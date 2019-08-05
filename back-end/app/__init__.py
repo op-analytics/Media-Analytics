@@ -8,8 +8,8 @@ app = Flask(__name__)
 app.config.from_object('config')
 
 # Import flask modules to use below
-from app.nlp.controller import nlp as nlp_module
-from app.api.controller import api as api_module
+from app.nlp.routes import nlp as nlp_module
+from app.api.routes import api as api_module
 
 # Register blueprint(s)
 app.register_blueprint(api_module)
