@@ -18,8 +18,8 @@ app.register_blueprint(nlp_module, url_prefix='/nlp')
 # Sample JSON error handling
 @app.errorhandler(404)
 def not_found(error):
-    return jsonify(
-            code=404,
-            message="not_found"
-            ), 404
+    return jsonify({
+        'code':404,
+        'message':"not_found"
+    }), 404
 
