@@ -2,7 +2,7 @@
 from flask import Blueprint, jsonify
 
 # Define the blueprint: 'auth', set its url prefix: app.url/auth
-nlp = Blueprint('nlp', __name__, url_prefix='/nlp')
+nlp = Blueprint('nlp', __name__)
 
 @nlp.route('/', methods=['GET'])
 def index():

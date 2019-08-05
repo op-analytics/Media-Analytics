@@ -13,7 +13,7 @@ from app.api.controllers import api as api_module
 
 # Register blueprint(s)
 app.register_blueprint(api_module)
-app.register_blueprint(nlp_module)
+app.register_blueprint(nlp_module, url_prefix='/nlp')
 
 # Sample JSON error handling
 @app.errorhandler(404)
