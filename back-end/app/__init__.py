@@ -8,8 +8,8 @@ app = Flask(__name__)
 app.config.from_object('config')
 
 # Import a module / component using its blueprint handler variable (mod_auth)
-from app.nlp.controllers import nlp as nlp_module
-from app.api.controllers import api as api_module
+from app.nlp.controller import nlp as nlp_module
+from app.api.controller import api as api_module
 
 # Register blueprint(s)
 app.register_blueprint(api_module)
