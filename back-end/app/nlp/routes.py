@@ -1,7 +1,6 @@
 # Import flask dependencies
 from flask import Blueprint, jsonify
 
-# Define the blueprint: 'auth', set its url prefix: app.url/auth
 nlp = Blueprint('nlp', __name__)
 
 
