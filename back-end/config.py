@@ -1,5 +1,7 @@
 # Statement for enabling the development environment
 DEBUG = True
+
+# Port the server will run on in development
 PORT = 8080
 
 # Define the application directory
