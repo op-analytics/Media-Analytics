@@ -1,10 +1,10 @@
 # Import flask dependencies
 from flask import Blueprint, jsonify
 
-api = Blueprint('api', __name__,)
+routes = Blueprint('api', __name__,)
 
 
-@api.route('/', methods=['GET'])
+@routes.route('/', methods=['GET'])
 def index():
     return jsonify({
         'code': 202,

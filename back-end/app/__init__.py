@@ -1,7 +1,7 @@
 # Import flask and template operators
 from flask import Flask, jsonify
-from app.api.routes import api as api_module
-from app.nlp.routes import nlp as nlp_module
+from app.api.routes import routes as api_routes
+from app.nlp.routes import routes as nlp_routes
 
 # Define the WSGI application object
 app = Flask(__name__)
@@ -10,8 +10,8 @@ app = Flask(__name__)
 app.config.from_object('config')
 
 # Register blueprint(s)
-app.register_blueprint(api_module)
-app.register_blueprint(nlp_module, url_prefix='/nlp')
+app.register_blueprint(api_routes)
+app.register_blueprint(nlp_routes, url_prefix='/nlp')
 
 # Sample JSON error handling
 @app.errorhandler(404)
