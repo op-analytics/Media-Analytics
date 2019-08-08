@@ -26,3 +26,7 @@ class Config():
 
     # Secret key for signing cookies
     SECRET_KEY = "secret"
+
+
+class Testing(Config):
+    TESTING = True
