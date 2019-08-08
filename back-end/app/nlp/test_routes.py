@@ -1,12 +1,12 @@
 import pytest
-from app import app
+from app import create_app
 
 
 class TestNLPRoutes(object):
     # Put any setup code in this method
     @classmethod
     def setup_class(self):
-        self.app = app
+        self.app = create_app('config.Testing')
         self.prefix = '/nlp/'
         self.client = self.app.test_client()
 
