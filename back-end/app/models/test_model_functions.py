@@ -7,10 +7,6 @@ from app.models.model_functions import loadModels
 
 
 class TestModelFunctions(object):
-    def test_returns_a_dictionary(self):
-        models = loadModels('./')
-        assert isinstance(models, dict)
-
     def test_should_throw_an_error_given_a_path_that_doesnt_exist(self):
         # Create random path
         path = ''
