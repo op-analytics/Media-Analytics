@@ -17,7 +17,7 @@ def loadModels(path):
             continue
         # Try opening the model and ignore error thrown if it is not a model
         try:
-            models[file] = KeyedVectors.load(file, mmap='r')
+            models[file] = KeyedVectors.load(path+file, mmap='r')
             numOfModels = numOfModels + 1
         except Exception:
             pass
