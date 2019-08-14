@@ -7,7 +7,7 @@ def loadModels(path):
     if not os.path.exists(path):
         raise OSError("given path %s does not exist" % path)
     if os.path.isfile(path):
-        raise OSError("given path %s is a folder" % path)
+        raise OSError("given path %s is not a folder" % path)
     return {
         "ohno": 1
     }
