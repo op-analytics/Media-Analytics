@@ -11,14 +11,16 @@ def loadModels(path):
         raise OSError("given path %s is not a folder" % path)
     models = {}
     numOfModels = 0
-    for file in os.listdir(path):
+    files = os.listdir(path)
+    for file in files:
         # Skip files that don't appear to be models
-        if file.lower().endswith(('.npy', '.md', '-example')) or os.path.isdir(path+file) or file.startswith('.'):
+        if file.lower().endswith(('.npy', '.md', '-example')) or os.path.isdir(path+str(file)) or file.startswith('.'):
             continue
         # Try opening the model and ignore error thrown if it is not a model
         try:
-            models[file] = KeyedVectors.load(path+file, mmap='r')
-            models[file].syn0norm = models[file].wv.syn0 # prevent recalc of normed vectors
+            model =  KeyedVectors.load(path+file, mmap='r')
+            model.syn0norm = model.wv.syn0 # prevent recalc of normed vectors
+            models[str(file)] = model
             numOfModels = numOfModels + 1
         except Exception as e:
             raise e
