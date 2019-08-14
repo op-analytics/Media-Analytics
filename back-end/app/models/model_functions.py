@@ -1,4 +1,5 @@
 import os
+from gensim.models import KeyedVectors
 
 
 def loadModels(path):
@@ -8,6 +9,20 @@ def loadModels(path):
         raise OSError("given path %s does not exist" % path)
     if os.path.isfile(path):
         raise OSError("given path %s is not a folder" % path)
+    models = {}
+    numOfModels = 0
+    for file in os.listdir(path):
+        # Skip files that don't appear to be models
+        if file.lower().endswith(('.npy', '.md', '-example')):
+            continue
+        # Try opening the model and ignore error thrown if it is not a model
+        try:
+            models[file] = KeyedVectors.load(file, mmap='r')
+            numOfModels = numOfModels + 1
+        except Exception:
+            pass
+    if numOfModels == 0:
+        raise OSError("No models were found in given path %s" % path)
     return {
         "ohno": 1
     }
