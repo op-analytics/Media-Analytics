@@ -23,6 +23,4 @@ def loadModels(path):
             raise e
     if numOfModels == 0:
         raise OSError("No models were found in given path %s" % path)
-    return {
-        "ohno": 1
-    }
+    return models
