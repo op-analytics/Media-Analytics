@@ -30,3 +30,7 @@ class TestModelFunctions(object):
         # Get random file from files in current dir
         with pytest.raises(OSError):
             models = loadModels('.')
+
+    def test_should_return_a_dictionary_if_given_path_from_env(self):
+        models = loadModels(os.environ['TIMELINE_MODELS_DIR'])
+        assert isinstance(models, dict)
