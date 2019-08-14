@@ -13,7 +13,7 @@ def loadModels(path):
     numOfModels = 0
     for file in os.listdir(path):
         # Skip files that don't appear to be models
-        if file.lower().endswith(('.npy', '.md', '-example')):
+        if file.lower().endswith(('.npy', '.md', '-example')) or os.path.isdir(path+file) or file.startswith('.'):
             continue
         # Try opening the model and ignore error thrown if it is not a model
         try:
