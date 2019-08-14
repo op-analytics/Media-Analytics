@@ -1,5 +1,6 @@
 import pytest
 import string
+from gensim.models import Word2Vec
 import secrets
 import os
 from random import *
@@ -34,3 +35,12 @@ class TestModelFunctions(object):
     def test_should_return_a_dictionary_if_given_path_from_env(self):
         models = loadModels(os.environ['TIMELINE_MODELS_DIR'])
         assert isinstance(models, dict)
+
+    def test_should_return_a_dictionary_of_models_given_a_valid_path_from_env(self):
+        models = loadModels(os.environ['TIMELINE_MODELS_DIR'])
+        are_all_models = True
+        for _,model in models.items():
+            if not isinstance(model, Word2Vec):
+                are_all_models = False
+        assert are_all_models
+
