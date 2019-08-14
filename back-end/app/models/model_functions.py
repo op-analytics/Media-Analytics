@@ -19,8 +19,8 @@ def loadModels(path):
         try:
             models[file] = KeyedVectors.load(path+file, mmap='r')
             numOfModels = numOfModels + 1
-        except Exception:
-            pass
+        except Exception as e:
+            raise e
     if numOfModels == 0:
         raise OSError("No models were found in given path %s" % path)
     return {
