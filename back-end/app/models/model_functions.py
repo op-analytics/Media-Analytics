@@ -18,6 +18,7 @@ def loadModels(path):
         # Try opening the model and ignore error thrown if it is not a model
         try:
             models[file] = KeyedVectors.load(path+file, mmap='r')
+            models[file].syn0norm = models[file].wv.syn0 # prevent recalc of normed vectors
             numOfModels = numOfModels + 1
         except Exception as e:
             raise e
