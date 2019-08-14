@@ -1,5 +1,6 @@
 import pytest
 import string
+import secrets
 import os
 from random import *
 from app.models.model_functions import loadModels
@@ -20,3 +21,10 @@ class TestModelFunctions(object):
         # Test OSError is raised when given an invalid path
         with pytest.raises(OSError):
             models = loadModels(path)
+
+    def test_should_throw_an_error_given_a_path_is_a_file(self):
+        # Get random file from files in current dir
+        file = secrets.choice([f for f in os.listdir('.') if os.path.isfile(f)])
+        # Test OSError is raised when given a file for a path
+        with pytest.raises(OSError):
+            models = loadModels(file)
