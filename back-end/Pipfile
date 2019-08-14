@@ -5,6 +5,7 @@ name = "pypi"
 
 [packages]
 Flask = "*"
+gensim = "*"
 
 [dev-packages]
 pylint = "*"
