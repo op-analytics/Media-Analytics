@@ -42,7 +42,7 @@ class TestNLPRoutes(object):
                 'year_from': year_from,
                 'year_to': year_to
             }
-            ).get_json()
+        ).get_json()
         for item in response['data']:
             if(int(item['year']) < year_from or int(item['year']) > year_to):
                 data_only_for_given_years = False
