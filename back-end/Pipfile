@@ -6,6 +6,7 @@ name = "pypi"
 [packages]
 Flask = "*"
 gensim = "*"
+marshmallow = "*"
 
 [dev-packages]
 pylint = "*"
@@ -14,3 +15,6 @@ pytest = "*"
 
 [requires]
 python_version = "3.7"
+
+[pipenv]
+allow_prereleases = true
