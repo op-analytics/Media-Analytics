@@ -6,6 +6,7 @@ import os
 
 routes = Blueprint('timeline', __name__)
 
+models = loadModels(os.environ['TIMELINE_MODELS_DIR'])
 
 class FrequencySchema(Schema):
     year_from = fields.Int(required=True)
@@ -34,7 +35,6 @@ def getFrequency():
     year_to = int(request.json['year_to'])
     word = request.json['word'].lower()
     data = []
-    models = loadModels(os.environ['TIMELINE_MODELS_DIR'])
     for year, model in models.items():
         totalWordCount = 0
         for w in model.wv.vocab:
