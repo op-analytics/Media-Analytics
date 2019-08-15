@@ -1,0 +1,8 @@
+.input-field{
+  background-color: darkgray;
+}
+
+.input-form{
+  display: flexbox;
+  width: 200px;
+}

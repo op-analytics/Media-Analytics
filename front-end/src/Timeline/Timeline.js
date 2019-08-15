@@ -27,7 +27,7 @@ export default function Timeline() {
           word: "boat",
           rank: 1525,
           count: 3223,
-          y: 0.012659834833737834
+          y: 0.0126
         },
         { year: 1981, word: "boat", rank: 1400, count: 3400, y: 0.013 },
         { year: 1982, word: "boat", rank: 1420, count: 3375, y: 0.01352324 },
@@ -45,32 +45,43 @@ export default function Timeline() {
     });
   }, [datasets, labels]);
 
-  const createAfterLabels = labels => {
+  const createLabels = labels => {
     return function(tooltipItem, data) {
-      return [
-        labels.reduce(
-          (accum, { key, value }) =>
-            accum.concat(
-              key +
-                ": " +
-                data["datasets"][0]["data"][tooltipItem["index"]][value] + '\n'
-            ),
-          []
-        )
-      ];
+      return labels.reduce(
+        (accum, { key, value }) =>
+          accum.concat(
+            key + data["datasets"][0]["data"][tooltipItem["index"]][value]
+          ),
+        []
+      );
     };
   };
 
+  const [word, setWord] = useState("example");
+  const [startYear, setStartYear] = useState("1970");
+  const [endYear, setStartWord] = useState("2018");
+
   return (
     <div>
-      <form>
-        <label>
-          Word to search
-        </label>
-        <input name="word" type="text">
-        </input>
-
-        
+      <form className="input-form"> 
+        <label>Word:</label>
+        <input className="input-field"
+          value={word}
+          type="text"
+          onChange={e => setWord(e.target.value)}
+        />
+        <label>Start year:</label>
+        <input className="input-field"
+          value={startYear}
+          type="text"
+          onChange={e => setWord(e.target.value)}
+        />
+         <label>End year:</label>
+         <input className="input-field"
+          value={endYear}
+          type="text"
+          onChange={e => setWord(e.target.value)}
+        />
       </form>
       <Line
         data={data}
@@ -82,17 +93,13 @@ export default function Timeline() {
           tooltips: {
             callbacks: {
               title: function(tooltipItem, data) {
-                return data["labels"][tooltipItem[0]["index"]];
+                const response = data.datasets[0].data[tooltipItem[0].index];
+                return response["year"] + " - " + response["word"];
               },
-              label: function(tooltipItem, data) {
-                return data["datasets"][0]["data"][tooltipItem["index"]][
-                  "word"
-                ];
-              },
-              afterLabel: createAfterLabels([
-                { key: "Frequency", value: "y" },
-                { key: "Count", value: 'count'},
-                { key: "Rank", value: 'rank'}
+              label: createLabels([
+                { key: "Frequency: ", value: "y" },
+                { key: "Count: ", value: "count" },
+                { key: "Rank: ", value: "rank" }
               ])
             }
           }
