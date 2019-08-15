@@ -22,7 +22,7 @@ def loadModels(path):
             model = KeyedVectors.load(path+file, mmap='r')
             model.syn0norm = model.wv.syn0  # prevent recalc of normed vectors
             model.totalWordCount = reduce(
-                lambda total, word: total+word.count, model.wv.vocab, 0)
+                lambda total, word: total+word.count, model.wv.vocab.values(), 0)
             models[str(file)] = model
             numOfModels = numOfModels + 1
         except Exception as e:
