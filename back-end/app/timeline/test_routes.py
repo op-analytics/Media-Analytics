@@ -16,5 +16,17 @@ class TestNLPRoutes(object):
         pass
 
     def test_frequecy_should_return_404_if_missing_items_in_body(self):
-        responseCode = self.client.post(self.prefix+'frequency',json={'word':"Jim"}).status_code
+        responseCode = self.client.post(
+            self.prefix+'frequency', json={'word': "Jim"}).status_code
         assert responseCode == 400
+
+    def test_frequecy_should_return_202_if_given_all_params(self):
+        responseCode = self.client.post(
+            self.prefix+'frequency',
+            json={
+                'word': "Jim",
+                'year_from': '1991',
+                'year_too': '2000'
+            }
+        ).status_code
+        assert responseCode == 202

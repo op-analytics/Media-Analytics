@@ -1,6 +1,8 @@
 # Import flask dependencies
 from flask import Blueprint, jsonify, request
 from marshmallow import Schema, fields, ValidationError
+from app.models.model_functions import loadModels
+import os
 
 routes = Blueprint('timeline', __name__)
 
@@ -28,6 +30,7 @@ def getFrequency():
             'code': 400,
             'messages': err.messages
         }), 400
+    models = loadModels(os.environ['TIMELINE_MODELS_DIR'])
     return jsonify({
         'code': 202,
         'messages': "Successfully made the request"
