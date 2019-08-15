@@ -4,6 +4,10 @@ from functools import reduce
 
 
 def isPotentialModel(file):
+    '''
+        Checks if a given file is a potential model
+        Returns false for hidden files, directories, and files that have a file extention
+    '''
     return not (file.lower().endswith('-example') or os.path.isdir(file) or '.' in file)
 
 
