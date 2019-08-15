@@ -25,8 +25,25 @@ class TestNLPRoutes(object):
             self.prefix+'frequency',
             json={
                 'word': "Jim",
-                'year_from': '1991',
-                'year_too': '2000'
+                'year_from': 1991,
+                'year_to': 2000
             }
         ).status_code
         assert responseCode == 202
+
+    def test_frequecy_should_only_return_data_for_given_years(self):
+        data_only_for_given_years = True
+        year_from = 1991
+        year_to = 2000
+        response = self.client.post(
+            self.prefix+'frequency',
+            json={
+                'word': "Jim",
+                'year_from': year_from,
+                'year_to': year_to
+            }
+            ).get_json()
+        for item in response['data']:
+            if(int(item['year']) < year_from or int(item['year']) > year_to):
+                data_only_for_given_years = False
+        assert data_only_for_given_years

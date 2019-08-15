@@ -8,8 +8,8 @@ routes = Blueprint('timeline', __name__)
 
 
 class FrequencySchema(Schema):
-    year_from = fields.Str(required=True)
-    year_too = fields.Str(required=True)
+    year_from = fields.Int(required=True)
+    year_to = fields.Int(required=True)
     word = fields.Str(required=True)
 
 
@@ -30,8 +30,30 @@ def getFrequency():
             'code': 400,
             'messages': err.messages
         }), 400
+    year_from = int(request.json['year_from'])
+    year_to = int(request.json['year_to'])
+    word = request.json['word'].lower()
+    data = []
     models = loadModels(os.environ['TIMELINE_MODELS_DIR'])
+    for year, model in models.items():
+        totalWordCount = 0
+        for w in model.wv.vocab:
+            totalWordCount += model.wv.vocab[w].count
+        year = int(year)
+        if year < year_from or year > year_to:
+            continue
+        wordCount = model.wv.vocab[word].count
+        wordFreq = (wordCount/totalWordCount) * 100
+        # Add the data to dictionary
+        data.append({
+            'year': year,
+            'word': word,
+            'rank': model.wv.vocab[word].index+1,
+            'wordCount': wordCount,
+            'wordFreq': wordFreq
+        })
+    # return the data dictionary
     return jsonify({
         'code': 202,
-        'messages': "Successfully made the request"
+        'data': data
     }), 202
