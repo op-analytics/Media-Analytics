@@ -32,10 +32,6 @@ class TestModelFunctions(object):
         with pytest.raises(OSError):
             models = loadModels('.')
 
-    def test_should_return_a_dictionary_if_given_path_from_env(self):
-        models = loadModels(os.environ['TIMELINE_MODELS_DIR'])
-        assert isinstance(models, dict)
-
     def test_should_return_a_dictionary_of_models_given_a_valid_path_from_env(self):
         models = loadModels(os.environ['TIMELINE_MODELS_DIR'])
         are_all_models = True
