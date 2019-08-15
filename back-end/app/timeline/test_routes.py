@@ -47,3 +47,17 @@ class TestNLPRoutes(object):
             if(int(item['year']) < year_from or int(item['year']) > year_to):
                 data_only_for_given_years = False
         assert data_only_for_given_years
+
+    def test_frequency_should_return_zeroed_values_for_words_that_dont_exist(self):
+        year_from = 2018
+        year_to = 2018
+        response = self.client.post(
+            self.prefix+'frequency',
+            json={
+                'word': "The",
+                'year_from': year_from,
+                'year_to': year_to
+            }
+        ).get_json()
+        # TODO: Change to multiple assert?
+        assert response['data'][0]['rank'] == 0
