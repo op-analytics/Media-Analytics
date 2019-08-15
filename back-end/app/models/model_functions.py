@@ -1,5 +1,6 @@
 import os
 from gensim.models import KeyedVectors
+from functools import reduce
 
 
 def loadModels(path):
@@ -18,8 +19,10 @@ def loadModels(path):
             continue
         # Try opening the model and ignore error thrown if it is not a model
         try:
-            model =  KeyedVectors.load(path+file, mmap='r')
-            model.syn0norm = model.wv.syn0 # prevent recalc of normed vectors
+            model = KeyedVectors.load(path+file, mmap='r')
+            model.syn0norm = model.wv.syn0  # prevent recalc of normed vectors
+            model.totalWordCount = reduce(
+                lambda total, word: total+word.count, model.wv.vocab, 0)
             models[str(file)] = model
             numOfModels = numOfModels + 1
         except Exception as e:
