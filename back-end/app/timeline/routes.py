@@ -36,14 +36,11 @@ def getFrequency():
     word = request.json['word'].lower()
     data = []
     for year, model in models.items():
-        totalWordCount = 0
-        for w in model.wv.vocab:
-            totalWordCount += model.wv.vocab[w].count
         year = int(year)
         if year < year_from or year > year_to:
             continue
         wordCount = model.wv.vocab[word].count
-        wordFreq = (wordCount/totalWordCount) * 100
+        wordFreq = (wordCount/model.totalWordCount) * 100
         # Add the data to dictionary
         data.append({
             'year': year,
