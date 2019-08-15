@@ -33,6 +33,7 @@ def getFrequency():
         }), 400
     year_from = int(request.json['year_from'])
     year_to = int(request.json['year_to'])
+    # Convert word to lowercase to use with models
     word = request.json['word'].lower()
     data = []
     for year, model in models.items():
