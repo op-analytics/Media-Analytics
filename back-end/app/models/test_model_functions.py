@@ -28,7 +28,6 @@ class TestModelFunctions(object):
             models = loadModels(file)
 
     def test_should_throw_an_error_when_given_path_has_no_models(self):
-        # Get random file from files in current dir
         with pytest.raises(OSError):
             models = loadModels('.')
 
