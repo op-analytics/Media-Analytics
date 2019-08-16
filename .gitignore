@@ -213,3 +213,7 @@ typings/
 
 # DynamoDB Local files
 .dynamodb/
+
+# Editors
+**.vscode
+**.vim
