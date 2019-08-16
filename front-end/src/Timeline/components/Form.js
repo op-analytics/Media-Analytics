@@ -5,6 +5,7 @@ import FormControl from "@material-ui/core/FormControl";
 import FormHelperText from "@material-ui/core/FormHelperText";
 import Input from "@material-ui/core/Input";
 import InputLabel from "@material-ui/core/InputLabel";
+import Slider from '@material-ui/core/Slider';
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -18,14 +19,16 @@ const useStyles = makeStyles(theme => ({
     margin: theme.spacing(1)
   },
   Button: {
-    width: '1.5 rems',
+    width: "1.5 rems"
+  },
+  root: {
+    width: 300,
   }
 }));
 
 export default function Form() {
   const [word, setWord] = useState("example");
-  const [startYear, setStartYear] = useState("1970");
-  const [endYear, setEndYear] = useState("2018");
+  const [yearRange, setYearRange] = useState([1970, 2018]);
   const classes = useStyles();
 
   function WordInput() {
@@ -45,42 +48,21 @@ export default function Form() {
     );
   }
 
-  function StartYearInput() {
-    return (
-      <FormControl className={classes.formControl}>
-        <InputLabel htmlFor="component-helper">Start Year</InputLabel>
-        <Input
-          id="component-helper"
-          value={startYear}
-          onChange={e => setStartYear(e.target.value)}
-          aria-describedby="component-helper-text"
-        />
-      </FormControl>
-    );
-  }
-
-  function EndYearInput() {
-    return (
-      <FormControl className={classes.formControl}>
-        <InputLabel htmlFor="component-helper">End Year</InputLabel>
-        <Input
-          id="component-helper"
-          value={endYear}
-          onChange={e => setEndYear(e.target.value)}
-          aria-describedby="component-helper-text"
-        />
-      </FormControl>
-    );
-  }
-
   return (
     <form className={classes.container}>
       <WordInput />
-      <StartYearInput />
-      <EndYearInput />
-      <Button variant="contained" color="primary">
-        Submit
-      </Button>
+      <div className={classes.root}>
+        <Slider
+          // ThumbComponent={AirbnbThumbComponent}
+          aria-label="airbnb slider"
+          valueLabelDisplay="auto"
+          value={yearRange}
+          onChange={(_, newValue) => setYearRange(newValue)}
+          getAriaValueText={value => `${value}`}
+          min={1960}
+          max={2020}
+        />
+      </div>
     </form>
   );
 }
