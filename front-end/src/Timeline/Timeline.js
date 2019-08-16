@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Line } from "react-chartjs-2";
+import Form from './components/Form'
+
+
 
 export default function Timeline() {
   const [data, setData] = useState({
@@ -57,39 +60,16 @@ export default function Timeline() {
     };
   };
 
-  const [word, setWord] = useState("example");
-  const [startYear, setStartYear] = useState("1970");
-  const [endYear, setStartWord] = useState("2018");
-
   return (
-    <div>
-      <form className="input-form"> 
-        <label>Word:</label>
-        <input className="input-field"
-          value={word}
-          type="text"
-          onChange={e => setWord(e.target.value)}
-        />
-        <label>Start year:</label>
-        <input className="input-field"
-          value={startYear}
-          type="text"
-          onChange={e => setWord(e.target.value)}
-        />
-         <label>End year:</label>
-         <input className="input-field"
-          value={endYear}
-          type="text"
-          onChange={e => setWord(e.target.value)}
-        />
-      </form>
+    <>
+      <Form />
       <Line
         data={data}
         width={500}
         height={300}
         options={{
-          maintainAspectRatio: false,
-          responsive: false,
+          maintainAspectRatio: true,
+          responsive: true,
           tooltips: {
             callbacks: {
               title: function(tooltipItem, data) {
@@ -105,6 +85,6 @@ export default function Timeline() {
           }
         }}
       />
-    </div>
+    </>
   );
 }
