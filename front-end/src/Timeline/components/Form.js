@@ -1,30 +1,22 @@
 import React, { useState, useEffect } from "react";
-import Button from "@material-ui/core/Button";
 import { makeStyles } from "@material-ui/core/styles";
 import FormControl from "@material-ui/core/FormControl";
 import FormHelperText from "@material-ui/core/FormHelperText";
 import Input from "@material-ui/core/Input";
 import InputLabel from "@material-ui/core/InputLabel";
-import Slider from '@material-ui/core/Slider';
+import Slider from "@material-ui/core/Slider";
 
 const useStyles = makeStyles(theme => ({
-  container: {
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
-    flexWrap: "wrap",
-    justifyContent: "center"
-  },
   formControl: {
     margin: theme.spacing(1)
   },
-  Button: {
-    width: "1.5 rems"
-  },
-  root: {
-    width: 300,
+  slider: {
+    paddingLeft: 2,
+
   }
 }));
+
+const marks = [{ value: 1960, label: "1960" }, { value: 2020, label: "2020" }];
 
 export default function Form() {
   const [word, setWord] = useState("example");
@@ -49,11 +41,11 @@ export default function Form() {
   }
 
   return (
-    <form className={classes.container}>
+    <form >
       <WordInput />
-      <div className={classes.root}>
+      <div className={classes.slider}>
+        <h4>Year range</h4>
         <Slider
-          // ThumbComponent={AirbnbThumbComponent}
           aria-label="airbnb slider"
           valueLabelDisplay="auto"
           value={yearRange}
@@ -61,6 +53,7 @@ export default function Form() {
           getAriaValueText={value => `${value}`}
           min={1960}
           max={2020}
+          marks={marks}
         />
       </div>
     </form>
