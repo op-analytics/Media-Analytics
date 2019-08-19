@@ -1,8 +1,8 @@
-# Import flask and template operators
+# Import flask dependencies
 from flask import Flask, jsonify, g
 
-# Assign DB variable
-# E.G. db = SQLAlchemy
+# Create Plugins
+# Example db = sqlAlchemy()
 
 
 def create_app(config_filename='config.Config'):
@@ -11,7 +11,7 @@ def create_app(config_filename='config.Config'):
     app.config.from_object(config_filename)
 
     # Initialize Plugins
-    # db.init_app(app)
+    # Example db.init_app(app)
     with app.app_context():
         # Import and Register blueprint(s)
         from app.api.routes import routes as api_routes
