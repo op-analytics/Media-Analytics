@@ -1,16 +1,11 @@
 # Import flask dependencies
 from flask import Blueprint, jsonify, request
-from marshmallow import Schema, fields, ValidationError
+from marshmallow import ValidationError
 from app.models.model_functions import loadModels
+from .schemas import FrequencySchema
 import os
 
 routes = Blueprint('timeline', __name__)
-
-
-class FrequencySchema(Schema):
-    year_from = fields.Int(required=True)
-    year_to = fields.Int(required=True)
-    word = fields.Str(required=True)
 
 
 @routes.route('/', methods=['GET'])
