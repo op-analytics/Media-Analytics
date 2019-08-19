@@ -20,6 +20,8 @@ module.exports = {
   plugins: ["react"],
   rules: {
     "react/jsx-filename-extension": [1, { extensions: [".js", ".jsx"] }],
-    "no-underscore-dangle": 0
+    "no-underscore-dangle": 0,
+    "arrow-parens": 0,
+    "no-tabs": "error",
   },
 };
