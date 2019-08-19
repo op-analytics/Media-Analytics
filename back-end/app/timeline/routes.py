@@ -7,6 +7,8 @@ import os
 
 routes = Blueprint('timeline', __name__)
 
+models = loadModels(os.environ['TIMELINE_MODELS_DIR'])
+
 
 @routes.route('/', methods=['GET'])
 def index():
@@ -27,26 +29,32 @@ def getFrequency():
         }), 400
     year_from = int(request.json['year_from'])
     year_to = int(request.json['year_to'])
+    # Convert word to lowercase to use with models
     word = request.json['word'].lower()
     data = []
-    models = loadModels(os.environ['TIMELINE_MODELS_DIR'])
     for year, model in models.items():
-        totalWordCount = 0
-        for w in model.wv.vocab:
-            totalWordCount += model.wv.vocab[w].count
         year = int(year)
         if year < year_from or year > year_to:
             continue
-        wordCount = model.wv.vocab[word].count
-        wordFreq = (wordCount/totalWordCount) * 100
-        # Add the data to dictionary
-        data.append({
-            'year': year,
-            'word': word,
-            'rank': model.wv.vocab[word].index+1,
-            'wordCount': wordCount,
-            'wordFreq': wordFreq
-        })
+        try:
+            wordCount = model.wv.vocab[word].count
+            wordFreq = (wordCount/model.totalWordCount) * 100
+            # Add the data to dictionary
+            data.append({
+                'year': year,
+                'word': word,
+                'rank': model.wv.vocab[word].index+1,
+                'wordCount': wordCount,
+                'wordFreq': wordFreq
+            })
+        except KeyError:
+            data.append({
+                'year': year,
+                'word': word,
+                'rank': 0,
+                'wordCount': 0,
+                'wordFreq': 0
+            })
     # return the data dictionary
     return jsonify({
         'code': 202,

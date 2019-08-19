@@ -28,18 +28,13 @@ class TestModelFunctions(object):
             models = loadModels(file)
 
     def test_should_throw_an_error_when_given_path_has_no_models(self):
-        # Get random file from files in current dir
         with pytest.raises(OSError):
             models = loadModels('.')
-
-    def test_should_return_a_dictionary_if_given_path_from_env(self):
-        models = loadModels(os.environ['TIMELINE_MODELS_DIR'])
-        assert isinstance(models, dict)
 
     def test_should_return_a_dictionary_of_models_given_a_valid_path_from_env(self):
         models = loadModels(os.environ['TIMELINE_MODELS_DIR'])
         are_all_models = True
-        for _,model in models.items():
+        for model in models.values():
             if not isinstance(model, Word2Vec):
                 are_all_models = False
         assert are_all_models
