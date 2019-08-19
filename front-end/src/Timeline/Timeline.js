@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Line } from 'react-chartjs-2';
+<<<<<<< HEAD
 import { makeStyles } from '@material-ui/core/styles';
+=======
+import { makeStyles, createMuiTheme } from '@material-ui/core/styles';
+>>>>>>> e6ea8409bc074dbd2f2131df8844b56fe6536341
 import Grid from '@material-ui/core/Grid';
 import Form from './components/Form';
 
@@ -75,10 +79,17 @@ export default function Timeline() {
   const classes = useStyles();
 
   useEffect(() => {
+<<<<<<< HEAD
     setTimelineData(data => ({ ...data, datasets, labels }));
   }, [datasets, labels]);
 
   const createLabels = currentLabels => (tooltipItem, data) => currentLabels.reduce(
+=======
+    setData(data => ({ ...data, datasets, labels }));
+  }, [datasets, labels]);
+
+  const createLabels = labels => (tooltipItem, data) => labels.reduce(
+>>>>>>> e6ea8409bc074dbd2f2131df8844b56fe6536341
     (accum, { key, value }) => accum.concat(key + data.datasets[0].data[tooltipItem.index][value]),
     [],
   );
