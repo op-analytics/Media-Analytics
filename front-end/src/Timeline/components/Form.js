@@ -1,25 +1,24 @@
-import React, { useState, useEffect } from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import FormControl from "@material-ui/core/FormControl";
-import FormHelperText from "@material-ui/core/FormHelperText";
-import Input from "@material-ui/core/Input";
-import InputLabel from "@material-ui/core/InputLabel";
-import Slider from "@material-ui/core/Slider";
+import React, { useState } from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+import FormControl from '@material-ui/core/FormControl';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import Input from '@material-ui/core/Input';
+import InputLabel from '@material-ui/core/InputLabel';
+import Slider from '@material-ui/core/Slider';
 
 const useStyles = makeStyles(theme => ({
   formControl: {
-    margin: theme.spacing(1)
+    margin: theme.spacing(1),
   },
   slider: {
     paddingLeft: 2,
-
-  }
+  },
 }));
 
-const marks = [{ value: 1960, label: "1960" }, { value: 2020, label: "2020" }];
+const marks = [{ value: 1960, label: '1960' }, { value: 2020, label: '2020' }];
 
 export default function Form() {
-  const [word, setWord] = useState("example");
+  const [word, setWord] = useState('example');
   const [yearRange, setYearRange] = useState([1970, 2018]);
   const classes = useStyles();
 
@@ -33,15 +32,13 @@ export default function Form() {
           onChange={e => setWord(e.target.value)}
           aria-describedby="component-helper-text"
         />
-        <FormHelperText id="component-helper-text">
-          Can be a comma separated list
-        </FormHelperText>
+        <FormHelperText id="component-helper-text">Can be a comma separated list</FormHelperText>
       </FormControl>
     );
   }
 
   return (
-    <form >
+    <form>
       <WordInput />
       <div className={classes.slider}>
         <h4>Year range</h4>
