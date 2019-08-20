@@ -15,7 +15,7 @@ class TestNLPRoutes(object):
     def teardown_class(self):
         pass
 
-    def test_frequecy_should_return_404_if_missing_items_in_body(self):
+    def test_frequecy_should_return_400_if_missing_items_in_body(self):
         responseCode = self.client.post(
             self.prefix+'frequency', json={'word': "Jim"}).status_code
         assert responseCode == 400
