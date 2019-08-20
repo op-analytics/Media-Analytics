@@ -16,11 +16,9 @@ def create_app(config_filename='config.Config'):
         # Import and Register blueprint(s)
         from app.api.routes import routes as api_routes
         from app.nlp.routes import routes as nlp_routes
-        from app.timeline.routes import routes as timeline_routes
 
         app.register_blueprint(api_routes)
         app.register_blueprint(nlp_routes, url_prefix='/nlp')
-        app.register_blueprint(timeline_routes, url_prefix='/timeline')
 
         @app.errorhandler(404)
         #pylint: disable=unused-variable
