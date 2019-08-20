@@ -9,10 +9,20 @@ function Home() {
     </div>
   );
 }
+
+function NotFound() {
+  return (
+    <div className="App">
+      <h1>Not found</h1>
+    </div>
+  );
+}
+
 export default function App() {
   return (
     <Router>
       <Route exact path='/' component={Home}/>
+      <Route exact path='*' component={NotFound}/>
     </Router>
   );
 }
