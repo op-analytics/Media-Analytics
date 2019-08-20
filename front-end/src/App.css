@@ -1,7 +1,8 @@
-.App {
-  text-align: center;
-  background-color: #282c34;
-  min-height: 100vh;
-  font-size: calc(14px + 2vmin);
-  color: white;
+.input-field{
+  background-color: darkgray;
+}
+
+.input-form{
+  display: flexbox;
+  width: 180px;
 }
