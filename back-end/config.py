@@ -3,7 +3,7 @@ import os
 
 class Config():
     # Statement for enabling the development environment
-    DEBUG = True
+    DEBUG = False
 
     # Port the server will run on in development
     PORT = os.environ['PORT']
@@ -23,3 +23,7 @@ class Config():
 
 class Testing(Config):
     TESTING = True
+
+
+class Dev(Config):
+    DEBUG = True
