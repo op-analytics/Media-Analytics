@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import Timeline from './Timeline/Timeline';
+import Timeline from './Timeline';
 
 export default function App() {
   return (
