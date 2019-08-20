@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Line } from 'react-chartjs-2';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import Form from './components/Form';
 
 const useStyles = makeStyles(() => ({
   LineChart: {
@@ -88,9 +87,6 @@ export default function Timeline() {
       <h3>Word Frequency Timeline</h3>
       <Grid container spacing="2">
         <Grid item xs="false" lg={4} />
-        <Grid item xs={6} lg={4} spacing-xs-2>
-          <Form />
-        </Grid>
         <Grid item xs="false" lg={4} />
         <Grid item xs="false" lg={3} />
         <Grid item xs={12} lg={6} className={classes.LineChart} wrap="wrap">
