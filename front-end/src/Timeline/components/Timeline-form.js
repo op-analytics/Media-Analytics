@@ -1,82 +1,52 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import Axios from 'axios';
-
-// TODO:Update production url.
-const apiUrl = process.env.NODE_ENV === 'production' ? 'http://example.com' : process.env.REACT_APP_API_URL;
+import TextField from '@material-ui/core/TextField';
 
 const useStyles = makeStyles(() => ({
   form: {
     display: 'flex',
     flexDirection: 'column',
+    maxWidth: '200px',
   },
   input: {
     border: 'solid 1px black',
   },
 }));
 
-export default function Form({ setTimelineData }) {
+export default function Form() {
   const classes = useStyles();
 
   const [word, setWord] = useState('');
   const [yearFrom, setYearFrom] = useState('');
   const [yearTo, setYearTo] = useState('');
 
-  const handleSubmit = e => {
-    e.preventDefault();
-    Axios.post(
-      `${apiUrl}timeline/frequency`,
-      {
-        word,
-        year_from: yearFrom,
-        year_to: yearTo,
-      },
-      { headers: { 'Content-Type': 'application/json' } },
-    )
-      .then(data => {
-        console.log(data);
-      })
-      .catch(error => {
-        console.log(error.response);
-      });
-  };
-
   return (
-    <form className={classes.form} onSubmit={handleSubmit}>
-      <label>
-        Word:
-        <input
-          type="text"
-          name="word"
-          className={classes.input}
-          value={word}
-          onChange={e => setWord(e.target.value)}
-        />
-      </label>
-
-      <label>
-        Year from:
-        <input
-          type="text"
-          name="year-from"
-          className={classes.input}
-          value={yearFrom}
-          onChange={e => setYearFrom(e.target.value)}
-        />
-      </label>
-
-      <label>
-        Year to:
-        <input
-          type="text"
-          name="year-to"
-          className={classes.input}
-          value={yearTo}
-          onChange={e => setYearTo(e.target.value)}
-        />
-      </label>
-
+    <form className={classes.form}>
+      <TextField
+        label="Word:"
+        name="word"
+        className={classes.textField}
+        value={word}
+        margin="normal"
+        onChange={e => setWord(e.target.value)}
+      />
+      <TextField
+        label="Year from:"
+        name="year-from"
+        className={classes.textField}
+        value={yearFrom}
+        margin="normal"
+        onChange={e => setYearFrom(e.target.value)}
+      />
+      <TextField
+        label="Year to:"
+        name="year-to"
+        className={classes.textField}
+        value={yearTo}
+        margin="normal"
+        onChange={e => setYearTo(e.target.value)}
+      />
       <input type="submit" value="submit" />
     </form>
   );
