@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import Timeline from './Timeline';
+import Timeline from './Timeline/Timeline-view';
 
 function Home() {
   return (
