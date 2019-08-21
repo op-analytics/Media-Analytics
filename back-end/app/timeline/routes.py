@@ -21,8 +21,8 @@ def index():
 @routes.route('/frequency', methods=['POST'])
 def getFrequency():
     try:
-        FrequencySchema(strict=True).load(request.json) if int(
-            marshmallow_version[0]) < 3 else FrequencySchema().load(request.json)
+        FrequencySchema(strict=True).load(request.get_json(force=True)) if int(
+            marshmallow_version[0]) < 3 else FrequencySchema().load(request.get_json(force=True))
     except ValidationError as err:
         return jsonify({
             'code': 400,

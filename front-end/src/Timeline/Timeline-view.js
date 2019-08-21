@@ -26,7 +26,7 @@ export default function Timeline() {
   return (
     <>
       <h3>Word Frequency Timeline</h3>
-      <Form />
+      <Form setTimelineData={setTimelineData} />
       <Grid container spacing="2">
         <Grid item xs="false" lg={4} />
         <Grid item xs="false" lg={4} />
@@ -45,7 +45,7 @@ export default function Timeline() {
                   },
                   label: createLabels([
                     { key: 'Frequency: ', value: 'y' },
-                    { key: 'Count: ', value: 'count' },
+                    { key: 'Count: ', value: 'wordCount' },
                     { key: 'Rank: ', value: 'rank' },
                   ]),
                 },
