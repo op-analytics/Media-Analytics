@@ -45,7 +45,7 @@ export default function Timeline() {
                   },
                   label: createLabels([
                     { key: 'Frequency: ', value: 'y' },
-                    { key: 'Count: ', value: 'count' },
+                    { key: 'Count: ', value: 'wordCount' },
                     { key: 'Rank: ', value: 'rank' },
                   ]),
                 },

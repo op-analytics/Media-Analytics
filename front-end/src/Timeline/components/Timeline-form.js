@@ -12,14 +12,18 @@ const API_URL = process.env.NODE_ENV === 'production' ? '/api/' : process.env.RE
 const useStyles = makeStyles(theme => ({
   form: {
     display: 'flex',
-    flexDirection: 'column',
-    maxWidth: '200px',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
   },
   input: {
     border: 'solid 1px black',
   },
   formControl: {
     margin: theme.spacing(1),
+  },
+  button: {
+    maxHeight: '40px',
+    marginTop: '36px',
   },
 }));
 
@@ -29,6 +33,24 @@ function Form({ setTimelineData }) {
   const [word, setWord] = useState('');
   const [yearFrom, setYearFrom] = useState('');
   const [yearTo, setYearTo] = useState('');
+
+  const extractLabelsFromResponse = response => response.data.data.reduce((data, { year }) => data.concat(year), []);
+
+  const createDataset = data => ({
+    label: data[0].word,
+    fill: false,
+    lineTension: 0.1,
+    backgroundColor: 'rgba(75,192,192,0.4)',
+    borderColor: 'rgba(75,192,192,1)',
+    pointBorderColor: 'rgba(172,75,125,0.8)',
+    pointBackgroundColor: 'rgba(172,75,125,1)',
+    pointBorderWidth: 1.5,
+    pointHoverRadius: 5,
+    pointHoverBackgroundColor: 'rgba(75,192,192,1)',
+    pointHoverBorderWidth: 2,
+    pointHitRadius: 10,
+    data,
+  });
 
   const onSubmitHandler = e => {
     e.preventDefault();
