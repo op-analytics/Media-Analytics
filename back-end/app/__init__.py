@@ -1,5 +1,5 @@
 # Import flask dependencies
-from flask import Flask, jsonify, g
+from flask import Flask, jsonify, g, request
 
 # Create Plugins
 # Example db = sqlAlchemy()
@@ -21,6 +21,14 @@ def create_app(config_filename='config.Config'):
         app.register_blueprint(api_routes)
         app.register_blueprint(nlp_routes, url_prefix='/nlp')
         app.register_blueprint(timeline_routes, url_prefix='/timeline')
+
+        @app.before_request
+        def checkmimetype():
+            if not request.mimetype == 'application/json':
+                return jsonify({
+                    'code': 400,
+                    'error': 'Content type is not application/json'
+                }), 400
 
         @app.errorhandler(404)
         #pylint: disable=unused-variable
