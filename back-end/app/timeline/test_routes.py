@@ -61,3 +61,17 @@ class TestNLPRoutes(object):
         ).get_json()
         # TODO: Change to multiple assert?
         assert response['data'][0]['rank'] == 0
+
+    def test_should_return_years_invalid_if_year_from_after_year_to(self):
+        year_from = 2018
+        year_to = 2017
+        response = self.client.post(
+            self.prefix+'frequency',
+            json={
+                'word': "The",
+                'year_from': year_from,
+                'year_to': year_to
+            }
+        ).get_json()
+
+        assert 'year_from' in response['messages'] and 'year_to' in response['messages']
