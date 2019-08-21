@@ -5,6 +5,9 @@ import FormControl from '@material-ui/core/FormControl';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import PropTypes from 'prop-types';
+import Axios from 'axios';
+
+const API_URL = process.env.NODE_ENV === 'production' ? '/api/' : process.env.REACT_APP_API_URL;
 
 const useStyles = makeStyles(theme => ({
   form: {
@@ -26,6 +29,12 @@ function Form({ setTimelineData }) {
   const [word, setWord] = useState('');
   const [yearFrom, setYearFrom] = useState('');
   const [yearTo, setYearTo] = useState('');
+
+  const onSubmitHandler = e => {
+    e.preventDefault();
+    
+    Axios.post()
+  };
 
   return (
     <form className={classes.form}>
