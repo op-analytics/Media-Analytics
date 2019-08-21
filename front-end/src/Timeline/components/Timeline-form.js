@@ -32,12 +32,13 @@ function Form({ setTimelineData }) {
 
   const onSubmitHandler = e => {
     e.preventDefault();
-    
-    Axios.post()
+    Axios.post(`${API_URL}timeline/frequency`, { word, year_from: yearFrom, year_to: yearTo })
+      .then(response => console.log(response))
+      .catch(error => console.log(error.response));
   };
 
   return (
-    <form className={classes.form}>
+    <form className={classes.form} onSubmit={onSubmitHandler}>
       <FormControl className={classes.formControl}>
         <TextField
           label="Word:"
@@ -68,7 +69,7 @@ function Form({ setTimelineData }) {
           onChange={e => setYearTo(e.target.value)}
         />
       </FormControl>
-      <Button variant="outlined" color="primary" className={classes.button}>
+      <Button variant="outlined" color="primary" type="submit" className={classes.button}>
         Submit
       </Button>
     </form>
