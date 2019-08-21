@@ -4,6 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import FormControl from '@material-ui/core/FormControl';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import PropTypes from 'prop-types';
 
 const useStyles = makeStyles(theme => ({
   form: {
@@ -19,7 +20,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function Form() {
+function Form({ setTimelineData }) {
   const classes = useStyles();
 
   const [word, setWord] = useState('');
@@ -64,3 +65,9 @@ export default function Form() {
     </form>
   );
 }
+
+Form.propTypes = {
+  setTimelineData: PropTypes.func.isRequired,
+};
+
+export default Form;
