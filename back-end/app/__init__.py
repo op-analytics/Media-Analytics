@@ -1,8 +1,10 @@
 # Import flask dependencies
 from flask import Flask, jsonify, g
+from flask_cors import CORS
 
 # Create Plugins
 # Example db = sqlAlchemy()
+cors = CORS()
 
 
 def create_app(config_filename='config.Config'):
@@ -12,6 +14,7 @@ def create_app(config_filename='config.Config'):
 
     # Initialize Plugins
     # Example db.init_app(app)
+    cors.init_app(app)
     with app.app_context():
         # Import and Register blueprint(s)
         from app.api.routes import routes as api_routes
