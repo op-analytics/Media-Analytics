@@ -55,7 +55,19 @@ function Form({ setTimelineData }) {
   const onSubmitHandler = e => {
     e.preventDefault();
     Axios.post(`${API_URL}timeline/frequency`, { word, year_from: yearFrom, year_to: yearTo })
-      .then(response => console.log(response))
+      .then(response => {
+        setTimelineData({
+          labels: extractLabelsFromResponse(response),
+          datasets: [
+            createDataset(
+              response.data.data.reduce(
+                (accum, data) => accum.concat({ ...data, y: data.wordFreq }),
+                [],
+              ),
+            ),
+          ],
+        });
+      })
       .catch(error => console.log(error.response));
   };
 
