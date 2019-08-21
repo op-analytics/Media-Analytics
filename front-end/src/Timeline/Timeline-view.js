@@ -26,7 +26,7 @@ export default function Timeline() {
   return (
     <>
       <h3>Word Frequency Timeline</h3>
-      <Form setTimelineData={setTimelineData} />
+      <Form />
       <Grid container spacing="2">
         <Grid item xs="false" lg={4} />
         <Grid item xs="false" lg={4} />
