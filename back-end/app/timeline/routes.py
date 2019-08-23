@@ -4,10 +4,15 @@ from marshmallow import ValidationError, __version__ as marshmallow_version
 from app.models.model_functions import loadModels
 from .schemas import FrequencySchema
 import os
+from gensim.models import Word2Vec
+from flask import current_app
 
 routes = Blueprint('timeline', __name__)
 
-models = loadModels(os.environ['TIMELINE_MODELS_DIR'])
+#TODO: Tidy this up as it seems like bad practice
+# Use models from enviroment if they exist otherwise use a single test model
+models = loadModels(os.environ['TIMELINE_MODELS_DIR']) if not current_app.config['TESTING'] else {
+    "1999": Word2Vec([['first', 'sentence'], ['second', 'sentence']], min_count=1, batch_words=0.1, workers=1)}
 
 
 @routes.route('/', methods=['GET'])

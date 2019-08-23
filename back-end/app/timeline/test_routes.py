@@ -43,8 +43,8 @@ class TestNLPRoutes(object):
         assert all(int(item['year']) >= year_from and int( item['year'] <= year_to) for item in response['data'])
 
     def test_frequency_should_return_zeroed_values_for_words_that_dont_exist(self):
-        year_from = 2018
-        year_to = 2018
+        year_from = 0
+        year_to = 3000
         response = self.client.post(
             self.prefix+'frequency',
             json={

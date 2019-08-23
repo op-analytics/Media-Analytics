@@ -13,6 +13,7 @@ class TestModelFunctions(object):
 
     @mock.patch('app.models.model_functions.os.path')
     def test_should_throw_an_error_given_a_path_is_a_file(self, mock_path):
+        # Test OSError is raised when given a file for a path
         mock_path.exists.return_value = True
         mock_path.isfile.return_value = True
         with pytest.raises(OSError):
