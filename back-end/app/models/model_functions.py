@@ -15,9 +15,9 @@ def loadModels(path):
     '''Loads and returns all models in the given path as a dictionary'''
     # raise OSError if path is invalid or is a file
     if not os.path.exists(path):
-        raise OSError("given path %s does not exist" % path)
+        raise OSError("given path does not exist")
     if os.path.isfile(path):
-        raise OSError("given path %s is not a folder" % path)
+        raise OSError("given path is not a folder")
     models = {}
     files = os.listdir(path)
     for file in files:
@@ -30,5 +30,5 @@ def loadModels(path):
                 lambda total, word: total+word.count, model.wv.vocab.values(), 0)
             models[str(file)] = model
     if len(models) == 0:
-        raise OSError("No models were found in given path %s" % path)
+        raise OSError("No models were found in given path")
     return models

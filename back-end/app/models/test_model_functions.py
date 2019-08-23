@@ -8,15 +8,14 @@ class TestModelFunctions(object):
     @mock.patch('app.models.model_functions.os.path')
     def test_should_throw_an_error_given_a_path_that_doesnt_exist(self, mock_path):
         mock_path.exists.return_value = False
-        with pytest.raises(OSError):
+        with pytest.raises(OSError, match='given path does not exist'):
             loadModels('')
 
     @mock.patch('app.models.model_functions.os.path')
     def test_should_throw_an_error_given_a_path_is_a_file(self, mock_path):
-        # Test OSError is raised when given a file for a path
         mock_path.exists.return_value = True
         mock_path.isfile.return_value = True
-        with pytest.raises(OSError):
+        with pytest.raises(OSError, match='given path is not a folder'):
             loadModels('')
 
     @mock.patch('app.models.model_functions.os.path')
@@ -26,7 +25,7 @@ class TestModelFunctions(object):
             'notamodel.py', 'notamodel-example', 'notamodel.xml', '.gitignore']
         mock_path.exists.return_value = True
         mock_path.isfile.return_value = False
-        with pytest.raises(OSError):
+        with pytest.raises(OSError, match='No models were found in given path'):
             loadModels('')
 
     @mock.patch('app.models.model_functions.os.path.exists', return_value=True)
