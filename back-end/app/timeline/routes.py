@@ -19,7 +19,7 @@ models = loadModels(os.environ['TIMELINE_MODELS_DIR']) if not current_app.config
 def index():
     return jsonify({
         'code': 202,
-        'message': "Hello from nlp"
+        'message': "Hello from timeline"
     })
 
 
