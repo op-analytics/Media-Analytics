@@ -5,26 +5,23 @@ import unittest.mock as mock
 
 
 class TestModelFunctions(object):
-    @mock.patch('app.models.model_functions.os.path')
-    def test_should_throw_an_error_given_a_path_that_doesnt_exist(self, mock_path):
-        mock_path.exists.return_value = False
+    @mock.patch('app.models.model_functions.os.path.exists', return_value=False)
+    def test_should_throw_an_error_given_a_path_that_doesnt_exist(self, *args, **kwargs):
         with pytest.raises(OSError, match='given path does not exist'):
             loadModels('')
 
-    @mock.patch('app.models.model_functions.os.path')
-    def test_should_throw_an_error_given_a_path_is_a_file(self, mock_path):
-        mock_path.exists.return_value = True
-        mock_path.isfile.return_value = True
+    @mock.patch('app.models.model_functions.os.path.exists', return_value=True)
+    @mock.patch('app.models.model_functions.os.path.isfile', return_value=True)
+    def test_should_throw_an_error_given_a_path_is_a_file(self, *args, **kwargs):
         with pytest.raises(OSError, match='given path is not a folder'):
             loadModels('')
 
-    @mock.patch('app.models.model_functions.os.path')
+    @mock.patch('app.models.model_functions.os.path.exists', return_value=True)
+    @mock.patch('app.models.model_functions.os.path.isfile', return_value=False)
     @mock.patch('app.models.model_functions.os.listdir')
-    def test_should_throw_an_error_when_given_path_has_no_models(self, mock_listdir, mock_path):
+    def test_should_throw_an_error_when_given_path_has_no_models(self, mock_listdir, *args, **kwargs):
         mock_listdir.return_value = [
             'notamodel.py', 'notamodel-example', 'notamodel.xml', '.gitignore']
-        mock_path.exists.return_value = True
-        mock_path.isfile.return_value = False
         with pytest.raises(OSError, match='No models were found in given path'):
             loadModels('')
 
