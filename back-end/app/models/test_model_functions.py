@@ -12,7 +12,7 @@ class TestModelFunctions(object):
 
     @mock.patch('app.models.model_functions.os.path.exists', return_value=True)
     @mock.patch('app.models.model_functions.os.path.isfile', return_value=True)
-    def test_should_throw_an_error_given_a_path_is_a_file(self, *args, **kwargs):
+    def test_should_throw_an_error_given_a_path_that_is_a_file(self, *args, **kwargs):
         with pytest.raises(OSError, match='given path is not a folder'):
             loadModels('')
 
