@@ -9,8 +9,8 @@ from flask import current_app
 
 routes = Blueprint('timeline', __name__)
 
-#TODO: Tidy this up as it seems like bad practice
-# Use models from enviroment if they exist otherwise use a single test model
+# TODO: Tidy this up as it seems like bad practice
+# Use models from enviroment if not testing
 models = loadModels(os.environ['TIMELINE_MODELS_DIR']) if not current_app.config['TESTING'] else {
     "1999": Word2Vec([['first', 'sentence'], ['second', 'sentence']], min_count=1, batch_words=0.1, workers=1)}
 
