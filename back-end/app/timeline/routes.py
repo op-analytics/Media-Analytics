@@ -21,6 +21,7 @@ def index():
 @routes.route('/frequency', methods=['POST'])
 def getFrequency():
     try:
+        #pylint: disable=unexpected-keyword-arg
         FrequencySchema(strict=True).load(request.get_json(force=True)) if int(
             marshmallow_version[0]) < 3 else FrequencySchema().load(request.get_json(force=True))
     except ValidationError as err:
