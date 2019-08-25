@@ -1,4 +1,4 @@
-from marshmallow import Schema, fields, validates_schema, ValidationError
+from marshmallow import Schema, ValidationError, fields, validates_schema
 
 
 class FrequencySchema(Schema):
@@ -8,14 +8,10 @@ class FrequencySchema(Schema):
 
     @validates_schema(skip_on_field_errors=True)
     def validate_year_from(self, data, *args, **kwargs):
-        if int(data['year_from']) > int(data['year_to']):
-            raise ValidationError(
-                'year_from must be before year_to', 'year_from'
-            )
+        if int(data["year_from"]) > int(data["year_to"]):
+            raise ValidationError("year_from must be before year_to", "year_from")
 
     @validates_schema(skip_on_field_errors=True)
     def validate_year_to(self, data, *args, **kwargs):
-        if int(data['year_from']) > int(data['year_to']):
-            raise ValidationError(
-                'year_to must be after year_from', 'year_to'
-            )
+        if int(data["year_from"]) > int(data["year_to"]):
+            raise ValidationError("year_to must be after year_from", "year_to")

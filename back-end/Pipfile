@@ -11,7 +11,7 @@ Flask-Cors = "*"
 
 [dev-packages]
 pylint = "*"
-autopep8 = "*"
+black = "*"
 pytest = "*"
 pytest-cov = "*"
 jedi = "*"
