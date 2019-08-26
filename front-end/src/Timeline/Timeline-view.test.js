@@ -10,7 +10,7 @@ describe('Timeline', () => {
 });
 
 describe('Timeline', () => {
-  it('should render a Frid', () => {
+  it('should render a Grid', () => {
     const component = shallow(<Timeline />);
     expect(component.find('Grid').exists());
   });
