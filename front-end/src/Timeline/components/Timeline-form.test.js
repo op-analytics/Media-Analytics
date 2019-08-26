@@ -8,7 +8,7 @@ describe('Form', () => {
     expect(component.find('form').exists());
   });
 
-  it('form fields should be fillable', () => {
+  it('is fillable when', () => {
     const component = shallow(<Form />);
     const testData = { yearFrom: '1980', yearTo: '1990', word: 'man' };
 
