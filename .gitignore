@@ -217,3 +217,5 @@ typings/
 # Editors
 **.vscode
 **.vim
+**tags
+**.taghl

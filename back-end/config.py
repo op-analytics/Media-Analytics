@@ -1,12 +1,12 @@
 import os
 
 
-class Config():
+class Config:
     # Statement for enabling the development environment
     DEBUG = False
 
     # Port the server will run on in development
-    PORT = os.environ['PORT']
+    PORT = os.environ["PORT"]
 
     # Define the application directory
     BASE_DIR = os.path.abspath(os.path.dirname(__file__))

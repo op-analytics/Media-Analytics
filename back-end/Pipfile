@@ -7,12 +7,14 @@ name = "pypi"
 Flask = "*"
 gensim = "*"
 marshmallow = "*"
-flask-cors = "*"
+Flask-Cors = "*"
 
 [dev-packages]
 pylint = "*"
-autopep8 = "*"
+black = "*"
 pytest = "*"
+pytest-cov = "*"
+jedi = "*"
 
 [requires]
 python_version = "3.7"
