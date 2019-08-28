@@ -25,7 +25,7 @@ class TestNLPRoutes(object):
         assert (
             self.client.post(
                 self.prefix + "frequency",
-                json={"word": "Jim", "year_from": 1991, "year_to": 2000},
+                json={"words": ["Jim"], "year_from": 1991, "year_to": 2000},
             ).status_code
             == 202
         )
@@ -35,11 +35,11 @@ class TestNLPRoutes(object):
         year_to = 2000
         response = self.client.post(
             self.prefix + "frequency",
-            json={"word": "Jim", "year_from": year_from, "year_to": year_to},
+            json={"words": ["Jim"], "year_from": year_from, "year_to": year_to},
         ).get_json()
         assert all(
             int(item["year"]) >= year_from and int(item["year"] <= year_to)
-            for item in response["data"]
+            for item in response["data"][0]["data"]
         )
 
     def test_frequency_should_return_zeroed_values_for_words_that_dont_exist(self):
@@ -47,18 +47,18 @@ class TestNLPRoutes(object):
         year_to = 3000
         response = self.client.post(
             self.prefix + "frequency",
-            json={"word": "The", "year_from": year_from, "year_to": year_to},
+            json={"words": ["The"], "year_from": year_from, "year_to": year_to},
         ).get_json()
-        assert response["data"][0]["rank"] == 0
-        assert response["data"][0]["wordCount"] == 0
-        assert response["data"][0]["wordFreq"] == 0
+        assert response["data"][0]["data"][0]["rank"] == 0
+        assert response["data"][0]["data"][0]["wordCount"] == 0
+        assert response["data"][0]["data"][0]["wordFreq"] == 0
 
-    def test_should_return_years_invalid_if_year_from_after_year_to(self):
+    def test_should_return_year_range_invalid_if_year_from_after_year_to(self):
         year_from = 2018
         year_to = 2017
         response = self.client.post(
             self.prefix + "frequency",
-            json={"word": "The", "year_from": year_from, "year_to": year_to},
+            json={"words": ["The"], "year_from": year_from, "year_to": year_to},
         ).get_json()
 
         assert "year_from" in response["messages"]
