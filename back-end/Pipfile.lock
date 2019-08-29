@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "335f97092ed69c8082a5e9d03932fd4ba570667ce7f9f85487ada032afcccc85"
+            "sha256": "ee2b1b0f34b83177967c3c52136cdc15702a45c5feafa3d6644f1a2f5e3a150c"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -25,6 +25,7 @@
         },
         "boto3": {
             "hashes": [
+<<<<<<< HEAD
                 "sha256:47132bfc3061091b03cdf24c11f083641cd5686feccdb14cabab62d25297185f",
                 "sha256:b62534d324bc806686dbdd7d4957d323fd61d55f2e9e30975c3042fabeb57d53"
             ],
@@ -36,6 +37,19 @@
                 "sha256:ae74ede86f5fd3e3c5cb63f066c9dbb21df12af79ceeb068e1bcb04b076dbb78"
             ],
             "version": "==1.12.215"
+=======
+                "sha256:09cf39452a8a45e6e91ba64486e1861e0d6466d50b046d445627cc1cbdde29a1",
+                "sha256:274708f2103e42fac72ad2b56681c26b70909594bef146a99d376c52df4ded04"
+            ],
+            "version": "==1.9.218"
+        },
+        "botocore": {
+            "hashes": [
+                "sha256:aba87b5c594ec33deb679eda0a19b32e654bf781ff1dd8f1b53dffcd7c8a4dd9",
+                "sha256:c66f4ffccb57dcca45b0f279e7fafc0ee83dab2a37aaeb047acb2543c8408439"
+            ],
+            "version": "==1.12.218"
+>>>>>>> c962682... Extract function from getWordData
         },
         "certifi": {
             "hashes": [
@@ -505,6 +519,15 @@
             ],
             "index": "pypi",
             "version": "==2.7.1"
+        },
+        "rope": {
+            "hashes": [
+                "sha256:6b728fdc3e98a83446c27a91fc5d56808a004f8beab7a31ab1d7224cecc7d969",
+                "sha256:c5c5a6a87f7b1a2095fb311135e2a3d1f194f5ecb96900fdd0a9100881f48aaf",
+                "sha256:f0dcf719b63200d492b85535ebe5ea9b29e0d0b8aebeb87fe03fc1a65924fdaf"
+            ],
+            "index": "pypi",
+            "version": "==0.14.0"
         },
         "six": {
             "hashes": [
