@@ -97,7 +97,7 @@ function Nav({ children, title }) {
       </AppBar>
       <nav className={classes.drawer}>
         {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
-        <Hidden smUp implementation="css">
+        <Hidden smUp implementation="js">
           <Drawer
             variant="temporary"
             anchor="left"
@@ -113,7 +113,7 @@ function Nav({ children, title }) {
             {drawer}
           </Drawer>
         </Hidden>
-        <Hidden xsDown implementation="css">
+        <Hidden xsDown implementation="js">
           <Drawer
             classes={{
               paper: classes.drawerPaper,
