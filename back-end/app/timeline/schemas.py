@@ -1,10 +1,10 @@
-from marshmallow import Schema, ValidationError, fields, validates_schema
+from marshmallow import Schema, ValidationError, fields, validates_schema, validate
 
 
 class FrequencySchema(Schema):
     year_from = fields.Int(required=True)
     year_to = fields.Int(required=True)
-    word = fields.Str(required=True)
+    words = fields.List(fields.String(), required=True, validates=validate.Length(min=1))
 
     @validates_schema(skip_on_field_errors=True)
     def validate_year_from(self, data, *args, **kwargs):
