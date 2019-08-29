@@ -100,7 +100,7 @@ function Nav({ children, title }) {
         <Hidden smUp implementation="css">
           <Drawer
             variant="temporary"
-            anchor={'right'}
+            anchor="left"
             open={mobileOpen}
             onClose={() => setMobileOpen(!mobileOpen)}
             classes={{
