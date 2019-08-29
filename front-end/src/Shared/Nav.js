@@ -143,6 +143,11 @@ Nav.defaultProps = {
 Nav.propTypes = {
   children: PropTypes.element,
   title: PropTypes.string,
+  links: PropTypes.arrayOf(
+    PropTypes.arrayOf(
+      PropTypes.shape({ href: PropTypes.string.isRequired, text: PropTypes.string.isRequired }),
+    ),
+  ).isRequired,
 };
 
 export default Nav;
