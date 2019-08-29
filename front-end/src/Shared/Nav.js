@@ -13,6 +13,7 @@ import Typography from '@material-ui/core/Typography';
 import MenuIcon from '@material-ui/icons/Menu';
 import PropTypes from 'prop-types';
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const drawerWidth = 240;
 
@@ -46,9 +47,13 @@ const useStyles = makeStyles(theme => ({
     flexGrow: 1,
     padding: theme.spacing(3),
   },
+  link: {
+    textDecoration: 'none',
+    color: 'black',
+  },
 }));
 
-function Nav({ children, title }) {
+function Nav({ children, title, links }) {
   const classes = useStyles();
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
@@ -56,23 +61,20 @@ function Nav({ children, title }) {
     <div>
       <div className={classes.toolbar} />
       <Divider />
-      <List>
-        {['Home', 'Timeline', 'Sentiment Analysis', 'Topic Modeling', 'Latent Association'].map(
-          text => (
-            <ListItem button key={text}>
-              <ListItemText primary={text} />
-            </ListItem>
-          ),
-        )}
-      </List>
-      <Divider />
-      <List>
-        {['About', 'Docs', 'Paper'].map(text => (
-          <ListItem button key={text}>
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
-      </List>
+      {links.map(section => (
+        <div key={section.reduce((key, { href, text }) => key + href + text, '')}>
+          <Divider />
+          <List>
+            {section.map(({ href, text }) => (
+              <Link to={href} className={classes.link} key={href + text}>
+                <ListItem button key={text}>
+                  <ListItemText primary={text} />
+                </ListItem>
+              </Link>
+            ))}
+          </List>
+        </div>
+      ))}
     </div>
   );
 
