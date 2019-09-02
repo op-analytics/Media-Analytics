@@ -61,5 +61,34 @@ class TestNLPRoutes(object):
             json={"words": ["The"], "year_from": year_from, "year_to": year_to},
         ).get_json()
 
-        assert "year_from" in response["messages"]
-        assert "year_to" in response["messages"]
+        assert "year_range" in response["messages"]
+
+    def test_should_return_year_range_invalid_if_no_model_exists_for_given_range(self):
+        year_from = 0
+        year_to = 1
+        response = self.client.post(
+            self.prefix + "frequency",
+            json={"words": ["The"], "year_from": year_from, "year_to": year_to},
+        ).get_json()
+
+        assert "year_range" in response["messages"]
+    
+    def test_frequency_should_should_return_data_for_multiple_words(self):
+      year_from = 1985
+      year_to = 2000
+      words = ["man", "woman", "cat"]
+      response = self.client.post(
+          self.prefix + "frequency",
+          json={"words": words, "year_from": year_from, "year_to": year_to},
+      ).get_json()
+      assert len(response["data"]) > 1
+    
+    def test_frequency_should_return_a_list(self):
+      year_from = 1985
+      year_to = 2000
+      words = ["second", "first"]
+      response = self.client.post(
+          self.prefix + "frequency",
+          json={"words": words, "year_from": year_from, "year_to": year_to},
+      ).get_json()
+      assert isinstance(response["data"], list)
