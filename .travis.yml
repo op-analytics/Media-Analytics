@@ -1,0 +1,29 @@
+os: linux
+dist: xenial
+sudo: true
+matrix:
+  include:
+    - language: python
+      python:
+        - "3.7"
+      env: PORT=8080
+      before_install:
+        - cd back-end
+      install:
+        - pip install pipenv
+        - pipenv install --dev
+      script:
+        - pytest
+
+    - language: node_js
+      node_js:
+        - stable
+      before_install:
+        - cd front-end
+      install:
+        - npm install -D
+      script:
+        - npm run test
+
+notifications:
+  email: false
