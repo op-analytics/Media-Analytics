@@ -76,6 +76,8 @@ def getWordFrequencyData(words, year_from, year_to):
                         "wordFreq": wordFreq,
                     }
                 )
+    # Sort all words datasets by year
+    for wordData in frequencyData: wordData['data'].sort(key=lambda x: int(x["year"]))
     return frequencyData
 
 
