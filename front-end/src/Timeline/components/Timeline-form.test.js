@@ -3,7 +3,7 @@ import { shallow } from 'enzyme';
 import Form from './Timeline-form';
 
 const props = {
-  setTimelineData: jest.fn(),
+  onSubmitHandler: jest.fn(),
 };
 
 // eslint-disable-next-line react/jsx-props-no-spreading

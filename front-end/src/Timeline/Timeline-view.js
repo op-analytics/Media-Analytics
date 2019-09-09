@@ -1,59 +1,95 @@
 import React, { useState } from 'react';
-import { Line } from 'react-chartjs-2';
 import { makeStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
+import Axios from 'axios';
 import Form from './components/Timeline-form';
+import LineCharts from '../Shared/LineCharts';
+
+const API_URL = process.env.NODE_ENV === 'production' ? '/api/' : process.env.REACT_APP_API_URL;
 
 const useStyles = makeStyles(() => ({
-  LineChart: {
-    maxWidth: '1000px',
+  container: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'column',
+    overflow: 'hidden',
+    width: '94%',
   },
 }));
 
 export default function Timeline() {
-  const [timelineData, setTimelineData] = useState({
-    labels: [],
-    datasets: [],
-  });
+  const [timelineDatasets, setTimelineDatasets] = useState([]);
 
   const classes = useStyles();
 
-  const createLabels = currentLabels => (tooltipItem, data) => currentLabels.reduce(
-    (accum, { key, value }) => accum.concat(key + data.datasets[0].data[tooltipItem.index][value]),
-    [],
-  );
+  const getLabels = wordFrequencyData =>
+    wordFrequencyData[0].data.reduce((yearLabels, { year }) => yearLabels.concat(year * 1), []);
+
+  const createDataset = ({ data, word }) => {
+    const dataWithY = data.reduce(
+      (accum, {
+        wordFreq, rank, wordCount, year,
+      }) =>
+        accum.concat({
+          word,
+          year,
+          wordFreq,
+          rank,
+          wordCount,
+          y: wordFreq,
+        }),
+      [],
+    );
+
+    return {
+      label: word,
+      fill: false,
+      lineTension: 0.1,
+      backgroundColor: 'rgba(75,192,192,0.4)',
+      borderColor: 'rgba(75,192,192,1)',
+      pointBorderColor: 'rgba(172,75,125,0.8)',
+      pointBackgroundColor: 'rgba(172,75,125,1)',
+      pointBorderWidth: 1.5,
+      pointHoverRadius: 5,
+      pointHoverBackgroundColor: 'rgba(75,192,192,1)',
+      pointHoverBorderWidth: 2,
+      pointHitRadius: 10,
+      data: dataWithY,
+    };
+  };
+
+  const onSubmitHandler = (e, yearFrom, yearTo, words) => {
+    e.preventDefault();
+    const wordArray = words.split(',');
+    Axios.post(`${API_URL}timeline/frequency`, {
+      words: wordArray,
+      year_from: yearFrom,
+      year_to: yearTo,
+    })
+      .then(response => {
+        const wordFrequencyData = response.data.data;
+        setTimelineDatasets(
+          wordFrequencyData.reduce(
+            (accum, data) =>
+              accum.concat({
+                labels: getLabels(wordFrequencyData),
+                datasets: [createDataset(data)],
+              }),
+            [],
+          ),
+        );
+      })
+      // eslint-disable-next-line no-console
+      .catch(error => console.log(error.response));
+  };
 
   return (
     <>
       <h3>Word Frequency Timeline</h3>
-      <Form setTimelineData={setTimelineData} />
-      <Grid container spacing="2">
-        <Grid item xs="false" lg={4} />
-        <Grid item xs="false" lg={4} />
-        <Grid item xs="false" lg={3} />
-        <Grid item xs={12} lg={6} className={classes.LineChart} wrap="wrap">
-          <Line
-            data={timelineData}
-            options={{
-              maintainAspectRatio: true,
-              responsive: true,
-              tooltips: {
-                callbacks: {
-                  title(tooltipItem, data) {
-                    const response = data.datasets[0].data[tooltipItem[0].index];
-                    return `${response.year} - ${response.word}`;
-                  },
-                  label: createLabels([
-                    { key: 'Frequency: ', value: 'y' },
-                    { key: 'Count: ', value: 'wordCount' },
-                    { key: 'Rank: ', value: 'rank' },
-                  ]),
-                },
-              },
-            }}
-          />
-        </Grid>
-      </Grid>
+      <div className={classes.container}>
+        <Form onSubmitHandler={onSubmitHandler} />
+        <LineCharts chartDatasets={timelineDatasets} />
+      </div>
     </>
   );
 }

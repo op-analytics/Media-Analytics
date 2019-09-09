@@ -5,56 +5,15 @@ exports[`Timeline should render correctly 1`] = `
   <h3>
     Word Frequency Timeline
   </h3>
-  <Form
-    setTimelineData={[Function]}
-  />
-  <WithStyles(ForwardRef(Grid))
-    container={true}
-    spacing="2"
+  <div
+    className="makeStyles-container-1"
   >
-    <WithStyles(ForwardRef(Grid))
-      item={true}
-      lg={4}
-      xs="false"
+    <Form
+      onSubmitHandler={[Function]}
     />
-    <WithStyles(ForwardRef(Grid))
-      item={true}
-      lg={4}
-      xs="false"
+    <LineCharts
+      chartDatasets={Array []}
     />
-    <WithStyles(ForwardRef(Grid))
-      item={true}
-      lg={3}
-      xs="false"
-    />
-    <WithStyles(ForwardRef(Grid))
-      className="makeStyles-LineChart-1"
-      item={true}
-      lg={6}
-      wrap="wrap"
-      xs={12}
-    >
-      <Line
-        data={
-          Object {
-            "datasets": Array [],
-            "labels": Array [],
-          }
-        }
-        options={
-          Object {
-            "maintainAspectRatio": true,
-            "responsive": true,
-            "tooltips": Object {
-              "callbacks": Object {
-                "label": [Function],
-                "title": [Function],
-              },
-            },
-          }
-        }
-      />
-    </WithStyles(ForwardRef(Grid))>
-  </WithStyles(ForwardRef(Grid))>
+  </div>
 </Fragment>
 `;

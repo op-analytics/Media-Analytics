@@ -23,5 +23,7 @@ module.exports = {
     "no-underscore-dangle": 0,
     "arrow-parens": 0,
     "no-tabs": "error",
+    "max-length": 81,
+    "implicit-arrow-linebreak": "off",
   },
 };

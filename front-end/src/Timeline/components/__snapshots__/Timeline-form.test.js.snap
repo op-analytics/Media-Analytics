@@ -9,9 +9,9 @@ exports[`Form renders correctly 1`] = `
     className="makeStyles-formControl-3"
   >
     <WithStyles(ForwardRef(TextField))
-      label="Word:"
+      label="Words:"
       margin="normal"
-      name="word"
+      name="words"
       onChange={[Function]}
       value=""
     />
