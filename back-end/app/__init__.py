@@ -28,7 +28,7 @@ def create_app(config_filename="config.Config"):
 
         @app.errorhandler(404)
         # pylint: disable=unused-variable
-        def not_found():
+        def not_found(error):
             return jsonify({"code": 404, "message": "not_found"}), 404
 
         return app
