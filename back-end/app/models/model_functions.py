@@ -24,7 +24,7 @@ def load_model(path, file):
     return model
 
 
-def add_model_to_models(path, file, models):
+def load_and_add_model_to_models(path, file, models):
     """Loads and adds a given model to the models dictionary"""
     models[str(file)] = load_model(path, file)
 
@@ -43,7 +43,9 @@ def loadModels(path):
     for file in files:
         # Only try open files that appear to be models
         if isPotentialModel(path + file):
-            process = Thread(target=add_model_to_models, args=[path, file, models])
+            process = Thread(
+                target=load_and_add_model_to_models, args=[path, file, models]
+            )
             process.start()
             threads.append(process)
     for process in threads:
