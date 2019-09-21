@@ -8,6 +8,7 @@ from marshmallow import ValidationError
 from marshmallow import __version__ as marshmallow_version
 
 from app.models.model_functions import loadModels
+from app.utils import Applymap
 
 from .schemas import FrequencySchema
 
@@ -77,7 +78,8 @@ def getWordFrequencyData(words, year_from, year_to):
                     }
                 )
     # Sort all words datasets by year
-    for wordData in frequencyData: wordData['data'].sort(key=lambda x: int(x["year"]))
+    for wordData in frequencyData:
+        wordData["data"].sort(key=lambda x: int(x["year"]))
     return frequencyData
 
 
@@ -101,8 +103,10 @@ def getFrequency():
         return jsonify({"code": 400, "messages": err.messages}), 400
     year_from = int(request.json["year_from"])
     year_to = int(request.json["year_to"])
-    # Convert all words to lowercase to use with models
-    words = list(map(lambda word: word.lower(), request.json["words"]))
+    # Convert all words to lowercase and strip spaces to use with models
+    words = Applymap(
+        [lambda word: word.lower(), lambda word: word.strip()], request.json["words"]
+    )
     wordFrequencyData = getWordFrequencyData(words, year_from, year_to)
     if len(wordFrequencyData) > 0:
         # Return the data dictionary
