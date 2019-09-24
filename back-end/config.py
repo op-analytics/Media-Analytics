@@ -27,3 +27,7 @@ class Testing(Config):
 
 class Dev(Config):
     DEBUG = True
+    MONGODB_SETTINGS = {
+        "db": "project_test_db",
+        "host": "mongodb://localhost/project_test_db",
+    }

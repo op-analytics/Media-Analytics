@@ -1,10 +1,11 @@
 # Import flask dependencies
 from flask import Flask, g, jsonify, request
 from flask_cors import CORS
+from flask_mongoengine import MongoEngine
 
 # Create Plugins
-# Example db = sqlAlchemy()
 cors = CORS()
+db = MongoEngine()
 
 
 def create_app(config_filename="config.Config"):
@@ -13,8 +14,8 @@ def create_app(config_filename="config.Config"):
     app.config.from_object(config_filename)
 
     # Initialize Plugins
-    # Example db.init_app(app)
     cors.init_app(app)
+    db.init_app(app)
 
     with app.app_context():
         # Import and Register blueprint(s)
@@ -28,7 +29,7 @@ def create_app(config_filename="config.Config"):
 
         @app.errorhandler(404)
         # pylint: disable=unused-variable
-        def not_found():
+        def not_found(error):
             return jsonify({"code": 404, "message": "not_found"}), 404
 
         return app
