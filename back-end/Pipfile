@@ -8,6 +8,7 @@ Flask = "*"
 gensim = "*"
 marshmallow = "*"
 Flask-Cors = "*"
+flask-mongoengine = "*"
 
 [dev-packages]
 pylint = "*"
