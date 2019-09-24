@@ -1,6 +1,7 @@
 import os
-from gensim.models import KeyedVectors
 from functools import reduce
+
+from gensim.models import KeyedVectors
 
 
 def isPotentialModel(file):
@@ -22,14 +23,15 @@ def loadModels(path):
     files = os.listdir(path)
     for file in files:
         # Only try open files that appear to be models
-        if isPotentialModel(path + file):
+        full_path_to_file = os.path.join(path, file)
+        if isPotentialModel(full_path_to_file):
             # Try opening the model and add total word counts
-            model = KeyedVectors.load(path + file, mmap="r")
+            model = KeyedVectors.load(full_path_to_file, mmap="r")
             model.syn0norm = model.wv.syn0  # prevent recalc of normed vectors
             model.totalWordCount = reduce(
                 lambda total, word: total + word.count, model.wv.vocab.values(), 0
             )
             models[str(file)] = model
-    if len(models) == 0:
+    if not models:
         raise OSError("No models were found in given path")
     return models
