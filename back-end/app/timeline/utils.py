@@ -22,7 +22,7 @@ def get_word_frequency_data(models, words, year_from, year_to):
             # Get the index of the object containing the current word in frequencyData.
             data_index = get_index_by_value(frequency_data, "word", word)
             # If the word is not already in frequencyData.
-            if not data_index:
+            if data_index is None:
                 frequency_data.append({"word": word, "data": [word_data]})
             else:
                 # If the word already exists in frequency data, just append the current year's data.
