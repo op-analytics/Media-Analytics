@@ -28,15 +28,15 @@ export default function Timeline() {
   const createDataset = ({ data, word }) => {
     const dataWithY = data.reduce(
       (accum, {
-        wordFreq, rank, wordCount, year,
+        freq, rank, count, year,
       }) =>
         accum.concat({
           word,
           year,
-          wordFreq,
+          freq,
           rank,
-          wordCount,
-          y: wordFreq,
+          count,
+          y: freq,
         }),
       [],
     );
@@ -61,7 +61,7 @@ export default function Timeline() {
   const onSubmitHandler = (e, yearFrom, yearTo, words) => {
     e.preventDefault();
     const wordArray = words.split(',');
-    Axios.post(`${API_URL}timeline/frequency`, {
+    Axios.post(`${API_URL}/timeline/frequency`, {
       words: wordArray,
       year_from: yearFrom,
       year_to: yearTo,

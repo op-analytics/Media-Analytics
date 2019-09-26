@@ -42,7 +42,7 @@ function LineCharts({ chartDatasets }) {
                     },
                     {
                       key: 'Count: ',
-                      value: 'wordCount',
+                      value: 'count',
                     },
                     {
                       key: 'Rank: ',

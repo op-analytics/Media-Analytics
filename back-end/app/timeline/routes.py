@@ -51,7 +51,7 @@ def getFrequency():
     words = Applymap(
         [lambda word: word.lower(), lambda word: word.strip()], request.json["words"]
     )
-    wordFrequencyData = getWordFrequencyData(models, words, year_from, year_to)
+    wordFrequencyData = get_word_frequency_data(models, words, year_from, year_to)
     if len(wordFrequencyData) > 0:
         # Return the data dictionary
         return jsonify({"code": 202, "data": wordFrequencyData}), 202
