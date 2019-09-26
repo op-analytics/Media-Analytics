@@ -1,0 +1,704 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LineChart renders a chart for a dataset of multiple words 1`] = `
+<Fragment>
+  <div
+    className="makeStyles-chartContainer-1"
+    key="undefinedcont"
+  >
+    <h1
+      className="makeStyles-chartTitle-2"
+      key="undefinedh1"
+    />
+    <ResponsiveContainer
+      debounce={0}
+      height="100%"
+      width="100%"
+    >
+      <LineChart
+        barCategoryGap="10%"
+        barGap={4}
+        layout="horizontal"
+        margin={
+          Object {
+            "bottom": 0,
+            "left": 0,
+            "right": 30,
+            "top": 10,
+          }
+        }
+        reverseStackOrder={false}
+        stackOffset="none"
+      >
+        <CartesianGrid
+          fill="none"
+          horizontal={true}
+          horizontalFill={Array []}
+          horizontalPoints={Array []}
+          stroke="#ccc"
+          strokeDasharray="3 3"
+          vertical={true}
+          verticalFill={Array []}
+          verticalPoints={Array []}
+        />
+        <XAxis
+          allowDataOverflow={false}
+          allowDecimals={true}
+          allowDuplicatedCategory={true}
+          dataKey="year"
+          domain={
+            Array [
+              0,
+              "auto",
+            ]
+          }
+          height={30}
+          hide={false}
+          mirror={false}
+          orientation="bottom"
+          padding={
+            Object {
+              "left": 0,
+              "right": 0,
+            }
+          }
+          reversed={false}
+          scale="auto"
+          tickCount={5}
+          type="category"
+          width={0}
+          xAxisId={0}
+        />
+        <YAxis
+          allowDataOverflow={false}
+          allowDecimals={true}
+          allowDuplicatedCategory={true}
+          domain={
+            Array [
+              0,
+              "auto",
+            ]
+          }
+          height={0}
+          hide={false}
+          mirror={false}
+          orientation="left"
+          padding={
+            Object {
+              "bottom": 0,
+              "top": 0,
+            }
+          }
+          reversed={false}
+          scale="auto"
+          tickCount={5}
+          type="number"
+          width={60}
+          yAxisId={0}
+        />
+        <Tooltip
+          active={false}
+          animationDuration={400}
+          animationEasing="ease"
+          content={
+            <CustomTooltip
+              classes={
+                Object {
+                  "chartContainer": "makeStyles-chartContainer-1",
+                  "chartTitle": "makeStyles-chartTitle-2",
+                  "customTooltip": "makeStyles-customTooltip-3",
+                  "customTooltipLabel": "makeStyles-customTooltipLabel-4",
+                  "customTooltipLabelSpan": "makeStyles-customTooltipLabelSpan-5",
+                }
+              }
+            />
+          }
+          contentStyle={Object {}}
+          coordinate={
+            Object {
+              "x": 0,
+              "y": 0,
+            }
+          }
+          cursor={true}
+          cursorStyle={Object {}}
+          filterNull={true}
+          isAnimationActive={true}
+          itemStyle={Object {}}
+          labelStyle={Object {}}
+          offset={10}
+          separator=" : "
+          useTranslate3d={false}
+          viewBox={
+            Object {
+              "x1": 0,
+              "x2": 0,
+              "y1": 0,
+              "y2": 0,
+            }
+          }
+          wrapperStyle={Object {}}
+        />
+        <Line
+          activeDot={
+            Object {
+              "border": "white",
+              "stroke": "#3F51B5",
+              "strokeWidth": 7,
+            }
+          }
+          animateNewValues={true}
+          animationBegin={0}
+          animationDuration={1500}
+          animationEasing="ease"
+          connectNulls={false}
+          dataKey="freq"
+          dot={
+            Object {
+              "strokeWidth": 5,
+            }
+          }
+          fill="#8884d8"
+          hide={false}
+          isAnimationActive={true}
+          legendType="line"
+          onAnimationEnd={[Function]}
+          onAnimationStart={[Function]}
+          points={Array []}
+          stroke="#8884d8"
+          strokeWidth={3}
+          type="monotone"
+          xAxisId={0}
+          yAxisId={0}
+        />
+      </LineChart>
+    </ResponsiveContainer>
+  </div>
+  <div
+    className="makeStyles-chartContainer-1"
+    key="undefinedcont"
+  >
+    <h1
+      className="makeStyles-chartTitle-2"
+      key="undefinedh1"
+    />
+    <ResponsiveContainer
+      debounce={0}
+      height="100%"
+      width="100%"
+    >
+      <LineChart
+        barCategoryGap="10%"
+        barGap={4}
+        layout="horizontal"
+        margin={
+          Object {
+            "bottom": 0,
+            "left": 0,
+            "right": 30,
+            "top": 10,
+          }
+        }
+        reverseStackOrder={false}
+        stackOffset="none"
+      >
+        <CartesianGrid
+          fill="none"
+          horizontal={true}
+          horizontalFill={Array []}
+          horizontalPoints={Array []}
+          stroke="#ccc"
+          strokeDasharray="3 3"
+          vertical={true}
+          verticalFill={Array []}
+          verticalPoints={Array []}
+        />
+        <XAxis
+          allowDataOverflow={false}
+          allowDecimals={true}
+          allowDuplicatedCategory={true}
+          dataKey="year"
+          domain={
+            Array [
+              0,
+              "auto",
+            ]
+          }
+          height={30}
+          hide={false}
+          mirror={false}
+          orientation="bottom"
+          padding={
+            Object {
+              "left": 0,
+              "right": 0,
+            }
+          }
+          reversed={false}
+          scale="auto"
+          tickCount={5}
+          type="category"
+          width={0}
+          xAxisId={0}
+        />
+        <YAxis
+          allowDataOverflow={false}
+          allowDecimals={true}
+          allowDuplicatedCategory={true}
+          domain={
+            Array [
+              0,
+              "auto",
+            ]
+          }
+          height={0}
+          hide={false}
+          mirror={false}
+          orientation="left"
+          padding={
+            Object {
+              "bottom": 0,
+              "top": 0,
+            }
+          }
+          reversed={false}
+          scale="auto"
+          tickCount={5}
+          type="number"
+          width={60}
+          yAxisId={0}
+        />
+        <Tooltip
+          active={false}
+          animationDuration={400}
+          animationEasing="ease"
+          content={
+            <CustomTooltip
+              classes={
+                Object {
+                  "chartContainer": "makeStyles-chartContainer-1",
+                  "chartTitle": "makeStyles-chartTitle-2",
+                  "customTooltip": "makeStyles-customTooltip-3",
+                  "customTooltipLabel": "makeStyles-customTooltipLabel-4",
+                  "customTooltipLabelSpan": "makeStyles-customTooltipLabelSpan-5",
+                }
+              }
+            />
+          }
+          contentStyle={Object {}}
+          coordinate={
+            Object {
+              "x": 0,
+              "y": 0,
+            }
+          }
+          cursor={true}
+          cursorStyle={Object {}}
+          filterNull={true}
+          isAnimationActive={true}
+          itemStyle={Object {}}
+          labelStyle={Object {}}
+          offset={10}
+          separator=" : "
+          useTranslate3d={false}
+          viewBox={
+            Object {
+              "x1": 0,
+              "x2": 0,
+              "y1": 0,
+              "y2": 0,
+            }
+          }
+          wrapperStyle={Object {}}
+        />
+        <Line
+          activeDot={
+            Object {
+              "border": "white",
+              "stroke": "#3F51B5",
+              "strokeWidth": 7,
+            }
+          }
+          animateNewValues={true}
+          animationBegin={0}
+          animationDuration={1500}
+          animationEasing="ease"
+          connectNulls={false}
+          dataKey="freq"
+          dot={
+            Object {
+              "strokeWidth": 5,
+            }
+          }
+          fill="#8884d8"
+          hide={false}
+          isAnimationActive={true}
+          legendType="line"
+          onAnimationEnd={[Function]}
+          onAnimationStart={[Function]}
+          points={Array []}
+          stroke="#8884d8"
+          strokeWidth={3}
+          type="monotone"
+          xAxisId={0}
+          yAxisId={0}
+        />
+      </LineChart>
+    </ResponsiveContainer>
+  </div>
+</Fragment>
+`;
+
+exports[`LineChart renders a chart for a dataset of one word 1`] = `
+<Fragment>
+  <div
+    className="makeStyles-chartContainer-1"
+    key="undefinedcont"
+  >
+    <h1
+      className="makeStyles-chartTitle-2"
+      key="undefinedh1"
+    />
+    <ResponsiveContainer
+      debounce={0}
+      height="100%"
+      width="100%"
+    >
+      <LineChart
+        barCategoryGap="10%"
+        barGap={4}
+        layout="horizontal"
+        margin={
+          Object {
+            "bottom": 0,
+            "left": 0,
+            "right": 30,
+            "top": 10,
+          }
+        }
+        reverseStackOrder={false}
+        stackOffset="none"
+      >
+        <CartesianGrid
+          fill="none"
+          horizontal={true}
+          horizontalFill={Array []}
+          horizontalPoints={Array []}
+          stroke="#ccc"
+          strokeDasharray="3 3"
+          vertical={true}
+          verticalFill={Array []}
+          verticalPoints={Array []}
+        />
+        <XAxis
+          allowDataOverflow={false}
+          allowDecimals={true}
+          allowDuplicatedCategory={true}
+          dataKey="year"
+          domain={
+            Array [
+              0,
+              "auto",
+            ]
+          }
+          height={30}
+          hide={false}
+          mirror={false}
+          orientation="bottom"
+          padding={
+            Object {
+              "left": 0,
+              "right": 0,
+            }
+          }
+          reversed={false}
+          scale="auto"
+          tickCount={5}
+          type="category"
+          width={0}
+          xAxisId={0}
+        />
+        <YAxis
+          allowDataOverflow={false}
+          allowDecimals={true}
+          allowDuplicatedCategory={true}
+          domain={
+            Array [
+              0,
+              "auto",
+            ]
+          }
+          height={0}
+          hide={false}
+          mirror={false}
+          orientation="left"
+          padding={
+            Object {
+              "bottom": 0,
+              "top": 0,
+            }
+          }
+          reversed={false}
+          scale="auto"
+          tickCount={5}
+          type="number"
+          width={60}
+          yAxisId={0}
+        />
+        <Tooltip
+          active={false}
+          animationDuration={400}
+          animationEasing="ease"
+          content={
+            <CustomTooltip
+              classes={
+                Object {
+                  "chartContainer": "makeStyles-chartContainer-1",
+                  "chartTitle": "makeStyles-chartTitle-2",
+                  "customTooltip": "makeStyles-customTooltip-3",
+                  "customTooltipLabel": "makeStyles-customTooltipLabel-4",
+                  "customTooltipLabelSpan": "makeStyles-customTooltipLabelSpan-5",
+                }
+              }
+            />
+          }
+          contentStyle={Object {}}
+          coordinate={
+            Object {
+              "x": 0,
+              "y": 0,
+            }
+          }
+          cursor={true}
+          cursorStyle={Object {}}
+          filterNull={true}
+          isAnimationActive={true}
+          itemStyle={Object {}}
+          labelStyle={Object {}}
+          offset={10}
+          separator=" : "
+          useTranslate3d={false}
+          viewBox={
+            Object {
+              "x1": 0,
+              "x2": 0,
+              "y1": 0,
+              "y2": 0,
+            }
+          }
+          wrapperStyle={Object {}}
+        />
+        <Line
+          activeDot={
+            Object {
+              "border": "white",
+              "stroke": "#3F51B5",
+              "strokeWidth": 7,
+            }
+          }
+          animateNewValues={true}
+          animationBegin={0}
+          animationDuration={1500}
+          animationEasing="ease"
+          connectNulls={false}
+          dataKey="freq"
+          dot={
+            Object {
+              "strokeWidth": 5,
+            }
+          }
+          fill="#8884d8"
+          hide={false}
+          isAnimationActive={true}
+          legendType="line"
+          onAnimationEnd={[Function]}
+          onAnimationStart={[Function]}
+          points={Array []}
+          stroke="#8884d8"
+          strokeWidth={3}
+          type="monotone"
+          xAxisId={0}
+          yAxisId={0}
+        />
+      </LineChart>
+    </ResponsiveContainer>
+  </div>
+</Fragment>
+`;
+
+exports[`LineChart should render correctly 1`] = `
+<Fragment>
+  <div
+    className="makeStyles-chartContainer-1"
+    key="undefinedcont"
+  >
+    <h1
+      className="makeStyles-chartTitle-2"
+      key="undefinedh1"
+    />
+    <ResponsiveContainer
+      debounce={0}
+      height="100%"
+      width="100%"
+    >
+      <LineChart
+        barCategoryGap="10%"
+        barGap={4}
+        layout="horizontal"
+        margin={
+          Object {
+            "bottom": 0,
+            "left": 0,
+            "right": 30,
+            "top": 10,
+          }
+        }
+        reverseStackOrder={false}
+        stackOffset="none"
+      >
+        <CartesianGrid
+          fill="none"
+          horizontal={true}
+          horizontalFill={Array []}
+          horizontalPoints={Array []}
+          stroke="#ccc"
+          strokeDasharray="3 3"
+          vertical={true}
+          verticalFill={Array []}
+          verticalPoints={Array []}
+        />
+        <XAxis
+          allowDataOverflow={false}
+          allowDecimals={true}
+          allowDuplicatedCategory={true}
+          dataKey="year"
+          domain={
+            Array [
+              0,
+              "auto",
+            ]
+          }
+          height={30}
+          hide={false}
+          mirror={false}
+          orientation="bottom"
+          padding={
+            Object {
+              "left": 0,
+              "right": 0,
+            }
+          }
+          reversed={false}
+          scale="auto"
+          tickCount={5}
+          type="category"
+          width={0}
+          xAxisId={0}
+        />
+        <YAxis
+          allowDataOverflow={false}
+          allowDecimals={true}
+          allowDuplicatedCategory={true}
+          domain={
+            Array [
+              0,
+              "auto",
+            ]
+          }
+          height={0}
+          hide={false}
+          mirror={false}
+          orientation="left"
+          padding={
+            Object {
+              "bottom": 0,
+              "top": 0,
+            }
+          }
+          reversed={false}
+          scale="auto"
+          tickCount={5}
+          type="number"
+          width={60}
+          yAxisId={0}
+        />
+        <Tooltip
+          active={false}
+          animationDuration={400}
+          animationEasing="ease"
+          content={
+            <CustomTooltip
+              classes={
+                Object {
+                  "chartContainer": "makeStyles-chartContainer-1",
+                  "chartTitle": "makeStyles-chartTitle-2",
+                  "customTooltip": "makeStyles-customTooltip-3",
+                  "customTooltipLabel": "makeStyles-customTooltipLabel-4",
+                  "customTooltipLabelSpan": "makeStyles-customTooltipLabelSpan-5",
+                }
+              }
+            />
+          }
+          contentStyle={Object {}}
+          coordinate={
+            Object {
+              "x": 0,
+              "y": 0,
+            }
+          }
+          cursor={true}
+          cursorStyle={Object {}}
+          filterNull={true}
+          isAnimationActive={true}
+          itemStyle={Object {}}
+          labelStyle={Object {}}
+          offset={10}
+          separator=" : "
+          useTranslate3d={false}
+          viewBox={
+            Object {
+              "x1": 0,
+              "x2": 0,
+              "y1": 0,
+              "y2": 0,
+            }
+          }
+          wrapperStyle={Object {}}
+        />
+        <Line
+          activeDot={
+            Object {
+              "border": "white",
+              "stroke": "#3F51B5",
+              "strokeWidth": 7,
+            }
+          }
+          animateNewValues={true}
+          animationBegin={0}
+          animationDuration={1500}
+          animationEasing="ease"
+          connectNulls={false}
+          dataKey="freq"
+          dot={
+            Object {
+              "strokeWidth": 5,
+            }
+          }
+          fill="#8884d8"
+          hide={false}
+          isAnimationActive={true}
+          legendType="line"
+          onAnimationEnd={[Function]}
+          onAnimationStart={[Function]}
+          points={Array []}
+          stroke="#8884d8"
+          strokeWidth={3}
+          type="monotone"
+          xAxisId={0}
+          yAxisId={0}
+        />
+      </LineChart>
+    </ResponsiveContainer>
+  </div>
+</Fragment>
+`;

@@ -11,9 +11,6 @@ exports[`Timeline should render correctly 1`] = `
     <Form
       onSubmitHandler={[Function]}
     />
-    <LineCharts
-      chartDatasets={Array []}
-    />
   </div>
 </Fragment>
 `;
