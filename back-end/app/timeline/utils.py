@@ -68,7 +68,7 @@ def get_word_sentiment_data(sentiment_data):
         if data_index == None:
             new_sentiment_data.append({"word": sentiment_obj.word, "data": [word_data]})
         else:
-            # If the word already exists in frequency data, just append the current year's data.
+            # If the word already exists in sentiment data, just append the current year's data.
             new_sentiment_data[data_index]["data"].append(word_data)
     # Sort all words datasets by year
     for wordData in new_sentiment_data:
