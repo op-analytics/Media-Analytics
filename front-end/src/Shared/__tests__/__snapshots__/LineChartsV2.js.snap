@@ -1,15 +1,33 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`LineChart create tooltip function returns tooltip with all given items 1`] = `
+<div>
+  <h2>
+    test
+  </h2>
+  <p
+    key="y"
+  >
+    <span>
+      y
+      :
+    </span>
+    y
+  </p>
+</div>
+`;
+
 exports[`LineChart renders a chart for a dataset of multiple words 1`] = `
 <Fragment>
   <div
     className="makeStyles-chartContainer-1"
-    key="undefinedcont"
+    key="bob"
   >
     <h1
       className="makeStyles-chartTitle-2"
-      key="undefinedh1"
-    />
+    >
+      bob
+    </h1>
     <ResponsiveContainer
       debounce={0}
       height="100%"
@@ -18,6 +36,13 @@ exports[`LineChart renders a chart for a dataset of multiple words 1`] = `
       <LineChart
         barCategoryGap="10%"
         barGap={4}
+        data={
+          Array [
+            Object {
+              "y": 1,
+            },
+          ]
+        }
         layout="horizontal"
         margin={
           Object {
@@ -45,7 +70,6 @@ exports[`LineChart renders a chart for a dataset of multiple words 1`] = `
           allowDataOverflow={false}
           allowDecimals={true}
           allowDuplicatedCategory={true}
-          dataKey="year"
           domain={
             Array [
               0,
@@ -100,19 +124,7 @@ exports[`LineChart renders a chart for a dataset of multiple words 1`] = `
           active={false}
           animationDuration={400}
           animationEasing="ease"
-          content={
-            <CustomTooltip
-              classes={
-                Object {
-                  "chartContainer": "makeStyles-chartContainer-1",
-                  "chartTitle": "makeStyles-chartTitle-2",
-                  "customTooltip": "makeStyles-customTooltip-3",
-                  "customTooltipLabel": "makeStyles-customTooltipLabel-4",
-                  "customTooltipLabelSpan": "makeStyles-customTooltipLabelSpan-5",
-                }
-              }
-            />
-          }
+          content={[Function]}
           contentStyle={Object {}}
           coordinate={
             Object {
@@ -152,7 +164,7 @@ exports[`LineChart renders a chart for a dataset of multiple words 1`] = `
           animationDuration={1500}
           animationEasing="ease"
           connectNulls={false}
-          dataKey="freq"
+          dataKey="y"
           dot={
             Object {
               "strokeWidth": 5,
@@ -176,12 +188,13 @@ exports[`LineChart renders a chart for a dataset of multiple words 1`] = `
   </div>
   <div
     className="makeStyles-chartContainer-1"
-    key="undefinedcont"
+    key="bill"
   >
     <h1
       className="makeStyles-chartTitle-2"
-      key="undefinedh1"
-    />
+    >
+      bill
+    </h1>
     <ResponsiveContainer
       debounce={0}
       height="100%"
@@ -190,6 +203,13 @@ exports[`LineChart renders a chart for a dataset of multiple words 1`] = `
       <LineChart
         barCategoryGap="10%"
         barGap={4}
+        data={
+          Array [
+            Object {
+              "y": 1,
+            },
+          ]
+        }
         layout="horizontal"
         margin={
           Object {
@@ -217,7 +237,6 @@ exports[`LineChart renders a chart for a dataset of multiple words 1`] = `
           allowDataOverflow={false}
           allowDecimals={true}
           allowDuplicatedCategory={true}
-          dataKey="year"
           domain={
             Array [
               0,
@@ -272,19 +291,7 @@ exports[`LineChart renders a chart for a dataset of multiple words 1`] = `
           active={false}
           animationDuration={400}
           animationEasing="ease"
-          content={
-            <CustomTooltip
-              classes={
-                Object {
-                  "chartContainer": "makeStyles-chartContainer-1",
-                  "chartTitle": "makeStyles-chartTitle-2",
-                  "customTooltip": "makeStyles-customTooltip-3",
-                  "customTooltipLabel": "makeStyles-customTooltipLabel-4",
-                  "customTooltipLabelSpan": "makeStyles-customTooltipLabelSpan-5",
-                }
-              }
-            />
-          }
+          content={[Function]}
           contentStyle={Object {}}
           coordinate={
             Object {
@@ -324,7 +331,7 @@ exports[`LineChart renders a chart for a dataset of multiple words 1`] = `
           animationDuration={1500}
           animationEasing="ease"
           connectNulls={false}
-          dataKey="freq"
+          dataKey="y"
           dot={
             Object {
               "strokeWidth": 5,
@@ -353,12 +360,13 @@ exports[`LineChart renders a chart for a dataset of one word 1`] = `
 <Fragment>
   <div
     className="makeStyles-chartContainer-1"
-    key="undefinedcont"
+    key="bob"
   >
     <h1
       className="makeStyles-chartTitle-2"
-      key="undefinedh1"
-    />
+    >
+      bob
+    </h1>
     <ResponsiveContainer
       debounce={0}
       height="100%"
@@ -367,6 +375,13 @@ exports[`LineChart renders a chart for a dataset of one word 1`] = `
       <LineChart
         barCategoryGap="10%"
         barGap={4}
+        data={
+          Array [
+            Object {
+              "y": 1,
+            },
+          ]
+        }
         layout="horizontal"
         margin={
           Object {
@@ -394,7 +409,6 @@ exports[`LineChart renders a chart for a dataset of one word 1`] = `
           allowDataOverflow={false}
           allowDecimals={true}
           allowDuplicatedCategory={true}
-          dataKey="year"
           domain={
             Array [
               0,
@@ -449,19 +463,7 @@ exports[`LineChart renders a chart for a dataset of one word 1`] = `
           active={false}
           animationDuration={400}
           animationEasing="ease"
-          content={
-            <CustomTooltip
-              classes={
-                Object {
-                  "chartContainer": "makeStyles-chartContainer-1",
-                  "chartTitle": "makeStyles-chartTitle-2",
-                  "customTooltip": "makeStyles-customTooltip-3",
-                  "customTooltipLabel": "makeStyles-customTooltipLabel-4",
-                  "customTooltipLabelSpan": "makeStyles-customTooltipLabelSpan-5",
-                }
-              }
-            />
-          }
+          content={[Function]}
           contentStyle={Object {}}
           coordinate={
             Object {
@@ -501,7 +503,7 @@ exports[`LineChart renders a chart for a dataset of one word 1`] = `
           animationDuration={1500}
           animationEasing="ease"
           connectNulls={false}
-          dataKey="freq"
+          dataKey="y"
           dot={
             Object {
               "strokeWidth": 5,
@@ -530,12 +532,13 @@ exports[`LineChart should render correctly 1`] = `
 <Fragment>
   <div
     className="makeStyles-chartContainer-1"
-    key="undefinedcont"
+    key="bob"
   >
     <h1
       className="makeStyles-chartTitle-2"
-      key="undefinedh1"
-    />
+    >
+      bob
+    </h1>
     <ResponsiveContainer
       debounce={0}
       height="100%"
@@ -544,6 +547,13 @@ exports[`LineChart should render correctly 1`] = `
       <LineChart
         barCategoryGap="10%"
         barGap={4}
+        data={
+          Array [
+            Object {
+              "y": 1,
+            },
+          ]
+        }
         layout="horizontal"
         margin={
           Object {
@@ -571,7 +581,6 @@ exports[`LineChart should render correctly 1`] = `
           allowDataOverflow={false}
           allowDecimals={true}
           allowDuplicatedCategory={true}
-          dataKey="year"
           domain={
             Array [
               0,
@@ -626,19 +635,7 @@ exports[`LineChart should render correctly 1`] = `
           active={false}
           animationDuration={400}
           animationEasing="ease"
-          content={
-            <CustomTooltip
-              classes={
-                Object {
-                  "chartContainer": "makeStyles-chartContainer-1",
-                  "chartTitle": "makeStyles-chartTitle-2",
-                  "customTooltip": "makeStyles-customTooltip-3",
-                  "customTooltipLabel": "makeStyles-customTooltipLabel-4",
-                  "customTooltipLabelSpan": "makeStyles-customTooltipLabelSpan-5",
-                }
-              }
-            />
-          }
+          content={[Function]}
           contentStyle={Object {}}
           coordinate={
             Object {
@@ -678,7 +675,7 @@ exports[`LineChart should render correctly 1`] = `
           animationDuration={1500}
           animationEasing="ease"
           connectNulls={false}
-          dataKey="freq"
+          dataKey="y"
           dot={
             Object {
               "strokeWidth": 5,

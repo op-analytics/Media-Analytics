@@ -20,6 +20,8 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
+const cleanDataset = dataset => ({ title: dataset.word, data: dataset.data });
+
 export default function Timeline() {
   const [timelineDatasets, setTimelineDatasets] = useState([]);
 
@@ -46,9 +48,16 @@ export default function Timeline() {
       <h3>Word Frequency Timeline</h3>
       <div className={classes.container}>
         <Form onSubmitHandler={onSubmitHandler} />
-        {timelineDatasets.length > 0 && (
-          <LineCharts chartDatasets={timelineDatasets} />
-        )}
+        <LineCharts
+          datasets={timelineDatasets.map(cleanDataset)}
+          xAxisKey="year"
+          yAxisKey="freq"
+          tooltipItems={[
+            { key: 'freq', title: 'freq' },
+            { key: 'count', title: 'count' },
+            { key: 'rank', title: 'rank' },
+          ]}
+        />
       </div>
     </>
   );

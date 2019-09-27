@@ -10,6 +10,7 @@ import {
 } from 'recharts';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
+import { createTooltip } from './utils';
 
 const useStyles = makeStyles(() => ({
   chartContainer: {
@@ -25,7 +26,7 @@ const useStyles = makeStyles(() => ({
       textTransform: 'uppercase',
     },
   },
-  customTooltip: {
+  tooltip: {
     width: '200px',
     margin: 0,
     lineHeight: '24px',
@@ -33,50 +34,25 @@ const useStyles = makeStyles(() => ({
     backgroundColor: 'hsla(0,0%,100%,.8)',
     padding: '10px',
   },
-  customTooltipLabel: {
+  tooltipLabel: {
     color: '#333',
   },
-  customTooltipLabelSpan: {
+  tooltipLabelFirstWord: {
     color: '#777',
+    '&:first-letter': {
+      textTransform: 'uppercase',
+    },
   },
 }));
 
-const CustomTooltip = ({ active, payload, label, classes }) => {
-  if (active) {
-    return (
-      <div className={classes.customTooltip}>
-        <p className={classes.customTooltipLabel}>
-          <span className={classes.customTooltipLabelSpan}>Year:</span>
-          {` ${payload[0].payload.year}`}
-        </p>
-        <p className={classes.customTooltipLabel}>
-          <span className={classes.customTooltipLabelSpan}>Freq:</span>
-          {` ${payload[0].payload.freq.toFixed(5)}`}
-        </p>
-        <p className={classes.customTooltipLabel}>
-          <span className={classes.customTooltipLabelSpan}>Count:</span>
-          {`  ${payload[0].payload.count}`}
-        </p>
-        <p className={classes.customTooltipLabel}>
-          <span className={classes.customTooltipLabelSpan}>Rank:</span>
-          {` ${payload[0].payload.rank}`}
-        </p>
-      </div>
-    );
-  }
-  return null;
-};
-
-function LineCharts({ chartDatasets }) {
+function LineCharts({ datasets, xAxisKey, yAxisKey, tooltipItems }) {
   const classes = useStyles();
 
   return (
     <>
-      {chartDatasets.map(data => (
-        <div className={classes.chartContainer} key={data.word + 'cont'}>
-          <h1 key={data.word + 'h1'} className={classes.chartTitle}>
-            {data.word}
-          </h1>
+      {datasets.map(data => (
+        <div className={classes.chartContainer} key={data.title}>
+          <h1 className={classes.chartTitle}>{data.title}</h1>
           <ResponsiveContainer>
             <LineChart
               data={data.data}
@@ -86,15 +62,15 @@ function LineCharts({ chartDatasets }) {
                 left: 0,
                 bottom: 0,
               }}
-              key={data.word}
+              //key={data.word}
             >
               <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="year" />
+              <XAxis dataKey={xAxisKey} />
               <YAxis />
-              <Tooltip content={<CustomTooltip classes={classes} />} />
+              <Tooltip content={createTooltip(classes, tooltipItems)} />
               <Line
                 type="monotone"
-                dataKey="freq"
+                dataKey={yAxisKey}
                 stroke="#8884d8"
                 fill="#8884d8"
                 strokeWidth={3}
@@ -114,12 +90,18 @@ function LineCharts({ chartDatasets }) {
 }
 
 LineCharts.propTypes = {
-  chartDatasets: PropTypes.arrayOf(
+  datasets: PropTypes.arrayOf(
     PropTypes.shape({
-      labels: PropTypes.arrayOf(PropTypes.string),
-      datasets: PropTypes.arrayOf(
-        PropTypes.shape({ data: PropTypes.array.isRequired }),
-      ),
+      title: PropTypes.string.isRequired,
+      data: PropTypes.arrayOf(PropTypes.shape({}).isRequired).isRequired,
+    }),
+  ).isRequired,
+  xAxisKey: PropTypes.string,
+  yAxisKey: PropTypes.string.isRequired,
+  tooltipItems: PropTypes.arrayOf(
+    PropTypes.shape({
+      title: PropTypes.string.isRequired,
+      key: PropTypes.string.isRequired,
     }),
   ).isRequired,
 };

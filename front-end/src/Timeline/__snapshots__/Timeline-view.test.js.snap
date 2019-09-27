@@ -11,6 +11,27 @@ exports[`Timeline should render correctly 1`] = `
     <Form
       onSubmitHandler={[Function]}
     />
+    <LineCharts
+      datasets={Array []}
+      tooltipItems={
+        Array [
+          Object {
+            "key": "freq",
+            "title": "freq",
+          },
+          Object {
+            "key": "count",
+            "title": "count",
+          },
+          Object {
+            "key": "rank",
+            "title": "rank",
+          },
+        ]
+      }
+      xAxisKey="year"
+      yAxisKey="freq"
+    />
   </div>
 </Fragment>
 `;
