@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Timeline should render correctly 1`] = `
+<Fragment>
+  <h3>
+    Sentiment Over Timeline
+  </h3>
+  <div
+    className="makeStyles-container-1"
+  >
+    <Form
+      onSubmitHandler={[Function]}
+    />
+    <LineCharts
+      datasets={Array []}
+      tooltipItems={
+        Array [
+          Object {
+            "key": "sentiment",
+            "title": "Sentiment",
+          },
+        ]
+      }
+      xAxisKey="year"
+      yAxisKey="sentiment"
+    />
+  </div>
+</Fragment>
+`;

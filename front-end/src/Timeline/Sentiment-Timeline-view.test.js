@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import Timeline from './Timeline-view';
+import Timeline from './Sentiment-Timeline-view';
 
 const getWrapper = () => shallow(<Timeline />);
 

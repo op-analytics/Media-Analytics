@@ -1,7 +1,8 @@
 import React from 'react';
 import './App.css';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import Timeline from './Timeline/Timeline-view';
+import FrequencyTimeline from './Timeline/Frequency-Timeline-view';
+import SentimentTimeline from './Timeline/Sentiment-Timeline-view';
 import Nav from './Shared/Nav';
 
 function Home() {
@@ -23,8 +24,8 @@ function NotFound() {
 const links = [
   [
     { href: '/', text: 'Home' },
-    { href: '/timeline', text: 'Timeline' },
-    { href: '/sentiment-analasis', text: 'Sentiment Analysis' },
+    { href: '/frequency', text: 'Frequency Over Time' },
+    { href: '/sentiment', text: 'Sentiment Over Time' },
     { href: '/topic-modeling', text: 'Topic Modeling' },
     { href: '/latent-association', text: 'Latent Association' },
   ],
@@ -41,7 +42,8 @@ export default function App() {
       <Nav title="NYT Analytics" links={links}>
         <Switch>
           <Route exact path="/" component={Home} />
-          <Route path="/timeline" component={Timeline} />
+          <Route path="/frequency" component={FrequencyTimeline} />
+          <Route path="/sentiment" component={SentimentTimeline} />
           <Route component={NotFound} />
         </Switch>
       </Nav>
