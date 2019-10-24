@@ -4,7 +4,7 @@ from app import create_app
 
 from .models import Sentiment
 
-class TestNLPRoutes(object):
+class TestTimelineRoutes(object):
     # Put any setup code in this method
     @classmethod
     def setup_class(self):
