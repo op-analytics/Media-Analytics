@@ -12,7 +12,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import MenuIcon from '@material-ui/icons/Menu';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 const drawerWidth = 240;
@@ -55,14 +55,16 @@ const useStyles = makeStyles(theme => ({
 
 function Nav({ children, title, links }) {
   const classes = useStyles();
-  const [mobileOpen, setMobileOpen] = React.useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
 
   const drawer = (
     <div>
       <div className={classes.toolbar} />
       <Divider />
       {links.map(section => (
-        <div key={section.reduce((key, { href, text }) => key + href + text, '')}>
+        <div
+          key={section.reduce((key, { href, text }) => key + href + text, '')}
+        >
           <Divider />
           <List>
             {section.map(({ href, text }) => (
@@ -145,7 +147,10 @@ Nav.propTypes = {
   title: PropTypes.string,
   links: PropTypes.arrayOf(
     PropTypes.arrayOf(
-      PropTypes.shape({ href: PropTypes.string.isRequired, text: PropTypes.string.isRequired }),
+      PropTypes.shape({
+        href: PropTypes.string.isRequired,
+        text: PropTypes.string.isRequired,
+      }),
     ),
   ).isRequired,
 };
