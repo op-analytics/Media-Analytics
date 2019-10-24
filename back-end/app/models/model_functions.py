@@ -26,16 +26,16 @@ def load_model(full_file_path):
     return model
 
 
-def load_and_add_model_to_models(full_file_path, models):
+def load_and_add_model_to_models(path, model_name, models):
     """Loads and adds a given model to the models dictionary"""
-    models[str(file)] = load_model(full_file_path)
+    models[str(model_name)] = load_model(os.path.join(path, model_name))
 
 
 # pylint: disable=invalid-name
 def loadModels(path):
     """Loads and returns all models in the given path as a dictionary"""
     # raise OSError if path is invalid or is a file
-    
+
     if not os.path.exists(path):
         raise OSError("given path does not exist")
     if os.path.isfile(path):
@@ -44,11 +44,10 @@ def loadModels(path):
     models = {}
     files = os.listdir(path)
     for file in files:
-        full_file_path = os.path.join(path, file)
         # Only try open files that appear to be models
-        if isPotentialModel(full_file_path):
+        if isPotentialModel(os.path.join(path, file)):
             process = Thread(
-                target=load_and_add_model_to_models, args=[full_file_path, models]
+                target=load_and_add_model_to_models, args=[path, file, models]
             )
             process.start()
             threads.append(process)
