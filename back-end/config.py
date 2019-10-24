@@ -23,11 +23,12 @@ class Config:
 
 class Testing(Config):
     TESTING = True
+    MONGODB_SETTINGS = {
+        "db": "mongoenginetest",
+        "host": "mongomock://localhost",
+    }
 
 
 class Dev(Config):
     DEBUG = True
-    MONGODB_SETTINGS = {
-        "db": "project_test_db",
-        "host": "mongodb://localhost/project_test_db",
-    }
+    MONGODB_SETTINGS = {"db": "nyta", "host": "mongodb://localhost/nyta"}

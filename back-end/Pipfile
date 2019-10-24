@@ -17,6 +17,7 @@ pytest = "*"
 pytest-cov = "*"
 jedi = "*"
 rope = "*"
+mongomock = "*"
 
 [requires]
 python_version = "3.7"

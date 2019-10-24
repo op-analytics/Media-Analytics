@@ -7,10 +7,12 @@ from gensim.models import Word2Vec
 from marshmallow import ValidationError
 from marshmallow import __version__ as marshmallow_version
 
+from .utils import *
 from app.models.model_functions import loadModels
 from app.utils import Applymap
 
-from .schemas import FrequencySchema
+from .models import Sentiment
+from .schemas import TimelineSchema
 
 routes = Blueprint("timeline", __name__)
 
@@ -31,57 +33,6 @@ models = (
     else {"1999": testModel}
 )
 
-# The frequency data for each word in words for the year range given.
-def getWordFrequencyData(words, year_from, year_to):
-    frequencyData = []
-    for year, model in models.items():
-        year = int(year)
-        if year < year_from or year > year_to:
-            continue
-        for word in words:
-            try:
-                wordCount = model.wv.vocab[word].count
-                wordFreq = (wordCount / model.totalWordCount) * 100
-                wordRank = model.wv.vocab[word].index + 1
-            except KeyError:  # The word is not in vocabulary for this year.
-                wordCount = 0
-                wordFreq = 0
-                wordRank = 0
-            # Get the index of the object containing the current word in frequencyData.
-            dataIndex = next(
-                (index for (index, w) in enumerate(frequencyData) if w["word"] == word),
-                None,
-            )
-            # If the word is not already in frequencyData.
-            if dataIndex == None:
-                frequencyData.append(
-                    {
-                        "word": word,
-                        "data": [
-                            {
-                                "year": year,
-                                "rank": wordRank,
-                                "wordCount": wordCount,
-                                "wordFreq": wordFreq,
-                            }
-                        ],
-                    }
-                )
-            else:
-                # If the word already exists in frequency data, just append the current year's data.
-                frequencyData[dataIndex]["data"].append(
-                    {
-                        "year": year,
-                        "rank": wordRank,
-                        "wordCount": wordCount,
-                        "wordFreq": wordFreq,
-                    }
-                )
-    # Sort all words datasets by year
-    for wordData in frequencyData:
-        wordData["data"].sort(key=lambda x: int(x["year"]))
-    return frequencyData
-
 
 @routes.route("/", methods=["GET"])
 def index():
@@ -91,14 +42,7 @@ def index():
 @routes.route("/frequency", methods=["POST"])
 def getFrequency():
     try:
-        # pylint: disable=unexpected-keyword-arg
-        FrequencySchema(strict=True).load(
-            request.get_json(force=True)
-        ) if int(  # Still needed?
-            marshmallow_version[0]
-        ) < 3 else FrequencySchema().load(
-            request.get_json(force=True)
-        )
+        TimelineSchema().load(request.get_json(force=True))
     except ValidationError as err:
         return jsonify({"code": 400, "messages": err.messages}), 400
     year_from = int(request.json["year_from"])
@@ -107,10 +51,43 @@ def getFrequency():
     words = Applymap(
         [lambda word: word.lower(), lambda word: word.strip()], request.json["words"]
     )
-    wordFrequencyData = getWordFrequencyData(words, year_from, year_to)
+    wordFrequencyData = get_word_frequency_data(models, words, year_from, year_to)
     if len(wordFrequencyData) > 0:
         # Return the data dictionary
         return jsonify({"code": 202, "data": wordFrequencyData}), 202
+    else:
+        return (
+            jsonify(
+                {
+                    "code": 400,
+                    "messages": {
+                        "year_range": ["No data exists for any year in given range"]
+                    },
+                }
+            ),
+            400,
+        )
+
+
+@routes.route("/sentiment", methods=["POST"])
+def getSentiment():
+    try:
+        TimelineSchema().load(request.get_json(force=True))
+    except ValidationError as err:
+        return jsonify({"code": 400, "messages": err.messages}), 400
+    year_from = int(request.json["year_from"])
+    year_to = int(request.json["year_to"])
+    # Convert all words to lowercase and strip spaces to use with models
+    words = Applymap(
+        [lambda word: word.lower(), lambda word: word.strip()], request.json["words"]
+    )
+    word_sentiment_data = get_word_sentiment_data(
+        Sentiment.objects(word__in=words, year__lte=year_to, year__gte=year_from)
+    )
+
+    if len(word_sentiment_data) > 0:
+        # Return the data dictionary
+        return jsonify({"code": 202, "data": word_sentiment_data}), 202
     else:
         return (
             jsonify(

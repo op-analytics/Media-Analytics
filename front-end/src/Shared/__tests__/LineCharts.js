@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import LineCharts from './LineCharts';
+import LineCharts from '../LineCharts';
 
 const chartDatasetsWithOneWord = [{ labels: [], datasets: [{ data: [{ word: 'bob' }] }] }];
 const chartDatasetsWithTwoWords = [
