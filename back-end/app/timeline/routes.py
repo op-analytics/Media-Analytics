@@ -2,17 +2,16 @@
 import os
 from functools import reduce
 
+from app.models.model_functions import loadModels
+from app.utils import Applymap
 from flask import Blueprint, current_app, jsonify, request
 from gensim.models import Word2Vec
 from marshmallow import ValidationError
 from marshmallow import __version__ as marshmallow_version
 
-from .utils import *
-from app.models.model_functions import loadModels
-from app.utils import Applymap
-
 from .models import Sentiment
-from .schemas import TimelineSchema
+from .schemas import LatentAssociationSchema, TimelineSchema
+from .utils import *
 
 routes = Blueprint("timeline", __name__)
 
@@ -75,6 +74,7 @@ def getSentiment():
         TimelineSchema().load(request.get_json(force=True))
     except ValidationError as err:
         return jsonify({"code": 400, "messages": err.messages}), 400
+
     year_from = int(request.json["year_from"])
     year_to = int(request.json["year_to"])
     # Convert all words to lowercase and strip spaces to use with models
@@ -100,3 +100,42 @@ def getSentiment():
             ),
             400,
         )
+
+
+@routes.route("/latent-association", methods=["POST"])
+def getLatentAssociation():
+    try:
+        LatentAssociationSchema().load(request.get_json(force=True))
+    except ValidationError as err:
+        return jsonify({"code": 400, "messages": err.messages}), 400
+
+    year_from = request.json["year_from"]
+    year_to = request.json["year_to"]
+
+    # Convert all words to lowercase and strip spaces to use with models
+    concept_1 = Applymap(
+        [lambda word: word.lower(), lambda word: word.strip()],
+        request.json["concept_1"],
+    )
+    concept_2 = Applymap(
+        [lambda word: word.lower(), lambda word: word.strip()],
+        request.json["concept_2"],
+    )
+
+    latent_association_data = get_latent_association_data(
+        year_from, year_to, concept_1, concept_2
+    )
+
+    if latent_association_data:
+        return jsonify({"code": 202, "data": latent_association_data}), 202
+    return (
+        jsonify(
+            {
+                "code": 400,
+                "messages": {
+                    "concepts": ["Could not get enough data for these words"]
+                },
+            }
+        ),
+        400,
+    )

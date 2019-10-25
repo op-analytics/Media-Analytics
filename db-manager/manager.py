@@ -1,7 +1,7 @@
 import os
 
 import click
-from mongoengine import Document, FloatField, IntField, StringField, connect
+from mongoengine import Document, FloatField, IntField, StringField, ListField, connect
 
 import _pickle as pickle
 
@@ -14,7 +14,14 @@ class Sentiment(Document):
     sentiment = FloatField(required=True)
 
 
-mongo_documents = {"sentiment": Sentiment}
+class LatentAssociation(Document):
+    word = StringField(required=True)
+    vectors = ListField(required=False)
+    year_from = IntField(required=True)
+    year_to = IntField(required=True)
+
+
+mongo_documents = {"sentiment": Sentiment, "latent_association": LatentAssociation}
 
 
 @click.group()
@@ -22,8 +29,13 @@ def cli():
     pass
 
 
-@cli.command(help='Adds data from a given path to the database.')
-@click.option("--data-type", type=click.Choice(mongo_documents.keys()), required=True, help='The type of data you wish to store from the list of previous options.')
+@cli.command(help="Adds data from a given path to the database.")
+@click.option(
+    "--data-type",
+    type=click.Choice(mongo_documents.keys()),
+    required=True,
+    help="The type of data you wish to store from the list of previous options.",
+)
 @click.argument("file-path", type=click.Path(exists=True), required=True)
 def add(data_type, file_path):
     files = os.listdir(file_path)
