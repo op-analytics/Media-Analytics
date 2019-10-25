@@ -1,3 +1,4 @@
+# pylint: disable=no-member
 from app import db
 
 

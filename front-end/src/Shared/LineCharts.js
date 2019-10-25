@@ -17,9 +17,11 @@ function LineCharts({ chartDatasets }) {
   return (
     <>
       {chartDatasets.map(data => (
-        <div className={classes.chartContainer}>
+        <div
+          className={classes.chartContainer}
+          key={data.datasets[0].data[0].word}
+        >
           <Line
-            key={data.datasets[0].data[0].word}
             data={data}
             options={{
               maintainAspectRatio: true,
@@ -27,13 +29,17 @@ function LineCharts({ chartDatasets }) {
               tooltips: {
                 callbacks: {
                   title: (tooltipItem, wordData) => {
-                    const response = wordData.datasets[0].data[tooltipItem[0].index];
+                    const response =
+                      wordData.datasets[0].data[tooltipItem[0].index];
                     return `${response.year} - ${response.word}`;
                   },
                   label: (toolTipItems => (tooltipItem, wordData) =>
                     toolTipItems.reduce(
                       (accum, { key, value }) =>
-                        accum.concat(key + wordData.datasets[0].data[tooltipItem.index][value]),
+                        accum.concat(
+                          key +
+                            wordData.datasets[0].data[tooltipItem.index][value],
+                        ),
                       [],
                     ))([
                     {
@@ -63,7 +69,9 @@ LineCharts.propTypes = {
   chartDatasets: PropTypes.arrayOf(
     PropTypes.shape({
       labels: PropTypes.arrayOf(PropTypes.string),
-      datasets: PropTypes.arrayOf(PropTypes.shape({ data: PropTypes.array.isRequired })),
+      datasets: PropTypes.arrayOf(
+        PropTypes.shape({ data: PropTypes.array.isRequired }),
+      ),
     }),
   ).isRequired,
 };

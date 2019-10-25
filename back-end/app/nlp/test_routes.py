@@ -1,10 +1,10 @@
-import pytest
 from app import create_app
 
 
-class TestNLPRoutes(object):
+class TestNLPRoutes:
     # Put any setup code in this method
     @classmethod
+    # pylint: disable=bad-classmethod-argument
     def setup_class(self):
         self.app = create_app("config.Testing")
         self.prefix = "/nlp/"
@@ -12,6 +12,7 @@ class TestNLPRoutes(object):
 
     # Put any cleanup code in this method
     @classmethod
+    # pylint: disable=bad-classmethod-argument
     def teardown_class(self):
         pass
 

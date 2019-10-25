@@ -4,11 +4,8 @@ from threading import Thread
 
 from gensim.models import KeyedVectors
 
-from gensim.models import KeyedVectors
 
-
-# pylint: disable=invalid-name
-def isPotentialModel(file):
+def is_potential_model(file):
     """
         Checks if a given file is a potential model
         Returns false for hidden files, directories, and files that have a file extention
@@ -32,7 +29,7 @@ def load_and_add_model_to_models(path, model_name, models):
 
 
 # pylint: disable=invalid-name
-def loadModels(path):
+def load_models(path):
     """Loads and returns all models in the given path as a dictionary"""
     # raise OSError if path is invalid or is a file
 
@@ -45,7 +42,7 @@ def loadModels(path):
     files = os.listdir(path)
     for file in files:
         # Only try open files that appear to be models
-        if isPotentialModel(os.path.join(path, file)):
+        if is_potential_model(os.path.join(path, file)):
             process = Thread(
                 target=load_and_add_model_to_models, args=[path, file, models]
             )

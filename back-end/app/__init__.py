@@ -1,4 +1,4 @@
-# Import flask dependencies
+# pylint: disable=import-outside-toplevel
 from flask import Flask, g, jsonify, request
 from flask_cors import CORS
 from flask_mongoengine import MongoEngine
@@ -29,7 +29,7 @@ def create_app(config_filename="config.Config"):
 
         @app.errorhandler(404)
         # pylint: disable=unused-variable
-        def not_found(error):
+        def not_found(_):
             return jsonify({"code": 404, "message": "not_found"}), 404
 
         return app

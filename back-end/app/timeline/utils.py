@@ -32,7 +32,8 @@ def get_word_frequency_data(models, words, year_from, year_to):
             if data_index is None:
                 frequency_data.append({"word": word, "data": [word_data]})
             else:
-                # If the word already exists in frequency data, just append the current year's data.
+                # If the word already exists in frequency data,
+                # just append the current year's data.
                 frequency_data[data_index]["data"].append(word_data)
     # Sort all words datasets by year
     for word_data in frequency_data:
@@ -54,8 +55,8 @@ def get_word_sentiment_data(sentiment_data):
             # just append the current year's data.
             new_sentiment_data[data_index]["data"].append(word_data)
     # Sort all words datasets by year
-    for wordData in new_sentiment_data:
-        wordData["data"].sort(key=lambda x: int(x["year"]))
+    for word_data in new_sentiment_data:
+        word_data["data"].sort(key=lambda x: int(x["year"]))
     return new_sentiment_data
 
 

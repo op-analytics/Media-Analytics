@@ -1,6 +1,7 @@
-import React from 'react';
 import { shallow } from 'enzyme';
+import React from 'react';
 import LineCharts from '../LineChartsV2';
+
 const chartDatasetsWithOneWord = [
   {
     title: 'bob',

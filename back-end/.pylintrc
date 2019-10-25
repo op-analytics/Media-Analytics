@@ -9,9 +9,6 @@ extension-pkg-whitelist=
 # paths.
 ignore=CVS
 
-# Profiled execution.
-profile=no
-
 # Add files or directories matching the regex patterns to the blacklist. The
 # regex matches against base names, not paths.
 ignore-patterns=
@@ -31,7 +28,7 @@ limit-inference-results=100
 
 # List of plugins (as comma separated values of python modules names) to load,
 # usually to register additional checkers.
-load-plugins=
+load-plugins=pylint_mongoengine
 
 # Pickle collected data for later comparisons.
 persistent=yes
@@ -45,7 +42,7 @@ suggestion-mode=yes
 
 # Allow loading of arbitrary C extensions. Extensions are imported into the
 # active Python interpreter and may run arbitrary code.
-unsafe-load-any-extension=no
+unsafe-load-any-extension=yes
 
 
 [MESSAGES CONTROL]
@@ -81,7 +78,7 @@ disable=print-statement,
         useless-suppression,
         deprecated-pragma,
         use-symbolic-message-instead,
-        apply-builtin,
+#78        apply-builtin,
         basestring-builtin,
         buffer-builtin,
         cmp-builtin,
@@ -141,7 +138,11 @@ disable=print-statement,
         xreadlines-attribute,
         deprecated-sys-function,
         exception-escape,
-        comprehension-escape
+        comprehension-escape,
+        missing-docstring,
+        no-self-use,
+        C0330, # Disable eight space hanging indentation
+        W0511 # Disable TODO and FIXME reporting
 
 # Enable the message, report, category or checker with the given id(s). You can
 # either give multiple identifier separated by comma (,) or put this option
@@ -246,7 +247,7 @@ expected-line-ending-format=
 ignore-long-lines=^\s*(# )?<?https?://\S+>?$
 
 # Number of spaces of indent required inside a hanging or continued line.
-# indent-after-paren=4
+indent-after-paren=4
 
 # String used as indentation unit. This is usually "    " (4 spaces) or "\t" (1
 # tab).

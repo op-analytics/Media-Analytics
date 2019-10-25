@@ -10,6 +10,7 @@ class TimelineSchema(Schema):
     )
 
     @validates_schema(skip_on_field_errors=True)
+    # pylint: disable=no-self-use
     def validate_year_from(self, data, *_, **__):
         if int(data["year_from"]) > int(data["year_to"]):
             raise ValidationError("year_from must be before year_to", "year_range")

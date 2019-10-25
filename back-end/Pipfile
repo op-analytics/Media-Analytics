@@ -18,6 +18,7 @@ pytest-cov = "*"
 jedi = "*"
 rope = "*"
 mongomock = "*"
+pylint-mongoengine = "*"
 
 [requires]
 python_version = "3.7"

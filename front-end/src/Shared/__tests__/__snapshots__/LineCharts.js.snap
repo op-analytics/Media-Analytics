@@ -4,6 +4,7 @@ exports[`LineChart renders a chart for a dataset of multiple words 1`] = `
 <Fragment>
   <div
     className="makeStyles-chartContainer-1"
+    key="bob"
   >
     <Line
       data={
@@ -20,7 +21,6 @@ exports[`LineChart renders a chart for a dataset of multiple words 1`] = `
           "labels": Array [],
         }
       }
-      key="bob"
       options={
         Object {
           "maintainAspectRatio": true,
@@ -37,6 +37,7 @@ exports[`LineChart renders a chart for a dataset of multiple words 1`] = `
   </div>
   <div
     className="makeStyles-chartContainer-1"
+    key="phil"
   >
     <Line
       data={
@@ -53,7 +54,6 @@ exports[`LineChart renders a chart for a dataset of multiple words 1`] = `
           "labels": Array [],
         }
       }
-      key="phil"
       options={
         Object {
           "maintainAspectRatio": true,
@@ -75,6 +75,7 @@ exports[`LineChart renders a chart for a dataset of one word 1`] = `
 <Fragment>
   <div
     className="makeStyles-chartContainer-1"
+    key="bob"
   >
     <Line
       data={
@@ -91,7 +92,6 @@ exports[`LineChart renders a chart for a dataset of one word 1`] = `
           "labels": Array [],
         }
       }
-      key="bob"
       options={
         Object {
           "maintainAspectRatio": true,
@@ -113,6 +113,7 @@ exports[`LineChart should render correctly 1`] = `
 <Fragment>
   <div
     className="makeStyles-chartContainer-1"
+    key="bob"
   >
     <Line
       data={
@@ -129,7 +130,6 @@ exports[`LineChart should render correctly 1`] = `
           "labels": Array [],
         }
       }
-      key="bob"
       options={
         Object {
           "maintainAspectRatio": true,

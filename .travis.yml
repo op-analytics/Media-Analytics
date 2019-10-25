@@ -2,6 +2,7 @@ os: linux
 dist: xenial
 sudo: true
 matrix:
+  fast_finish: true
   include:
     - language: python
       python:
@@ -14,6 +15,7 @@ matrix:
         - pipenv install --dev
       script:
         - pytest
+        - pylint app/
 
     - language: node_js
       node_js:
@@ -24,6 +26,7 @@ matrix:
         - npm install -D
       script:
         - npm run test
+        - eslint --ignore-pattern 'serviceWorker.js' .
 
 notifications:
   email: false

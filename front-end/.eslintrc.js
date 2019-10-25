@@ -1,10 +1,11 @@
-export default () => ({
+/* eslint-disable */
+module.exports = {
   env: {
     browser: true,
     es6: true,
     jest: true,
   },
-  extends: ['airbnb', 'eslint:recommended', 'plugin:react/recommended'],
+  extends: ['airbnb', 'eslint:recommended', 'plugin:react/recommended','prettier'],
   globals: {
     Atomics: 'readonly',
     SharedArrayBuffer: 'readonly',
@@ -23,5 +24,6 @@ export default () => ({
     'no-underscore-dangle': 0,
     'arrow-parens': 0,
     'no-tabs': 'error',
+    'import/prefer-default-export': 0,
   },
-});
+}

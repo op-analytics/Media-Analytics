@@ -96,7 +96,7 @@ LineCharts.propTypes = {
       data: PropTypes.arrayOf(PropTypes.shape({}).isRequired).isRequired,
     }),
   ).isRequired,
-  xAxisKey: PropTypes.string,
+  xAxisKey: PropTypes.string.isRequired,
   yAxisKey: PropTypes.string.isRequired,
   tooltipItems: PropTypes.arrayOf(
     PropTypes.shape({

@@ -1,12 +1,12 @@
-import pytest
 from app import create_app
 
 from .models import LatentAssociation, Sentiment
 
 
-class TestTimelineRoutes(object):
+class TestTimelineRoutes:
     # Put any setup code in this method
     @classmethod
+    # pylint: disable=bad-classmethod-argument
     def setup_class(self):
         self.app = create_app("config.Testing")
         self.prefix = "/timeline/"
@@ -24,6 +24,7 @@ class TestTimelineRoutes(object):
 
     # Put any cleanup code in this method
     @classmethod
+    # pylint: disable=bad-classmethod-argument
     def teardown_class(self):
         pass
 
@@ -79,6 +80,7 @@ class TestTimelineRoutes(object):
 
         assert "year_range" in response["messages"]
 
+    # pylint: disable=line-too-long
     def test_frequency_should_return_year_range_invalid_if_no_model_exists_for_given_range(
         self
     ):
@@ -120,12 +122,6 @@ class TestTimelineRoutes(object):
         )
 
     def test_sentiment_should_return_202_if_given_all_params(self):
-
-        temp = self.client.post(
-            self.prefix + "sentiment",
-            json={"words": ["Jim"], "year_from": 1991, "year_to": 2000},
-        ).get_json()
-
         assert (
             self.client.post(
                 self.prefix + "sentiment",
@@ -191,6 +187,7 @@ class TestTimelineRoutes(object):
             for year in range(year_from, year_to)
         )
 
+    # pylint: disable=line-too-long
     def test_latent_association_should_return_year_range_invalid_if_year_from_after_year_to(
         self
     ):
@@ -211,7 +208,6 @@ class TestTimelineRoutes(object):
     def test_latent_association_should_return_a_list(self):
         year_from = 1985
         year_to = 2000
-        words = ["second", "first"]
         response = self.client.post(
             self.prefix + "latent-association",
             json={
