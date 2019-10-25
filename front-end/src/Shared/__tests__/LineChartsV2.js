@@ -1,7 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import LineCharts from '../LineChartsV2';
-import { createTooltip } from '../LineChartsV2/utils';
 const chartDatasetsWithOneWord = [
   {
     title: 'bob',
@@ -46,18 +45,6 @@ describe('LineChart', () => {
       yAxisKey: 'y',
       tooltipItems: [{ title: 'y', key: 'y' }],
     });
-    expect(wrapper).toMatchSnapshot();
-  });
-  
-  test('create tooltip function returns tooltip with all given items', () => {
-    const Tooltip = createTooltip({}, [{ title: 'y', key: 'y' }]);
-    const wrapper = shallow(
-      <Tooltip
-        active={true}
-        payload={[{ payload: { y: 'y' } }]}
-        label="test"
-      />,
-    );
     expect(wrapper).toMatchSnapshot();
   });
 });

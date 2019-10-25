@@ -1,16 +1,16 @@
+import { makeStyles } from '@material-ui/core/styles';
+import PropTypes from 'prop-types';
 import React from 'react';
 import {
-  LineChart,
+  CartesianGrid,
   Line,
+  LineChart,
+  ResponsiveContainer,
+  Tooltip,
   XAxis,
   YAxis,
-  CartesianGrid,
-  Tooltip,
-  ResponsiveContainer,
 } from 'recharts';
-import PropTypes from 'prop-types';
-import { makeStyles } from '@material-ui/core/styles';
-import { createTooltip } from './utils';
+import { createTooltip } from '../utils';
 
 const useStyles = makeStyles(() => ({
   chartContainer: {

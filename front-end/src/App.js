@@ -1,9 +1,10 @@
 import React from 'react';
-import './App.css';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import FrequencyTimeline from './Timeline/Frequency-Timeline-view';
-import SentimentTimeline from './Timeline/Sentiment-Timeline-view';
+import './App.css';
 import Nav from './Shared/Nav';
+import FrequencyTimeline from './Timeline/Frequency-Timeline-view';
+import LatentAssociationTimeline from './Timeline/Latent-Association-view';
+import SentimentTimeline from './Timeline/Sentiment-Timeline-view';
 
 function Home() {
   return (
@@ -27,7 +28,7 @@ const links = [
     { href: '/frequency', text: 'Frequency Over Time' },
     { href: '/sentiment', text: 'Sentiment Over Time' },
     { href: '/topic-modeling', text: 'Topic Modeling' },
-    { href: '/latent-association', text: 'Latent Association' },
+    { href: '/latent-association', text: 'Latent Association Over Time' },
   ],
   [
     { href: '/about', text: 'About' },
@@ -44,6 +45,10 @@ export default function App() {
           <Route exact path="/" component={Home} />
           <Route path="/frequency" component={FrequencyTimeline} />
           <Route path="/sentiment" component={SentimentTimeline} />
+          <Route
+            path="/latent-association"
+            component={LatentAssociationTimeline}
+          />
           <Route component={NotFound} />
         </Switch>
       </Nav>

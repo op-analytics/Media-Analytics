@@ -1,22 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`LineChart create tooltip function returns tooltip with all given items 1`] = `
-<div>
-  <h2>
-    test
-  </h2>
-  <p
-    key="y"
-  >
-    <span>
-      y
-      :
-    </span>
-    y
-  </p>
-</div>
-`;
-
 exports[`LineChart renders a chart for a dataset of multiple words 1`] = `
 <Fragment>
   <div
