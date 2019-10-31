@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import './App.css';
 import Nav from './Shared/Nav';
 import FrequencyTimeline from './Timeline/Frequency-Timeline-view';
+import About from './About';
 import LatentAssociationTimeline from './Timeline/Latent-Association-view';
 import SentimentTimeline from './Timeline/Sentiment-Timeline-view';
 
@@ -43,6 +44,7 @@ export default function App() {
       <Nav title="NYT Analytics" links={links}>
         <Switch>
           <Route exact path="/" component={Home} />
+          <Route exact path="/about" component={About} />
           <Route path="/frequency" component={FrequencyTimeline} />
           <Route path="/sentiment" component={SentimentTimeline} />
           <Route
