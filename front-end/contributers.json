@@ -1,0 +1,14 @@
+{
+  "people":[
+    {
+      "name": "Liam Chistensen",
+      "description": "A human",
+      "image": "%PUBLIC_URL%/contributers/male.jpg"
+    },
+    {
+      "name": "Trent Nicholson",
+      "description": "A human",
+      "image": "%PUBLIC_URL%/contributers/male.jpg"
+    }
+  ]
+}
