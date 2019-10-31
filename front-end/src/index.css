@@ -6,6 +6,7 @@
   outline: 0;
   vertical-align: baseline;
   background: transparent;
+  box-sizing: border-box;
 }
 
 body {
