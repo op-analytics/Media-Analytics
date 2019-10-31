@@ -1,71 +1,42 @@
-import React from 'react';
-import Card from '@material-ui/core/Card';
-import Avatar from '@material-ui/core/Avatar';
-import Container from '@material-ui/core/Container';
-import CardContent from '@material-ui/core/CardContent';
-import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
+import React from 'react';
 import contributers from '../contributers.json';
+import AboutSection from './components/AboutSection';
+import ContributorSection from './components/ContributorSection';
 
 const useStyles = makeStyles({
   about: {
     marginBottom: '20px',
   },
-  contributers: {},
-  container: {
+  aboutText: {
+    paddingTop: 15,
+  },
+  contributorsContainer: {
     display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
+    paddingTop: 20,
   },
   card: {
-    display: 'flex',
+    width: '18vw',
     marginRight: '10px',
   },
   image: {
-    maxWidth: 240,
+    width: '50%',
+    height: '50%',
+    maxWidth: 140,
+    margin: 10,
+    display: 'inline-block',
+  },
+  imageContainer: {
+    textAlign: 'center',
   },
 });
 
 const About = () => {
   const classes = useStyles();
-
   return (
     <>
-      <div className={classes.about}>
-        <Typography variant="h4" component="h2">
-          About
-        </Typography>
-        <Typography variant="body1" component="p" color="textPrimary">
-          Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
-          nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
-          sed diam voluptua. At vero eos et accusam et justo duo dolores et ea
-          rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem
-          ipsum dolor sit amet.
-        </Typography>
-      </div>
-      <div className={classes.contributers}>
-        <Typography variant="h4" component="h2">
-          Contributers
-        </Typography>
-        <Container className={classes.container}>
-          {contributers.map(({ name, description, image }) => (
-            <Card className={classes.card} key={name}>
-              <Avatar
-                className={classes.image}
-                src={image}
-              />
-              <CardContent>
-                <Typography variant="h5" component="h2">
-                  {name}
-                </Typography>
-                <Typography variant="body2" component="p" color="textSecondary">
-                  {description}
-                </Typography>
-              </CardContent>
-            </Card>
-          ))}
-        </Container>
-      </div>
+      <AboutSection classes={classes} />
+      <ContributorSection classes={classes} contributers={contributers} />
     </>
   );
 };
