@@ -11,14 +11,12 @@ const useStyles = makeStyles({
   container: {
     display: 'flex',
     flexWrap: 'wrap',
-  },
-  contributors: {
-    boxSizing: 'border-box',
+    justifyContent: 'flex-start',
   },
   card: {
     minHeight: 380,
-    width: '100%',
-    margin: '10px',
+    width: '98%',
+    margin: 5,
   },
   image: {
     width: '50%',
@@ -32,84 +30,44 @@ const useStyles = makeStyles({
   column: {
     flex: '33%',
     maxWidth: '31%',
-    marginRight: 10,
-    '@media screen and (max-width: 1000px)': {
+    '@media screen and (max-width: 1200px)': {
       flex: '50%',
-      maxWidth: '50%',
+      maxWidth: '45%',
     },
-    '@media screen and (max-width: 800px)': {
+    '@media screen and (max-width: 900px)': {
       flex: '100%',
       maxWidth: '100%',
     },
   },
 });
 
-function listToMatrix(list, elementsPerSubArray) {
-  let matrix = [],
-    i,
-    k;
-  for (i = 0, k = -1; i < list.length; i++) {
-    if (i % elementsPerSubArray === 0) {
-      k++;
-      matrix[k] = [];
-    }
-    matrix[k].push(list[i]);
-  }
-  return matrix;
-}
-
-const cleanArray = list => list.filter(n => n);
-
-function getContributorsMatrix(contributors) {
-  let contributorsMatrix = listToMatrix(
-    contributors,
-    Math.ceil(contributors.length / 3) + 1,
-  );
-  contributorsMatrix = (m => m[0].map((x, i) => m.map(x => x[i])))(
-    contributorsMatrix,
-  );
-  return contributorsMatrix.map(cleanArray);
-}
-
 function ContributorSection({ contributors }) {
   const classes = useStyles();
-  const contributorsMatrix = getContributorsMatrix(contributors);
   return (
-    <Container>
+    <>
       <Typography variant="h4" component="h2">
         Contributors
       </Typography>
       <div className={classes.contributors}>
         <div className={classes.container}>
-          {contributorsMatrix.map(contributors => (
-            <div
-              className={classes.column}
-              key={contributors.reduce((accum, { name }) => accum + name, '')}
-            >
-              {contributors.map(({ name, description, image }) => (
-                <Card className={classes.card} key={name}>
-                  <Container className={classes.imageContainer}>
-                    <Avatar className={classes.image} src={image} />
-                  </Container>
-                  <CardContent>
-                    <Typography variant="h5" component="h2">
-                      {name}
-                    </Typography>
-                    <Typography
-                      variant="body2"
-                      component="p"
-                      color="textSecondary"
-                    >
-                      {description}
-                    </Typography>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
+          {contributors.map(({ name, description, image }) => (
+            <Card className={`${classes.card} ${classes.column}`} key={name}>
+              <Container className={classes.imageContainer}>
+                <Avatar className={classes.image} src={image} />
+              </Container>
+              <CardContent>
+                <Typography variant="h5" component="h2">
+                  {name}
+                </Typography>
+                <Typography variant="body2" component="p" color="textSecondary">
+                  {description}
+                </Typography>
+              </CardContent>
+            </Card>
           ))}
         </div>
       </div>
-    </Container>
+    </>
   );
 }
 
