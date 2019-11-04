@@ -7,7 +7,8 @@ matrix:
     - language: python
       python:
         - "3.7"
-      env: PORT=8080
+      env:
+        - PORT=8080
       before_install:
         - cd back-end
       install:
@@ -30,3 +31,4 @@ matrix:
 
 notifications:
   email: false
+

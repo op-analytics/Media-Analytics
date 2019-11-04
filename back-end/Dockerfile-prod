@@ -1,0 +1,12 @@
+# base image
+FROM kennethreitz/pipenv
+
+# add entrypoint-prod.sh
+COPY ./entrypoint-prod.sh /app/entrypoint-prod.sh
+RUN chmod +x /app/entrypoint-prod.sh
+
+# add app
+COPY . /app
+
+# run server
+CMD ["/app/entrypoint-prod.sh"]

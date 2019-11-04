@@ -1,0 +1,57 @@
+version: '3.3'
+
+volumes:
+  nyta-db:
+
+services:
+  db:
+    image: mongo
+    volumes:
+      - 'nyta-db:/data/db'
+    ports:
+      - 5555:27017
+    env_file: '.db.env'
+
+  back-end:
+    image: nichtj3/nyta-back-end:prod
+    build:
+      context: ./back-end
+      dockerfile: Dockerfile-prod
+    ports:
+      - 5000:5000
+    volumes:
+      - './back-end/models:/usr/src/models'
+    env_file: './back-end/.env'
+    environment:
+      - TIMELINE_MODELS_DIR=/usr/src/models/
+    deploy:
+      replicas: 1
+
+  front-end:
+    image: nichtj3/nyta-front-end:prod
+    build:
+      context: ./front-end
+      dockerfile: Dockerfile-prod
+    ports:
+      - 3000:80
+    env_file: './front-end/.env'
+    depends_on:
+      - back-end
+    deploy:
+      replicas: 1
+
+  nginx:
+    image: nichtj3/nyta-nginx:prod
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile-prod
+    restart: always
+    ports:
+      - 80:80
+    depends_on:
+      - back-end
+      - front-end
+    deploy:
+      replicas: 1
+      placement:
+        constraints: [node.role == manager]

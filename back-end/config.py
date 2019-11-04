@@ -5,9 +5,6 @@ class Config:
     # Statement for enabling the development environment
     DEBUG = False
 
-    # Port the server will run on in development
-    PORT = os.environ["PORT"]
-
     # Define the application directory
     BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 
@@ -23,12 +20,19 @@ class Config:
 
 class Testing(Config):
     TESTING = True
-    MONGODB_SETTINGS = {
-        "db": "mongoenginetest",
-        "host": "mongomock://localhost",
-    }
+    MONGODB_SETTINGS = {"db": "mongoenginetest", "host": "mongomock://localhost"}
+    DEBUG = True
 
 
 class Dev(Config):
     DEBUG = True
-    MONGODB_SETTINGS = {"db": "nyta", "host": "mongodb://localhost/nyta"}
+    MONGODB_SETTINGS = {
+        "db": os.environ.get("DB_NAME"),
+        "host": os.environ.get("DB_HOST"),
+        "username": os.environ.get("DB_USERNAME"),
+        "password": os.environ.get("DB_PASSWORD"),
+    }
+
+
+class Prod(Config):
+    pass

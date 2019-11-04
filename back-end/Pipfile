@@ -9,6 +9,7 @@ gensim = "*"
 marshmallow = "*"
 Flask-Cors = "*"
 flask-mongoengine = "*"
+gunicorn = "*"
 
 [dev-packages]
 pylint = "*"
