@@ -7,7 +7,7 @@ import Form from './components/Timeline-form';
 
 const API_URL =
   process.env.NODE_ENV === 'production'
-    ? '/api/'
+    ? '/api'
     : process.env.REACT_APP_API_URL;
 
 const useStyles = makeStyles(() => ({

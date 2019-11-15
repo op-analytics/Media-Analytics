@@ -17,6 +17,16 @@ class Config:
     # Enable protection agains *Cross-site Request Forgery (CSRF)*
     CSRF_ENABLED = True
 
+    port = os.environ.get("DB_PORT")
+    MONGODB_SETTINGS = {
+        "db": os.environ.get("DB_NAME"),
+        "host": os.environ.get("DB_HOST"),
+        "username": os.environ.get("DB_USERNAME"),
+        "password": os.environ.get("DB_PASSWORD"),
+        "authentication_source": os.environ.get("DB_AUTHENTICATION_SOURCE"),
+        "port": int(os.environ.get("DB_PORT", 27017)),
+    }
+
 
 class Testing(Config):
     TESTING = True
@@ -26,12 +36,6 @@ class Testing(Config):
 
 class Dev(Config):
     DEBUG = True
-    MONGODB_SETTINGS = {
-        "db": os.environ.get("DB_NAME"),
-        "host": os.environ.get("DB_HOST"),
-        "username": os.environ.get("DB_USERNAME"),
-        "password": os.environ.get("DB_PASSWORD"),
-    }
 
 
 class Prod(Config):

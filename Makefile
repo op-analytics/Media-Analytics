@@ -1,11 +1,24 @@
-clean-containers:
+clean-dev:
 	docker-compose kill
 	docker-compose rm -f
 
-start-containers: clean-containers
-	docker-compose up -d
+clean-prod:
+	docker-compose -f docker-compose-prod.yml kill 
+	docker-compose -f docker-compose-prod.yml rm -fv 
 
-start-prod-containers: clean-containers
+clean-dev-and-volumes: clean-dev
+	docker volume rm nyt-media-analytics_nyta-db
+
+clean-prod-and-volumes: clean-prod
+	docker volume rm nyt-media-analytics_nyta-db
+
+build-prod:
+	docker-compose -f docker-compose-prod.yml build
+
+start-containers: clean-dev
+	docker-compose up --build
+
+start-prod-containers: clean-prod
 	docker-compose -f docker-compose-prod.yml up -d
 
 test-back-end:

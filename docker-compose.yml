@@ -10,7 +10,7 @@ services:
       - 'nyta-db:/data/db'
     ports:
       - 5555:27017
-    env_file: '.db.env'
+    env_file: './db/.env'
 
   back-end:
     build:

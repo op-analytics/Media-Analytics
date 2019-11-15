@@ -9,21 +9,21 @@ services:
     volumes:
       - 'nyta-db:/data/db'
     ports:
-      - 5555:27017
-    env_file: '.db.env'
+      - 27017:27017
+    env_file: './db/.env'
 
   back-end:
     image: nichtj3/nyta-back-end:prod
     build:
       context: ./back-end
       dockerfile: Dockerfile-prod
-    ports:
-      - 5000:5000
     volumes:
       - './back-end/models:/usr/src/models'
     env_file: './back-end/.env'
     environment:
       - TIMELINE_MODELS_DIR=/usr/src/models/
+    depends_on:
+      - db
     deploy:
       replicas: 1
 
@@ -32,8 +32,6 @@ services:
     build:
       context: ./front-end
       dockerfile: Dockerfile-prod
-    ports:
-      - 3000:80
     env_file: './front-end/.env'
     depends_on:
       - back-end
