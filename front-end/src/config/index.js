@@ -18,7 +18,7 @@ const schema = Joi.object(options).unknown(true);
 const { error, value: config } = schema.validate(process.env);
 
 if (error) {
-  alert(`Missing property in config, Check the console for more info`);
+  alert(`Error in env, Check the console for more info`);
   // eslint-disable-next-line no-console
   console.error('Missing property in env.', error.message);
 }
