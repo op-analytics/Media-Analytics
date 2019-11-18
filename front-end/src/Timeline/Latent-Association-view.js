@@ -5,6 +5,7 @@ import React, { useState } from 'react';
 import { CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 import { createTooltip } from '../Shared/utils';
 import Form from './components/Timeline-two-field-form';
+import {API_URL} from '../config';
 
 
 const useStyles = makeStyles(() => ({
@@ -47,11 +48,6 @@ const useStyles = makeStyles(() => ({
     width: '94%',
   },
 }));
-
-const API_URL =
-  process.env.NODE_ENV === 'production'
-    ? '/api'
-    : process.env.REACT_APP_API_URL;
 
 export default function Timeline() {
   const [data, setData] = useState();

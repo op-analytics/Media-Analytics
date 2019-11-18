@@ -4,11 +4,7 @@ import Axios from 'axios';
 import React, { useState } from 'react';
 import LineCharts from '../Shared/LineChartsV2';
 import Form from './components/Timeline-form';
-
-const API_URL =
-  process.env.NODE_ENV === 'production'
-    ? '/api'
-    : process.env.REACT_APP_API_URL;
+import {API_URL} from '../config';
 
 const useStyles = makeStyles(() => ({
   container: {
