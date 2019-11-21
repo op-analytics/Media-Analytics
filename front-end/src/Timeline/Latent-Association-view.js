@@ -1,11 +1,10 @@
 import CircularProgress from '@material-ui/core/CircularProgress';
-import { makeStyles } from '@material-ui/core/styles';
+import {makeStyles} from '@material-ui/core/styles';
 import Axios from 'axios';
-import React, { useState } from 'react';
-import { CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
-import { createTooltip } from '../Shared/utils';
-import Form from './components/Timeline-two-field-form';
-
+import React, {useState} from 'react';
+import {CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis} from 'recharts';
+import Form from '../Shared/Form';
+import {createTooltip} from '../Shared/utils';
 
 const useStyles = makeStyles(() => ({
   chartContainer: {
@@ -49,9 +48,14 @@ const useStyles = makeStyles(() => ({
 }));
 
 const API_URL =
-  process.env.NODE_ENV === 'production'
-    ? '/api'
-    : process.env.REACT_APP_API_URL;
+  process.env.NODE_ENV === 'production' ? '/api' : process.env.REACT_APP_API_URL;
+
+const formData = [
+  { label: 'Concept 1', name: 'concept_1', required: true },
+  { label: 'Concept 2', name: 'concept_2', required: true },
+  { label: 'Year from', name: 'year_from', required: true },
+  { label: 'Year to', name: 'year_to', required: true },
+];
 
 export default function Timeline() {
   const [data, setData] = useState();
@@ -59,8 +63,12 @@ export default function Timeline() {
 
   const classes = useStyles();
 
-  const onSubmitHandler = (e, yearFrom, yearTo, concept1, concept2) => {
-    e.preventDefault();
+  const onSubmitHandler = ({
+    year_from: yearFrom,
+    year_to: yearTo,
+    concept_1: concept1,
+    concept_2: concept2,
+  }) => {
     const concept1Array = concept1.split(',');
     const concept2Array = concept2.split(',');
     const yearFromInt = parseInt(yearFrom);
@@ -84,7 +92,7 @@ export default function Timeline() {
     <>
       <h3>Latent association over time</h3>
       <div className={classes.container}>
-        <Form onSubmitHandler={onSubmitHandler} />
+        <Form formData={formData} onSubmit={onSubmitHandler} />
         {loading ? (
           <CircularProgress />
         ) : (

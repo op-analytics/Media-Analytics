@@ -1,14 +1,12 @@
 import CircularProgress from '@material-ui/core/CircularProgress';
-import { makeStyles } from '@material-ui/core/styles';
+import {makeStyles} from '@material-ui/core/styles';
 import Axios from 'axios';
-import React, { useState } from 'react';
+import React, {useState} from 'react';
+import Form from '../Shared/Form';
 import LineCharts from '../Shared/LineChartsV2';
-import Form from './components/Timeline-form';
 
 const API_URL =
-  process.env.NODE_ENV === 'production'
-    ? '/api'
-    : process.env.REACT_APP_API_URL;
+  process.env.NODE_ENV === 'production' ? '/api' : process.env.REACT_APP_API_URL;
 
 const useStyles = makeStyles(() => ({
   container: {
@@ -21,6 +19,12 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
+const formData = [
+  { label: 'Words', name: 'words', required: true },
+  { label: 'Year from', name: 'year_from', required: true },
+  { label: 'Year to', name: 'year_to', required: true },
+];
+
 const cleanDataset = dataset => ({ title: dataset.word, data: dataset.data });
 
 export default function Timeline() {
@@ -29,8 +33,7 @@ export default function Timeline() {
 
   const classes = useStyles();
 
-  const onSubmitHandler = (e, yearFrom, yearTo, words) => {
-    e.preventDefault();
+  const onSubmitHandler = ({ year_from: yearFrom, year_to: yearTo, words }) => {
     const wordArray = words.split(',');
     setLoading(true);
     Axios.post(`${API_URL}/timeline/sentiment`, {
@@ -51,7 +54,7 @@ export default function Timeline() {
     <>
       <h3>Sentiment Over Timeline</h3>
       <div className={classes.container}>
-        <Form onSubmitHandler={onSubmitHandler} />
+        <Form formData={formData} onSubmit={onSubmitHandler} />
         {loading ? (
           <CircularProgress />
         ) : (

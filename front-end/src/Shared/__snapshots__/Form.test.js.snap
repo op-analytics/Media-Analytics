@@ -1,0 +1,66 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Form renders correctly with more than one field 1`] = `
+<form
+  className="makeStyles-form-1"
+  onSubmit={[Function]}
+>
+  <WithStyles(ForwardRef(FormControl))
+    className="makeStyles-formControl-3"
+    key="test"
+  >
+    <WithStyles(ForwardRef(TextField))
+      label="test:"
+      margin="normal"
+      name="test"
+      onChange={[Function]}
+    />
+  </WithStyles(ForwardRef(FormControl))>
+  <WithStyles(ForwardRef(FormControl))
+    className="makeStyles-formControl-3"
+    key="test2"
+  >
+    <WithStyles(ForwardRef(TextField))
+      label="test2:"
+      margin="normal"
+      name="test2"
+      onChange={[Function]}
+    />
+  </WithStyles(ForwardRef(FormControl))>
+  <WithStyles(ForwardRef(Button))
+    className="makeStyles-button-4"
+    color="primary"
+    type="submit"
+    variant="outlined"
+  >
+    Submit
+  </WithStyles(ForwardRef(Button))>
+</form>
+`;
+
+exports[`Form renders correctly with one field 1`] = `
+<form
+  className="makeStyles-form-1"
+  onSubmit={[Function]}
+>
+  <WithStyles(ForwardRef(FormControl))
+    className="makeStyles-formControl-3"
+    key="test"
+  >
+    <WithStyles(ForwardRef(TextField))
+      label="test:"
+      margin="normal"
+      name="test"
+      onChange={[Function]}
+    />
+  </WithStyles(ForwardRef(FormControl))>
+  <WithStyles(ForwardRef(Button))
+    className="makeStyles-button-4"
+    color="primary"
+    type="submit"
+    variant="outlined"
+  >
+    Submit
+  </WithStyles(ForwardRef(Button))>
+</form>
+`;

@@ -9,7 +9,27 @@ exports[`Timeline should render correctly 1`] = `
     className="makeStyles-container-1"
   >
     <Form
-      onSubmitHandler={[Function]}
+      buttonText="Submit"
+      formData={
+        Array [
+          Object {
+            "label": "Words",
+            "name": "words",
+            "required": true,
+          },
+          Object {
+            "label": "Year from",
+            "name": "year_from",
+            "required": true,
+          },
+          Object {
+            "label": "Year to",
+            "name": "year_to",
+            "required": true,
+          },
+        ]
+      }
+      onSubmit={[Function]}
     />
     <LineCharts
       datasets={Array []}
