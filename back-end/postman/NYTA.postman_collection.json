@@ -1,0 +1,1105 @@
+{
+	"info": {
+		"_postman_id": "70320efe-00b3-4c70-9d16-eefad28ba121",
+		"name": "NYTA",
+		"description": "# New York times analytics API\nAn api to get word information and data from the nyt corpus",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Timeline sentiment",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "af06deb3-26f7-401d-af9a-8aaa4c9cd924",
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([201,202]);",
+							"});",
+							"var schema ={",
+							"  \"definitions\": {},",
+							"  \"$schema\": \"http://json-schema.org/draft-07/schema#\",",
+							"  \"$id\": \"http://example.com/root.json\",",
+							"  \"type\": \"object\",",
+							"  \"title\": \"The Root Schema\",",
+							"  \"required\": [",
+							"    \"code\",",
+							"    \"data\"",
+							"  ],",
+							"  \"properties\": {",
+							"    \"code\": {",
+							"      \"$id\": \"#/properties/code\",",
+							"      \"type\": \"integer\",",
+							"      \"title\": \"The Code Schema\",",
+							"      \"default\": 0,",
+							"      \"examples\": [",
+							"        202",
+							"      ]",
+							"    },",
+							"    \"data\": {",
+							"      \"$id\": \"#/properties/data\",",
+							"      \"type\": \"array\",",
+							"      \"title\": \"The Data Schema\",",
+							"      \"items\": {",
+							"        \"$id\": \"#/properties/data/items\",",
+							"        \"type\": \"object\",",
+							"        \"title\": \"The Items Schema\",",
+							"        \"required\": [",
+							"          \"data\",",
+							"          \"word\"",
+							"        ],",
+							"        \"properties\": {",
+							"          \"data\": {",
+							"            \"$id\": \"#/properties/data/items/properties/data\",",
+							"            \"type\": \"array\",",
+							"            \"title\": \"The Data Schema\",",
+							"            \"items\": {",
+							"              \"$id\": \"#/properties/data/items/properties/data/items\",",
+							"              \"type\": \"object\",",
+							"              \"title\": \"The Items Schema\",",
+							"              \"required\": [",
+							"                \"sentiment\",",
+							"                \"year\"",
+							"              ],",
+							"              \"properties\": {",
+							"                \"sentiment\": {",
+							"                  \"$id\": \"#/properties/data/items/properties/data/items/properties/sentiment\",",
+							"                  \"type\": \"number\",",
+							"                  \"title\": \"The Sentiment Schema\",",
+							"                  \"default\": 0.0,",
+							"                  \"examples\": [",
+							"                    -0.7534574875846117",
+							"                  ]",
+							"                },",
+							"                \"year\": {",
+							"                  \"$id\": \"#/properties/data/items/properties/data/items/properties/year\",",
+							"                  \"type\": \"integer\",",
+							"                  \"title\": \"The Year Schema\",",
+							"                  \"default\": 0,",
+							"                  \"examples\": [",
+							"                    1970",
+							"                  ]",
+							"                }",
+							"              }",
+							"            }",
+							"          },",
+							"          \"word\": {",
+							"            \"$id\": \"#/properties/data/items/properties/word\",",
+							"            \"type\": \"string\",",
+							"            \"title\": \"The Word Schema\",",
+							"            \"default\": \"\",",
+							"            \"examples\": [",
+							"              \"jim\"",
+							"            ],",
+							"            \"pattern\": \"^(.*)$\"",
+							"          }",
+							"        }",
+							"      }",
+							"    }",
+							"  }",
+							"};",
+							"",
+							"pm.test('Schema is valid', function() {",
+							"  pm.expect(tv4.validate(pm.response.json(), schema)).to.be.true;",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"words\":[\"Jim\"],\n\t\"year_to\":2018,\n\t\"year_from\":1970\n}"
+				},
+				"url": {
+					"raw": "{{API_URL}}/timeline/sentiment",
+					"host": [
+						"{{API_URL}}"
+					],
+					"path": [
+						"timeline",
+						"sentiment"
+					]
+				},
+				"description": "A list of words average sentiments for each year in a given time range for the list of given words"
+			},
+			"response": [
+				{
+					"name": "Timeline sentiment field missing",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"words\":[\"Jim\"],\n\t\"year_to\":1969\n}"
+						},
+						"url": {
+							"raw": "{{API_URL}}/timeline/sentiment",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"timeline",
+								"sentiment"
+							]
+						}
+					},
+					"status": "BAD REQUEST",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Server",
+							"value": "nginx/1.15.9"
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 19 Nov 2019 06:02:21 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Content-Length",
+							"value": "75"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"code\": 400,\n    \"messages\": {\n        \"year_from\": [\n            \"Missing data for required field.\"\n        ]\n    }\n}"
+				},
+				{
+					"name": "Timeline sentiment data is not found for the given year range or word",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"words\":[\"Jim\"],\n\t\"year_to\":1969,\n\t\"year_from\":1800\n}"
+						},
+						"url": {
+							"raw": "{{API_URL}}/timeline/sentiment",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"timeline",
+								"sentiment"
+							]
+						}
+					},
+					"status": "BAD REQUEST",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Server",
+							"value": "nginx/1.15.9"
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 19 Nov 2019 06:01:23 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Content-Length",
+							"value": "86"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"code\": 400,\n    \"messages\": {\n        \"year_range\": [\n            \"No data exists for any year in given range\"\n        ]\n    }\n}"
+				},
+				{
+					"name": "Timeline sentiment unknown and missing fields",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"words\":[\"Jim\"],\n\t\"year_too\":1969\n}"
+						},
+						"url": {
+							"raw": "{{API_URL}}/timeline/sentiment",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"timeline",
+								"sentiment"
+							]
+						}
+					},
+					"status": "BAD REQUEST",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Server",
+							"value": "nginx/1.15.9"
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 19 Nov 2019 06:02:52 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Content-Length",
+							"value": "152"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"code\": 400,\n    \"messages\": {\n        \"year_from\": [\n            \"Missing data for required field.\"\n        ],\n        \"year_to\": [\n            \"Missing data for required field.\"\n        ],\n        \"year_too\": [\n            \"Unknown field.\"\n        ]\n    }\n}"
+				},
+				{
+					"name": "Timeline sentiment data is found",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"words\":[\"Jim\"],\n\t\"year_to\":2018,\n\t\"year_from\":1970\n}"
+						},
+						"url": {
+							"raw": "{{API_URL}}/timeline/sentiment",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"timeline",
+								"sentiment"
+							]
+						}
+					},
+					"status": "ACCEPTED",
+					"code": 202,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Server",
+							"value": "nginx/1.15.9"
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 19 Nov 2019 06:00:29 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Content-Length",
+							"value": "2283"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"code\": 202,\n    \"data\": [\n        {\n            \"data\": [\n                {\n                    \"sentiment\": -0.7534574875846117,\n                    \"year\": 1970\n                },\n                {\n                    \"sentiment\": -1.4071877556969796,\n                    \"year\": 1971\n                },\n                {\n                    \"sentiment\": -1.946515226889683,\n                    \"year\": 1972\n                },\n                {\n                    \"sentiment\": -1.031292851532368,\n                    \"year\": 1973\n                },\n                {\n                    \"sentiment\": -0.5573384071509014,\n                    \"year\": 1974\n                },\n                {\n                    \"sentiment\": -1.1456956484520324,\n                    \"year\": 1975\n                },\n                {\n                    \"sentiment\": 0.24348117128674915,\n                    \"year\": 1976\n                },\n                {\n                    \"sentiment\": 1.828777071459241,\n                    \"year\": 1977\n                },\n                {\n                    \"sentiment\": 0.6030328187485514,\n                    \"year\": 1978\n                },\n                {\n                    \"sentiment\": 0.40691373831484107,\n                    \"year\": 1979\n                },\n                {\n                    \"sentiment\": 0.5213165352345055,\n                    \"year\": 1980\n                },\n                {\n                    \"sentiment\": 0.5213165352345055,\n                    \"year\": 1981\n                },\n                {\n                    \"sentiment\": -0.19778675968909912,\n                    \"year\": 1982\n                },\n                {\n                    \"sentiment\": 0.9625844662103538,\n                    \"year\": 1983\n                },\n                {\n                    \"sentiment\": -0.13241373287786234,\n                    \"year\": 1984\n                },\n                {\n                    \"sentiment\": -0.2468165297975267,\n                    \"year\": 1985\n                },\n                {\n                    \"sentiment\": 0.014675577447420415,\n                    \"year\": 1986\n                },\n                {\n                    \"sentiment\": 0.8481816692906894,\n                    \"year\": 1987\n                },\n                {\n                    \"sentiment\": 0.48863002182888704,\n                    \"year\": 1988\n                },\n                {\n                    \"sentiment\": 0.5376597919373146,\n                    \"year\": 1989\n                },\n                {\n                    \"sentiment\": -0.34487607001438186,\n                    \"year\": 1990\n                },\n                {\n                    \"sentiment\": 0.16176488777270318,\n                    \"year\": 1991\n                },\n                {\n                    \"sentiment\": -0.8188305143958485,\n                    \"year\": 1992\n                },\n                {\n                    \"sentiment\": 0.5540030486401238,\n                    \"year\": 1993\n                },\n                {\n                    \"sentiment\": -0.606368177259329,\n                    \"year\": 1994\n                },\n                {\n                    \"sentiment\": -0.6717412040705658,\n                    \"year\": 1995\n                },\n                {\n                    \"sentiment\": -0.7371142308818025,\n                    \"year\": 1996\n                },\n                {\n                    \"sentiment\": 0.17810814447551238,\n                    \"year\": 1997\n                },\n                {\n                    \"sentiment\": 2.335418029246326,\n                    \"year\": 1998\n                },\n                {\n                    \"sentiment\": 0.8154951558850709,\n                    \"year\": 1999\n                },\n                {\n                    \"sentiment\": 1.4365389105918203,\n                    \"year\": 2000\n                },\n                {\n                    \"sentiment\": 0.11273511766427559,\n                    \"year\": 2001\n                },\n                {\n                    \"sentiment\": 0.5540030486401238,\n                    \"year\": 2002\n                },\n                {\n                    \"sentiment\": 0.7174356156682158,\n                    \"year\": 2003\n                },\n                {\n                    \"sentiment\": 0.11273511766427559,\n                    \"year\": 2004\n                },\n                {\n                    \"sentiment\": -1.783082659861591,\n                    \"year\": 2005\n                },\n                {\n                    \"sentiment\": -2.6492752651104783,\n                    \"year\": 2006\n                },\n                {\n                    \"sentiment\": -1.783082659861591,\n                    \"year\": 2007\n                },\n                {\n                    \"sentiment\": -0.2958462999059543,\n                    \"year\": 2008\n                },\n                {\n                    \"sentiment\": -0.18144350298628992,\n                    \"year\": 2009\n                },\n                {\n                    \"sentiment\": -0.27950304320314506,\n                    \"year\": 2010\n                },\n                {\n                    \"sentiment\": 1.5509417075114846,\n                    \"year\": 2011\n                },\n                {\n                    \"sentiment\": 0.7828086424794526,\n                    \"year\": 2012\n                },\n                {\n                    \"sentiment\": 2.090269178704188,\n                    \"year\": 2013\n                },\n                {\n                    \"sentiment\": 0.4559435084232687,\n                    \"year\": 2014\n                },\n                {\n                    \"sentiment\": -0.18144350298628992,\n                    \"year\": 2015\n                },\n                {\n                    \"sentiment\": -0.16510024628348072,\n                    \"year\": 2016\n                },\n                {\n                    \"sentiment\": -0.524651893745283,\n                    \"year\": 2017\n                },\n                {\n                    \"sentiment\": -0.39390584012280944,\n                    \"year\": 2018\n                }\n            ],\n            \"word\": \"jim\"\n        }\n    ]\n}"
+				}
+			]
+		},
+		{
+			"name": "Timeline frequency",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "5b3ab268-e200-435b-87c0-c6c6760527bc",
+						"exec": [
+							"pm.test('Successful POST request', function() {",
+							"  pm.expect(pm.response.code).to.be.oneOf([201, 202]);",
+							"});",
+							"",
+							"var schema = {",
+							"  definitions: {},",
+							"  $schema: 'http://json-schema.org/draft-07/schema#',",
+							"  $id: 'http://example.com/root.json',",
+							"  type: 'object',",
+							"  title: 'The Root Schema',",
+							"  required: ['code', 'data'],",
+							"  properties: {",
+							"    code: {",
+							"      $id: '#/properties/code',",
+							"      type: 'integer',",
+							"      title: 'The Code Schema',",
+							"      default: 0,",
+							"      examples: [202],",
+							"    },",
+							"    data: {",
+							"      $id: '#/properties/data',",
+							"      type: 'array',",
+							"      title: 'The Data Schema',",
+							"      items: {",
+							"        $id: '#/properties/data/items',",
+							"        type: 'object',",
+							"        title: 'The Items Schema',",
+							"        required: ['data', 'word'],",
+							"        properties: {",
+							"          data: {",
+							"            $id: '#/properties/data/items/properties/data',",
+							"            type: 'array',",
+							"            title: 'The Data Schema',",
+							"            items: {",
+							"              $id: '#/properties/data/items/properties/data/items',",
+							"              type: 'object',",
+							"              title: 'The Items Schema',",
+							"              required: ['count', 'freq', 'rank', 'year'],",
+							"              properties: {",
+							"                count: {",
+							"                  $id:",
+							"                    '#/properties/data/items/properties/data/items/properties/count',",
+							"                  type: 'integer',",
+							"                  title: 'The Count Schema',",
+							"                  default: 0,",
+							"                  examples: [3789],",
+							"                },",
+							"                freq: {",
+							"                  $id:",
+							"                    '#/properties/data/items/properties/data/items/properties/freq',",
+							"                  type: 'number',",
+							"                  title: 'The Freq Schema',",
+							"                  default: 0.0,",
+							"                  examples: [0.018545107216807185],",
+							"                },",
+							"                rank: {",
+							"                  $id:",
+							"                    '#/properties/data/items/properties/data/items/properties/rank',",
+							"                  type: 'integer',",
+							"                  title: 'The Rank Schema',",
+							"                  default: 0,",
+							"                  examples: [976],",
+							"                },",
+							"                year: {",
+							"                  $id:",
+							"                    '#/properties/data/items/properties/data/items/properties/year',",
+							"                  type: 'integer',",
+							"                  title: 'The Year Schema',",
+							"                  default: 0,",
+							"                  examples: [1970],",
+							"                },",
+							"              },",
+							"            },",
+							"          },",
+							"          word: {",
+							"            $id: '#/properties/data/items/properties/word',",
+							"            type: 'string',",
+							"            title: 'One of the Words requested',",
+							"            default: '',",
+							"            examples: ['jim'],",
+							"            pattern: '^(.*)$',",
+							"          },",
+							"        },",
+							"      },",
+							"    },",
+							"  },",
+							"};",
+							"",
+							"pm.test('Schema is valid', function() {",
+							"  pm.expect(tv4.validate(pm.response.json(), schema)).to.be.true;",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "c7b5f93b-1a4a-487c-8fbe-517add0f3dc2",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"words\":[\"Jim\"],\n\t\"year_to\":2018,\n\t\"year_from\":1970\n}"
+				},
+				"url": {
+					"raw": "{{API_URL}}/timeline/frequency",
+					"host": [
+						"{{API_URL}}"
+					],
+					"path": [
+						"timeline",
+						"frequency"
+					]
+				},
+				"description": "A list of frequencies for a given time range for the list of given words"
+			},
+			"response": [
+				{
+					"name": "Timeline frequency data is found",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"words\":[\"Jim\"],\n\t\"year_to\":2018,\n\t\"year_from\":1970\n}"
+						},
+						"url": {
+							"raw": "http://10.118.26.10/api/timeline/frequency",
+							"protocol": "http",
+							"host": [
+								"10",
+								"118",
+								"26",
+								"10"
+							],
+							"path": [
+								"api",
+								"timeline",
+								"frequency"
+							]
+						}
+					},
+					"status": "ACCEPTED",
+					"code": 202,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Content-Length",
+							"value": "6655"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Server",
+							"value": "Werkzeug/0.16.0 Python/3.7.3"
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 19 Nov 2019 04:11:31 GMT"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"code\": 202,\n    \"data\": [\n        {\n            \"data\": [\n                {\n                    \"count\": 3789,\n                    \"freq\": 0.018545107216807185,\n                    \"rank\": 976,\n                    \"year\": 1970\n                },\n                {\n                    \"count\": 3386,\n                    \"freq\": 0.01706796204399784,\n                    \"rank\": 1077,\n                    \"year\": 1971\n                },\n                {\n                    \"count\": 3179,\n                    \"freq\": 0.01564439863600922,\n                    \"rank\": 1218,\n                    \"year\": 1972\n                },\n                {\n                    \"count\": 3294,\n                    \"freq\": 0.014926204329224578,\n                    \"rank\": 1293,\n                    \"year\": 1973\n                },\n                {\n                    \"count\": 3025,\n                    \"freq\": 0.01442222584671696,\n                    \"rank\": 1367,\n                    \"year\": 1974\n                },\n                {\n                    \"count\": 2699,\n                    \"freq\": 0.01474518447351196,\n                    \"rank\": 1325,\n                    \"year\": 1975\n                },\n                {\n                    \"count\": 2944,\n                    \"freq\": 0.013901730911882246,\n                    \"rank\": 1407,\n                    \"year\": 1976\n                },\n                {\n                    \"count\": 3486,\n                    \"freq\": 0.01401132891908144,\n                    \"rank\": 1374,\n                    \"year\": 1977\n                },\n                {\n                    \"count\": 3060,\n                    \"freq\": 0.014951230405643005,\n                    \"rank\": 1280,\n                    \"year\": 1978\n                },\n                {\n                    \"count\": 3708,\n                    \"freq\": 0.014564898406298446,\n                    \"rank\": 1325,\n                    \"year\": 1979\n                },\n                {\n                    \"count\": 3204,\n                    \"freq\": 0.014293040520502216,\n                    \"rank\": 1368,\n                    \"year\": 1981\n                },\n                {\n                    \"count\": 3239,\n                    \"freq\": 0.01494748375332194,\n                    \"rank\": 1312,\n                    \"year\": 1982\n                },\n                {\n                    \"count\": 3192,\n                    \"freq\": 0.014960826958772752,\n                    \"rank\": 1314,\n                    \"year\": 1983\n                },\n                {\n                    \"count\": 3389,\n                    \"freq\": 0.015160182605719125,\n                    \"rank\": 1292,\n                    \"year\": 1984\n                },\n                {\n                    \"count\": 3255,\n                    \"freq\": 0.014553002841121716,\n                    \"rank\": 1343,\n                    \"year\": 1985\n                },\n                {\n                    \"count\": 3682,\n                    \"freq\": 0.015655914132115763,\n                    \"rank\": 1240,\n                    \"year\": 1986\n                },\n                {\n                    \"count\": 3876,\n                    \"freq\": 0.016585115338223603,\n                    \"rank\": 1153,\n                    \"year\": 1987\n                },\n                {\n                    \"count\": 3742,\n                    \"freq\": 0.01582077589194486,\n                    \"rank\": 1218,\n                    \"year\": 1988\n                },\n                {\n                    \"count\": 3736,\n                    \"freq\": 0.01626335420101027,\n                    \"rank\": 1181,\n                    \"year\": 1989\n                },\n                {\n                    \"count\": 3619,\n                    \"freq\": 0.015916243703155326,\n                    \"rank\": 1213,\n                    \"year\": 1990\n                },\n                {\n                    \"count\": 3524,\n                    \"freq\": 0.01648822899997815,\n                    \"rank\": 1161,\n                    \"year\": 1991\n                },\n                {\n                    \"count\": 3717,\n                    \"freq\": 0.017090165913004298,\n                    \"rank\": 1117,\n                    \"year\": 1992\n                },\n                {\n                    \"count\": 4037,\n                    \"freq\": 0.019126194889719506,\n                    \"rank\": 966,\n                    \"year\": 1993\n                },\n                {\n                    \"count\": 3765,\n                    \"freq\": 0.01797737744012459,\n                    \"rank\": 1048,\n                    \"year\": 1994\n                },\n                {\n                    \"count\": 3348,\n                    \"freq\": 0.016175191430588428,\n                    \"rank\": 1186,\n                    \"year\": 1995\n                },\n                {\n                    \"count\": 3521,\n                    \"freq\": 0.016069165411999983,\n                    \"rank\": 1192,\n                    \"year\": 1996\n                },\n                {\n                    \"count\": 3516,\n                    \"freq\": 0.015512359194236179,\n                    \"rank\": 1233,\n                    \"year\": 1997\n                },\n                {\n                    \"count\": 3952,\n                    \"freq\": 0.015796831640030498,\n                    \"rank\": 1214,\n                    \"year\": 1998\n                },\n                {\n                    \"count\": 3931,\n                    \"freq\": 0.015210902196491426,\n                    \"rank\": 1269,\n                    \"year\": 1999\n                },\n                {\n                    \"count\": 4452,\n                    \"freq\": 0.016469234991826977,\n                    \"rank\": 1157,\n                    \"year\": 2000\n                },\n                {\n                    \"count\": 3941,\n                    \"freq\": 0.015033003373976608,\n                    \"rank\": 1286,\n                    \"year\": 2001\n                },\n                {\n                    \"count\": 3803,\n                    \"freq\": 0.014087147994472414,\n                    \"rank\": 1395,\n                    \"year\": 2002\n                },\n                {\n                    \"count\": 3752,\n                    \"freq\": 0.014294583632915093,\n                    \"rank\": 1354,\n                    \"year\": 2003\n                },\n                {\n                    \"count\": 3329,\n                    \"freq\": 0.013284690110958888,\n                    \"rank\": 1457,\n                    \"year\": 2004\n                },\n                {\n                    \"count\": 2103,\n                    \"freq\": 0.011074360990150032,\n                    \"rank\": 1765,\n                    \"year\": 2005\n                },\n                {\n                    \"count\": 1152,\n                    \"freq\": 0.010118093610634678,\n                    \"rank\": 1939,\n                    \"year\": 2006\n                },\n                {\n                    \"count\": 1802,\n                    \"freq\": 0.012242526487881393,\n                    \"rank\": 1595,\n                    \"year\": 2007\n                },\n                {\n                    \"count\": 3479,\n                    \"freq\": 0.012337875212907254,\n                    \"rank\": 1591,\n                    \"year\": 2008\n                },\n                {\n                    \"count\": 3663,\n                    \"freq\": 0.012761966093933227,\n                    \"rank\": 1529,\n                    \"year\": 2009\n                },\n                {\n                    \"count\": 3721,\n                    \"freq\": 0.01227376573448279,\n                    \"rank\": 1616,\n                    \"year\": 2010\n                },\n                {\n                    \"count\": 3689,\n                    \"freq\": 0.011818985429968698,\n                    \"rank\": 1681,\n                    \"year\": 2011\n                },\n                {\n                    \"count\": 3985,\n                    \"freq\": 0.011953261278614413,\n                    \"rank\": 1666,\n                    \"year\": 2012\n                },\n                {\n                    \"count\": 3170,\n                    \"freq\": 0.010472600373762813,\n                    \"rank\": 1887,\n                    \"year\": 2013\n                },\n                {\n                    \"count\": 2673,\n                    \"freq\": 0.009017876041551187,\n                    \"rank\": 2184,\n                    \"year\": 2014\n                },\n                {\n                    \"count\": 2350,\n                    \"freq\": 0.009027132833952345,\n                    \"rank\": 2179,\n                    \"year\": 2015\n                },\n                {\n                    \"count\": 2022,\n                    \"freq\": 0.007995449474156844,\n                    \"rank\": 2447,\n                    \"year\": 2016\n                },\n                {\n                    \"count\": 2384,\n                    \"freq\": 0.010052139147073463,\n                    \"rank\": 1975,\n                    \"year\": 2017\n                },\n                {\n                    \"count\": 2576,\n                    \"freq\": 0.010475255340448644,\n                    \"rank\": 1883,\n                    \"year\": 2018\n                }\n            ],\n            \"word\": \"jim\"\n        }\n    ]\n}"
+				},
+				{
+					"name": "Timeline frequency unknown and missing fields",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"words\":[\"Jim\"],\n\t\"year_too\":1969\n}"
+						},
+						"url": {
+							"raw": "http://10.118.26.10/api/timeline/frequency",
+							"protocol": "http",
+							"host": [
+								"10",
+								"118",
+								"26",
+								"10"
+							],
+							"path": [
+								"api",
+								"timeline",
+								"frequency"
+							]
+						}
+					},
+					"status": "BAD REQUEST",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Content-Length",
+							"value": "221"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Server",
+							"value": "Werkzeug/0.16.0 Python/3.7.3"
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 19 Nov 2019 04:13:31 GMT"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"code\": 400,\n    \"messages\": {\n        \"year_from\": [\n            \"Missing data for required field.\"\n        ],\n        \"year_to\": [\n            \"Missing data for required field.\"\n        ],\n        \"year_too\": [\n            \"Unknown field.\"\n        ]\n    }\n}"
+				},
+				{
+					"name": "Timeline frequency field missing",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"words\":[\"Jim\"],\n\t\"year_to\":1969\n}"
+						},
+						"url": {
+							"raw": "http://10.118.26.10/api/timeline/frequency",
+							"protocol": "http",
+							"host": [
+								"10",
+								"118",
+								"26",
+								"10"
+							],
+							"path": [
+								"api",
+								"timeline",
+								"frequency"
+							]
+						}
+					},
+					"status": "BAD REQUEST",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Content-Length",
+							"value": "106"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Server",
+							"value": "Werkzeug/0.16.0 Python/3.7.3"
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 19 Nov 2019 04:13:08 GMT"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"code\": 400,\n    \"messages\": {\n        \"year_from\": [\n            \"Missing data for required field.\"\n        ]\n    }\n}"
+				},
+				{
+					"name": "Timeline frequency data is not found for the given year range or word",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"words\":[\"Jim\"],\n\t\"year_to\":1969,\n\t\"year_from\":1800\n}"
+						},
+						"url": {
+							"raw": "http://10.118.26.10/api/timeline/frequency",
+							"protocol": "http",
+							"host": [
+								"10",
+								"118",
+								"26",
+								"10"
+							],
+							"path": [
+								"api",
+								"timeline",
+								"frequency"
+							]
+						}
+					},
+					"status": "BAD REQUEST",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Content-Length",
+							"value": "117"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Server",
+							"value": "Werkzeug/0.16.0 Python/3.7.3"
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 19 Nov 2019 04:12:17 GMT"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"code\": 400,\n    \"messages\": {\n        \"year_range\": [\n            \"No data exists for any year in given range\"\n        ]\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "Latent Association",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "bb3c2599-a57b-4977-adb5-410f8317bdcd",
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([201,202]);",
+							"});",
+							"",
+							"var schema = {",
+							"  \"definitions\": {},",
+							"  \"$schema\": \"http://json-schema.org/draft-07/schema#\",",
+							"  \"$id\": \"http://example.com/root.json\",",
+							"  \"type\": \"object\",",
+							"  \"title\": \"The Root Schema\",",
+							"  \"required\": [",
+							"    \"code\",",
+							"    \"data\"",
+							"  ],",
+							"  \"properties\": {",
+							"    \"code\": {",
+							"      \"$id\": \"#/properties/code\",",
+							"      \"type\": \"integer\",",
+							"      \"title\": \"The Code Schema\",",
+							"      \"default\": 0,",
+							"      \"examples\": [",
+							"        202",
+							"      ]",
+							"    },",
+							"    \"data\": {",
+							"      \"$id\": \"#/properties/data\",",
+							"      \"type\": \"array\",",
+							"      \"title\": \"The Data Schema\",",
+							"      \"items\": {",
+							"        \"$id\": \"#/properties/data/items\",",
+							"        \"type\": \"object\",",
+							"        \"title\": \"The Items Schema\",",
+							"        \"required\": [",
+							"          \"association\",",
+							"          \"year_range\"",
+							"        ],",
+							"        \"properties\": {",
+							"          \"association\": {",
+							"            \"$id\": \"#/properties/data/items/properties/association\",",
+							"            \"type\": \"number\",",
+							"            \"title\": \"The Association Schema\",",
+							"            \"default\": 0.0,",
+							"            \"examples\": [",
+							"              0.07491448790085795",
+							"            ]",
+							"          },",
+							"          \"year_range\": {",
+							"            \"$id\": \"#/properties/data/items/properties/year_range\",",
+							"            \"type\": \"string\",",
+							"            \"title\": \"The Year_range Schema\",",
+							"            \"default\": \"\",",
+							"            \"examples\": [",
+							"              \"1970-1974\"",
+							"            ],",
+							"            \"pattern\": \"^(.*)$\"",
+							"          }",
+							"        }",
+							"      }",
+							"    }",
+							"  }",
+							"};",
+							"",
+							"pm.test('Schema is valid', function() {",
+							"  pm.expect(tv4.validate(pm.response.json(), schema)).to.be.true;",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"concept_1\":[\"man\"],\n\t\"concept_2\":[\"Jim\"],\n\t\"year_to\":2018,\n\t\"year_from\":1970\n}"
+				},
+				"url": {
+					"raw": "{{API_URL}}/timeline/latent-association",
+					"host": [
+						"{{API_URL}}"
+					],
+					"path": [
+						"timeline",
+						"latent-association"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Latent Association field missing",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"concept_1\":[\"man\"],\n\t\"concept_2\":[\"Jim\"],\n\t\"year_to\":1969\n}"
+						},
+						"url": {
+							"raw": "{{API_URL}}/timeline/latent-association",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"timeline",
+								"latent-association"
+							]
+						}
+					},
+					"status": "BAD REQUEST",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Server",
+							"value": "nginx/1.15.9"
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 19 Nov 2019 06:05:32 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Content-Length",
+							"value": "75"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"code\": 400,\n    \"messages\": {\n        \"year_from\": [\n            \"Missing data for required field.\"\n        ]\n    }\n}"
+				},
+				{
+					"name": "Latent Association unknown and missing fields",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"concept_1\":[\"man\"],\n\t\"concept_2\":[\"Jim\"],\n\t\"year_too\":1969\n}"
+						},
+						"url": {
+							"raw": "{{API_URL}}/timeline/latent-association",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"timeline",
+								"latent-association"
+							]
+						}
+					},
+					"status": "BAD REQUEST",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Server",
+							"value": "nginx/1.15.9"
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 19 Nov 2019 06:06:15 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Content-Length",
+							"value": "152"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"code\": 400,\n    \"messages\": {\n        \"year_from\": [\n            \"Missing data for required field.\"\n        ],\n        \"year_to\": [\n            \"Missing data for required field.\"\n        ],\n        \"year_too\": [\n            \"Unknown field.\"\n        ]\n    }\n}"
+				},
+				{
+					"name": "Latent Association data is found",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"concept_1\":[\"man\"],\n\t\"concept_2\":[\"Jim\"],\n\t\"year_to\":2018,\n\t\"year_from\":1970\n}"
+						},
+						"url": {
+							"raw": "{{API_URL}}/timeline/latent-association",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"timeline",
+								"latent-association"
+							]
+						}
+					},
+					"status": "ACCEPTED",
+					"code": 202,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Server",
+							"value": "nginx/1.15.9"
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 19 Nov 2019 06:03:39 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Content-Length",
+							"value": "639"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"code\": 202,\n    \"data\": [\n        {\n            \"association\": 0.07491448790085795,\n            \"year_range\": \"1970-1974\"\n        },\n        {\n            \"association\": 0.14119912271360083,\n            \"year_range\": \"1975-1979\"\n        },\n        {\n            \"association\": 0.10046544408455967,\n            \"year_range\": \"1980-1984\"\n        },\n        {\n            \"association\": 0.11071427945658976,\n            \"year_range\": \"1985-1989\"\n        },\n        {\n            \"association\": 0.058799030820955084,\n            \"year_range\": \"1990-1994\"\n        },\n        {\n            \"association\": 0.002256334402467121,\n            \"year_range\": \"1995-1999\"\n        },\n        {\n            \"association\": -0.002399161694031698,\n            \"year_range\": \"2000-2004\"\n        },\n        {\n            \"association\": -0.032678050347809524,\n            \"year_range\": \"2005-2009\"\n        },\n        {\n            \"association\": 0.04529856712992909,\n            \"year_range\": \"2010-2014\"\n        },\n        {\n            \"association\": 0.024322762741790273,\n            \"year_range\": \"2015-2018\"\n        }\n    ]\n}"
+				},
+				{
+					"name": "Latent Association data is not found for the given year range or word",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"concept_1\":[\"man\"],\n\t\"concept_2\":[\"Jim\"],\n\t\"year_to\":1969,\n\t\"year_from\":1800\n}"
+						},
+						"url": {
+							"raw": "{{API_URL}}/timeline/latent-association",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"timeline",
+								"latent-association"
+							]
+						}
+					},
+					"status": "BAD REQUEST",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Server",
+							"value": "nginx/1.15.9"
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 19 Nov 2019 06:04:39 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Content-Length",
+							"value": "83"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"code\": 400,\n    \"messages\": {\n        \"concepts\": [\n            \"Could not get enough data for these words\"\n        ]\n    }\n}"
+				}
+			]
+		}
+	]
+}
