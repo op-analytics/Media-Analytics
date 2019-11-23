@@ -27,7 +27,7 @@ matrix:
         - npm install -D
       script:
         - npm run test
-        - eslint --ignore-pattern 'serviceWorker.js' .
+        - eslint .
 
 notifications:
   email: false

@@ -6,7 +6,6 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import PropTypes from 'prop-types';
 
-
 const useStyles = makeStyles(theme => ({
   form: {
     display: 'flex',
@@ -25,9 +24,12 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-function Form({
-  onSubmitHandler,
-}) {
+/**
+ * Form() A form with 3 fields words,yearFrom,yearToo
+ *
+ * @component
+ */
+function Form({ onSubmitHandler }) {
   const classes = useStyles();
 
   const [words, setWords] = useState('');
@@ -35,7 +37,10 @@ function Form({
   const [yearTo, setYearTo] = useState('');
 
   return (
-    <form className={classes.form} onSubmit={e => onSubmitHandler(e, yearFrom, yearTo, words)}>
+    <form
+      className={classes.form}
+      onSubmit={e => onSubmitHandler(e, yearFrom, yearTo, words)}
+    >
       <FormControl className={classes.formControl}>
         <TextField
           label="Words:"
@@ -66,7 +71,12 @@ function Form({
           onChange={e => setYearTo(e.target.value)}
         />
       </FormControl>
-      <Button variant="outlined" color="primary" type="submit" className={classes.button}>
+      <Button
+        variant="outlined"
+        color="primary"
+        type="submit"
+        className={classes.button}
+      >
         Submit
       </Button>
     </form>
@@ -74,6 +84,7 @@ function Form({
 }
 
 Form.propTypes = {
+  /** The function to call on submit. */
   onSubmitHandler: PropTypes.func.isRequired,
 };
 

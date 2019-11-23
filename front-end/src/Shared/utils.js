@@ -1,6 +1,13 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
 
+/**
+ * A tooltip factory for creating tooltips dynamicaly
+ *
+ * @param {Object} classes Classes to apply to the tooltip
+ * @param {Object[]} items The items to render on the tooltip
+ * @returns {Element}
+ */
 export const createTooltip = (classes, items) => {
   const ToolTip = ({ active, payload, label }) => {
     if (active) {

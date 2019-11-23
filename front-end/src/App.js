@@ -6,6 +6,11 @@ import FrequencyTimeline from './Timeline/Frequency-Timeline-view';
 import LatentAssociationTimeline from './Timeline/Latent-Association-view';
 import SentimentTimeline from './Timeline/Sentiment-Timeline-view';
 
+
+/**
+ * Not found page
+ * @component
+ */
 function NotFound() {
   return (
     <div className="App">
@@ -14,6 +19,8 @@ function NotFound() {
   );
 }
 
+// Links to show on the side bar
+// Each sub array will have a devider seporating them
 const links = [
   [
     { href: '/frequency', text: 'Frequency Over Time' },
@@ -28,7 +35,11 @@ const links = [
   ],
 ];
 
-export default function App() {
+/** 
+ * The main app component 
+ * @component
+ */
+function App() {
   return (
     <Router>
       <Nav title="NYT Analytics" links={links}>
@@ -46,3 +57,5 @@ export default function App() {
     </Router>
   );
 }
+
+export default App;

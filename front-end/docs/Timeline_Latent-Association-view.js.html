@@ -1,0 +1,238 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="utf-8">
+    <title>JSDoc: Timeline/Latent-Association-view.js</title>
+
+    <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="./build/entry.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link href="https://fonts.googleapis.com/css?family=Muli:100,400,700|Oswald:300|Inconsolata,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+    <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/app.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/iframe.css">
+</head>
+
+<body>
+    <div id="stickyNavbarOverlay"></div>
+    <div class="top-navbar">
+        <div class="container">
+            <nav class="navbar" role="navigation" aria-label="main navigation">
+                <div class="navbar-brand">
+                    
+                     
+                        <h1 class="navbar-item">My React components</h1>
+                    
+                    <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+                        <span aria-hidden="true"></span>
+                        <span aria-hidden="true"></span>
+                        <span aria-hidden="true"></span>
+                    </a>
+                </div>
+                
+            </nav>
+        </div>
+    </div>
+    <div class="container">
+        <div class="columns">
+            <div class="column is-3" id="sidebarNav">
+                <div class="sidebar">
+                    <nav>
+                        <h2><a href="index.html">Home</a></h2><div class="category"><h3>Components</h3><ul><li><a href="App.html">App</a></li><li><a href="Form.html">Form</a></li><li><a href="Home.html">Home</a></li><li><a href="LineCharts.html">LineCharts</a></li><li><a href="Nav.html">Nav</a></li><li><a href="NotFound.html">NotFound</a></li><li><a href="Timeline.html">Timeline</a></li></ul><h3>Global</h3><ul><li><a href="global.html#cleanDataset">cleanDataset</a></li><li><a href="global.html#createTooltip">createTooltip</a></li></ul></div>
+                    </nav>
+                </div>
+            </div>
+            <div class="column is-9-desktop">
+                <div class="content" id="main-content-wrapper">
+                    <header class="page-title">
+                        <p>Source</p>
+                        <h1>Timeline/Latent-Association-view.js</h1>
+                    </header>
+                    
+                    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import CircularProgress from '@material-ui/core/CircularProgress';
+import { makeStyles } from '@material-ui/core/styles';
+import Axios from 'axios';
+import React, { useState } from 'react';
+import { CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
+import { createTooltip } from '../Shared/utils';
+import Form from './components/Timeline-two-field-form';
+
+
+const useStyles = makeStyles(() => ({
+  chartContainer: {
+    width: '80vw',
+    height: '50vh',
+    flex: '0 1 auto',
+    maxWidth: '1000px',
+    paddingBottom: '6vh',
+  },
+  chartTitle: {
+    textAlign: 'center',
+    '&amp;:first-letter': {
+      textTransform: 'uppercase',
+    },
+  },
+  tooltip: {
+    width: '200px',
+    margin: 0,
+    lineHeight: '24px',
+    border: '1px solid #f5f5f5',
+    backgroundColor: 'hsla(0,0%,100%,.8)',
+    padding: '10px',
+  },
+  tooltipLabel: {
+    color: '#333',
+  },
+  tooltipLabelFirstWord: {
+    color: '#777',
+    '&amp;:first-letter': {
+      textTransform: 'uppercase',
+    },
+  },
+  container: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'column',
+    overflow: 'hidden',
+    width: '94%',
+  },
+}));
+
+const API_URL =
+  process.env.NODE_ENV === 'production'
+    ? '/api/'
+    : process.env.REACT_APP_API_URL;
+
+
+/**
+ * The latent association page component
+ * @component
+ */
+function Timeline() {
+  const [data, setData] = useState();
+  const [loading, setLoading] = useState(false);
+
+  const classes = useStyles();
+
+  const onSubmitHandler = (e, yearFrom, yearTo, concept1, concept2) => {
+    e.preventDefault();
+    const concept1Array = concept1.split(',');
+    const concept2Array = concept2.split(',');
+    const yearFromInt = parseInt(yearFrom);
+    const yearToInt = parseInt(yearTo);
+    setLoading(true);
+    Axios.post(`${API_URL}/timeline/latent-association`, {
+      concept_1: concept1Array,
+      concept_2: concept2Array,
+      year_from: yearFromInt,
+      year_to: yearToInt,
+    })
+      .then(response => {
+        setData(response.data.data);
+        setLoading(false);
+      })
+      // eslint-disable-next-line no-console
+      .catch(error => console.log(error.response));
+  };
+
+  return (
+    &lt;>
+      &lt;h3>Latent association over time&lt;/h3>
+      &lt;div className={classes.container}>
+        &lt;Form onSubmitHandler={onSubmitHandler} />
+        {loading ? (
+          &lt;CircularProgress />
+        ) : (
+          data &amp;&amp; (
+            &lt;div className={classes.chartContainer}>
+              &lt;ResponsiveContainer>
+                &lt;LineChart
+                  data={data}
+                  margin={{
+                    top: 10,
+                    right: 30,
+                    left: 10,
+                    bottom: 10,
+                  }}
+                >
+                  &lt;CartesianGrid strokeDasharray="3 3" />
+                  &lt;XAxis dataKey="year_range" tickMargin={15} />
+                  &lt;YAxis
+                    dataKey="association"
+                    tickFormatter={tickValue => tickValue.toFixed(2)}
+                    domain={['dataMin', 'dataMax']}
+                  />
+                  &lt;Tooltip
+                    content={createTooltip(classes, [
+                      {
+                        key: 'association',
+                        title: 'Association',
+                        formatFunction: item => item.toFixed(5),
+                      },
+                    ])}
+                  />
+                  &lt;Line
+                    type="linear"
+                    dataKey="association"
+                    stroke="#8884d8"
+                    fill="#8884d8"
+                    strokeWidth={3}
+                    dot={{ strokeWidth: 5 }}
+                    activeDot={{
+                      stroke: '#3F51B5',
+                      strokeWidth: 7,
+                      border: 'white',
+                    }}
+                  />
+                &lt;/LineChart>
+              &lt;/ResponsiveContainer>
+            &lt;/div>
+          )
+        )}
+      &lt;/div>
+    &lt;/>
+  );
+}
+
+export default Timeline;</code></pre>
+        </article>
+    </section>
+
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+<footer class="footer">
+    <div class="content has-text-centered">
+        <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a> on Wed Nov 06 2019 19:06:16 GMT+1300 (New Zealand Daylight Time)</p>
+        <p class="sidebar-created-by">
+            <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by 
+            <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers - JavaScript Development Agency</a>
+        </p>
+    </div>
+</footer>
+
+<script src="scripts/app.min.js"></script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

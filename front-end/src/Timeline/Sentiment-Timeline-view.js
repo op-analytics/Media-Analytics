@@ -25,9 +25,18 @@ const formData = [
   { label: 'Year to', name: 'year_to', required: true },
 ];
 
+/**
+ * A function to remove useless information from a dataset
+ * @param {Object} dataset The dataset to clean
+ * @returns {Object} An object with a title and data
+ */
 const cleanDataset = dataset => ({ title: dataset.word, data: dataset.data });
 
-export default function Timeline() {
+/**
+ * The sentiment timeline page component
+ * @component
+ */
+function Timeline() {
   const [timelineDatasets, setTimelineDatasets] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -69,3 +78,5 @@ export default function Timeline() {
     </>
   );
 }
+
+export default Timeline;

@@ -45,6 +45,11 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
+/**
+ * LineCharts A helper component for rendering multiple linecharts
+ *
+ * @component
+ */
 function LineCharts({ datasets, xAxisKey, yAxisKey, tooltipItems }) {
   const classes = useStyles();
 
@@ -62,7 +67,6 @@ function LineCharts({ datasets, xAxisKey, yAxisKey, tooltipItems }) {
                 left: 0,
                 bottom: 0,
               }}
-              //key={data.word}
             >
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey={xAxisKey} />
@@ -90,14 +94,18 @@ function LineCharts({ datasets, xAxisKey, yAxisKey, tooltipItems }) {
 }
 
 LineCharts.propTypes = {
+  /** The datasets to render line charts for */
   datasets: PropTypes.arrayOf(
     PropTypes.shape({
       title: PropTypes.string.isRequired,
       data: PropTypes.arrayOf(PropTypes.shape({}).isRequired).isRequired,
     }),
   ).isRequired,
+  /** The key for the x axis of the datasets */
   xAxisKey: PropTypes.string.isRequired,
+  /** The key for the y axis of the datasets */
   yAxisKey: PropTypes.string.isRequired,
+  /** An array of items to render in the tooltips */
   tooltipItems: PropTypes.arrayOf(
     PropTypes.shape({
       title: PropTypes.string.isRequired,

@@ -50,6 +50,11 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
+/**
+ * Nav A reusable nav bar with a sidebar
+ *
+ * @component
+ */
 function Nav({ children, title, links }) {
   const classes = useStyles();
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -140,8 +145,11 @@ Nav.defaultProps = {
 };
 
 Nav.propTypes = {
+  /** The elements to render beside the sidebar. */
   children: PropTypes.element,
+  /** The title to render on the app bar. */
   title: PropTypes.string,
+  /** The links to render on the sidebar. */
   links: PropTypes.arrayOf(
     PropTypes.arrayOf(
       PropTypes.shape({

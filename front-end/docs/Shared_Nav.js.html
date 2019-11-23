@@ -1,0 +1,255 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="utf-8">
+    <title>JSDoc: Shared/Nav.js</title>
+
+    <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="./build/entry.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link href="https://fonts.googleapis.com/css?family=Muli:100,400,700|Oswald:300|Inconsolata,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+    <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/app.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/iframe.css">
+</head>
+
+<body>
+    <div id="stickyNavbarOverlay"></div>
+    <div class="top-navbar">
+        <div class="container">
+            <nav class="navbar" role="navigation" aria-label="main navigation">
+                <div class="navbar-brand">
+                    
+                     
+                        <h1 class="navbar-item">My React components</h1>
+                    
+                    <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+                        <span aria-hidden="true"></span>
+                        <span aria-hidden="true"></span>
+                        <span aria-hidden="true"></span>
+                    </a>
+                </div>
+                
+            </nav>
+        </div>
+    </div>
+    <div class="container">
+        <div class="columns">
+            <div class="column is-3" id="sidebarNav">
+                <div class="sidebar">
+                    <nav>
+                        <h2><a href="index.html">Home</a></h2><div class="category"><h3>Components</h3><ul><li><a href="App.html">App</a></li><li><a href="Form.html">Form</a></li><li><a href="Home.html">Home</a></li><li><a href="LineCharts.html">LineCharts</a></li><li><a href="Nav.html">Nav</a></li><li><a href="NotFound.html">NotFound</a></li><li><a href="Timeline.html">Timeline</a></li></ul><h3>Global</h3><ul><li><a href="global.html#cleanDataset">cleanDataset</a></li><li><a href="global.html#createTooltip">createTooltip</a></li></ul></div>
+                    </nav>
+                </div>
+            </div>
+            <div class="column is-9-desktop">
+                <div class="content" id="main-content-wrapper">
+                    <header class="page-title">
+                        <p>Source</p>
+                        <h1>Shared/Nav.js</h1>
+                    </header>
+                    
+                    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import AppBar from '@material-ui/core/AppBar';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Divider from '@material-ui/core/Divider';
+import Drawer from '@material-ui/core/Drawer';
+import Hidden from '@material-ui/core/Hidden';
+import IconButton from '@material-ui/core/IconButton';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import { makeStyles } from '@material-ui/core/styles';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import MenuIcon from '@material-ui/icons/Menu';
+import PropTypes from 'prop-types';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+
+const drawerWidth = 240;
+
+const useStyles = makeStyles(theme => ({
+  root: {
+    display: 'flex',
+  },
+  drawer: {
+    [theme.breakpoints.up('sm')]: {
+      width: drawerWidth,
+      flexShrink: 0,
+    },
+  },
+  appBar: {
+    zIndex: theme.zIndex.drawer + 1,
+  },
+  menuButton: {
+    marginRight: theme.spacing(2),
+    [theme.breakpoints.up('sm')]: {
+      display: 'none',
+    },
+  },
+  toolbar: theme.mixins.toolbar,
+  drawerPaper: {
+    width: drawerWidth,
+  },
+  content: {
+    flexGrow: 1,
+    padding: theme.spacing(3),
+  },
+  link: {
+    textDecoration: 'none',
+    color: 'black',
+  },
+}));
+
+/**
+ * Nav A reusable nav bar with a sidebar
+ *
+ * @component
+ */
+function Nav({ children, title, links }) {
+  const classes = useStyles();
+  const [mobileOpen, setMobileOpen] = useState(false);
+
+  const drawer = (
+    &lt;div>
+      &lt;div className={classes.toolbar} />
+      &lt;Divider />
+      {links.map(section => (
+        &lt;div
+          key={section.reduce((key, { href, text }) => key + href + text, '')}
+        >
+          &lt;Divider />
+          &lt;List>
+            {section.map(({ href, text }) => (
+              &lt;Link to={href} className={classes.link} key={href + text}>
+                &lt;ListItem button key={text}>
+                  &lt;ListItemText primary={text} />
+                &lt;/ListItem>
+              &lt;/Link>
+            ))}
+          &lt;/List>
+        &lt;/div>
+      ))}
+    &lt;/div>
+  );
+
+  return (
+    &lt;div className={classes.root}>
+      &lt;CssBaseline />
+      &lt;AppBar position="fixed" className={classes.appBar}>
+        &lt;Toolbar>
+          &lt;IconButton
+            color="inherit"
+            aria-label="open drawer"
+            edge="start"
+            onClick={() => setMobileOpen(!mobileOpen)}
+            className={classes.menuButton}
+          >
+            &lt;MenuIcon />
+          &lt;/IconButton>
+          &lt;Typography variant="h6" noWrap>
+            {title}
+          &lt;/Typography>
+        &lt;/Toolbar>
+      &lt;/AppBar>
+      &lt;nav className={classes.drawer}>
+        {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
+        &lt;Hidden smUp implementation="js">
+          &lt;Drawer
+            variant="temporary"
+            anchor="left"
+            open={mobileOpen}
+            onClose={() => setMobileOpen(!mobileOpen)}
+            classes={{
+              paper: classes.drawerPaper,
+            }}
+            ModalProps={{
+              keepMounted: true, // Better open performance on mobile.
+            }}
+          >
+            {drawer}
+          &lt;/Drawer>
+        &lt;/Hidden>
+        &lt;Hidden xsDown implementation="js">
+          &lt;Drawer
+            classes={{
+              paper: classes.drawerPaper,
+            }}
+            variant="permanent"
+            open
+          >
+            {drawer}
+          &lt;/Drawer>
+        &lt;/Hidden>
+      &lt;/nav>
+      &lt;main className={classes.content}>
+        &lt;div className={classes.toolbar} />
+        {children}
+      &lt;/main>
+    &lt;/div>
+  );
+}
+
+Nav.defaultProps = {
+  children: null,
+  title: '',
+};
+
+Nav.propTypes = {
+  /** The elements to render beside the sidebar. */
+  children: PropTypes.element,
+  /** The title to render on the app bar. */
+  title: PropTypes.string,
+  /** The links to render on the sidebar. */
+  links: PropTypes.arrayOf(
+    PropTypes.arrayOf(
+      PropTypes.shape({
+        href: PropTypes.string.isRequired,
+        text: PropTypes.string.isRequired,
+      }),
+    ),
+  ).isRequired,
+};
+
+export default Nav;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+<footer class="footer">
+    <div class="content has-text-centered">
+        <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a> on Wed Nov 06 2019 19:06:16 GMT+1300 (New Zealand Daylight Time)</p>
+        <p class="sidebar-created-by">
+            <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by 
+            <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers - JavaScript Development Agency</a>
+        </p>
+    </div>
+</footer>
+
+<script src="scripts/app.min.js"></script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

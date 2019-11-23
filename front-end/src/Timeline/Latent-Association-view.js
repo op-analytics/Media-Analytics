@@ -57,7 +57,12 @@ const formData = [
   { label: 'Year to', name: 'year_to', required: true },
 ];
 
-export default function Timeline() {
+
+/**
+ * The latent association page component
+ * @component
+ */
+function Timeline() {
   const [data, setData] = useState();
   const [loading, setLoading] = useState(false);
 
@@ -146,3 +151,5 @@ export default function Timeline() {
     </>
   );
 }
+
+export default Timeline;

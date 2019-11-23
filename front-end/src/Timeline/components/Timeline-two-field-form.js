@@ -6,7 +6,6 @@ import TextField from '@material-ui/core/TextField';
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 
-
 const useStyles = makeStyles(theme => ({
   form: {
     display: 'flex',
@@ -25,9 +24,12 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-function Form({
-  onSubmitHandler,
-}) {
+/**
+ * Form() A form with 4 fields concept1,concept2,yearFrom,yearToo
+ *
+ * @component
+ */
+function Form({ onSubmitHandler }) {
   const classes = useStyles();
 
   const [concept1, setConcept1] = useState('');
@@ -36,7 +38,10 @@ function Form({
   const [yearTo, setYearTo] = useState('');
 
   return (
-    <form className={classes.form} onSubmit={e => onSubmitHandler(e, yearFrom, yearTo, concept1, concept2)}>
+    <form
+      className={classes.form}
+      onSubmit={e => onSubmitHandler(e, yearFrom, yearTo, concept1, concept2)}
+    >
       <FormControl className={classes.formControl}>
         <TextField
           label="Words:"
@@ -77,7 +82,12 @@ function Form({
           onChange={e => setYearTo(e.target.value)}
         />
       </FormControl>
-      <Button variant="outlined" color="primary" type="submit" className={classes.button}>
+      <Button
+        variant="outlined"
+        color="primary"
+        type="submit"
+        className={classes.button}
+      >
         Submit
       </Button>
     </form>
@@ -85,6 +95,7 @@ function Form({
 }
 
 Form.propTypes = {
+  /** The function to call on submit. */
   onSubmitHandler: PropTypes.func.isRequired,
 };
 
