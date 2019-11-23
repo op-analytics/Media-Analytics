@@ -13,9 +13,9 @@ from app.utils import apply_map
 from .models import Sentiment
 from .schemas import LatentAssociationSchema, TimelineSchema
 from .utils import (
+    get_latent_association_data,
     get_word_frequency_data,
     get_word_sentiment_data,
-    get_latent_association_data,
 )
 
 routes = Blueprint("timeline", __name__)
@@ -40,15 +40,19 @@ models = (
 
 @routes.route("/", methods=["GET"])
 def index():
+    """Get a page that confirms the endpoint works"""
     return jsonify({"code": 202, "message": "Hello from timeline"})
 
 
 @routes.route("/frequency", methods=["POST"])
 def get_frequency():
+    """Get frequency data for a set of words"""
+    # Compare the incoming parameters to the Timeline schema
     try:
         TimelineSchema().load(request.get_json(force=True))
     except ValidationError as err:
         return jsonify({"code": 400, "messages": err.messages}), 400
+
     year_from = int(request.json["year_from"])
     year_to = int(request.json["year_to"])
 
@@ -56,10 +60,8 @@ def get_frequency():
     words = apply_map(
         [lambda word: word.lower(), lambda word: word.strip()], request.json["words"]
     )
-
     word_frequency_data = get_word_frequency_data(models, words, year_from, year_to)
     if word_frequency_data:
-        # Return the data dictionary
         return jsonify({"code": 202, "data": word_frequency_data}), 202
     return (
         jsonify(
@@ -76,6 +78,8 @@ def get_frequency():
 
 @routes.route("/sentiment", methods=["POST"])
 def get_sentiment():
+    """Get sentiment data for a set of words"""
+    # Compare incomng parameters to Timeline schema
     try:
         TimelineSchema().load(request.get_json(force=True))
     except ValidationError as err:
@@ -108,6 +112,8 @@ def get_sentiment():
 
 @routes.route("/latent-association", methods=["POST"])
 def get_latent_association():
+    """Get latent association data for two sets of words"""
+    # Compare incoming parameters to Latent Association schema
     try:
         LatentAssociationSchema().load(request.get_json(force=True))
     except ValidationError as err:

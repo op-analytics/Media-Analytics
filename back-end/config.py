@@ -2,6 +2,8 @@ import os
 
 
 class Config:
+    """Base configuration for the Flask app"""
+
     # Statement for enabling the development environment
     DEBUG = False
 
@@ -29,14 +31,18 @@ class Config:
 
 
 class Testing(Config):
+    """Testing configuration for the Flask app"""
+
     TESTING = True
     MONGODB_SETTINGS = {"db": "mongoenginetest", "host": "mongomock://localhost"}
     DEBUG = True
 
 
 class Dev(Config):
+    """Development configuration for the Flask app"""
+
     DEBUG = True
 
 
 class Prod(Config):
-    pass
+    """Production configuration for the Flask app"""

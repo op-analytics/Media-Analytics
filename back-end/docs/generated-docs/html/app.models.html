@@ -1,0 +1,163 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>app.models package &#8212; Back-end 0.0.1 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="app-models-package">
+<h1>app.models package<a class="headerlink" href="#app-models-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-app.models.model_functions">
+<span id="app-models-model-functions-module"></span><h2>app.models.model_functions module<a class="headerlink" href="#module-app.models.model_functions" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="app.models.model_functions.is_potential_model">
+<code class="sig-prename descclassname">app.models.model_functions.</code><code class="sig-name descname">is_potential_model</code><span class="sig-paren">(</span><em class="sig-param">file</em><span class="sig-paren">)</span><a class="headerlink" href="#app.models.model_functions.is_potential_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks if a given file is a potential model</p>
+<p>Returns false for hidden files, directories, and files that have a file extention</p>
+<ul class="simple">
+<li><p>&#64;type  file: string</p></li>
+<li><p>&#64;param file: path to a file</p></li>
+<li><p>&#64;rtype:      boolean</p></li>
+<li><p>&#64;return:     if file is a valid model</p></li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="app.models.model_functions.load_and_add_model_to_models">
+<code class="sig-prename descclassname">app.models.model_functions.</code><code class="sig-name descname">load_and_add_model_to_models</code><span class="sig-paren">(</span><em class="sig-param">path</em>, <em class="sig-param">model_name</em>, <em class="sig-param">models</em><span class="sig-paren">)</span><a class="headerlink" href="#app.models.model_functions.load_and_add_model_to_models" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads and adds a given model to the models dictionary</p>
+<p>Add new model to models dictionary</p>
+<ul class="simple">
+<li><p>&#64;type path:        string</p></li>
+<li><p>&#64;param path:       path to a model</p></li>
+<li><p>&#64;type model_name:  string</p></li>
+<li><p>&#64;param model_name: name to reference new model in models</p></li>
+<li><p>&#64;type models:      dictionary</p></li>
+<li><p>&#64;param models:     dictionary of models</p></li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="app.models.model_functions.load_model">
+<code class="sig-prename descclassname">app.models.model_functions.</code><code class="sig-name descname">load_model</code><span class="sig-paren">(</span><em class="sig-param">full_file_path</em><span class="sig-paren">)</span><a class="headerlink" href="#app.models.model_functions.load_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tries to open the model at the given path and adds total word counts property</p>
+<p>Returns a Gensim KeyedVectors model</p>
+<ul class="simple">
+<li><p>&#64;type  full_file_path: string</p></li>
+<li><p>&#64;param full_file_path: path to a model</p></li>
+<li><p>&#64;rtype:                object</p></li>
+<li><p>&#64;return:               KeyedVector model</p></li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="app.models.model_functions.load_models">
+<code class="sig-prename descclassname">app.models.model_functions.</code><code class="sig-name descname">load_models</code><span class="sig-paren">(</span><em class="sig-param">path</em><span class="sig-paren">)</span><a class="headerlink" href="#app.models.model_functions.load_models" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads and returns all models in the given path as a dictionary</p>
+<p>Returns a dictionary of Gensim KeyedVectors models</p>
+<ul class="simple">
+<li><p>&#64;type path:  string</p></li>
+<li><p>&#64;param path: path to directory containing models</p></li>
+<li><p>&#64;rtype       dictionary</p></li>
+<li><p>&#64;return      dictionary of every model in path</p></li>
+</ul>
+</dd></dl>
+
+</div>
+<div class="section" id="module-app.models">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-app.models" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Back-end</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019, Liam C, Trent N.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.2.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/app.models.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -3,6 +3,9 @@ url = "https://pypi.python.org/simple"
 verify_ssl = true
 name = "pypi"
 
+[scripts]
+start = "python manage.py run -h 0.0.0.0"
+
 [packages]
 Flask = "*"
 gensim = "*"
@@ -10,6 +13,7 @@ marshmallow = "*"
 Flask-Cors = "*"
 flask-mongoengine = "*"
 gunicorn = "*"
+sphinx = "*"
 
 [dev-packages]
 pylint = "*"

@@ -1,0 +1,428 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>app.timeline package &#8212; Back-end 0.0.1 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="app-timeline-package">
+<h1>app.timeline package<a class="headerlink" href="#app-timeline-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-app.timeline.models">
+<span id="app-timeline-models-module"></span><h2>app.timeline.models module<a class="headerlink" href="#module-app.timeline.models" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="app.timeline.models.LatentAssociation">
+<em class="property">class </em><code class="sig-prename descclassname">app.timeline.models.</code><code class="sig-name descname">LatentAssociation</code><span class="sig-paren">(</span><em class="sig-param">*args</em>, <em class="sig-param">**values</em><span class="sig-paren">)</span><a class="headerlink" href="#app.timeline.models.LatentAssociation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">flask_mongoengine.Document</span></code></p>
+<p>MongoEngine document schema for LatentAssociation collection</p>
+<dl class="exception">
+<dt id="app.timeline.models.LatentAssociation.DoesNotExist">
+<em class="property">exception </em><code class="sig-name descname">DoesNotExist</code><a class="headerlink" href="#app.timeline.models.LatentAssociation.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">mongoengine.errors.DoesNotExist</span></code></p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="app.timeline.models.LatentAssociation.MultipleObjectsReturned">
+<em class="property">exception </em><code class="sig-name descname">MultipleObjectsReturned</code><a class="headerlink" href="#app.timeline.models.LatentAssociation.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">mongoengine.errors.MultipleObjectsReturned</span></code></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="app.timeline.models.LatentAssociation.id">
+<code class="sig-name descname">id</code><a class="headerlink" href="#app.timeline.models.LatentAssociation.id" title="Permalink to this definition">¶</a></dt>
+<dd><p>A field wrapper around MongoDB’s ObjectIds.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="app.timeline.models.LatentAssociation.objects">
+<code class="sig-name descname">objects</code><a class="headerlink" href="#app.timeline.models.LatentAssociation.objects" title="Permalink to this definition">¶</a></dt>
+<dd><p>The default QuerySet Manager.</p>
+<p>Custom QuerySet Manager functions can extend this class and users can
+add extra queryset functionality.  Any custom manager methods must accept a
+<code class="xref py py-class docutils literal notranslate"><span class="pre">Document</span></code> class as its first argument, and a
+<code class="xref py py-class docutils literal notranslate"><span class="pre">QuerySet</span></code> as its second argument.</p>
+<p>The method function should return a <code class="xref py py-class docutils literal notranslate"><span class="pre">QuerySet</span></code>
+, probably the same one that was passed in, but modified in some way.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="app.timeline.models.LatentAssociation.vectors">
+<code class="sig-name descname">vectors</code><a class="headerlink" href="#app.timeline.models.LatentAssociation.vectors" title="Permalink to this definition">¶</a></dt>
+<dd><p>A list field that wraps a standard field, allowing multiple instances
+of the field to be used as a list in the database.</p>
+<p>If using with ReferenceFields see: <span class="xref std std-ref">one-to-many-with-listfields</span></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Required means it cannot be empty - as the default for ListFields is []</p>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="app.timeline.models.LatentAssociation.word">
+<code class="sig-name descname">word</code><a class="headerlink" href="#app.timeline.models.LatentAssociation.word" title="Permalink to this definition">¶</a></dt>
+<dd><p>A unicode string field.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="app.timeline.models.LatentAssociation.year_from">
+<code class="sig-name descname">year_from</code><a class="headerlink" href="#app.timeline.models.LatentAssociation.year_from" title="Permalink to this definition">¶</a></dt>
+<dd><p>32-bit integer field.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="app.timeline.models.LatentAssociation.year_to">
+<code class="sig-name descname">year_to</code><a class="headerlink" href="#app.timeline.models.LatentAssociation.year_to" title="Permalink to this definition">¶</a></dt>
+<dd><p>32-bit integer field.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="app.timeline.models.Sentiment">
+<em class="property">class </em><code class="sig-prename descclassname">app.timeline.models.</code><code class="sig-name descname">Sentiment</code><span class="sig-paren">(</span><em class="sig-param">*args</em>, <em class="sig-param">**values</em><span class="sig-paren">)</span><a class="headerlink" href="#app.timeline.models.Sentiment" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">flask_mongoengine.Document</span></code></p>
+<p>MongoEngine document schema for Sentiment collection</p>
+<dl class="exception">
+<dt id="app.timeline.models.Sentiment.DoesNotExist">
+<em class="property">exception </em><code class="sig-name descname">DoesNotExist</code><a class="headerlink" href="#app.timeline.models.Sentiment.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">mongoengine.errors.DoesNotExist</span></code></p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="app.timeline.models.Sentiment.MultipleObjectsReturned">
+<em class="property">exception </em><code class="sig-name descname">MultipleObjectsReturned</code><a class="headerlink" href="#app.timeline.models.Sentiment.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">mongoengine.errors.MultipleObjectsReturned</span></code></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="app.timeline.models.Sentiment.id">
+<code class="sig-name descname">id</code><a class="headerlink" href="#app.timeline.models.Sentiment.id" title="Permalink to this definition">¶</a></dt>
+<dd><p>A field wrapper around MongoDB’s ObjectIds.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="app.timeline.models.Sentiment.objects">
+<code class="sig-name descname">objects</code><a class="headerlink" href="#app.timeline.models.Sentiment.objects" title="Permalink to this definition">¶</a></dt>
+<dd><p>The default QuerySet Manager.</p>
+<p>Custom QuerySet Manager functions can extend this class and users can
+add extra queryset functionality.  Any custom manager methods must accept a
+<code class="xref py py-class docutils literal notranslate"><span class="pre">Document</span></code> class as its first argument, and a
+<code class="xref py py-class docutils literal notranslate"><span class="pre">QuerySet</span></code> as its second argument.</p>
+<p>The method function should return a <code class="xref py py-class docutils literal notranslate"><span class="pre">QuerySet</span></code>
+, probably the same one that was passed in, but modified in some way.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="app.timeline.models.Sentiment.sentiment">
+<code class="sig-name descname">sentiment</code><a class="headerlink" href="#app.timeline.models.Sentiment.sentiment" title="Permalink to this definition">¶</a></dt>
+<dd><p>Floating point number field.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="app.timeline.models.Sentiment.word">
+<code class="sig-name descname">word</code><a class="headerlink" href="#app.timeline.models.Sentiment.word" title="Permalink to this definition">¶</a></dt>
+<dd><p>A unicode string field.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="app.timeline.models.Sentiment.year">
+<code class="sig-name descname">year</code><a class="headerlink" href="#app.timeline.models.Sentiment.year" title="Permalink to this definition">¶</a></dt>
+<dd><p>32-bit integer field.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="app-timeline-routes-module">
+<h2>app.timeline.routes module<a class="headerlink" href="#app-timeline-routes-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-app.timeline.schemas">
+<span id="app-timeline-schemas-module"></span><h2>app.timeline.schemas module<a class="headerlink" href="#module-app.timeline.schemas" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="app.timeline.schemas.LatentAssociationSchema">
+<em class="property">class </em><code class="sig-prename descclassname">app.timeline.schemas.</code><code class="sig-name descname">LatentAssociationSchema</code><span class="sig-paren">(</span><em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#app.timeline.schemas.LatentAssociationSchema" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">marshmallow.Schema</span></code></p>
+<p>Schema for LatentAssociation route query parameters</p>
+<p>Inherits from Marshmellow.Schema</p>
+<dl class="attribute">
+<dt id="app.timeline.schemas.LatentAssociationSchema.concept_1">
+<code class="sig-name descname">concept_1</code><a class="headerlink" href="#app.timeline.schemas.LatentAssociationSchema.concept_1" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="app.timeline.schemas.LatentAssociationSchema.concept_2">
+<code class="sig-name descname">concept_2</code><a class="headerlink" href="#app.timeline.schemas.LatentAssociationSchema.concept_2" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="app.timeline.schemas.LatentAssociationSchema.validate_year_from">
+<code class="sig-name descname">validate_year_from</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">*_</em>, <em class="sig-param">**__</em><span class="sig-paren">)</span><a class="headerlink" href="#app.timeline.schemas.LatentAssociationSchema.validate_year_from" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="app.timeline.schemas.LatentAssociationSchema.year_from">
+<code class="sig-name descname">year_from</code><a class="headerlink" href="#app.timeline.schemas.LatentAssociationSchema.year_from" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="app.timeline.schemas.LatentAssociationSchema.year_to">
+<code class="sig-name descname">year_to</code><a class="headerlink" href="#app.timeline.schemas.LatentAssociationSchema.year_to" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="app.timeline.schemas.TimelineSchema">
+<em class="property">class </em><code class="sig-prename descclassname">app.timeline.schemas.</code><code class="sig-name descname">TimelineSchema</code><span class="sig-paren">(</span><em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#app.timeline.schemas.TimelineSchema" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">marshmallow.Schema</span></code></p>
+<p>Schema for Timeline route query parameters</p>
+<p>Inherits from Marshmellow.Schema</p>
+<dl class="method">
+<dt id="app.timeline.schemas.TimelineSchema.validate_year_from">
+<code class="sig-name descname">validate_year_from</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">*_</em>, <em class="sig-param">**__</em><span class="sig-paren">)</span><a class="headerlink" href="#app.timeline.schemas.TimelineSchema.validate_year_from" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="app.timeline.schemas.TimelineSchema.words">
+<code class="sig-name descname">words</code><a class="headerlink" href="#app.timeline.schemas.TimelineSchema.words" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="app.timeline.schemas.TimelineSchema.year_from">
+<code class="sig-name descname">year_from</code><a class="headerlink" href="#app.timeline.schemas.TimelineSchema.year_from" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="app.timeline.schemas.TimelineSchema.year_to">
+<code class="sig-name descname">year_to</code><a class="headerlink" href="#app.timeline.schemas.TimelineSchema.year_to" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-app.timeline.utils">
+<span id="app-timeline-utils-module"></span><h2>app.timeline.utils module<a class="headerlink" href="#module-app.timeline.utils" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="app.timeline.utils.extract_vectors">
+<code class="sig-prename descclassname">app.timeline.utils.</code><code class="sig-name descname">extract_vectors</code><span class="sig-paren">(</span><em class="sig-param">dict_list</em><span class="sig-paren">)</span><a class="headerlink" href="#app.timeline.utils.extract_vectors" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extract vectors from a list of dictionaries and add them to a dictionary with
+year range as the key</p>
+<ul class="simple">
+<li><p>&#64;type dict_list:     array</p></li>
+<li><p>&#64;param dict_list:    array containing objects</p></li>
+<li><p>&#64;rtype vector_data:  dictionary</p></li>
+<li><dl class="simple">
+<dt>&#64;return vector_data: dictionary containing vectors accessible with</dt><dd><p>year range key e.g. 2000-2004</p>
+</dd>
+</dl>
+</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="app.timeline.utils.get_index_by_value">
+<code class="sig-prename descclassname">app.timeline.utils.</code><code class="sig-name descname">get_index_by_value</code><span class="sig-paren">(</span><em class="sig-param">object_list</em>, <em class="sig-param">key</em>, <em class="sig-param">value</em><span class="sig-paren">)</span><a class="headerlink" href="#app.timeline.utils.get_index_by_value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the index in a list of the object whos key equals value</p>
+<ul class="simple">
+<li><p>&#64;type object_list:  array</p></li>
+<li><p>&#64;param object_list: an array of objects</p></li>
+<li><p>&#64;type key:          string</p></li>
+<li><p>&#64;param key:         the key to find the index of</p></li>
+<li><p>&#64;type value:        any</p></li>
+<li><p>&#64;param value:       the value of the key to find the index of</p></li>
+<li><p>&#64;rtype:             int</p></li>
+<li><p>&#64;return:            index of the key that matches the value</p></li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="app.timeline.utils.get_latent_association_data">
+<code class="sig-prename descclassname">app.timeline.utils.</code><code class="sig-name descname">get_latent_association_data</code><span class="sig-paren">(</span><em class="sig-param">year_from</em>, <em class="sig-param">year_to</em>, <em class="sig-param">construct_1</em>, <em class="sig-param">construct_2</em><span class="sig-paren">)</span><a class="headerlink" href="#app.timeline.utils.get_latent_association_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the association between two contructs of words</p>
+<ul>
+<li><p>&#64;type year_from:                 int</p></li>
+<li><p>&#64;param year_from:                inclusive lower bound for data returned</p></li>
+<li><p>&#64;type year_to:                   int</p></li>
+<li><p>&#64;param year_to:                  inclusive upper bound for data returned</p></li>
+<li><p>&#64;type construct_1:               array</p></li>
+<li><p>&#64;param construct_1:              array of strings representing a concept</p></li>
+<li><p>&#64;type construct_2:               array</p></li>
+<li><p>&#64;param construct_2:              array of strings representing a concept</p></li>
+<li><p>&#64;rtype latent_association_data:  array</p></li>
+<li><dl>
+<dt>&#64;return latent_association_data: an array od objects containing</dt><dd><blockquote>
+<div><p>year range and association</p>
+</div></blockquote>
+<dl class="simple">
+<dt>‘array’ of ‘object’[</dt><dd><p>year_range: ‘string’,
+association: ‘float</p>
+</dd>
+</dl>
+<p>]</p>
+</dd>
+</dl>
+</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="app.timeline.utils.get_word_frequency_data">
+<code class="sig-prename descclassname">app.timeline.utils.</code><code class="sig-name descname">get_word_frequency_data</code><span class="sig-paren">(</span><em class="sig-param">models</em>, <em class="sig-param">words</em>, <em class="sig-param">year_from</em>, <em class="sig-param">year_to</em><span class="sig-paren">)</span><a class="headerlink" href="#app.timeline.utils.get_word_frequency_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the count, rank, frequency of a set of words for each year in range</p>
+<ul>
+<li><p>&#64;type models:           array</p></li>
+<li><p>&#64;param models:          array of KeyedVectors models</p></li>
+<li><p>&#64;type words:            array</p></li>
+<li><p>&#64;param words:           array of strings</p></li>
+<li><p>&#64;type year_from:        int</p></li>
+<li><p>&#64;param year_from:       the inclusive lower bound for data returned</p></li>
+<li><p>&#64;type year_to:          int</p></li>
+<li><p>&#64;param year_to:         the inclusive upper bound for data returned</p></li>
+<li><p>&#64;rtype frequency_data:  array</p></li>
+<li><dl>
+<dt>&#64;return frequency_data: an array that contains an object for each word in words.</dt><dd><p>each word object has the word and an array with data for
+each year.</p>
+<dl>
+<dt>‘array’ of ‘object’[</dt><dd><p>word: ‘string’,
+data: ‘array’ of object[</p>
+<blockquote>
+<div><p>year:  ‘int’,
+rank:  ‘int’,
+count: ‘int’,
+freq:  ‘float’</p>
+</div></blockquote>
+<p>]</p>
+</dd>
+</dl>
+<p>]</p>
+</dd>
+</dl>
+</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="app.timeline.utils.get_word_sentiment_data">
+<code class="sig-prename descclassname">app.timeline.utils.</code><code class="sig-name descname">get_word_sentiment_data</code><span class="sig-paren">(</span><em class="sig-param">sentiment_data</em><span class="sig-paren">)</span><a class="headerlink" href="#app.timeline.utils.get_word_sentiment_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extract the sentiment from sentiment data</p>
+<ul>
+<li><p>&#64;type sentiment_data:  array</p></li>
+<li><p>&#64;param sentiment_data: array of objects containing word, year and sentiment</p></li>
+<li><p>&#64;rtype sentiment_data: array</p></li>
+<li><dl>
+<dt>&#64;return:               an array that contains an object for each word in</dt><dd><p>sentiment_data. each word object has the word and an
+array with data for each year.</p>
+<dl>
+<dt>‘array’ of ‘object’[</dt><dd><p>word: ‘string’,
+data: ‘array’ of object[</p>
+<blockquote>
+<div><p>year:  ‘int’,
+sentiment:  ‘float’,</p>
+</div></blockquote>
+<p>]</p>
+</dd>
+</dl>
+<p>]</p>
+</dd>
+</dl>
+</li>
+</ul>
+</dd></dl>
+
+</div>
+<div class="section" id="module-app.timeline">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-app.timeline" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Back-end</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019, Liam C, Trent N.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.2.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/app.timeline.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

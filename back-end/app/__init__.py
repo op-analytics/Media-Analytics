@@ -9,7 +9,13 @@ db = MongoEngine()
 
 
 def create_app(config_filename="config.Config"):
-    """Initialize the core application."""
+    """ Initialize the core application
+
+        - @type config_filename:  string
+        - @param config_filename: the configuration to use when creating the app
+        - @rtype app:             Flask
+        - @return app:            a flask application
+    """
     app = Flask(__name__, instance_relative_config=False)
     app.config.from_object(config_filename)
 

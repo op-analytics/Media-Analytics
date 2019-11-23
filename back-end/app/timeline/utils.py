@@ -5,6 +5,17 @@ from .models import LatentAssociation
 
 
 def get_index_by_value(object_list, key, value):
+    """ Get the index in a list of the object whos key equals value
+
+        - @type object_list:  array
+        - @param object_list: an array of objects
+        - @type key:          string
+        - @param key:         the key to find the index of
+        - @type value:        any
+        - @param value:       the value of the key to find the index of
+        - @rtype:             int
+        - @return:            index of the key that matches the value
+    """
     return next(
         (index for (index, w) in enumerate(object_list) if w[key] == value), None
     )
@@ -12,6 +23,31 @@ def get_index_by_value(object_list, key, value):
 
 # The frequency data for each word in words for the year range given.
 def get_word_frequency_data(models, words, year_from, year_to):
+    """ Get the count, rank, frequency of a set of words for each year in range
+
+        - @type models:           array
+        - @param models:          array of KeyedVectors models
+        - @type words:            array
+        - @param words:           array of strings
+        - @type year_from:        int
+        - @param year_from:       the inclusive lower bound for data returned
+        - @type year_to:          int
+        - @param year_to:         the inclusive upper bound for data returned
+        - @rtype frequency_data:  array
+        - @return frequency_data: an array that contains an object for each word in words.
+                                  each word object has the word and an array with data for
+                                  each year.
+
+                                  'array' of 'object'[
+                                         word: 'string',
+                                         data: 'array' of object[
+                                             year:  'int',
+                                             rank:  'int',
+                                             count: 'int',
+                                             freq:  'float'
+                                         ]
+                                  ]
+    """
     frequency_data = []
     for year, model in models.items():
         year = int(year)
@@ -42,6 +78,23 @@ def get_word_frequency_data(models, words, year_from, year_to):
 
 
 def get_word_sentiment_data(sentiment_data):
+    """ Extract the sentiment from sentiment data
+
+        - @type sentiment_data:  array
+        - @param sentiment_data: array of objects containing word, year and sentiment
+        - @rtype sentiment_data: array
+        - @return:               an array that contains an object for each word in
+                                 sentiment_data. each word object has the word and an
+                                 array with data for each year.
+
+                                 'array' of 'object'[
+                                        word: 'string',
+                                        data: 'array' of object[
+                                            year:  'int',
+                                            sentiment:  'float',
+                                        ]
+                                 ]
+    """
     new_sentiment_data = []
 
     for sentiment_obj in sentiment_data:
@@ -61,6 +114,15 @@ def get_word_sentiment_data(sentiment_data):
 
 
 def extract_vectors(dict_list):
+    """ Extract vectors from a list of dictionaries and add them to a dictionary with
+        year range as the key
+
+        - @type dict_list:     array
+        - @param dict_list:    array containing objects
+        - @rtype vector_data:  dictionary
+        - @return vector_data: dictionary containing vectors accessible with
+                               year range key e.g. 2000-2004
+    """
     vector_data = {}
     for result in dict_list:
         vector_data_key = str(result["year_from"]) + "-" + str(result["year_to"])
@@ -73,6 +135,25 @@ def extract_vectors(dict_list):
 
 
 def get_latent_association_data(year_from, year_to, construct_1, construct_2):
+    """ Get the association between two contructs of words
+
+        - @type year_from:                 int
+        - @param year_from:                inclusive lower bound for data returned
+        - @type year_to:                   int
+        - @param year_to:                  inclusive upper bound for data returned
+        - @type construct_1:               array
+        - @param construct_1:              array of strings representing a concept
+        - @type construct_2:               array
+        - @param construct_2:              array of strings representing a concept
+        - @rtype latent_association_data:  array
+        - @return latent_association_data: an array od objects containing
+                                           year range and association
+
+                                  'array' of 'object'[
+                                         year_range: 'string',
+                                         association: 'float
+                                  ]
+    """
     latent_association_data = []
 
     construct_1_data = LatentAssociation.objects(

@@ -1,8 +1,12 @@
-from marshmallow import (Schema, ValidationError, fields, validate,
-                         validates_schema)
+from marshmallow import Schema, ValidationError, fields, validate, validates_schema
 
 
 class TimelineSchema(Schema):
+    """ Schema for Timeline route query parameters
+
+        Inherits from Marshmellow.Schema
+    """
+
     year_from = fields.Int(required=True)
     year_to = fields.Int(required=True)
     words = fields.List(
@@ -17,6 +21,11 @@ class TimelineSchema(Schema):
 
 
 class LatentAssociationSchema(Schema):
+    """ Schema for LatentAssociation route query parameters
+
+        Inherits from Marshmellow.Schema
+    """
+
     year_from = fields.Int(required=True)
     year_to = fields.Int(required=True)
     concept_1 = fields.List(
