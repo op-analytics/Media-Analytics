@@ -11,6 +11,8 @@ services:
     ports:
       - 27017:27017
     env_file: './db/.env'
+    networks:
+      - default
 
   back-end:
     image: nichtj3/nyta-back-end:prod
@@ -22,6 +24,8 @@ services:
     env_file: './back-end/.env'
     environment:
       - TIMELINE_MODELS_DIR=/usr/src/models/
+    networks:
+      - default
     depends_on:
       - db
     deploy:
@@ -33,6 +37,8 @@ services:
       context: ./front-end
       dockerfile: Dockerfile-prod
     env_file: './front-end/.env'
+    networks:
+      - default
     depends_on:
       - back-end
     deploy:
@@ -46,6 +52,8 @@ services:
     restart: always
     ports:
       - 80:80
+    networks:
+      - default
     depends_on:
       - back-end
       - front-end
