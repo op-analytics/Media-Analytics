@@ -1,0 +1,17 @@
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+indent_size = 2
+indent_style = space
+insert_final_newline = false
+trim_trailing_whitespace = true
+
+# Python files 4 spaces
+[*.py]
+indent_size = 4
+
+# Makefiles use tabs
+[Makefile]
+indent_style = tab
