@@ -1,6 +1,6 @@
 # Import flask dependencies
 
-from flask import Blueprint, current_app, jsonify, request
+from flask import Blueprint, jsonify, request
 from marshmallow import ValidationError
 from marshmallow import __version__ as marshmallow_version
 
