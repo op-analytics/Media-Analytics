@@ -14,6 +14,8 @@ Flask-Cors = "*"
 flask-mongoengine = "*"
 gunicorn = "*"
 sphinx = "*"
+mongomock = "*"
+pytest = "*"
 
 [dev-packages]
 pylint = "*"
