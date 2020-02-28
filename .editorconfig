@@ -15,3 +15,6 @@ indent_size = 4
 # Makefiles use tabs
 [Makefile]
 indent_style = tab
+
+[*.{bat,vbs,ps1}]
+end_of_line = CRLF
