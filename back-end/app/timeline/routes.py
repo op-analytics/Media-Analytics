@@ -1,13 +1,9 @@
 # Import flask dependencies
-import os
-from functools import reduce
 
-from flask import Blueprint, current_app, jsonify, request
-from gensim.models import Word2Vec
+from flask import Blueprint, jsonify, request
 from marshmallow import ValidationError
 from marshmallow import __version__ as marshmallow_version
 
-from app.models.model_functions import load_models
 from app.utils import apply_map
 
 from .models import Sentiment
@@ -19,23 +15,6 @@ from .utils import (
 )
 
 routes = Blueprint("timeline", __name__)
-
-# TODO: Tidy this up as it seems like bad practice
-# Use models from enviroment if not testing
-test_model = Word2Vec(
-    [["first", "sentence"], ["second", "sentence"]],
-    min_count=1,
-    batch_words=0.1,
-    workers=1,
-)
-test_model.totalWordCount = reduce(
-    lambda total, word: total + word.count, test_model.wv.vocab.values(), 0
-)
-models = (
-    load_models(os.environ["TIMELINE_MODELS_DIR"])
-    if not current_app.config["TESTING"]
-    else {"1999": test_model}
-)
 
 
 @routes.route("/", methods=["GET"])
@@ -60,7 +39,7 @@ def get_frequency():
     words = apply_map(
         [lambda word: word.lower(), lambda word: word.strip()], request.json["words"]
     )
-    word_frequency_data = get_word_frequency_data(models, words, year_from, year_to)
+    word_frequency_data = get_word_frequency_data(words, year_from, year_to)
     if word_frequency_data:
         return jsonify({"code": 202, "data": word_frequency_data}), 202
     return (

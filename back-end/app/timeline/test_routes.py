@@ -1,6 +1,6 @@
 from app import create_app
 
-from .models import LatentAssociation, Sentiment
+from .models import LatentAssociation, Sentiment, Frequency
 
 
 class TestTimelineRoutes:
@@ -21,6 +21,10 @@ class TestTimelineRoutes:
         LatentAssociation(
             word="jim", year_from=1980, year_to=1985, vectors=[0.6, 0.5]
         ).save()
+        Frequency(word="jim", year=1996, rank=400, count=30, freq=0.00034).save()
+        Frequency(word="cat", year=1996, rank=400, count=30, freq=0.00034).save()
+        Frequency(word="man", year=1989, rank=400, count=30, freq=0.00034).save()
+        Frequency(word="first", year=1989, rank=400, count=30, freq=0.00034).save()
 
     # Put any cleanup code in this method
     @classmethod
@@ -57,19 +61,8 @@ class TestTimelineRoutes:
             for item in response["data"][0]["data"]
         )
 
-    def test_frequency_should_return_zeroed_values_for_words_that_dont_exist(self):
-        year_from = 0
-        year_to = 3000
-        response = self.client.post(
-            self.prefix + "frequency",
-            json={"words": ["The"], "year_from": year_from, "year_to": year_to},
-        ).get_json()
-        assert response["data"][0]["data"][0]["rank"] == 0
-        assert response["data"][0]["data"][0]["count"] == 0
-        assert response["data"][0]["data"][0]["freq"] == 0
-
     def test_frequency_should_return_year_range_invalid_if_year_from_after_year_to(
-        self
+        self,
     ):
         year_from = 2018
         year_to = 2017
@@ -82,7 +75,7 @@ class TestTimelineRoutes:
 
     # pylint: disable=line-too-long
     def test_frequency_should_return_year_range_invalid_if_no_model_exists_for_given_range(
-        self
+        self,
     ):
         year_from = 0
         year_to = 1
@@ -189,7 +182,7 @@ class TestTimelineRoutes:
 
     # pylint: disable=line-too-long
     def test_latent_association_should_return_year_range_invalid_if_year_from_after_year_to(
-        self
+        self,
     ):
         year_from = 2018
         year_to = 2017
