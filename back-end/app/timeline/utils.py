@@ -56,7 +56,12 @@ def get_word_frequency_data(words, year_from, year_to):
     for frequency_data_obj in frequency_data_db:
         word = frequency_data_obj.word
         data_index = get_index_by_value(frequency_data, "word", word)
-        word_data = {"year": frequency_data_obj.year, "rank": frequency_data_obj.rank, "count": frequency_data_obj.count, "freq": frequency_data_obj.freq}
+        word_data = {
+            "year": frequency_data_obj.year,
+            "rank": frequency_data_obj.rank,
+            "count": frequency_data_obj.count,
+            "freq": frequency_data_obj.freq,
+        }
         if data_index is None:
             frequency_data.append({"word": word, "data": [word_data]})
         else:

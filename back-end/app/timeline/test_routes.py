@@ -62,7 +62,7 @@ class TestTimelineRoutes:
         )
 
     def test_frequency_should_return_year_range_invalid_if_year_from_after_year_to(
-        self
+        self,
     ):
         year_from = 2018
         year_to = 2017
@@ -75,7 +75,7 @@ class TestTimelineRoutes:
 
     # pylint: disable=line-too-long
     def test_frequency_should_return_year_range_invalid_if_no_model_exists_for_given_range(
-        self
+        self,
     ):
         year_from = 0
         year_to = 1
@@ -182,7 +182,7 @@ class TestTimelineRoutes:
 
     # pylint: disable=line-too-long
     def test_latent_association_should_return_year_range_invalid_if_year_from_after_year_to(
-        self
+        self,
     ):
         year_from = 2018
         year_to = 2017

@@ -18,6 +18,7 @@ class LatentAssociation(db.Document):
     word = db.StringField(required=True)
     vectors = db.ListField(required=True)
 
+
 class Frequency(db.Document):
     """MongoEngine document schema for Frequency collection"""
 

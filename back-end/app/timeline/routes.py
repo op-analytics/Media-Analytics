@@ -16,6 +16,7 @@ from .utils import (
 
 routes = Blueprint("timeline", __name__)
 
+
 @routes.route("/", methods=["GET"])
 def index():
     """Get a page that confirms the endpoint works"""
