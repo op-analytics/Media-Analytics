@@ -1,6 +1,6 @@
 from app import create_app
 
-from .models import LatentAssociation, Sentiment
+from .models import LatentAssociation, Sentiment, Frequency
 
 
 class TestTimelineRoutes:
@@ -21,6 +21,19 @@ class TestTimelineRoutes:
         LatentAssociation(
             word="jim", year_from=1980, year_to=1985, vectors=[0.6, 0.5]
         ).save()
+        Frequency(
+            word="jim", year=1996, rank=400, count=30, freq=0.00034
+        ).save()
+        Frequency(
+            word="cat", year=1996, rank=400, count=30, freq=0.00034
+        ).save()
+        Frequency(
+            word="man", year=1989, rank=400, count=30, freq=0.00034
+        ).save()
+        Frequency(
+            word="first", year=1989, rank=400, count=30, freq=0.00034
+        ).save()
+
 
     # Put any cleanup code in this method
     @classmethod
