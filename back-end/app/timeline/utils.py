@@ -22,7 +22,7 @@ def get_index_by_value(object_list, key, value):
 
 
 # The frequency data for each word in words for the year range given.
-def get_word_frequency_data(models, words, year_from, year_to):
+def get_word_frequency_data(words, year_from, year_to):
     """ Get the count, rank, frequency of a set of words for each year in range
 
         - @type models:           array
