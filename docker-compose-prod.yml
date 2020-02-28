@@ -17,11 +17,7 @@ services:
     build:
       context: ./back-end
       dockerfile: Dockerfile-prod
-    volumes:
-      - './back-end/models:/usr/src/models'
     env_file: './back-end/.env'
-    environment:
-      - TIMELINE_MODELS_DIR=/usr/src/models/
     depends_on:
       - db
     deploy:
