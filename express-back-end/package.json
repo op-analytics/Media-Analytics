@@ -7,25 +7,31 @@
     "dev": "nodemon src/index.js",
     "lint": "eslint src/",
     "start": "node src/index.js",
-    "test": "mocha"
+    "test": "mocha --recursive"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@hapi/joi": "^17.1.0",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "helmet": "^3.21.3",
+    "mathjs": "^6.6.1",
+    "mongoose": "^5.9.2",
     "morgan": "^1.9.1"
   },
   "devDependencies": {
+    "chai": "^4.2.0",
+    "chai-sorted": "^0.2.0",
     "eslint": "^6.8.0",
     "eslint-config-airbnb-base": "^14.0.0",
     "eslint-config-prettier": "^6.10.0",
     "eslint-plugin-import": "^2.20.1",
     "mocha": "^7.1.0",
+    "mongodb-memory-server": "^6.3.1",
     "nodemon": "^2.0.2",
     "prettier": "^1.19.1",
     "supertest": "^4.0.2"

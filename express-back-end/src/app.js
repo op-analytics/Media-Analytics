@@ -1,8 +1,11 @@
 const express = require('express');
+
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const helmet = require('helmet');
-require('dotenv').config();
+
+const db = require('./db');
+const config = require('./config');
 
 const api = require('./api');
 
@@ -17,6 +20,9 @@ app.use(bodyParser.json());
 // log http requests
 app.use(morgan('dev'));
 
-app.use('/', api);
+db.connect(config.mongooseURI);
+db.mongoose.set('debug', config.mongooseDebug);
+
+app.use('/api', api);
 
 module.exports = app;
