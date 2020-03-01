@@ -19,9 +19,9 @@ const User = new Schema({
   },
 });
 
-User.path('email').validate(val => {
+User.path('email').validate(value => {
   const emailRegex = /^([\w-.]+@([\w-]+\.)+[\w-]{2,4})?$/;
-  return emailRegex.test(val);
+  return emailRegex.test(value);
 }, 'Invalid email');
 
 module.exports = model('user', User);
