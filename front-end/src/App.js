@@ -24,8 +24,6 @@ function NotFound() {
 const links = [
   [
     { href: '/frequency', text: 'Frequency Over Time' },
-    { href: '/sentiment', text: 'Sentiment Over Time' },
-    { href: '/topic-modeling', text: 'Topic Modeling' },
     { href: '/latent-association', text: 'Latent Association Over Time' },
   ],
   [
@@ -46,7 +44,6 @@ function App() {
         <Switch>
           <Route exact path="/" render={() => <Redirect to="/frequency" />} />
           <Route path="/frequency" component={FrequencyTimeline} />
-          <Route path="/sentiment" component={SentimentTimeline} />
           <Route
             path="/latent-association"
             component={LatentAssociationTimeline}
