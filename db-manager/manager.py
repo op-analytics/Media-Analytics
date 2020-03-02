@@ -20,8 +20,14 @@ class LatentAssociation(Document):
     year_from = IntField(required=True)
     year_to = IntField(required=True)
 
+class Frequency(Document):
+    word = StringField(required=True)
+    year = StringField(required=True)
+    rank = IntField(required=True)
+    count = IntField(required=True)
+    freq = FloatField(required=True)
 
-mongo_documents = {"sentiment": Sentiment, "latent_association": LatentAssociation}
+mongo_documents = {"sentiment": Sentiment, "latent_association": LatentAssociation, "frequency": Frequency}
 
 
 @click.group()
