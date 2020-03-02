@@ -11,6 +11,8 @@ services:
     ports:
       - 5555:27017
     env_file: './db/.env'
+    networks:
+      - default
 
   back-end:
     build:
@@ -18,12 +20,11 @@ services:
       dockerfile: Dockerfile
     volumes:
       - './back-end:/usr/src/app'
-      - './back-end/models:/usr/src/models'
     ports:
       - 5000:5000
     env_file: './back-end/.env'
-    environment:
-      - TIMELINE_MODELS_DIR=/usr/src/models/
+    networks:
+      - default
 
   front-end:
     build:
@@ -35,6 +36,8 @@ services:
     ports:
       - 3000:3000
     env_file: './front-end/.env'
+    networks:
+      - default
     depends_on:
       - back-end
 
@@ -44,7 +47,9 @@ services:
       dockerfile: Dockerfile
     restart: always
     ports:
-      - 80:80
+      - 81:80
+    networks:
+      - default
     depends_on:
       - back-end
       - front-end
