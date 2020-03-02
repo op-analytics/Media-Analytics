@@ -7,4 +7,5 @@ router.get('/', (_, res) => {
 });
 
 router.post('/signup', UserController.Signup); 
+router.post('/login', UserController.Login); 
 module.exports = router; 

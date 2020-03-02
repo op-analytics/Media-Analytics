@@ -2,7 +2,7 @@ const request = require('supertest');
 
 const app = require('../src/app');
 
-describe('GET /', () => {
+describe('GET /api', () => {
   it('responds with a json message', done => {
     request(app)
       .get('/api')
