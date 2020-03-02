@@ -17,6 +17,9 @@ const envVarsSchema = Joi.object({
   MONGO_URI: Joi.string()
     .required()
     .description('Mongo DB host url'),
+  TOKEN_SECRET: Joi.string()
+    .required()
+    .description('The secret used to encrypt user data'),
 })
   .unknown()
   .required();
@@ -31,6 +34,7 @@ const config = {
   port: envVars.PORT,
   mongooseDebug: envVars.MONGOOSE_DEBUG,
   mongooseURI: envVars.MONGO_URI,
+  secret: envVars.TOKEN_SECRET,
 };
 
 module.exports = config;
