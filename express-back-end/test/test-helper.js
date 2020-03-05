@@ -7,7 +7,9 @@ const server = new MongoMemoryServer();
  * @returns {void}
  */
 const createDB = async () => {
-  db.disconnect(); // Disconnect from main db
+  // Disconnect from main db
+  // if you haven't already there will be a topology is closed error
+  // db.disconnect();
   const url = await server.getConnectionString();
   db.connect(url);
 };

@@ -7,6 +7,8 @@ const helmet = require('helmet');
 const db = require('./db');
 const config = require('./config');
 
+const { checkTokenSetUser } = require('./api/auth/middlewares');
+
 const api = require('./api');
 
 const app = express();
@@ -22,6 +24,8 @@ app.use(morgan('dev'));
 
 db.connect(config.mongooseURI);
 db.mongoose.set('debug', config.mongooseDebug);
+
+app.use(checkTokenSetUser);
 
 app.use('/api', api);
 
