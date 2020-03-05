@@ -114,3 +114,55 @@ describe('POST /Login', () => {
     destroyDB();
   });
 });
+
+describe('GET /user', () => {
+  let token;
+  let user;
+  before(async() => {
+    createDB();
+    const UserData = {
+      name: 'Bob',
+      email: 'bob@builder.com',
+      password: 'Yes@WeCan',
+    };
+    // Hash the password
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(UserData.password, salt);
+
+    // Try save and tokenize the user return error if it doesn't work
+    user = new User({
+      ...UserData,
+      password: hashedPassword,
+    });
+    await user.save();
+
+    const res = await request(app)
+      .post('/api/auth/login')
+      .send({ email: 'bob@builder.com', password: 'Yes@WeCan' })
+      .expect(200);
+    token = res.body.token;
+  });
+
+  it('It should return the user that the token on the request belongs to', async () => {
+    const res = await request(app)
+      .get('/api/auth/user')
+      .set({ Authorization: token })
+      .expect(200);
+    expect(res.body.data).to.be.an('object');
+    expect(res.body.data.name).to.equal('Bob');
+    expect(res.body.data.email).to.equal('bob@builder.com');
+  });
+
+  it('It should return UnAuthorized when called with an invalid token', async () => {
+    const res = await request(app)
+      .get('/api/auth/user')
+      .set({ Authorization: 'fake_token' })
+      .expect(401);
+    expect(res.body.message).to.be.an('string');
+    expect(res.body.message).to.equal('UnAuthorized');
+  });
+
+  after(() => {
+    destroyDB();
+  });
+});

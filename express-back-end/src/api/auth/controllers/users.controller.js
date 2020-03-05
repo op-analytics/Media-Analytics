@@ -23,6 +23,12 @@ module.exports = (function() {
       },
     );
 
+  const GetUserData = (req, res) => {
+    res.json({
+      data: {...req.user}
+    });
+  };
+
   const Signup = async (req, res) => {
     // Validate against schema
     const { error, value: UserData } = SignupSchema.validate(req.body, {
@@ -68,7 +74,9 @@ module.exports = (function() {
         token,
       });
     } catch (err) {
-      res.status(500).json(createValidationError("There was an error creating your user"));
+      res
+        .status(500)
+        .json(createValidationError('There was an error creating your user'));
       return;
     }
   };
@@ -116,5 +124,6 @@ module.exports = (function() {
   return {
     Signup,
     Login,
+    GetUserData,
   };
 })();
