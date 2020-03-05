@@ -53,6 +53,7 @@ exports[`LineChart renders a chart for a dataset of multiple words 1`] = `
           allowDataOverflow={false}
           allowDecimals={true}
           allowDuplicatedCategory={true}
+          dataKey="X"
           domain={
             Array [
               0,
@@ -220,6 +221,7 @@ exports[`LineChart renders a chart for a dataset of multiple words 1`] = `
           allowDataOverflow={false}
           allowDecimals={true}
           allowDuplicatedCategory={true}
+          dataKey="X"
           domain={
             Array [
               0,
@@ -392,6 +394,7 @@ exports[`LineChart renders a chart for a dataset of one word 1`] = `
           allowDataOverflow={false}
           allowDecimals={true}
           allowDuplicatedCategory={true}
+          dataKey="X"
           domain={
             Array [
               0,
@@ -564,6 +567,7 @@ exports[`LineChart should render correctly 1`] = `
           allowDataOverflow={false}
           allowDecimals={true}
           allowDuplicatedCategory={true}
+          dataKey="X"
           domain={
             Array [
               0,
