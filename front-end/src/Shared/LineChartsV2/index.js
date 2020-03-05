@@ -93,6 +93,10 @@ function LineCharts({ datasets, xAxisKey, yAxisKey, tooltipItems }) {
   );
 }
 
+LineCharts.defaultProps = {
+  xAxisKey: 'X',
+};
+
 LineCharts.propTypes = {
   /** The datasets to render line charts for */
   datasets: PropTypes.arrayOf(
@@ -102,7 +106,7 @@ LineCharts.propTypes = {
     }),
   ).isRequired,
   /** The key for the x axis of the datasets */
-  xAxisKey: PropTypes.string.isRequired,
+  xAxisKey: PropTypes.string,
   /** The key for the y axis of the datasets */
   yAxisKey: PropTypes.string.isRequired,
   /** An array of items to render in the tooltips */
