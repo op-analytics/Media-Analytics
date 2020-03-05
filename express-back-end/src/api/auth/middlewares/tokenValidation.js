@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 
 function getTokenFromBearer(header) {
   const tokenSplit = header.split(' ');
-  return tokenSplit.length > 0 ? tokenSplit[1] : tokenSplit[0];
+  return tokenSplit.length > 1 ? tokenSplit[1] : tokenSplit[0];
 }
 
 function getTokenFromRequest(req) {
@@ -13,41 +13,20 @@ function getTokenFromRequest(req) {
   return false;
 }
 
-function verifyJWT(token) {
-  return new Promise(resolve => {
-    jwt.verify(token, process.env.TOKEN_SECRET, (err, decoded) => {
-      if (err) return resolve();
-      return resolve(decoded);
-    });
-  });
-}
-
-function getUserFromBearer(bearer) {
-  const token = getTokenFromBearer(bearer);
-
-  if (token) {
-    return verifyJWT(token).then(user => {
-      return user;
-    });
-  }
-  return Promise.resolve();
-}
-
 function checkTokenSetUser(req, res, next) {
   const token = getTokenFromRequest(req);
-
   if (token) {
-    verifyJWT(token).then(user => {
+    try {
+      const user = jwt.verify(token, process.env.TOKEN_SECRET);
       req.user = user;
-      next();
-    });
-  } else {
-    next();
+      // Ignore errors as we are just trying to set the user on the request
+    } catch {}
   }
+  next();
 }
 
 module.exports = {
-  verifyJWT,
   checkTokenSetUser,
-  getUserFromBearer,
+  getTokenFromRequest,
+  getTokenFromBearer,
 };
