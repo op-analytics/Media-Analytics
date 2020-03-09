@@ -9,6 +9,8 @@ import './App.css';
 import Nav from './Shared/Nav';
 import FrequencyTimeline from './Timeline/Frequency-Timeline-view';
 import LatentAssociationTimeline from './Timeline/Latent-Association-view';
+import ProtectedRoute from './Timeline/components/ProtectedRoute';
+import Login from './routes/Auth/Login/Login';
 
 /**
  * Not found page
@@ -46,11 +48,12 @@ function App() {
       <Nav title="NYT Analytics" links={links}>
         <Switch>
           <Route exact path="/" render={() => <Redirect to="/frequency" />} />
-          <Route path="/frequency" component={FrequencyTimeline} />
-          <Route
+          <Route path="/login" component={Login} />
+          <ProtectedRoute
             path="/latent-association"
             component={LatentAssociationTimeline}
           />
+          <ProtectedRoute path="/frequency" component={FrequencyTimeline} />
           <Route component={NotFound} />
         </Switch>
       </Nav>
