@@ -12,6 +12,7 @@
     "react-chartjs-2": "^2.7.6",
     "react-dom": "^16.8.6",
     "react-hook-form": "^4.10.1",
+    "react-redux": "^7.2.0",
     "react-router-dom": "^5.0.1",
     "react-scripts": "3.0.1",
     "recharts": "^1.7.1",
