@@ -1,33 +1,25 @@
-import { createStore } from 'redux';
+import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
+import createSagaMiddleware from 'redux-saga';
+import rootSaga from './rootSaga'
 
-const initialState = { authenticated: false };
+import user from './ducks/users/reducer';
 
-const authenticate = () =>({
-  type: 'AUTHENTICATE',
-  authenticated: true
-})
+const initialState = {};
 
-const unAuthenticate = () =>({
-  type: 'UNAUTHENTICATE',
-  authenticated: false
-})
+const sagaMiddleware = createSagaMiddleware()
 
-const authentication = (state = [], action) => {
-  switch (action.type) {
-    case 'AUTHENTICATE':
-      return [
-        ...state,
-        {'authenticated': true}
-      ]
-    case 'UNAUTHENTICATE':
-      return [...state,
-        {'authenticated': false}
-      ]
-    default:
-      return state
-  }
-}
+const reducers = combineReducers({
+  user,
+});
 
-const Store = createStore(authentication, initialState);
+const composeEnhancers =
+  typeof window === 'object' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
+    ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})
+    : compose;
 
-export default Store;
+const enhancer = composeEnhancers(applyMiddleware(sagaMiddleware));
+
+const store = createStore(reducers, initialState, enhancer);
+
+sagaMiddleware.run(rootSaga)
+export default store;

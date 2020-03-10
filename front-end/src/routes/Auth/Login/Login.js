@@ -10,6 +10,8 @@ import Typography from '@material-ui/core/Typography';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import { useDispatch } from 'react-redux';
+import { userActions } from '../../../state/ducks/users';
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -34,8 +36,10 @@ const useStyles = makeStyles(theme => ({
 export default function SignIn() {
   const classes = useStyles();
   const { register, handleSubmit } = useForm();
-
-  const submit = userData => console.log(userData);
+  const dispatch = useDispatch();
+  const submit = userData => {
+    dispatch(userActions.login(userData.email, userData.password))
+  }
 
   return (
     <Container component="main" maxWidth="xs">
