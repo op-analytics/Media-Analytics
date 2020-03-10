@@ -3,6 +3,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const helmet = require('helmet');
+const cors = require('cors')
 
 const db = require('./db');
 const config = require('./config');
@@ -21,6 +22,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 // log http requests
 app.use(morgan('dev'));
+app.use(cors())
 
 db.connect(config.mongooseURI);
 db.mongoose.set('debug', config.mongooseDebug);

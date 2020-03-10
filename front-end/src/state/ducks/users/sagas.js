@@ -17,7 +17,7 @@ const setAuthorizationHeader = token => {
 export function* loginSaga({ payload }) {
   const { email, password } = payload;
   try {
-    const { token } = yield call(() =>
+    const {data:{token}}  = yield call(() =>
       axios.post(`${API_URL}/login`, { email, password }),
     );
     setAuthorizationHeader(token);
@@ -28,6 +28,6 @@ export function* loginSaga({ payload }) {
   }
 }
 
-export async function* loginWatcher() {
+export function* loginWatcher() {
   yield takeEvery(LOGIN, loginSaga);
 }
