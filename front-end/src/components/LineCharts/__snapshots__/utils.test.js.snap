@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Utils create tooltip function returns tooltip with all given items 1`] = `
+<div>
+  <h2>
+    test
+  </h2>
+  <p
+    key="y"
+  >
+    <span>
+      y: 
+    </span>
+    y
+  </p>
+</div>
+`;
+
+exports[`Utils create tooltip function returns tooltip with format functions applied 1`] = `
+<div>
+  <h2>
+    test
+  </h2>
+  <p
+    key="y"
+  >
+    <span>
+      y: 
+    </span>
+    y test
+  </p>
+</div>
+`;

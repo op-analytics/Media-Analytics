@@ -21,6 +21,8 @@ matrix:
     - language: node_js
       node_js:
         - stable
+      env:
+        - REACT_APP_CAPTCHA_KEY=notMySecret
       before_install:
         - cd front-end
       install:

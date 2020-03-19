@@ -1,29 +1,18 @@
 import React from 'react';
-import {
-  BrowserRouter as Router,
-  Redirect,
-  Route,
-  Switch,
-} from 'react-router-dom';
-import './App.css';
-import Nav from './Shared/Nav';
-import FrequencyTimeline from './Timeline/Frequency-Timeline-view';
-import LatentAssociationTimeline from './Timeline/Latent-Association-view';
+import { Redirect, Route, Switch } from 'react-router-dom';
+import Nav from './components/Nav';
 
-/**
- * Not found page
- * @component
- */
-function NotFound() {
-  return (
-    <div className="App">
-      <h1>Not found</h1>
-    </div>
-  );
-}
+// Routes
+import Login from './routes/Auth/Login';
+import Signup from './routes/Auth/Signup';
+import FrequencyTimeline from './routes/Timeline/Frequency.view';
+import LatentAssociationTimeline from './routes/Timeline/Latent-Association.view';
+import NotFound from './routes/NotFound.view';
+import LoggedInRoute from './components/Auth/LoggedInRoute';
+import LoggedOutRoute from './components/Auth/LoggedOutRoute';
 
 // Links to show on the side bar
-// Each sub array will have a devider seporating them
+// Each sub array will have a divider separating them
 const links = [
   [
     { href: '/frequency', text: 'Frequency Over Time' },
@@ -42,19 +31,19 @@ const links = [
  */
 function App() {
   return (
-    <Router>
-      <Nav title="NYT Analytics" links={links}>
-        <Switch>
-          <Route exact path="/" render={() => <Redirect to="/frequency" />} />
-          <Route path="/frequency" component={FrequencyTimeline} />
-          <Route
-            path="/latent-association"
-            component={LatentAssociationTimeline}
-          />
-          <Route component={NotFound} />
-        </Switch>
-      </Nav>
-    </Router>
+    <Nav title="NYT Analytics" links={links}>
+      <Switch>
+        <Route exact path="/" render={() => <Redirect to="/frequency" />} />
+        <LoggedOutRoute path="/signup" component={Signup} />
+        <LoggedOutRoute path="/login" component={Login} />
+        <LoggedInRoute path="/frequency" component={FrequencyTimeline} />
+        <LoggedInRoute
+          path="/latent-association"
+          component={LatentAssociationTimeline}
+        />
+        <Route component={NotFound} />
+      </Switch>
+    </Nav>
   );
 }
 

@@ -1,5 +1,5 @@
-module.exports={
-  "singleQuote": true,
-  "trailingComma": "all",
-  "printWidth": 81,
-}
+module.exports = {
+  singleQuote: true,
+  trailingComma: 'all',
+  printWidth: 81,
+};

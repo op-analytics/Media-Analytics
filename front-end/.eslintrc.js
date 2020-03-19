@@ -5,7 +5,12 @@ module.exports = {
     es6: true,
     jest: true,
   },
-  extends: ['airbnb', 'eslint:recommended', 'plugin:react/recommended','prettier'],
+  extends: [
+    'airbnb',
+    'eslint:recommended',
+    'plugin:react/recommended',
+    'prettier',
+  ],
   globals: {
     Atomics: 'readonly',
     SharedArrayBuffer: 'readonly',
@@ -26,4 +31,4 @@ module.exports = {
     'no-tabs': 'error',
     'import/prefer-default-export': 0,
   },
-}
+};
