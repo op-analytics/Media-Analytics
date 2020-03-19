@@ -1,5 +1,9 @@
 import CircularProgress from '@material-ui/core/CircularProgress';
+import FormControl from '@material-ui/core/FormControl';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import Select from '@material-ui/core/Select';
 import { makeStyles } from '@material-ui/core/styles';
 import Switch from '@material-ui/core/Switch';
 import React, { useState } from 'react';
@@ -7,6 +11,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Form from '../../components/Form';
 import LineCharts from '../../components/LineCharts';
 import { getFrequencies } from '../../state/ducks/timeline';
+
 
 const useStyles = makeStyles(() => ({
   container: {
@@ -16,6 +21,12 @@ const useStyles = makeStyles(() => ({
     flexDirection: 'column',
     overflow: 'hidden',
     width: '94%',
+  },
+  label:{
+    backgroundColor:'white',
+  },
+  formControl: {
+    minWidth: 120,
   },
 }));
 
@@ -32,6 +43,7 @@ const formData = [
 function Timeline() {
   const classes = useStyles();
   const dispatch = useDispatch();
+  const [yAxisKey, setYAxisKey] = useState('freq');
   const [absolute, setAbsolute] = useState(false);
 
   const loading = useSelector(state => state.timeline.loading);
@@ -51,6 +63,21 @@ function Timeline() {
       <h3>Word Frequency Timeline</h3>
       <div className={classes.container}>
         <Form formData={formData} onSubmit={onSubmitHandler} />
+        <FormControl className={classes.formControl}>
+          <InputLabel className={classes.label} id="y-axis-key-select-label">
+            Y-Axis Key
+          </InputLabel>
+          <Select
+            labelId="y-axis-key-select-label"
+            id="y-axis-key-select"
+            value={yAxisKey}
+            onChange={e => setYAxisKey(e.target.value)}
+          >
+            <MenuItem value="freq">Frequency</MenuItem>
+            <MenuItem value="count">Count</MenuItem>
+            <MenuItem value="rank">Rank</MenuItem>
+          </Select>
+        </FormControl>
         <FormControlLabel
           control={(
             <Switch
@@ -59,7 +86,7 @@ function Timeline() {
               value="absolute"
               color="primary"
             />
-)}
+          )}
           label="Display absolute"
         />
         {loading ? (
@@ -68,7 +95,7 @@ function Timeline() {
           <LineCharts
             datasets={frequencies}
             xAxisKey="year"
-            yAxisKey="freq"
+            yAxisKey={yAxisKey}
             displayAbsolute={absolute}
             tooltipItems={[
               { key: 'freq', title: 'freq' },

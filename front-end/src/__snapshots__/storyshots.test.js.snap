@@ -920,7 +920,7 @@ exports[`Storyshots Routes/Auth Signup Form 1`] = `
 </main>
 `;
 
-exports[`Storyshots Timeline/Frequency Lantent Association Timeline 1`] = `
+exports[`Storyshots Timeline/Frequency Frequency Timeline 1`] = `
 Array [
   <h3>
     Word Frequency Timeline
@@ -929,11 +929,11 @@ Array [
     className="makeStyles-container-967"
   >
     <form
-      className="makeStyles-form-968"
+      className="makeStyles-form-970"
       onSubmit={[Function]}
     >
       <div
-        className="MuiFormControl-root makeStyles-formControl-970"
+        className="MuiFormControl-root makeStyles-formControl-972"
       >
         <div
           className="MuiFormControl-root MuiTextField-root MuiFormControl-marginNormal"
@@ -971,7 +971,7 @@ Array [
         </div>
       </div>
       <div
-        className="MuiFormControl-root makeStyles-formControl-970"
+        className="MuiFormControl-root makeStyles-formControl-972"
       >
         <div
           className="MuiFormControl-root MuiTextField-root MuiFormControl-marginNormal"
@@ -1009,7 +1009,7 @@ Array [
         </div>
       </div>
       <div
-        className="MuiFormControl-root makeStyles-formControl-970"
+        className="MuiFormControl-root makeStyles-formControl-972"
       >
         <div
           className="MuiFormControl-root MuiTextField-root MuiFormControl-marginNormal"
@@ -1047,7 +1047,7 @@ Array [
         </div>
       </div>
       <button
-        className="MuiButtonBase-root MuiButton-root MuiButton-outlined makeStyles-button-971 MuiButton-outlinedPrimary"
+        className="MuiButtonBase-root MuiButton-root MuiButton-outlined makeStyles-button-973 MuiButton-outlinedPrimary"
         disabled={false}
         onBlur={[Function]}
         onDragLeave={[Function]}
@@ -1073,6 +1073,52 @@ Array [
         />
       </button>
     </form>
+    <div
+      className="MuiFormControl-root makeStyles-formControl-969"
+    >
+      <label
+        className="MuiFormLabel-root MuiInputLabel-root makeStyles-label-968 MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiFormLabel-filled"
+        data-shrink={true}
+        id="y-axis-key-select-label"
+      >
+        Y-Axis Key
+      </label>
+      <div
+        className="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-formControl MuiInput-formControl"
+        onClick={[Function]}
+      >
+        <div
+          aria-haspopup="listbox"
+          aria-labelledby="y-axis-key-select-label y-axis-key-select"
+          className="MuiSelect-root MuiSelect-select MuiSelect-selectMenu MuiInputBase-input MuiInput-input"
+          id="y-axis-key-select"
+          onBlur={[Function]}
+          onFocus={[Function]}
+          onKeyDown={[Function]}
+          onMouseDown={[Function]}
+          role="button"
+          tabIndex={0}
+        >
+          Frequency
+        </div>
+        <input
+          onAnimationStart={[Function]}
+          type="hidden"
+          value="freq"
+        />
+        <svg
+          aria-hidden="true"
+          className="MuiSvgIcon-root MuiSelect-icon"
+          focusable="false"
+          role="presentation"
+          viewBox="0 0 24 24"
+        >
+          <path
+            d="M7 10l5 5 5-5z"
+          />
+        </svg>
+      </div>
+    </div>
     <label
       className="MuiFormControlLabel-root"
     >
@@ -1081,7 +1127,7 @@ Array [
       >
         <span
           aria-disabled={false}
-          className="MuiButtonBase-root MuiIconButton-root PrivateSwitchBase-root-1079 MuiSwitch-switchBase MuiSwitch-colorPrimary"
+          className="MuiButtonBase-root MuiIconButton-root PrivateSwitchBase-root-1104 MuiSwitch-switchBase MuiSwitch-colorPrimary"
           onBlur={[Function]}
           onDragLeave={[Function]}
           onFocus={[Function]}
@@ -1100,7 +1146,7 @@ Array [
           >
             <input
               checked={false}
-              className="PrivateSwitchBase-input-1082 MuiSwitch-input"
+              className="PrivateSwitchBase-input-1107 MuiSwitch-input"
               onChange={[Function]}
               type="checkbox"
               value="absolute"
@@ -1124,10 +1170,10 @@ Array [
       </span>
     </label>
     <div
-      className="makeStyles-chartContainer-1122"
+      className="makeStyles-chartContainer-1147"
     >
       <h1
-        className="makeStyles-chartTitle-1123"
+        className="makeStyles-chartTitle-1148"
       >
         cat
       </h1>
@@ -1166,14 +1212,14 @@ Array [
     Latent association over time
   </h3>,
   <div
-    className="makeStyles-container-1142"
+    className="makeStyles-container-1167"
   >
     <form
-      className="makeStyles-form-1143"
+      className="makeStyles-form-1168"
       onSubmit={[Function]}
     >
       <div
-        className="MuiFormControl-root makeStyles-formControl-1145"
+        className="MuiFormControl-root makeStyles-formControl-1170"
       >
         <div
           className="MuiFormControl-root MuiTextField-root MuiFormControl-marginNormal"
@@ -1211,7 +1257,7 @@ Array [
         </div>
       </div>
       <div
-        className="MuiFormControl-root makeStyles-formControl-1145"
+        className="MuiFormControl-root makeStyles-formControl-1170"
       >
         <div
           className="MuiFormControl-root MuiTextField-root MuiFormControl-marginNormal"
@@ -1249,7 +1295,7 @@ Array [
         </div>
       </div>
       <div
-        className="MuiFormControl-root makeStyles-formControl-1145"
+        className="MuiFormControl-root makeStyles-formControl-1170"
       >
         <div
           className="MuiFormControl-root MuiTextField-root MuiFormControl-marginNormal"
@@ -1287,7 +1333,7 @@ Array [
         </div>
       </div>
       <div
-        className="MuiFormControl-root makeStyles-formControl-1145"
+        className="MuiFormControl-root makeStyles-formControl-1170"
       >
         <div
           className="MuiFormControl-root MuiTextField-root MuiFormControl-marginNormal"
@@ -1325,7 +1371,7 @@ Array [
         </div>
       </div>
       <button
-        className="MuiButtonBase-root MuiButton-root MuiButton-outlined makeStyles-button-1146 MuiButton-outlinedPrimary"
+        className="MuiButtonBase-root MuiButton-root MuiButton-outlined makeStyles-button-1171 MuiButton-outlinedPrimary"
         disabled={false}
         onBlur={[Function]}
         onDragLeave={[Function]}
@@ -1352,7 +1398,7 @@ Array [
       </button>
     </form>
     <div
-      className="makeStyles-chartContainer-1137"
+      className="makeStyles-chartContainer-1162"
     >
       <div
         className="recharts-responsive-container"

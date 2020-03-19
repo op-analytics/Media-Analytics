@@ -28,4 +28,4 @@ export default {
   decorators: [storyFn => <Provider store={store}>{storyFn()}</Provider>],
 };
 
-export const LantentAssociationTimeline = () => <Timeline />;
+export const FrequencyTimeline = () => <Timeline />;
