@@ -50,7 +50,13 @@ const useStyles = makeStyles(() => ({
  *
  * @component
  */
-function LineCharts({ datasets, xAxisKey, yAxisKey, tooltipItems }) {
+function LineCharts({
+  datasets,
+  xAxisKey,
+  yAxisKey,
+  tooltipItems,
+  displayAbsolute,
+}) {
   const classes = useStyles();
 
   return (
@@ -70,7 +76,7 @@ function LineCharts({ datasets, xAxisKey, yAxisKey, tooltipItems }) {
             >
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey={xAxisKey} />
-              <YAxis />
+              <YAxis domain={[displayAbsolute ? 0 : 'auto', 'auto']} />
               <Tooltip content={createTooltip(classes, tooltipItems)} />
               <Line
                 type="monotone"
@@ -116,6 +122,7 @@ LineCharts.propTypes = {
       key: PropTypes.string.isRequired,
     }),
   ).isRequired,
+  displayAbsolute: PropTypes.bool.isRequired,
 };
 
 export default LineCharts;

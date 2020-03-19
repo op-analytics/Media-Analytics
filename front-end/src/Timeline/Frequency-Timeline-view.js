@@ -1,7 +1,9 @@
 import CircularProgress from '@material-ui/core/CircularProgress';
-import {makeStyles} from '@material-ui/core/styles';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import { makeStyles } from '@material-ui/core/styles';
+import Switch from '@material-ui/core/Switch';
 import Axios from 'axios';
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import Form from '../Shared/Form';
 import LineCharts from '../Shared/LineChartsV2';
 
@@ -39,6 +41,7 @@ const cleanDataset = dataset => ({ title: dataset.word, data: dataset.data });
 function Timeline() {
   const [timelineDatasets, setTimelineDatasets] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [absolute, setAbsolute] = useState(false);
 
   const classes = useStyles();
 
@@ -64,6 +67,17 @@ function Timeline() {
       <h3>Word Frequency Timeline</h3>
       <div className={classes.container}>
         <Form formData={formData} onSubmit={onSubmitHandler} />
+        <FormControlLabel
+          control={(
+            <Switch
+              checked={absolute}
+              onChange={() => setAbsolute(!absolute)}
+              value="absolute"
+              color="primary"
+            />
+          )}
+          label="Display absolute"
+        />
         {loading ? (
           <CircularProgress />
         ) : (
@@ -71,6 +85,7 @@ function Timeline() {
             datasets={timelineDatasets.map(cleanDataset)}
             xAxisKey="year"
             yAxisKey="freq"
+            displayAbsolute={absolute}
             tooltipItems={[
               { key: 'freq', title: 'freq' },
               { key: 'count', title: 'count' },

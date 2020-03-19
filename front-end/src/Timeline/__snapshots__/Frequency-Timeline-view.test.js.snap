@@ -31,8 +31,20 @@ exports[`Timeline should render correctly 1`] = `
       }
       onSubmit={[Function]}
     />
+    <WithStyles(ForwardRef(FormControlLabel))
+      control={
+        <ForwardRef(WithStyles)
+          checked={false}
+          color="primary"
+          onChange={[Function]}
+          value="absolute"
+        />
+      }
+      label="Display absolute"
+    />
     <LineCharts
       datasets={Array []}
+      displayAbsolute={false}
       tooltipItems={
         Array [
           Object {

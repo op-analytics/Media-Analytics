@@ -1,8 +1,8 @@
-.input-field{
+.input-field {
   background-color: darkgray;
 }
 
-.input-form{
+.input-form {
   display: flexbox;
   width: 180px;
 }

@@ -9,8 +9,7 @@ exports[`Utils create tooltip function returns tooltip with all given items 1`] 
     key="y"
   >
     <span>
-      y
-      :
+      y:
     </span>
     y
   </p>
@@ -26,8 +25,7 @@ exports[`Utils create tooltip function returns tooltip with format functions app
     key="y"
   >
     <span>
-      y
-      :
+      y:
     </span>
     y test
   </p>

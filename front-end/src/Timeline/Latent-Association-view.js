@@ -1,10 +1,18 @@
 import CircularProgress from '@material-ui/core/CircularProgress';
-import {makeStyles} from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import Axios from 'axios';
-import React, {useState} from 'react';
-import {CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis} from 'recharts';
+import React, { useState } from 'react';
+import {
+  CartesianGrid,
+  Line,
+  LineChart,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
+} from 'recharts';
 import Form from '../Shared/Form';
-import {createTooltip} from '../Shared/utils';
+import { createTooltip } from '../Shared/utils';
 
 const useStyles = makeStyles(() => ({
   chartContainer: {
@@ -56,7 +64,6 @@ const formData = [
   { label: 'Year from', name: 'year_from', required: true },
   { label: 'Year to', name: 'year_to', required: true },
 ];
-
 
 /**
  * The latent association page component

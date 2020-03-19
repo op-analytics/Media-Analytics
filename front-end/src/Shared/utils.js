@@ -21,8 +21,7 @@ export const createTooltip = (classes, items) => {
             return (
               <p className={classes.tooltipLabel} key={item.title}>
                 <span className={classes.tooltipLabelFirstWord}>
-                  {item.title}
-                  :
+                  {`${item.title}:`}
                 </span>
                 {payloadItem}
               </p>

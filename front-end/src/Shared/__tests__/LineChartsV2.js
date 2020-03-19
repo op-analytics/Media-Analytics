@@ -27,6 +27,7 @@ describe('LineChart', () => {
       datasets: chartDatasetsWithOneWord,
       yAxisKey: 'y',
       tooltipItems: [{ title: 'y', key: 'y' }],
+      displayAbsolute: false
     });
     expect(wrapper).toMatchSnapshot();
   });
@@ -36,6 +37,7 @@ describe('LineChart', () => {
       datasets: chartDatasetsWithTwoWords,
       yAxisKey: 'y',
       tooltipItems: [{ title: 'y', key: 'y' }],
+      displayAbsolute: false
     });
     expect(wrapper).toMatchSnapshot();
   });
@@ -45,6 +47,7 @@ describe('LineChart', () => {
       datasets: chartDatasetsWithOneWord,
       yAxisKey: 'y',
       tooltipItems: [{ title: 'y', key: 'y' }],
+      displayAbsolute: false
     });
     expect(wrapper).toMatchSnapshot();
   });
