@@ -4,20 +4,6 @@ sudo: true
 matrix:
   fast_finish: true
   include:
-    - language: python
-      python:
-        - "3.7"
-      env:
-        - PORT=8080
-      before_install:
-        - cd back-end
-      install:
-        - pip install pipenv
-        - pipenv install --dev
-      script:
-        - pytest
-        - pylint app/
-
     - language: node_js
       node_js:
         - stable

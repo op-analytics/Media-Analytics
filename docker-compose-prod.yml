@@ -16,18 +16,19 @@ services:
     networks:
       - default
 
-  back-end:
-    image: nichtj3/nyta-back-end:prod
+  express-back-end:
     build:
-      context: ./back-end
+      context: ./express-back-end
       dockerfile: Dockerfile-prod
-    env_file: './back-end/.env'
+    ports:
+      - 5000:5000
+    env_file: './express-back-end/.env'
+    environment:
+      - PORT=5000
     networks:
       - default
     depends_on:
       - db
-    deploy:
-      replicas: 1
 
   front-end:
     image: nichtj3/nyta-front-end:prod
@@ -38,24 +39,18 @@ services:
     networks:
       - default
     depends_on:
-      - back-end
-    deploy:
-      replicas: 1
+      - express-back-end
 
   nginx:
     image: nichtj3/nyta-nginx:prod
     build:
       context: ./nginx
-      dockerfile: Dockerfile-prod
+      dockerfile: Dockerfile
     restart: always
     ports:
       - 80:80
     networks:
       - default
     depends_on:
-      - back-end
       - front-end
-    deploy:
-      replicas: 1
-      placement:
-        constraints: [node.role == manager]
+      - express-back-end
