@@ -10,7 +10,9 @@ services:
       - 'nyta-db:/data/db'
     ports:
       - 5555:27017
-    env_file: './db/.env'
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=yourUsername
+      - MONGO_INITDB_ROOT_PASSWORD=yourPassword
     networks:
       - default
 
