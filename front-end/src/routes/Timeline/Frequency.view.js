@@ -12,7 +12,6 @@ import Form from '../../components/Form';
 import LineCharts from '../../components/LineCharts';
 import { getFrequencies } from '../../state/ducks/timeline';
 
-
 const useStyles = makeStyles(() => ({
   container: {
     display: 'flex',
@@ -22,11 +21,12 @@ const useStyles = makeStyles(() => ({
     overflow: 'hidden',
     width: '94%',
   },
-  label:{
-    backgroundColor:'white',
+  label: {
+    backgroundColor: 'white',
   },
   formControl: {
     minWidth: 120,
+    padding: 10,
   },
 }));
 
@@ -34,6 +34,12 @@ const formData = [
   { label: 'Words', name: 'words', required: true },
   { label: 'Year from', name: 'year_from', required: true },
   { label: 'Year to', name: 'year_to', required: true },
+];
+
+const allMediaOutlets = [
+  { name: 'New York Times', value: 'nyt' },
+  { name: 'Wall Street Journal', value: 'wsj' },
+  { name: 'The Guardian', value: 'guardian' },
 ];
 
 /**
@@ -45,6 +51,7 @@ function Timeline() {
   const dispatch = useDispatch();
   const [yAxisKey, setYAxisKey] = useState('freq');
   const [absolute, setAbsolute] = useState(false);
+  const [mediaOutlets, setMediaOutlets] = useState(['nyt']);
 
   const loading = useSelector(state => state.timeline.loading);
   const frequencies = useSelector(state => state.timeline.frequencies);
@@ -55,7 +62,7 @@ function Timeline() {
     words: wordsString,
   }) => {
     const words = wordsString.split(',');
-    dispatch(getFrequencies(words, yearFrom, yearTo));
+    dispatch(getFrequencies(words, yearFrom, yearTo, mediaOutlets));
   };
 
   return (
@@ -78,15 +85,33 @@ function Timeline() {
             <MenuItem value="rank">Rank</MenuItem>
           </Select>
         </FormControl>
+        <FormControl className={classes.formControl}>
+          <InputLabel className={classes.label} id="media-outlets-select-label">
+            Media Outlets
+          </InputLabel>
+          <Select
+            labelId="media-outlets-select-label"
+            id="media-outlets-select"
+            multiple
+            value={mediaOutlets}
+            onChange={e => setMediaOutlets(e.target.value)}
+          >
+            {allMediaOutlets.map(outlet => (
+              <MenuItem key={outlet.name} value={outlet.value}>
+                {outlet.name}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
         <FormControlLabel
-          control={(
+          control={
             <Switch
               checked={absolute}
               onChange={() => setAbsolute(!absolute)}
               value="absolute"
               color="primary"
             />
-          )}
+          }
           label="Display absolute"
         />
         {loading ? (

@@ -1,16 +1,12 @@
 import CircularProgress from '@material-ui/core/CircularProgress';
+import FormControl from '@material-ui/core/FormControl';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import Select from '@material-ui/core/Select';
 import { makeStyles } from '@material-ui/core/styles';
-import React from 'react';
+import React, {useState} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  CartesianGrid,
-  Line,
-  LineChart,
-  ResponsiveContainer,
-  Tooltip,
-  XAxis,
-  YAxis,
-} from 'recharts';
+import { CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 import Form from '../../components/Form';
 import { createTooltip } from '../../components/LineCharts/utils';
 import { getAssociations } from '../../state/ducks/timeline';
@@ -63,6 +59,12 @@ const formData = [
   { label: 'Year to', name: 'year_to', required: true },
 ];
 
+const allMediaOutlets = [
+  { name: 'New York Times', value: 'nyt' },
+  { name: 'Wall Street Journal', value: 'wsj' },
+  { name: 'The Guardian', value: 'guardian' },
+];
+
 /**
  * The latent association page component
  * @component
@@ -70,6 +72,7 @@ const formData = [
 function Timeline() {
   const associations = useSelector(state => state.timeline.associations);
   const loading = useSelector(state => state.timeline.loading);
+  const [mediaOutlets, setMediaOutlets] = useState(['nyt']);
 
   const classes = useStyles();
   const dispatch = useDispatch();
@@ -85,7 +88,7 @@ function Timeline() {
     const yearFromInt = parseInt(yearFrom);
     const yearToInt = parseInt(yearTo);
     dispatch(
-      getAssociations(concept1Array, concept2Array, yearFromInt, yearToInt),
+      getAssociations(concept1Array, concept2Array, yearFromInt, yearToInt, mediaOutlets),
     );
   };
 
@@ -94,6 +97,24 @@ function Timeline() {
       <h3>Latent association over time</h3>
       <div className={classes.container}>
         <Form formData={formData} onSubmit={onSubmitHandler} />
+        <FormControl className={classes.formControl}>
+          <InputLabel className={classes.label} id="media-outlets-select-label">
+            Media Outlets
+          </InputLabel>
+          <Select
+            labelId="media-outlets-select-label"
+            id="media-outlets-select"
+            multiple
+            value={mediaOutlets}
+            onChange={e => setMediaOutlets(e.target.value)}
+          >
+            {allMediaOutlets.map(outlet => (
+              <MenuItem key={outlet.name} value={outlet.value}>
+                {outlet.name}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
         {loading ? (
           <CircularProgress />
         ) : (
