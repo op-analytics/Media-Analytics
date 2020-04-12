@@ -30,7 +30,7 @@ media_outlets = [
     "wt",
 ]
 
-year_range = range(1960, 1980)
+year_range = range(1900, 2000)
 
 
 class MediaOutlet(Document):
@@ -40,7 +40,7 @@ class MediaOutlet(Document):
 class Sentiment(Document):
     word = StringField(required=True)
     year = IntField(required=True)
-    media_src = ReferenceField(MediaOutlet, required=True)
+    media_outlet = ReferenceField(MediaOutlet, required=True)
     sentiment = FloatField(required=True)
 
 
@@ -48,14 +48,14 @@ class LatentAssociation(Document):
     word = StringField(required=True)
     year_from = IntField(required=True)
     year_to = IntField(required=True)
-    media_src = ReferenceField(MediaOutlet, required=True)
+    media_outlet = ReferenceField(MediaOutlet, required=True)
     vectors = ListField(required=False)
 
 
 class Frequency(Document):
     word = StringField(required=True)
     year = StringField(required=True)
-    media_src = ReferenceField(MediaOutlet, required=True)
+    media_outlet = ReferenceField(MediaOutlet, required=True)
     rank = IntField(required=True)
     count = IntField(required=True)
     freq = FloatField(required=True)
@@ -69,8 +69,8 @@ mongo_documents = {
 }
 
 
-def add_relative_frequency(year):
-    frequency_objects = Frequency.objects(year=year)
+def add_relative_frequency(year, media_outlet):
+    frequency_objects = Frequency.objects(year=year, media_outlet=media_outlet)
     max_freq = frequency_objects.order_by("-freq")[0]["freq"]
     with click.progressbar(
         frequency_objects,
@@ -95,10 +95,10 @@ def cli():
     help="The type of data you wish to store from the list of previous options.",
 )
 @click.option(
-    "--media-source",
+    "--media-outlet",
     type=click.Choice(media_outlets),
     required=True,
-    help="The news source the data was retrieved from.",
+    help="The news outlet the data was retrieved from.",
 )
 @click.option(
     "--drop-collection",
@@ -106,10 +106,10 @@ def cli():
     help="Control whether the collection being added to will be dropped first.",
 )
 @click.argument("file", type=click.Path(exists=True), required=True)
-def add(data_type, media_source, drop_collection, file):
+def add(data_type, media_outlet, drop_collection, file):
     MediaOutlet.drop_collection()
-    for media_outlet in media_outlets:
-        MediaOutlet(media_outlet).save()
+    for new_media_outlet in media_outlets:
+        MediaOutlet(new_media_outlet).save()
 
     if file.endswith(".pkl"):
         with open(file, "rb") as data_file:
@@ -128,7 +128,7 @@ def add(data_type, media_source, drop_collection, file):
                     ) as year_data:
                         for word, word_data in year_data:
                             new_word = mongo_documents[data_type](
-                                word, year, media_source, **word_data
+                                word, year, media_outlet, **word_data
                             )
                             if data_type == "latent_association":
                                 year_from, year_to = year.split("-")
@@ -136,12 +136,12 @@ def add(data_type, media_source, drop_collection, file):
                                     word,
                                     year_from,
                                     year_to,
-                                    media_source,
+                                    media_outlet,
                                     word_data["vectors"],
                                 )
                             new_word.save()
                     if data_type == "frequency":
-                        add_relative_frequency(year)
+                        add_relative_frequency(year, media_outlet)
 
 
 if __name__ == "__main__":
