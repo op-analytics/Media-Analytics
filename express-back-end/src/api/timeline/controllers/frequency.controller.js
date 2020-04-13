@@ -47,14 +47,14 @@ module.exports = (function() {
         if (wordDataIndex == -1) {
           frequencyData.push({
             word: word,
-            data: { [media_outlet]: [[wordData]] },
+            data: { [media_outlet]: [wordData] },
           });
         } else {
           // Check if the key for the media outlet does not already exist.
           if (!frequencyData[wordDataIndex].data[media_outlet]) {
-            frequencyData[wordDataIndex].data[media_outlet].push([wordData]);
+            frequencyData[wordDataIndex].data[media_outlet] = [wordData];
           } else {
-            frequencyData[wordDataIndex].data[media_outlet] = [[wordData]];
+            frequencyData[wordDataIndex].data[media_outlet].push(wordData);
           }
         }
       }

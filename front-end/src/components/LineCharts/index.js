@@ -10,7 +10,7 @@ import {
   XAxis,
   YAxis,
 } from 'recharts';
-import { createTooltip } from './utils';
+import { createTooltip, stringToColour } from './utils';
 
 const useStyles = makeStyles(() => ({
   chartContainer: {
@@ -56,6 +56,8 @@ function LineCharts({
   yAxisKey,
   tooltipItems,
   displayAbsolute,
+  words,
+  mediaOutlets,
 }) {
   const classes = useStyles();
 
@@ -78,19 +80,24 @@ function LineCharts({
               <XAxis dataKey={xAxisKey} />
               <YAxis domain={[displayAbsolute ? 0 : 'auto', 'auto']} />
               <Tooltip content={createTooltip(classes, tooltipItems)} />
-              <Line
-                type="monotone"
-                dataKey={yAxisKey}
-                stroke="#8884d8"
-                fill="#8884d8"
-                strokeWidth={3}
-                dot={{ strokeWidth: 5 }}
-                activeDot={{
-                  stroke: '#3F51B5',
-                  strokeWidth: 7,
-                  border: 'white',
-                }}
-              />
+              {words.map(word =>
+                mediaOutlets.map(mediaOutlet => (
+                  <Line
+                    key={mediaOutlet + word}
+                    type="monotone"
+                    dataKey={mediaOutlet + word + yAxisKey}
+                    stroke={stringToColour(word)}
+                    fill={stringToColour(word)}
+                    strokeWidth={3}
+                    dot={{ strokeWidth: 5 }}
+                    activeDot={{
+                      stroke: stringToColour(word),
+                      strokeWidth: 7,
+                      border: 'white',
+                    }}
+                  />
+                )),
+              )}
             </LineChart>
           </ResponsiveContainer>
         </div>
@@ -123,6 +130,8 @@ LineCharts.propTypes = {
     }),
   ).isRequired,
   displayAbsolute: PropTypes.bool.isRequired,
+  words: PropTypes.arrayOf(PropTypes.string).isRequired,
+  mediaOutlets: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
 export default LineCharts;
