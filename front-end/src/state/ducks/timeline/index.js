@@ -56,7 +56,7 @@ export default function reducer(state = initialState, action = {}) {
 }
 
 // Action Creators
-export const getFrequencies = (words, yearFrom, yearTo, mediaOutlets) => ({
+export const getFrequencies = (words, yearFrom, yearTo, mediaOutlets, chartType) => ({
   type: GET_FREQUENCY,
   payload: {
     words,
@@ -64,6 +64,7 @@ export const getFrequencies = (words, yearFrom, yearTo, mediaOutlets) => ({
     year_to: yearTo,
     media_outlets: mediaOutlets,
   },
+  chartType: chartType
 });
 
 export const getFrequencySuccess = frequencies => ({
