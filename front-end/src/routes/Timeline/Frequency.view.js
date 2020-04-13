@@ -42,6 +42,13 @@ const allMediaOutlets = [
   { name: 'The Guardian', value: 'guardian' },
 ];
 
+const chartTypes = {
+  SINGLE: 'single',
+  MULTIPLE: 'multiple',
+  BY_OUTLET: 'byOutlet',
+  BY_WORD: 'byWord',
+};
+
 /**
  * The frequency timeline page component
  * @component
@@ -52,6 +59,8 @@ function Timeline() {
   const [yAxisKey, setYAxisKey] = useState('freq');
   const [absolute, setAbsolute] = useState(false);
   const [mediaOutlets, setMediaOutlets] = useState(['nyt']);
+  const [chartType, setChartType] = useState(chartTypes.SINGLE);
+  const [words, setWords] = useState([]);
 
   const loading = useSelector(state => state.timeline.loading);
   const frequencies = useSelector(state => state.timeline.frequencies);
@@ -61,8 +70,8 @@ function Timeline() {
     year_to: yearTo,
     words: wordsString,
   }) => {
-    const words = wordsString.split(',');
-    dispatch(getFrequencies(words, yearFrom, yearTo, mediaOutlets));
+    setWords(wordsString.split(','));
+    dispatch(getFrequencies(words, yearFrom, yearTo, mediaOutlets, chartType));
   };
 
   return (
@@ -104,14 +113,14 @@ function Timeline() {
           </Select>
         </FormControl>
         <FormControlLabel
-          control={
+          control={(
             <Switch
               checked={absolute}
               onChange={() => setAbsolute(!absolute)}
               value="absolute"
               color="primary"
             />
-          }
+          )}
           label="Display absolute"
         />
         {loading ? (
@@ -127,6 +136,8 @@ function Timeline() {
               { key: 'count', title: 'count' },
               { key: 'rank', title: 'rank' },
             ]}
+            words={words}
+            mediaOutlets={mediaOutlets}
           />
         )}
       </div>
