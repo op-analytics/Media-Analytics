@@ -67,6 +67,7 @@ function singleDataset(responseData) {
       });
     }
   });
+  summaryObject.data.sort((x, y) => x.year - y.year)
   result.push(summaryObject);
   return result;
 }
