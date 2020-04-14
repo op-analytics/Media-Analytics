@@ -42,12 +42,12 @@ const allMediaOutlets = [
   { name: 'The Guardian', value: 'guardian' },
 ];
 
-const chartTypes = {
-  SINGLE: 'single',
-  MULTIPLE: 'multiple',
-  BY_OUTLET: 'byOutlet',
-  BY_WORD: 'byWord',
-};
+const chartTypes = [
+  { name: 'Single Chart',  value: 'single'},
+  { name: 'Mulitple Charts', value: 'multiple'},
+  { name: 'By Outlet Charts', value: 'byOutlet'},
+  { name: 'By Word Charts', value: 'byWord'},
+];
 
 /**
  * The frequency timeline page component
@@ -59,7 +59,7 @@ function Timeline() {
   const [yAxisKey, setYAxisKey] = useState('freq');
   const [absolute, setAbsolute] = useState(false);
   const [mediaOutlets, setMediaOutlets] = useState(['nyt']);
-  const [chartType, setChartType] = useState(chartTypes.SINGLE);
+  const [chartType, setChartType] = useState('multiple');
   const [words, setWords] = useState([]);
 
   const loading = useSelector(state => state.timeline.loading);
@@ -108,6 +108,23 @@ function Timeline() {
             {allMediaOutlets.map(outlet => (
               <MenuItem key={outlet.name} value={outlet.value}>
                 {outlet.name}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+        <FormControl className={classes.formControl}>
+          <InputLabel className={classes.label} id="chart-type-select-label">
+            Chart Type
+          </InputLabel>
+          <Select
+            labelId="chart-type-select-label"
+            id="chart-type-select"
+            value={chartType}
+            onChange={e => setChartType(e.target.value)}
+          >
+            {chartTypes.map(type => (
+              <MenuItem key={type.name} value={type.value}>
+                {type.name}
               </MenuItem>
             ))}
           </Select>
