@@ -19,12 +19,13 @@ function multipleDatasets(responseData) {
       let mediaOutletData = [];
       wordDataset.data[mediaOutlet].map(wordData => {
         // Creating keys for the year data using using the media outlet and word.
-        let yearDataObject = { year: wordData.year };
-        yearDataObject[mediaOutlet + wordDataset.word + 'rank'] = wordData.rank;
-        yearDataObject[mediaOutlet + wordDataset.word + 'count'] =
-          wordData.count;
-        yearDataObject[mediaOutlet + wordDataset.word + 'freq'] = wordData.freq;
-        mediaOutletData.push(yearDataObject);
+        let yearObject = { year: wordData.year };
+        yearObject[mediaOutlet + wordDataset.word + 'rank'] = wordData.rank;
+        yearObject[mediaOutlet + wordDataset.word + 'count'] = wordData.count;
+        yearObject[mediaOutlet + wordDataset.word + 'freq'] = wordData.freq;
+        yearObject[mediaOutlet + wordDataset.word + 'word'] = wordDataset.word;
+        yearObject[mediaOutlet + wordDataset.word + 'mediaOutlet'] = mediaOutlet;
+        mediaOutletData.push(yearObject);
       });
       // Add the new result
       result.push({
@@ -38,9 +39,9 @@ function multipleDatasets(responseData) {
 
 function singleDataset(responseData) {
   let result = [];
-  // The objec that will contain all the data. This could be wrapped in brackets at
+  // The object that will contain all the data. This could be wrapped in brackets at
   // the final return and result could be removed but I think it is clearer and
-  // consistant with the other functions to keep separate.
+  // consistant with the other functions when kept separate.
   let summaryObject = {
     title: 'Summary',
     data: [],
@@ -61,6 +62,8 @@ function singleDataset(responseData) {
         yearObject[mediaOutlet + wordDataset.word + 'rank'] = wordData.rank;
         yearObject[mediaOutlet + wordDataset.word + 'count'] = wordData.count;
         yearObject[mediaOutlet + wordDataset.word + 'freq'] = wordData.freq;
+        yearObject[mediaOutlet + wordDataset.word + 'word'] = wordDataset.word;
+        yearObject[mediaOutlet + wordDataset.word + 'mediaOutlet'] = mediaOutlet;
       });
     }
   });
@@ -75,7 +78,7 @@ function byOutletDataset(responseData) {
     let currentMediaOutlet = '';
     let mediaOutletData = [];
     for (const mediaOutlet in wordDataset.data) {
-      let yearDataObject;
+      let yearObject;
       mediaOutletData = [];
       currentMediaOutlet = mediaOutlet;
 
@@ -86,27 +89,28 @@ function byOutletDataset(responseData) {
           mediaOutletData = mediaOutletInResult.data;
         }
         // Get a reference to the year data in media outlet data if it already exists.
-        yearDataObject = mediaOutletData.find(obj => obj.year === wordData.year);
-        if (!yearDataObject) {
-          yearDataObject = { year: wordData.year };
-          mediaOutletData.push(yearDataObject);
+        yearObject = mediaOutletData.find(obj => obj.year === wordData.year);
+        if (!yearObject) {
+          yearObject = { year: wordData.year };
+          mediaOutletData.push(yearObject);
         }
         // Creating keys for the data using using the media outlet and word.
-        yearDataObject[mediaOutlet + wordDataset.word + 'rank'] = wordData.rank;
-        yearDataObject[mediaOutlet + wordDataset.word + 'count'] =
-          wordData.count;
-        yearDataObject[mediaOutlet + wordDataset.word + 'freq'] = wordData.freq;
+        yearObject[mediaOutlet + wordDataset.word + 'rank'] = wordData.rank;
+        yearObject[mediaOutlet + wordDataset.word + 'count'] = wordData.count;
+        yearObject[mediaOutlet + wordDataset.word + 'freq'] = wordData.freq;
+        yearObject[mediaOutlet + wordDataset.word + 'word'] = wordDataset.word;
+        yearObject[mediaOutlet + wordDataset.word + 'mediaOutlet'] = mediaOutlet;
       });
 
       // Check there is aready data for the particular year in the current media data.
       let yearDataObjectInMediaOutlet = mediaOutletData.find(
-        obj => obj.year === yearDataObject.year,
+        obj => obj.year === yearObject.year,
       );
       // If there is no data already for the year, add the year object. If there was
       // already data, the year object would be a reference to an object within the
       // media outlet data array and wouldn't need to be appended.
       if (!yearDataObjectInMediaOutlet) {
-        mediaOutletData.push(yearDataObject);
+        mediaOutletData.push(yearObject);
       }
       // Check if there is already data for the media outlet in result.
       let resultMediaOutlet = result.find(

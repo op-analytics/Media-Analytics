@@ -1,6 +1,6 @@
 import { makeStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useState } from 'react';
 import {
   CartesianGrid,
   Line,
@@ -60,6 +60,7 @@ function LineCharts({
   mediaOutlets,
 }) {
   const classes = useStyles();
+  const [dotHovered, setDotHovered] = useState();
 
   return (
     <>
@@ -79,7 +80,9 @@ function LineCharts({
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey={xAxisKey} />
               <YAxis domain={[displayAbsolute ? 0 : 'auto', 'auto']} />
-              <Tooltip content={createTooltip(classes, tooltipItems)} />
+              <Tooltip
+                content={createTooltip(classes, tooltipItems, dotHovered)}
+              />
               {words.map(word =>
                 mediaOutlets.map(mediaOutlet => (
                   <Line
@@ -91,6 +94,10 @@ function LineCharts({
                     strokeWidth={3}
                     dot={{ strokeWidth: 5 }}
                     activeDot={{
+                      onMouseOver: () => {
+                        setDotHovered(mediaOutlet + word);
+                      },
+                      onMouseLeave: () => setDotHovered(null),
                       stroke: stringToColour(word),
                       strokeWidth: 7,
                       border: 'white',

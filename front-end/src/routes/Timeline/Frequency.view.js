@@ -132,6 +132,8 @@ function Timeline() {
             yAxisKey={yAxisKey}
             displayAbsolute={absolute}
             tooltipItems={[
+              { key: 'word', title: 'word'},
+              { key: 'mediaOutlet', title: 'media outlet'},
               { key: 'freq', title: 'freq' },
               { key: 'count', title: 'count' },
               { key: 'rank', title: 'rank' },
