@@ -70,7 +70,7 @@ mongo_documents = {
 
 
 def add_relative_frequency(year, media_outlet):
-    frequency_objects = Frequency.objects(year=year, media_outlet=media_outlet)
+    frequency_objects = Frequency.objects(__raw__={'year': year, 'media_outlet': media_outlet})
     max_freq = frequency_objects.order_by("-freq")[0]["freq"]
     with click.progressbar(
         frequency_objects,
