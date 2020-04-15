@@ -41,6 +41,7 @@ module.exports = (function() {
           rank: frequencyDataObj.rank,
           count: frequencyDataObj.count,
           freq: frequencyDataObj.freq,
+          rel_freq: frequencyDataObj.rel_freq,
         };
         let wordDataIndex = frequencyData.findIndex(fd => fd.word == word);
         // Check if the key for the word does not already exist.

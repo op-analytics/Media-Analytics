@@ -40,16 +40,22 @@ const allMediaOutlets = [
   { name: 'New York Times', value: 'nyt' },
   { name: 'Wall Street Journal', value: 'wsj' },
   { name: 'The Guardian', value: 'guardian' },
-  { name: 'HuffPost', value: 'hp'},
+  { name: 'HuffPost', value: 'hp' },
 ];
 
 const chartTypes = [
-  { name: 'Single Chart',  value: 'single'},
-  { name: 'Mulitple Charts', value: 'multiple'},
-  { name: 'By Outlet Charts', value: 'byOutlet'},
-  { name: 'By Word Charts', value: 'byWord'},
+  { name: 'Single Chart', value: 'single' },
+  { name: 'Mulitple Charts', value: 'multiple' },
+  { name: 'By Outlet Charts', value: 'byOutlet' },
+  { name: 'By Word Charts', value: 'byWord' },
 ];
 
+const yAxisKeys = [
+  { name: 'Frequency', value: 'freq' },
+  { name: 'Relative Frequency', value: 'rel_freq' },
+  { name: 'Count', value: 'count' },
+  { name: 'Rank', value: 'rank' },
+];
 /**
  * The frequency timeline page component
  * @component
@@ -90,9 +96,11 @@ function Timeline() {
             value={yAxisKey}
             onChange={e => setYAxisKey(e.target.value)}
           >
-            <MenuItem value="freq">Frequency</MenuItem>
-            <MenuItem value="count">Count</MenuItem>
-            <MenuItem value="rank">Rank</MenuItem>
+            {yAxisKeys.map(key => (
+              <MenuItem key={key.name} value={key.value}>
+                {key.name}
+              </MenuItem>
+            ))}
           </Select>
         </FormControl>
         <FormControl className={classes.formControl}>
@@ -131,14 +139,14 @@ function Timeline() {
           </Select>
         </FormControl>
         <FormControlLabel
-          control={(
+          control={
             <Switch
               checked={absolute}
               onChange={() => setAbsolute(!absolute)}
               value="absolute"
               color="primary"
             />
-          )}
+          }
           label="Display absolute"
         />
         {loading ? (
@@ -150,11 +158,12 @@ function Timeline() {
             yAxisKey={yAxisKey}
             displayAbsolute={absolute}
             tooltipItems={[
-              { key: 'word', title: 'word'},
-              { key: 'mediaOutlet', title: 'media outlet'},
+              { key: 'word', title: 'word' },
+              { key: 'mediaOutlet', title: 'media outlet' },
               { key: 'freq', title: 'freq' },
               { key: 'count', title: 'count' },
               { key: 'rank', title: 'rank' },
+              { key: 'rel_freq', title: 'relative frequency' },
             ]}
             words={words}
             mediaOutlets={mediaOutlets}
