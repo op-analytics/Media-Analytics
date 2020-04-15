@@ -40,6 +40,7 @@ const allMediaOutlets = [
   { name: 'New York Times', value: 'nyt' },
   { name: 'Wall Street Journal', value: 'wsj' },
   { name: 'The Guardian', value: 'guardian' },
+  { name: 'HuffPost', value: 'hp'},
 ];
 
 const chartTypes = [
