@@ -15,6 +15,7 @@ from mongoengine import (
 
 connect("nyta")
 
+
 media_outlets = [
     "bloomberg",
     "bre",
@@ -30,7 +31,7 @@ media_outlets = [
     "wt",
 ]
 
-year_range = range(1900, 2000)
+year_range = range(2010, 2020)
 
 
 class MediaOutlet(Document):
@@ -59,7 +60,6 @@ class Frequency(Document):
     rank = IntField(required=True)
     count = IntField(required=True)
     freq = FloatField(required=True)
-    rel_freq = FloatField(required=False)
 
 
 mongo_documents = {
@@ -67,20 +67,6 @@ mongo_documents = {
     "latent_association": LatentAssociation,
     "frequency": Frequency,
 }
-
-
-def add_relative_frequency(year, media_outlet):
-    frequency_objects = Frequency.objects(__raw__={'year': year, 'media_outlet': media_outlet})
-    max_freq = frequency_objects.order_by("-freq")[0]["freq"]
-    with click.progressbar(
-        frequency_objects,
-        label="Calculating relative frequencies...",
-        length=len(frequency_objects),
-    ) as frequencies:
-        for word in frequencies:
-            word["rel_freq"] = word["freq"] / max_freq
-            word.save()
-
 
 @click.group()
 def cli():
@@ -140,8 +126,6 @@ def add(data_type, media_outlet, drop_collection, file):
                                     word_data["vectors"],
                                 )
                             new_word.save()
-                    if data_type == "frequency":
-                        add_relative_frequency(year, media_outlet)
 
 
 if __name__ == "__main__":

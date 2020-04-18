@@ -25,10 +25,6 @@ const Frequency = new Schema({
     type: Number,
     required: true,
   },
-  rel_freq: {
-    type: Number,
-    required: true,
-  },
 });
 
 Frequency.set('collection', 'frequency');

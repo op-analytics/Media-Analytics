@@ -14,8 +14,6 @@ function multipleDatasets(responseData) {
         yearObject[mediaOutlet + wordDataset.word + 'freq'] = wordData.freq;
         yearObject[mediaOutlet + wordDataset.word + 'word'] = wordDataset.word;
         yearObject[mediaOutlet + wordDataset.word + 'mediaOutlet'] = mediaOutlet;
-        yearObject[mediaOutlet + wordDataset.word + 'rel_freq'] =
-          wordData.rel_freq;
         mediaOutletData.push(yearObject);
       });
       // Add the new result
@@ -55,8 +53,6 @@ function singleDataset(responseData) {
         yearObject[mediaOutlet + wordDataset.word + 'freq'] = wordData.freq;
         yearObject[mediaOutlet + wordDataset.word + 'word'] = wordDataset.word;
         yearObject[mediaOutlet + wordDataset.word + 'mediaOutlet'] = mediaOutlet;
-        yearObject[mediaOutlet + wordDataset.word + 'rel_freq'] =
-          wordData.rel_freq;
       });
     }
   });
@@ -94,8 +90,6 @@ function byOutletDataset(responseData) {
         yearObject[mediaOutlet + wordDataset.word + 'freq'] = wordData.freq;
         yearObject[mediaOutlet + wordDataset.word + 'word'] = wordDataset.word;
         yearObject[mediaOutlet + wordDataset.word + 'mediaOutlet'] = mediaOutlet;
-        yearObject[mediaOutlet + wordDataset.word + 'rel_freq'] =
-          wordData.rel_freq;
       });
 
       // Check there is aready data for the particular year in the current media data.
@@ -160,7 +154,6 @@ module.exports = (function() {
           rank: frequencyDataObj.rank,
           count: frequencyDataObj.count,
           freq: frequencyDataObj.freq,
-          rel_freq: frequencyDataObj.rel_freq,
         };
         let wordDataIndex = frequencyData.findIndex(fd => fd.word == word);
         // Check if the key for the word does not already exist.

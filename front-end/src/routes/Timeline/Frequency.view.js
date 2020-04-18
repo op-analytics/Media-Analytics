@@ -52,10 +52,8 @@ const chartTypes = [
 
 const yAxisKeys = [
   { name: 'Frequency', value: 'freq' },
-  { name: 'Relative Frequency', value: 'rel_freq' },
   { name: 'Count', value: 'count' },
   { name: 'Rank', value: 'rank' },
-
 ];
 /**
  * The frequency timeline page component
@@ -164,7 +162,6 @@ function Timeline() {
               { key: 'freq', title: 'freq' },
               { key: 'count', title: 'count' },
               { key: 'rank', title: 'rank' },
-              { key: 'rel_freq', title: 'relative frequency' },
             ]}
             words={words}
             mediaOutlets={mediaOutlets}
