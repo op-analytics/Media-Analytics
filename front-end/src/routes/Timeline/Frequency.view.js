@@ -55,6 +55,7 @@ const yAxisKeys = [
   { name: 'Relative Frequency', value: 'rel_freq' },
   { name: 'Count', value: 'count' },
   { name: 'Rank', value: 'rank' },
+
 ];
 /**
  * The frequency timeline page component
@@ -139,14 +140,14 @@ function Timeline() {
           </Select>
         </FormControl>
         <FormControlLabel
-          control={
+          control={(
             <Switch
               checked={absolute}
               onChange={() => setAbsolute(!absolute)}
               value="absolute"
               color="primary"
             />
-          }
+          )}
           label="Display absolute"
         />
         {loading ? (

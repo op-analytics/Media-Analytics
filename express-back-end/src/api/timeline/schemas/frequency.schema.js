@@ -12,4 +12,5 @@ module.exports = Joi.object({
     .items(Joi.string())
     .required()
     .min(1),
+  chart_type: Joi.string().allow('multiple', 'single', 'byOutlet'),
 });
