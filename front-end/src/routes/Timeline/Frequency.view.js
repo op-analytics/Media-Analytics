@@ -159,7 +159,7 @@ function Timeline() {
             yAxisKey={yAxisKey}
             displayAbsolute={absolute}
             tooltipItems={[
-              { key: yAxisKey, title: yAxisKeys.find(key => key.value === yAxisKey).name }
+              { key: "rank", title:"rank" }
             ]}
             words={words}
             mediaOutlets={mediaOutlets}

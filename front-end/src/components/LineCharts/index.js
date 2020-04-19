@@ -1,6 +1,6 @@
 import { makeStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
-import React, { useState } from 'react';
+import React from 'react';
 import {
   CartesianGrid,
   Line,
@@ -9,8 +9,12 @@ import {
   Tooltip,
   XAxis,
   YAxis,
+  Legend,
 } from 'recharts';
-import { createTooltip, stringToColour } from './utils';
+import {
+  createLegendPayload,
+  stringToColour,
+} from './utils';
 
 const useStyles = makeStyles(() => ({
   chartContainer: {
@@ -54,13 +58,11 @@ function LineCharts({
   datasets,
   xAxisKey,
   yAxisKey,
-  tooltipItems,
   displayAbsolute,
   words,
   mediaOutlets,
 }) {
   const classes = useStyles();
-
   return (
     <>
       {datasets.map(data => (
@@ -79,14 +81,21 @@ function LineCharts({
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey={xAxisKey} />
               <YAxis domain={[displayAbsolute ? 0 : 'auto', 'auto']} />
-              <Tooltip
-                content={createTooltip(classes, tooltipItems, words, mediaOutlets)}
+              <Legend
+                payload={createLegendPayload(
+                  data,
+                  words,
+                  mediaOutlets,
+                  yAxisKey,
+                )}
               />
+              <Tooltip />
               {words.map(word =>
                 mediaOutlets.map(mediaOutlet => (
                   <Line
                     key={mediaOutlet + word}
                     type="monotone"
+                    name={mediaOutlet + ' - ' + word}
                     dataKey={mediaOutlet + word + yAxisKey}
                     stroke={stringToColour(word)}
                     fill={stringToColour(word)}
@@ -124,13 +133,6 @@ LineCharts.propTypes = {
   xAxisKey: PropTypes.string,
   /** The key for the y axis of the datasets */
   yAxisKey: PropTypes.string.isRequired,
-  /** An array of items to render in the tooltips */
-  tooltipItems: PropTypes.arrayOf(
-    PropTypes.shape({
-      title: PropTypes.string.isRequired,
-      key: PropTypes.string.isRequired,
-    }),
-  ).isRequired,
   displayAbsolute: PropTypes.bool.isRequired,
   words: PropTypes.arrayOf(PropTypes.string).isRequired,
   mediaOutlets: PropTypes.arrayOf(PropTypes.string).isRequired,

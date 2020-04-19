@@ -43,6 +43,37 @@ export const createTooltip = (classes, items, words, mediaOutlets) => {
 };
 
 /**
+ * A legend item factory for creating legend items dynamicaly
+ *
+ * @param {Object} data Data being used for the chart
+ * @param {Object[]} words
+ * @param {Object[]} mediaOutlets
+ * @param {String} YAxisKey
+ * @returns {Element}
+ */
+export const createLegendPayload = (data, words, mediaOutlets, YAxisKey) => {
+  let legendItems = [];
+  for (let yearData of data.data) {
+    for (let mediaOutlet of mediaOutlets) {
+      for (let word of words) {
+        if (Object.keys(yearData).includes(mediaOutlet + word + YAxisKey)) {
+          if (
+            legendItems.findIndex(item => item.id === mediaOutlet + word) === -1
+          ) {
+            legendItems.push({
+              id: mediaOutlet + word,
+              value: mediaOutlet + ' - ' + word,
+              color: stringToColour(word),
+            });
+          }
+        }
+      }
+    }
+  }
+  return legendItems;
+};
+
+/**
  * A deterministic converter of a string to a hexidecimal colour
  *
  * @param {String} str
