@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Form from '../../components/Form';
 import LineCharts from '../../components/LineCharts';
 import { getFrequencies } from '../../state/ducks/timeline';
+import { YAxis } from 'recharts';
 
 const useStyles = makeStyles(() => ({
   container: {
@@ -66,7 +67,7 @@ function Timeline() {
   const [absolute, setAbsolute] = useState(false);
   const [mediaOutlets, setMediaOutlets] = useState(['nyt']);
   const [chartType, setChartType] = useState('multiple');
-  const [words, setWords] = useState();
+  const [words, setWords] = useState([]);
 
   const loading = useSelector(state => state.timeline.loading);
   const frequencies = useSelector(state => state.timeline.frequencies);
@@ -158,11 +159,7 @@ function Timeline() {
             yAxisKey={yAxisKey}
             displayAbsolute={absolute}
             tooltipItems={[
-              { key: 'word', title: 'word' },
-              { key: 'mediaOutlet', title: 'media outlet' },
-              { key: 'freq', title: 'freq' },
-              { key: 'count', title: 'count' },
-              { key: 'rank', title: 'rank' },
+              { key: yAxisKey, title: yAxisKeys.find(key => key.value === yAxisKey).name }
             ]}
             words={words}
             mediaOutlets={mediaOutlets}

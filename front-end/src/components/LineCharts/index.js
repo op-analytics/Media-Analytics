@@ -60,7 +60,6 @@ function LineCharts({
   mediaOutlets,
 }) {
   const classes = useStyles();
-  const [dotHovered, setDotHovered] = useState();
 
   return (
     <>
@@ -81,7 +80,7 @@ function LineCharts({
               <XAxis dataKey={xAxisKey} />
               <YAxis domain={[displayAbsolute ? 0 : 'auto', 'auto']} />
               <Tooltip
-                content={createTooltip(classes, tooltipItems, dotHovered)}
+                content={createTooltip(classes, tooltipItems, words, mediaOutlets)}
               />
               {words.map(word =>
                 mediaOutlets.map(mediaOutlet => (
@@ -94,10 +93,6 @@ function LineCharts({
                     strokeWidth={3}
                     dot={{ strokeWidth: 5 }}
                     activeDot={{
-                      onMouseOver: () => {
-                        setDotHovered(mediaOutlet + word);
-                      },
-                      onMouseLeave: () => setDotHovered(null),
                       stroke: stringToColour(word),
                       strokeWidth: 7,
                       border: 'white',

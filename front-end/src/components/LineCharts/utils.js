@@ -8,24 +8,31 @@ import React from 'react';
  * @param {Object[]} items The items to render on the tooltip
  * @returns {Element}
  */
-export const createTooltip = (classes, items, dot) => {
+export const createTooltip = (classes, items, words, mediaOutlets) => {
   const ToolTip = ({ active, payload, label }) => {
-    if (active && dot) {
+    if (active) {
       return (
         <div className={classes.tooltip}>
           <h3>{label}</h3>
           {items.map(item => {
-            let payloadItem = payload[0].payload[dot + item.key];
-            if (item.formatFunction)
-              payloadItem = item.formatFunction(payloadItem);
-            return (
-              <p className={classes.tooltipLabel} key={dot + item.title}>
-                <span className={classes.tooltipLabelFirstWord}>
-                  {`${item.title}: `}
-                </span>
-                {payloadItem}
-              </p>
-            );
+            return mediaOutlets.map(mediaOutlet => {
+              return words.map(word => {
+                let payloadItem =
+                  payload[0].payload[mediaOutlet + word + item.key];
+                if (item.formatFunction)
+                  payloadItem = item.formatFunction(payloadItem);
+                if (payloadItem) {
+                  return (
+                    <p className={classes.tooltipLabel} key={item.title}>
+                      <span className={classes.tooltipLabelFirstWord}>
+                        {`${mediaOutlet} - ${word}: `}
+                      </span>
+                      {Math.round(payloadItem * 1000000) / 1000000}
+                    </p>
+                  );
+                }
+              });
+            });
           })}
         </div>
       );
