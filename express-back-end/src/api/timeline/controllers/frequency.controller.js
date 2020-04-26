@@ -1,6 +1,14 @@
 const Frequency = require('../models/frequency.model');
 const { FrequencySchema } = require('../schemas');
 
+const allMediaOutlets = [
+  { name: 'New York Times', value: 'nyt' },
+  { name: 'Wall Street Journal', value: 'wsj' },
+  { name: 'The Guardian', value: 'guardian' },
+  { name: 'HuffPost', value: 'hp' },
+];
+
+
 function multipleDatasets(responseData) {
   let result = [];
   responseData.map(wordDataset => {
@@ -17,8 +25,10 @@ function multipleDatasets(responseData) {
         mediaOutletData.push(yearObject);
       });
       // Add the new result
+      title = allMediaOutlets.find(obj => obj.value === mediaOutlet)
+      console.log('title', title)
       result.push({
-        title: wordDataset.word + ' - ' + mediaOutlet,
+        title: wordDataset.word + ' - ' + title.name,
         data: mediaOutletData,
       });
     }

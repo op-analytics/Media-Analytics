@@ -51,7 +51,7 @@ export const createTooltip = (classes, items, words, mediaOutlets) => {
  * @param {String} YAxisKey
  * @returns {Element}
  */
-export const createLegendPayload = (data, words, mediaOutlets, YAxisKey) => {
+export const createLegendPayload = (data, words, mediaOutlets, YAxisKey, allMediaOutlets) => {
   let legendItems = [];
   for (let yearData of data.data) {
     for (let mediaOutlet of mediaOutlets) {
@@ -62,7 +62,7 @@ export const createLegendPayload = (data, words, mediaOutlets, YAxisKey) => {
           ) {
             legendItems.push({
               id: mediaOutlet + word,
-              value: mediaOutlet + ' - ' + word,
+              value: allMediaOutlets.find(obj => obj.value === mediaOutlet).name + ' - ' + word,
               color: stringToColour(word),
             });
           }

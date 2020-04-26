@@ -163,6 +163,7 @@ function Timeline() {
             ]}
             words={words}
             mediaOutlets={mediaOutlets}
+            allMediaOutlets={allMediaOutlets}
           />
         )}
       </div>

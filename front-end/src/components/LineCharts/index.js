@@ -11,10 +11,7 @@ import {
   YAxis,
   Legend,
 } from 'recharts';
-import {
-  createLegendPayload,
-  stringToColour,
-} from './utils';
+import { createLegendPayload, stringToColour } from './utils';
 
 const useStyles = makeStyles(() => ({
   chartContainer: {
@@ -61,6 +58,7 @@ function LineCharts({
   displayAbsolute,
   words,
   mediaOutlets,
+  allMediaOutlets,
 }) {
   const classes = useStyles();
   return (
@@ -87,6 +85,7 @@ function LineCharts({
                   words,
                   mediaOutlets,
                   yAxisKey,
+                  allMediaOutlets,
                 )}
               />
               <Tooltip />
@@ -95,7 +94,12 @@ function LineCharts({
                   <Line
                     key={mediaOutlet + word}
                     type="monotone"
-                    name={mediaOutlet + ' - ' + word}
+                    name={
+                      allMediaOutlets.find(obj => obj.value === mediaOutlet)
+                        .name +
+                      ' - ' +
+                      word
+                    }
                     dataKey={mediaOutlet + word + yAxisKey}
                     stroke={stringToColour(word)}
                     fill={stringToColour(word)}
@@ -136,6 +140,12 @@ LineCharts.propTypes = {
   displayAbsolute: PropTypes.bool.isRequired,
   words: PropTypes.arrayOf(PropTypes.string).isRequired,
   mediaOutlets: PropTypes.arrayOf(PropTypes.string).isRequired,
+  allMediaOutlets: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      value: PropTypes.string.isRequired,
+    }),
+  ).isRequired,
 };
 
 export default LineCharts;
