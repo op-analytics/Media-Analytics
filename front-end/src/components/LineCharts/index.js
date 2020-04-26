@@ -59,6 +59,8 @@ function LineCharts({
   words,
   mediaOutlets,
   allMediaOutlets,
+  yearFrom,
+  yearTo,
 }) {
   const classes = useStyles();
   return (
@@ -77,7 +79,12 @@ function LineCharts({
               }}
             >
               <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey={xAxisKey} />
+              <XAxis
+                type="number"
+                domain={[yearFrom, yearTo]}
+                dataKey={xAxisKey}
+                tickCount={Math.abs(yearTo - yearFrom)}
+              />
               <YAxis domain={[displayAbsolute ? 0 : 'auto', 'auto']} />
               <Legend
                 payload={createLegendPayload(
@@ -146,6 +153,8 @@ LineCharts.propTypes = {
       value: PropTypes.string.isRequired,
     }),
   ).isRequired,
+  yearFrom: PropTypes.number.isRequired,
+  yearTo: PropTypes.number.isRequired,
 };
 
 export default LineCharts;

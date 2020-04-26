@@ -68,6 +68,8 @@ function Timeline() {
   const [mediaOutlets, setMediaOutlets] = useState(['nyt']);
   const [chartType, setChartType] = useState('multiple');
   const [words, setWords] = useState([]);
+  const [yearFrom, setYearFrom] = useState();
+  const [yearTo, setYearTo] = useState();
 
   const loading = useSelector(state => state.timeline.loading);
   const frequencies = useSelector(state => state.timeline.frequencies);
@@ -78,7 +80,11 @@ function Timeline() {
     words: wordsString,
   }) => {
     let wordsList = wordsString.split(',')
+    let year_from = Number(yearFrom)
+    let year_to = Number(yearTo)
     setWords(wordsList);
+    setYearFrom(year_from)
+    setYearTo(year_to)
     dispatch(getFrequencies(wordsList, yearFrom, yearTo, mediaOutlets, chartType));
   };
 
@@ -164,6 +170,8 @@ function Timeline() {
             words={words}
             mediaOutlets={mediaOutlets}
             allMediaOutlets={allMediaOutlets}
+            yearFrom={yearFrom}
+            yearTo={yearTo}
           />
         )}
       </div>
