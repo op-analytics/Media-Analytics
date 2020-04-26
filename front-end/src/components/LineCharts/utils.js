@@ -1,5 +1,10 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
+import Square from '@material-ui/icons/Stop';
+import Circle from '@material-ui/icons/FiberManualRecord';
+import Star from '@material-ui/icons/Star';
+import Cross from '@material-ui/icons/Clear';
+import Triangle from '@material-ui/icons/ChangeHistory';
 
 /**
  * A tooltip factory for creating tooltips dynamicaly
@@ -42,6 +47,14 @@ export const createTooltip = (classes, items, words, mediaOutlets) => {
   return ToolTip;
 };
 
+const icons = {
+  0: { legend: 'square', icon: Square },
+  1: { legend: 'star', icon: Star },
+  2: { legend: 'cross', icon: Cross },
+  3: { legend: 'circle', icon: Circle },
+  4: { legend: 'triangle', icon: Triangle },
+};
+
 /**
  * A legend item factory for creating legend items dynamicaly
  *
@@ -51,10 +64,16 @@ export const createTooltip = (classes, items, words, mediaOutlets) => {
  * @param {String} YAxisKey
  * @returns {Element}
  */
-export const createLegendPayload = (data, words, mediaOutlets, YAxisKey, allMediaOutlets) => {
-  let legendItems = [];
+export const createLegendPayload = (
+  data,
+  words,
+  mediaOutlets,
+  YAxisKey,
+  allMediaOutlets,
+) => {
+  const legendItems = [];
   for (let yearData of data.data) {
-    for (let mediaOutlet of mediaOutlets) {
+    for (let [index, mediaOutlet] of mediaOutlets.entries()) {
       for (let word of words) {
         if (Object.keys(yearData).includes(mediaOutlet + word + YAxisKey)) {
           if (
@@ -62,8 +81,12 @@ export const createLegendPayload = (data, words, mediaOutlets, YAxisKey, allMedi
           ) {
             legendItems.push({
               id: mediaOutlet + word,
-              value: allMediaOutlets.find(obj => obj.value === mediaOutlet).name + ' - ' + word,
+              value:
+                allMediaOutlets.find(obj => obj.value === mediaOutlet).name +
+                ' - ' +
+                word,
               color: stringToColour(word),
+              type: icons[index].legend,
             });
           }
         }
@@ -79,7 +102,6 @@ export const createLegendPayload = (data, words, mediaOutlets, YAxisKey, allMedi
  * @param {String} str
  * @returns {String}
  */
-
 export const stringToColour = str => {
   let hash = 0;
   for (let i = 0; i < str.length; i++) {
@@ -91,4 +113,22 @@ export const stringToColour = str => {
     colour += ('00' + value.toString(16)).substr(-2);
   }
   return colour;
+};
+
+/**
+ * Create an icon for each outlet
+ *
+ * @param {String} str
+ * @returns {String}
+ */
+export const CustomizedDot = props => {
+  const { cx, cy, stroke, value, number } = props;
+  const iconData = value ? icons[number] : null;
+  const Icon = iconData ? iconData.icon : null;
+
+  return (
+    <svg x={cx - 10} y={cy - 10} width={20} height={20} viewBox="0 0 1024 1024">
+      {Icon && <Icon style={{ color: stroke }} />}
+    </svg>
+  );
 };
