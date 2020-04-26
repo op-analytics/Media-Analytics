@@ -8,7 +8,6 @@ const allMediaOutlets = [
   { name: 'HuffPost', value: 'hp' },
 ];
 
-
 function multipleDatasets(responseData) {
   let result = [];
   responseData.map(wordDataset => {
@@ -25,8 +24,7 @@ function multipleDatasets(responseData) {
         mediaOutletData.push(yearObject);
       });
       // Add the new result
-      title = allMediaOutlets.find(obj => obj.value === mediaOutlet)
-      console.log('title', title)
+      title = allMediaOutlets.find(obj => obj.value === mediaOutlet);
       result.push({
         title: wordDataset.word + ' - ' + title.name,
         data: mediaOutletData,
@@ -84,7 +82,11 @@ function byOutletDataset(responseData) {
 
       wordDataset.data[mediaOutlet].map(wordData => {
         // Get a reference to the current media outlet data if it already exists.
-        let mediaOutletInResult = result.find(obj => obj.title === mediaOutlet);
+        let mediaOutletInResult = result.find(
+          obj =>
+            obj.title ===
+            allMediaOutlets.find(obj => obj.value === currentMediaOutlet).name,
+        );
         if (mediaOutletInResult) {
           mediaOutletData = mediaOutletInResult.data;
         }
@@ -114,17 +116,49 @@ function byOutletDataset(responseData) {
       }
       // Check if there is already data for the media outlet in result.
       let resultMediaOutlet = result.find(
-        obj => obj.title === currentMediaOutlet,
+        obj =>
+          obj.title ===
+          allMediaOutlets.find(obj => obj.value === currentMediaOutlet).name,
       );
       // Similar to above. Only add to result if not already there, a reference has
       // been edited and doesn't need added again.
       if (!resultMediaOutlet) {
+        title = allMediaOutlets.find(obj => obj.value === currentMediaOutlet)
+          .name;
         let newResultMediaOutlet = {
-          title: currentMediaOutlet,
+          title: title,
           data: mediaOutletData,
         };
         result.push(newResultMediaOutlet);
       }
+    }
+  });
+  console.log('result', result);
+  return result;
+}
+
+function byWordDataset(responseData) {
+  let result = [];
+  responseData.map(wordDataset => {
+    for (const mediaOutlet in wordDataset.data) {
+      wordDataset.data[mediaOutlet].map(wordData => {
+        // Creating keys for the year data using using the media outlet and word.
+        let yearObject = { year: wordData.year };
+        yearObject[mediaOutlet + wordDataset.word + 'rank'] = wordData.rank;
+        yearObject[mediaOutlet + wordDataset.word + 'count'] = wordData.count;
+        yearObject[mediaOutlet + wordDataset.word + 'freq'] = wordData.freq;
+        yearObject[mediaOutlet + wordDataset.word + 'word'] = wordDataset.word;
+        yearObject[mediaOutlet + wordDataset.word + 'mediaOutlet'] = mediaOutlet;
+        // Check if there is already a chart for the current word
+        wordObject = result.find(obj => obj.title === wordDataset.word);
+        // If there is not a chart
+        if (!wordObject) {
+          wordObject = { title: wordDataset.word, data: [] };
+          result.push(wordObject);
+        }
+        // Add to the result for the currant word
+        wordObject.data.push(yearObject);
+      });
     }
   });
   return result;
@@ -193,6 +227,9 @@ module.exports = (function() {
           break;
         case 'byOutlet':
           processedData = byOutletDataset(frequencyData);
+          break;
+        case 'byWord':
+          processedData = byWordDataset(frequencyData);
           break;
         default:
           processedData = frequencyData;
