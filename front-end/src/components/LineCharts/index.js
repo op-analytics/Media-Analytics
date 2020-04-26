@@ -11,7 +11,7 @@ import {
   YAxis,
   Legend,
 } from 'recharts';
-import { createLegendPayload, stringToColour } from './utils';
+import { createLegendPayload, stringToColour, CustomizedDot } from './utils';
 
 const useStyles = makeStyles(() => ({
   chartContainer: {
@@ -65,65 +65,70 @@ function LineCharts({
   const classes = useStyles();
   return (
     <>
-      {datasets.map(data => (
-        <div className={classes.chartContainer} key={data.title}>
-          <h1 className={classes.chartTitle}>{data.title}</h1>
-          <ResponsiveContainer>
-            <LineChart
-              data={data.data}
-              margin={{
-                top: 10,
-                right: 30,
-                left: 0,
-                bottom: 0,
-              }}
-            >
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis
-                type="number"
-                domain={[yearFrom, yearTo]}
-                dataKey={xAxisKey}
-                tickCount={Math.abs(yearTo - yearFrom)}
-              />
-              <YAxis domain={[displayAbsolute ? 0 : 'auto', 'auto']} />
-              <Legend
-                payload={createLegendPayload(
-                  data,
-                  words,
-                  mediaOutlets,
-                  yAxisKey,
-                  allMediaOutlets,
+      {datasets.map(data => {
+        return (
+          <div className={classes.chartContainer} key={data.title}>
+            <h1 className={classes.chartTitle}>{data.title}</h1>
+            <ResponsiveContainer>
+              <LineChart
+                data={data.data}
+                margin={{
+                  top: 10,
+                  right: 30,
+                  left: 0,
+                  bottom: 0,
+                }}
+              >
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis
+                  type="number"
+                  domain={[yearFrom, yearTo]}
+                  dataKey={xAxisKey}
+                  tickCount={Math.abs(yearTo - yearFrom)}
+                />
+                <YAxis domain={[displayAbsolute ? 0 : 'auto', 'auto']} />
+                <Legend
+                  payload={createLegendPayload(
+                    data,
+                    words,
+                    mediaOutlets,
+                    yAxisKey,
+                    allMediaOutlets,
+                  )}
+                />
+                <Tooltip />
+                {words.map(word =>
+                  mediaOutlets.map((mediaOutlet, index) => {
+                    return (
+                      <Line
+                        key={mediaOutlet + word}
+                        type="monotone"
+                        name={
+                          allMediaOutlets.find(obj => obj.value === mediaOutlet)
+                            .name +
+                          ' - ' +
+                          word
+                        }
+                        dataKey={mediaOutlet + word + yAxisKey}
+                        stroke={stringToColour(word)}
+                        fill={stringToColour(word)}
+                        connectNulls
+                        strokeWidth={3}
+                        dot={<CustomizedDot number={index} />}
+                        activeDot={{
+                          stroke: stringToColour(word),
+                          strokeWidth: 7,
+                          border: 'white',
+                        }}
+                      />
+                    );
+                  }),
                 )}
-              />
-              <Tooltip />
-              {words.map(word =>
-                mediaOutlets.map(mediaOutlet => (
-                  <Line
-                    key={mediaOutlet + word}
-                    type="monotone"
-                    name={
-                      allMediaOutlets.find(obj => obj.value === mediaOutlet)
-                        .name +
-                      ' - ' +
-                      word
-                    }
-                    dataKey={mediaOutlet + word + yAxisKey}
-                    stroke={stringToColour(word)}
-                    fill={stringToColour(word)}
-                    strokeWidth={3}
-                    dot={{ strokeWidth: 5 }}
-                    activeDot={{
-                      stroke: stringToColour(word),
-                      strokeWidth: 7,
-                      border: 'white',
-                    }}
-                  />
-                )),
-              )}
-            </LineChart>
-          </ResponsiveContainer>
-        </div>
-      ))}
+              </LineChart>
+            </ResponsiveContainer>
+          </div>
+        );
+      })}
     </>
   );
 }
