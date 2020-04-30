@@ -20,12 +20,35 @@ import {
 const API_URL =
   process.env.NODE_ENV === 'production' ? '/api' : process.env.REACT_APP_API_URL;
 
+function createGeneralError(errorMessage) {
+  return { type: ['general'], message: errorMessage };
+}
+
+function getErrorsFromResponse(response) {
+  return response.data.errors
+    ? response.data.errors
+    : [createGeneralError(response.statusText)];
+}
+
+function setTokenHeaders(action) {
+  const XAuthToken = `Bearer ${action.payload}`;
+  localStorage.setItem('XAuthToken', XAuthToken);
+  axios.defaults.headers.common.Authorization = XAuthToken;
+}
+
+function removeToken() {
+  localStorage.removeItem('XAuthToken');
+  delete axios.defaults.headers.common.Authorization;
+  window.location.reload();
+}
+
 function* fetchUser() {
   try {
     const { data: user } = yield call(axios.get, `${API_URL}/auth/user`);
     yield put(getUserSuccess(user));
-  } catch (err) {
-    yield put(fetchFailure(err));
+  } catch ({ response }) {
+    const errors = getErrorsFromResponse(response);
+    yield put(fetchFailure(errors));
   }
 }
 
@@ -46,8 +69,9 @@ function* signup(action) {
     const { token } = data;
     yield put(signupSuccess());
     yield authenticateAndGetUser(token);
-  } catch (err) {
-    yield put(fetchFailure(err));
+  } catch ({ response }) {
+    const errors = getErrorsFromResponse(response);
+    yield put(fetchFailure(errors));
   }
 }
 
@@ -61,21 +85,10 @@ function* login(action) {
     const { token } = data;
     yield put(loginSuccess());
     yield authenticateAndGetUser(token);
-  } catch (err) {
-    yield put(fetchFailure(err));
+  } catch ({ response }) {
+    const errors = getErrorsFromResponse(response);
+    yield put(fetchFailure(errors));
   }
-}
-
-function setTokenHeaders(action) {
-  const XAuthToken = `Bearer ${action.payload}`;
-  localStorage.setItem('XAuthToken', XAuthToken);
-  axios.defaults.headers.common.Authorization = XAuthToken;
-}
-
-function removeToken() {
-  localStorage.removeItem('XAuthToken');
-  delete axios.defaults.headers.common.Authorization;
-  window.location.reload();
 }
 
 function* watchGetUser() {

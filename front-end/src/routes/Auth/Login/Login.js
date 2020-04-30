@@ -10,10 +10,10 @@ import Typography from '@material-ui/core/Typography';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { login } from '../../../state/ducks/user';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
     display: 'flex',
@@ -37,8 +37,35 @@ export default function SignIn() {
   const classes = useStyles();
   const { register, handleSubmit } = useForm();
   const dispatch = useDispatch();
-
   const submit = ({ email, password }) => dispatch(login(email, password));
+
+  let errors = useSelector((state) => state.user.errors) || [];
+
+  let passwordHasError = false;
+  let passwordHelperText = '';
+  let emailHasError = false;
+  let emailHelperText = '';
+
+  if (errors.length > 0) {
+    var errorType = errors.length > 0 ? errors[0].type[0] : '';
+    switch (errorType) {
+      case 'password':
+        passwordHasError = true;
+        passwordHelperText = errors[0].message;
+        break;
+      case 'email':
+        emailHasError = true;
+        emailHelperText = errors[0].message;
+        break;
+      case 'general':
+        passwordHasError = true;
+        passwordHelperText = errors[0].message;
+        emailHasError = true;
+        break;
+      default:
+        break;
+    }
+  }
 
   return (
     <Container component="main" maxWidth="xs">
@@ -66,6 +93,8 @@ export default function SignIn() {
             autoComplete="email"
             autoFocus
             inputRef={register}
+            error={emailHasError}
+            helperText={emailHelperText}
           />
           <TextField
             variant="outlined"
@@ -78,6 +107,8 @@ export default function SignIn() {
             id="password"
             autoComplete="current-password"
             inputRef={register}
+            error={passwordHasError}
+            helperText={passwordHelperText}
           />
           <Button
             type="submit"
