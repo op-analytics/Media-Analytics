@@ -13,7 +13,13 @@ from mongoengine import (
     connect,
 )
 
-connect("nyta")
+
+connect(
+    db="nyta",
+    username="admin",
+    password="P@ssw0rd",
+    host="mongodb://localhost:7456/nyta?authSource=admin",
+)
 
 
 media_outlets = [
@@ -31,7 +37,7 @@ media_outlets = [
     "wt",
 ]
 
-year_range = range(2010, 2020)
+year_range = range(1970, 2020)
 
 
 class MediaOutlet(Document):

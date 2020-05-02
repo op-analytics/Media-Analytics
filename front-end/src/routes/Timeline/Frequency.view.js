@@ -172,6 +172,7 @@ function Timeline() {
             allMediaOutlets={allMediaOutlets}
             yearFrom={yearFrom}
             yearTo={yearTo}
+            chartType={chartType}
           />
         )}
       </div>
