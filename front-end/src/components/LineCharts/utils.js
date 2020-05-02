@@ -3,7 +3,7 @@ import React from 'react';
 import Square from '@material-ui/icons/Stop';
 import Circle from '@material-ui/icons/FiberManualRecord';
 import Star from '@material-ui/icons/Star';
-import Cross from '@material-ui/icons/Clear';
+import Cross from '@material-ui/icons/Add';
 import Triangle from '@material-ui/icons/ChangeHistory';
 
 /**
