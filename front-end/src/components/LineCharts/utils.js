@@ -48,10 +48,10 @@ export const createTooltip = (classes, items, words, mediaOutlets) => {
 };
 
 const icons = {
-  0: { legend: 'square', icon: Square },
+  0: { legend: 'circle', icon: Circle },
   1: { legend: 'star', icon: Star },
   2: { legend: 'cross', icon: Cross },
-  3: { legend: 'circle', icon: Circle },
+  3: { legend: 'square', icon: Square },
   4: { legend: 'triangle', icon: Triangle },
 };
 
@@ -70,6 +70,7 @@ export const createLegendPayload = (
   mediaOutlets,
   YAxisKey,
   allMediaOutlets,
+  displayOption,
 ) => {
   const legendItems = [];
   for (let yearData of data.data) {
@@ -85,8 +86,11 @@ export const createLegendPayload = (
                 allMediaOutlets.find(obj => obj.value === mediaOutlet).name +
                 ' - ' +
                 word,
-              color: stringToColour(word),
-              type: icons[index].legend,
+              color:
+                displayOption === 'byWord'
+                  ? stringToColour(mediaOutlet)
+                  : stringToColour(word),
+              type: icons[displayOption === 'byWord' ? 0 : index].legend,
             });
           }
         }

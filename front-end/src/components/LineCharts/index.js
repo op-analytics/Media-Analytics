@@ -92,8 +92,11 @@ function LineCharts({
                   <Grid
                     key={word + mediaOutlet}
                     item
-                    xs={displayOption
-                   === 'multiple' ? 12 / mediaOutlets.length : 12}
+                    xs={
+                      displayOption === 'multiple'
+                        ? 12 / mediaOutlets.length
+                        : 12
+                    }
                   >
                     <div
                       className={classes.chartContainerInGrid}
@@ -127,31 +130,50 @@ function LineCharts({
                               mediaOutlets,
                               yAxisKey,
                               allMediaOutlets,
+                              displayOption,
                             )}
                           />
-                          <Tooltip itemSorter={item1 => item1.value * -1} />
 
-                          {words.map(word =>
-                            mediaOutlets.map((mediaOutlet, index) => {
+                          {words.map(line_word =>
+                            mediaOutlets.map((line_mediaOutlet, index) => {
                               return (
                                 <Line
-                                  key={mediaOutlet + word}
+                                  key={line_mediaOutlet + line_word}
                                   type="monotone"
                                   name={
                                     allMediaOutlets.find(
-                                      obj => obj.value === mediaOutlet,
+                                      obj => obj.value === line_mediaOutlet,
                                     ).name +
                                     ' - ' +
-                                    word
+                                    line_word
                                   }
-                                  dataKey={mediaOutlet + word + yAxisKey}
-                                  stroke={stringToColour(word)}
-                                  fill={stringToColour(word)}
+                                  dataKey={
+                                    line_mediaOutlet + line_word + yAxisKey
+                                  }
+                                  stroke={
+                                    displayOption === 'byWord'
+                                      ? stringToColour(line_mediaOutlet)
+                                      : stringToColour(line_word)
+                                  }
+                                  fill={
+                                    displayOption === 'byWord'
+                                      ? stringToColour(line_mediaOutlet)
+                                      : stringToColour(line_word)
+                                  }
                                   connectNulls
                                   strokeWidth={3}
-                                  dot={<CustomizedDot number={index} />}
+                                  dot={(
+                                    <CustomizedDot
+                                      number={
+                                        displayOption === 'byWord' ? 0 : index
+                                      }
+                                    />
+                                  )}
                                   activeDot={{
-                                    stroke: stringToColour(word),
+                                    stroke:
+                                      displayOption === 'byWord'
+                                        ? stringToColour(line_mediaOutlet)
+                                        : stringToColour(line_word),
                                     strokeWidth: 7,
                                     border: 'white',
                                   }}
@@ -159,6 +181,7 @@ function LineCharts({
                               );
                             }),
                           )}
+                          <Tooltip />
                         </LineChart>
                       </ResponsiveContainer>
                     </div>
