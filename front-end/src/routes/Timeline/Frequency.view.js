@@ -29,6 +29,7 @@ const useStyles = makeStyles(theme => ({
   },
   form: {
     width: '45%',
+    height: '100%',
   },
   input: {
     border: 'solid 1px black',
@@ -76,7 +77,7 @@ function Timeline() {
   const [yearTo, setYearTo] = useState();
   const [yAxisKey, setYAxisKey] = useState('freq');
   const [absolute, setAbsolute] = useState(false);
-  const [outlets, setOutlets] = useState(['nyt']);
+  const [outlets, setOutlets] = useState([]);
   const [displayOption, setDisplayOption] = useState('multiple');
   const [words, setWords] = useState([]);
   const loading = useSelector(state => state.timeline.loading);
@@ -101,7 +102,6 @@ function Timeline() {
                   blurBehavior="add" // Fix android chrome bug
                   onChange={newWords => setWords(newWords)}
                   required={!words.length}
-                  h
                 />
               </FormControl>
             </Grid>
@@ -110,7 +110,7 @@ function Timeline() {
                 <Autocomplete
                   multiple
                   id="tags-standard"
-                  options={outlets}
+                  options={mediaOutlets}
                   getOptionLabel={option => option.title}
                   filterSelectedOptions
                   required={!outlets.length}
@@ -196,7 +196,7 @@ function Timeline() {
                   className={classes.label}
                   id="display-option-select-label"
                 >
-                  Y-Axis Key
+                  Display Options
                 </InputLabel>
                 <Select
                   labelId="display-option-select-label"
@@ -242,7 +242,7 @@ function Timeline() {
             tooltipItems={[{ key: 'rank', title: 'rank' }]}
             words={words}
             mediaOutlets={outlets}
-            allMediaOutlets={outlets}
+            allMediaOutlets={mediaOutlets}
             yearFrom={yearFrom}
             yearTo={yearTo}
             displayOption={displayOption}

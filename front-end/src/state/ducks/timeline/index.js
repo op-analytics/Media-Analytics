@@ -61,7 +61,6 @@ export const getFrequencies = (
   yearFrom,
   yearTo,
   mediaOutlets,
-  chartType,
 ) => ({
   type: GET_FREQUENCY,
   payload: {
@@ -69,7 +68,6 @@ export const getFrequencies = (
     year_from: yearFrom,
     year_to: yearTo,
     media_outlets: mediaOutlets,
-    chartType: chartType,
   },
 });
 

@@ -1,0 +1,255 @@
+const Frequency = require('../models/frequency.model');
+const { FrequencySchema } = require('../schemas');
+
+const allMediaOutlets = [
+  { name: 'New York Times', value: 'nyt' },
+  { name: 'Wall Street Journal', value: 'wsj' },
+  { name: 'The Guardian', value: 'guardian' },
+  { name: 'HuffPost', value: 'hp' },
+];
+
+function multipleDatasets(responseData) {
+  let result = [];
+  responseData.map(wordDataset => {
+    for (const mediaOutlet in wordDataset.data) {
+      let mediaOutletData = [];
+      wordDataset.data[mediaOutlet].map(wordData => {
+        // Creating keys for the year data using using the media outlet and word.
+        let yearObject = { year: wordData.year };
+        yearObject[mediaOutlet + wordDataset.word + 'rank'] = wordData.rank;
+        yearObject[mediaOutlet + wordDataset.word + 'count'] = wordData.count;
+        yearObject[mediaOutlet + wordDataset.word + 'freq'] = wordData.freq;
+        yearObject[mediaOutlet + wordDataset.word + 'word'] = wordDataset.word;
+        yearObject[mediaOutlet + wordDataset.word + 'mediaOutlet'] = mediaOutlet;
+        mediaOutletData.push(yearObject);
+      });
+      // Add the new result
+      title = allMediaOutlets.find(obj => obj.value === mediaOutlet);
+      result.push({
+        title: wordDataset.word + ' - ' + title.name,
+        data: mediaOutletData,
+      });
+    }
+  });
+  return result;
+}
+
+function singleDataset(responseData) {
+  let result = [];
+  // The object that will contain all the data. This could be wrapped in brackets at
+  // the final return and result could be removed but I think it is clearer and
+  // consistant with the other functions when kept separate.
+  let summaryObject = {
+    title: 'Summary',
+    data: [],
+  };
+  responseData.map(wordDataset => {
+    for (const mediaOutlet in wordDataset.data) {
+      wordDataset.data[mediaOutlet].map(wordData => {
+        // Check if the year already exists in the summary object
+        let yearObject = summaryObject.data.find(
+          obj => obj.year === wordData.year,
+        );
+        // The year doesn't exist, set the year object to a new object for the year.
+        if (!yearObject) {
+          yearObject = { year: wordData.year };
+          summaryObject.data.push(yearObject);
+        }
+        // Add to year object using, media source and word in the keys.
+        yearObject[mediaOutlet + wordDataset.word + 'rank'] = wordData.rank;
+        yearObject[mediaOutlet + wordDataset.word + 'count'] = wordData.count;
+        yearObject[mediaOutlet + wordDataset.word + 'freq'] = wordData.freq;
+        yearObject[mediaOutlet + wordDataset.word + 'word'] = wordDataset.word;
+        yearObject[mediaOutlet + wordDataset.word + 'mediaOutlet'] = mediaOutlet;
+      });
+    }
+  });
+  summaryObject.data.sort((x, y) => x.year - y.year);
+  result.push(summaryObject);
+  return result;
+}
+
+function byOutletDataset(responseData) {
+  let result = [];
+  responseData.map(wordDataset => {
+    // Title and data to be appended to result
+    let currentMediaOutlet = '';
+    let mediaOutletData = [];
+    for (const mediaOutlet in wordDataset.data) {
+      let yearObject;
+      mediaOutletData = [];
+      currentMediaOutlet = mediaOutlet;
+
+      wordDataset.data[mediaOutlet].map(wordData => {
+        // Get a reference to the current media outlet data if it already exists.
+        let mediaOutletInResult = result.find(
+          obj =>
+            obj.title ===
+            allMediaOutlets.find(obj => obj.value === currentMediaOutlet).name,
+        );
+        if (mediaOutletInResult) {
+          mediaOutletData = mediaOutletInResult.data;
+        }
+        // Get a reference to the year data in media outlet data if it already exists.
+        yearObject = mediaOutletData.find(obj => obj.year === wordData.year);
+        if (!yearObject) {
+          yearObject = { year: wordData.year };
+          mediaOutletData.push(yearObject);
+        }
+        // Creating keys for the data using using the media outlet and word.
+        yearObject[mediaOutlet + wordDataset.word + 'rank'] = wordData.rank;
+        yearObject[mediaOutlet + wordDataset.word + 'count'] = wordData.count;
+        yearObject[mediaOutlet + wordDataset.word + 'freq'] = wordData.freq;
+        yearObject[mediaOutlet + wordDataset.word + 'word'] = wordDataset.word;
+        yearObject[mediaOutlet + wordDataset.word + 'mediaOutlet'] = mediaOutlet;
+      });
+
+      // Check there is aready data for the particular year in the current media data.
+      let yearDataObjectInMediaOutlet = mediaOutletData.find(
+        obj => obj.year === yearObject.year,
+      );
+      // If there is no data already for the year, add the year object. If there was
+      // already data, the year object would be a reference to an object within the
+      // media outlet data array and wouldn't need to be appended.
+      if (!yearDataObjectInMediaOutlet) {
+        mediaOutletData.push(yearObject);
+      }
+      // Check if there is already data for the media outlet in result.
+      let resultMediaOutlet = result.find(
+        obj =>
+          obj.title ===
+          allMediaOutlets.find(obj => obj.value === currentMediaOutlet).name,
+      );
+      // Similar to above. Only add to result if not already there, a reference has
+      // been edited and doesn't need added again.
+      if (!resultMediaOutlet) {
+        title = allMediaOutlets.find(obj => obj.value === currentMediaOutlet)
+          .name;
+        let newResultMediaOutlet = {
+          title: title,
+          data: mediaOutletData,
+        };
+        result.push(newResultMediaOutlet);
+      }
+    }
+  });
+  console.log('result', result);
+  return result;
+}
+
+function byWordDataset(responseData) {
+  let result = [];
+  responseData.map(wordDataset => {
+    for (const mediaOutlet in wordDataset.data) {
+      wordDataset.data[mediaOutlet].map(wordData => {
+        // Creating keys for the year data using using the media outlet and word.
+        let yearObject = { year: wordData.year };
+        yearObject[mediaOutlet + wordDataset.word + 'rank'] = wordData.rank;
+        yearObject[mediaOutlet + wordDataset.word + 'count'] = wordData.count;
+        yearObject[mediaOutlet + wordDataset.word + 'freq'] = wordData.freq;
+        yearObject[mediaOutlet + wordDataset.word + 'word'] = wordDataset.word;
+        yearObject[mediaOutlet + wordDataset.word + 'mediaOutlet'] = mediaOutlet;
+        // Check if there is already a chart for the current word
+        wordObject = result.find(obj => obj.title === wordDataset.word);
+        // If there is not a chart
+        if (!wordObject) {
+          wordObject = { title: wordDataset.word, data: [] };
+          result.push(wordObject);
+        }
+        // Add to the result for the currant word
+        wordObject.data.push(yearObject);
+      });
+    }
+  });
+  return result;
+}
+
+module.exports = (function() {
+  const GetFrequency = async (req, res) => {
+    // Validate parameters against the schema.
+    const { error, value } = FrequencySchema.validate(req.body, {
+      abortEarly: false,
+      allowUnknown: true,
+    });
+    if (error) {
+      res.status(422).json({
+        errors: error.details.map(error => ({
+          value: error.path,
+          message: error.message,
+        })),
+      });
+      return;
+    }
+<<<<<<< HEAD
+    // Retrieve the data from the database.
+=======
+    const cleanedWords = value.words.map((word)=>word.trim().toLowerCase());
+>>>>>>> origin/227-request-data-preprocessing
+    const frequencyDataDB = await Frequency.find({
+      word: cleanedWords,
+      year: { $gte: value.year_from, $lte: value.year_to },
+      media_outlet: value.media_outlets,
+    });
+    // Check if there is data in the database for the given parameters.
+    if (frequencyDataDB.length > 0) {
+      let frequencyData = [];
+      // Iterate over the data returned from the database in order to restructure it.
+      for (frequencyDataObj of frequencyDataDB) {
+        let word = frequencyDataObj.word;
+        let media_outlet = frequencyDataObj.media_outlet;
+        let wordData = {
+          year: frequencyDataObj.year,
+          rank: frequencyDataObj.rank,
+          count: frequencyDataObj.count,
+          freq: frequencyDataObj.freq,
+        };
+        let wordDataIndex = frequencyData.findIndex(fd => fd.word == word);
+        // Check if the key for the word does not already exist.
+        if (wordDataIndex == -1) {
+          frequencyData.push({
+            word: word,
+            data: { [media_outlet]: [wordData] },
+          });
+        } else {
+          // Check if the key for the media outlet does not already exist.
+          if (!frequencyData[wordDataIndex].data[media_outlet]) {
+            frequencyData[wordDataIndex].data[media_outlet] = [wordData];
+          } else {
+            frequencyData[wordDataIndex].data[media_outlet].push(wordData);
+          }
+        }
+      }
+
+      // Resutructure data based on chart type requested
+      let processedData = {};
+      switch (value.chartType) {
+        case 'multiple':
+          processedData = multipleDatasets(frequencyData);
+          break;
+        case 'single':
+          processedData = singleDataset(frequencyData);
+          break;
+        case 'byOutlet':
+          processedData = byOutletDataset(frequencyData);
+          break;
+        case 'byWord':
+          processedData = byWordDataset(frequencyData);
+          break;
+        default:
+          processedData = frequencyData;
+      }
+
+      // Set data in response to processedData.
+      res.json({ data: processedData });
+      return;
+    }
+    // If there is not data for the parameters, return an error.
+    res.status(404).json({
+      error: 'No frequency data was found for given parameters',
+    });
+  };
+
+  return {
+    GetFrequency,
+  };
+})();
