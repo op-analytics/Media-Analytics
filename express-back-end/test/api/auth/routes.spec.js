@@ -105,6 +105,30 @@ describe('POST /Login', () => {
         .expect(200);
       expect(res.body.token).to.be.an('string');
     });
+
+    it('It should login with the email in different case', async () => {
+      const UserData = {
+        name: 'Bob',
+        email: 'bob@builder.com',
+        password: 'Yes@WeCan',
+      };
+      // Hash the password
+      const salt = await bcrypt.genSalt(10);
+      const hashedPassword = await bcrypt.hash(UserData.password, salt);
+
+      // Try save and tokenize the user return error if it doesn't work
+      const user = new User({
+        ...UserData,
+        password: hashedPassword,
+      });
+      await user.save();
+
+      const res = await request(app)
+        .post('/api/auth/login')
+        .send({ email: 'bob@Builder.com', password: 'Yes@WeCan' })
+        .expect(200);
+      expect(res.body.token).to.be.an('string');
+    });
   });
   afterEach(async () => {
     await User.deleteMany();
