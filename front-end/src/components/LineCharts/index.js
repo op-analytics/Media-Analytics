@@ -74,6 +74,7 @@ function LineCharts({
   const classes = useStyles();
   let displayed = [];
   let processedData = {};
+  let displayAbsoluteLargestValue = 0;
 
   switch (displayOption) {
     case 'multiple':
@@ -91,6 +92,25 @@ function LineCharts({
     default:
       processedData = datasets;
   }
+  if (displayAbsolute) {
+    words.map(word => {
+      mediaOutlets.map(mediaOutlet => {
+        let data = processedData.find(obj =>
+          obj.data.find(objData =>
+            Object.keys(objData).find(key => key.includes(mediaOutlet + word)),
+          ),
+        );
+        if (data) {
+          for (let dataObj of data.data) {
+            let currentData = dataObj[mediaOutlet + word + yAxisKey];
+            if (currentData > displayAbsoluteLargestValue) {
+              displayAbsoluteLargestValue = currentData;
+            }
+          }
+        }
+      });
+    });
+  }
 
   return (
     <Grid container spacing={1} justify="center">
@@ -105,6 +125,7 @@ function LineCharts({
                   ),
                 ),
               );
+
               if (data && !displayed.includes(data.title)) {
                 displayed.push(data.title);
                 return (
@@ -137,7 +158,11 @@ function LineCharts({
                             tickCount={Math.abs(yearTo - yearFrom)}
                           />
                           <YAxis
-                            domain={[displayAbsolute ? 0 : 'auto', 'auto']}
+                            domain={
+                              displayAbsolute
+                                ? [0, displayAbsoluteLargestValue]
+                                : ['auto', 'auto']
+                            }
                           />
                           <Legend
                             payload={createLegendPayload(
@@ -179,13 +204,13 @@ function LineCharts({
                                   }
                                   connectNulls
                                   strokeWidth={3}
-                                  dot={(
+                                  dot={
                                     <CustomizedDot
                                       number={
                                         displayOption === 'byWord' ? 0 : index
                                       }
                                     />
-                                  )}
+                                  }
                                   activeDot={{
                                     stroke:
                                       displayOption === 'byWord'

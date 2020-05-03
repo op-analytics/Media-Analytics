@@ -69,7 +69,6 @@ function Timeline() {
   const [words, setWords] = useState([]);
   const [yearFrom, setYearFrom] = useState();
   const [yearTo, setYearTo] = useState();
-
   const loading = useSelector(state => state.timeline.loading);
   const frequencies = useSelector(state => state.timeline.frequencies);
 
