@@ -2,6 +2,7 @@ version: '3.3'
 
 volumes:
   nyta-db:
+  nyta-redis:
 
 services:
   db:
@@ -13,6 +14,13 @@ services:
     environment:
       - MONGO_INITDB_ROOT_USERNAME=yourUsername
       - MONGO_INITDB_ROOT_PASSWORD=yourPassword
+    networks:
+      - default
+
+  redis:
+    image: redis
+    volumes:
+      - 'nyta-redis:/data/'
     networks:
       - default
 
@@ -30,6 +38,9 @@ services:
       - PORT=5000
     networks:
       - default
+    depends_on:
+      - db
+      - redis
 
   front-end:
     build:
