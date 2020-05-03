@@ -2,10 +2,12 @@ const redis = require('redis');
 const assert = require('assert');
 const { AbortError, AggregateError, ReplyError } = require('redis');
 
+let client = redis.createClient(database);
 module.exports = {
   redis,
+  client,
   connect: database => {
-    const client = redis.createClient(database);
+    client = redis.createClient(database);
 
     client.on('ready', function() {
       //eslint-disable-next-line
@@ -20,5 +22,5 @@ module.exports = {
 
     return client;
   },
-  disconnect: client => client.quit(),
+  disconnect: (clientToDisconnect = client) => clientToDisconnect.quit(),
 };
