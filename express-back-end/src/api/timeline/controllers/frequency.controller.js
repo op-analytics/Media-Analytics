@@ -22,8 +22,9 @@ module.exports = (function() {
       });
       return;
     }
+    const cleanedWords = value.words.map((word)=>word.trim().toLowerCase());
     const frequencyDataDB = await Frequency.find({
-      word: value.words,
+      word: cleanedWords,
       year: { $gte: value.year_from, $lte: value.year_to },
     });
 

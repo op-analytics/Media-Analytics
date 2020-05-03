@@ -105,6 +105,68 @@ describe('Latent-Association', () => {
       await expect(res.body.data[0].yearRange).to.be.a('string');
     });
 
+    it('It should return data when given words starting or ending with spaces', async () => {
+      await new LatentAssociation({
+        word: 'man',
+        year_from: 2000,
+        year_to: 2004,
+        vectors: [0.3213, 0.642324, 0.5342],
+      }).save();
+
+      await new LatentAssociation({
+        word: 'woman',
+        year_from: 2000,
+        year_to: 2004,
+        vectors: [0.6242, 0.87234, 0.23422],
+      }).save();
+
+      const res = await request(app)
+        .post('/api/timeline/latent-association')
+        .send({
+          year_from: 2000,
+          year_to: 2004,
+          concept_1: [' man'],
+          concept_2: ['woman  '],
+        })
+        .expect(200);
+
+      await expect(res.body.data).to.be.an('array');
+      await expect(res.body.data).to.have.lengthOf(1);
+      await expect(res.body.data[0].association).to.be.a('number');
+      await expect(res.body.data[0].yearRange).to.be.a('string');
+    });
+
+    it('It should return data when given words with upper case characters', async () => {
+      await new LatentAssociation({
+        word: 'man',
+        year_from: 2000,
+        year_to: 2004,
+        vectors: [0.3213, 0.642324, 0.5342],
+      }).save();
+
+      await new LatentAssociation({
+        word: 'woman',
+        year_from: 2000,
+        year_to: 2004,
+        vectors: [0.6242, 0.87234, 0.23422],
+      }).save();
+
+      const res = await request(app)
+        .post('/api/timeline/latent-association')
+        .send({
+          year_from: 2000,
+          year_to: 2004,
+          concept_1: ['mAn'],
+          concept_2: ['WOmaN'],
+        })
+        .expect(200);
+
+      await expect(res.body.data).to.be.an('array');
+      await expect(res.body.data).to.have.lengthOf(1);
+      await expect(res.body.data[0].association).to.be.a('number');
+      await expect(res.body.data[0].yearRange).to.be.a('string');
+    });
+
     it('It should fail to return data if it does not exist', async () => {
       const res = await request(app)
         .post('/api/timeline/latent-association')
