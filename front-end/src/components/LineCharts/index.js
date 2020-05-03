@@ -19,15 +19,7 @@ const useStyles = makeStyles(() => ({
     width: '80vw',
     height: '50vh',
     flex: '0 1 auto',
-    maxWidth: '1000px',
     paddingBottom: '6vh',
-  },
-  chartContainerInGrid: {
-    width: '100%',
-    height: '50vh',
-    flex: '0 1 auto',
-    //maxWidth: '1000px',
-    paddingBottom: '10vh',
   },
   chartTitle: {
     textAlign: 'center',
@@ -99,7 +91,7 @@ function LineCharts({
                     }
                   >
                     <div
-                      className={classes.chartContainerInGrid}
+                      className={classes.chartContainer}
                       key={data.title}
                     >
                       <h1 className={classes.chartTitle}>{data.title}</h1>
