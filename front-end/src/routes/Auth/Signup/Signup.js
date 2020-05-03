@@ -50,7 +50,7 @@ export default function SignUp() {
   const [isHuman, setIsHuman] = useState(false);
   const [snackBarOpen, setSnackBarOpen] = useState(false);
 
-  let errors = useSelector((state) => state.user.errors) || [];
+  const errors = useSelector((state) => state.user.errors) || [];
 
   let nameHasError = false;
   let nameHelperText = '';
@@ -62,7 +62,7 @@ export default function SignUp() {
   let confirmPasswordHelperText = '';
 
   if (errors.length > 0) {
-    let errorType = errors.length > 0 ? errors[0].type[0] : '';
+    const errorType = errors.length > 0 ? errors[0].type[0] : '';
     switch (errorType) {
       case 'name':
         nameHasError = true;
@@ -104,8 +104,7 @@ export default function SignUp() {
   const handleClose = (reason) =>
     reason !== 'clickaway' && setSnackBarOpen(false);
 
-  const Alert = (props) => {
-    //eslint-disable-next-line react/jsx-props-no-spreading
+  const Alert = props => {
     return <MuiAlert elevation={6} variant="filled" {...props} />;
   };
 

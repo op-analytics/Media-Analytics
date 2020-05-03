@@ -82,8 +82,8 @@ function Timeline() {
   }) => {
     const concept1Array = concept1.split(',');
     const concept2Array = concept2.split(',');
-    const yearFromInt = parseInt(yearFrom);
-    const yearToInt = parseInt(yearTo);
+    const yearFromInt = parseInt(yearFrom, 10);
+    const yearToInt = parseInt(yearTo, 10);
     dispatch(
       getAssociations(concept1Array, concept2Array, yearFromInt, yearToInt),
     );

@@ -39,7 +39,7 @@ export default function SignIn() {
   const dispatch = useDispatch();
   const submit = ({ email, password }) => dispatch(login(email, password));
 
-  let errors = useSelector((state) => state.user.errors) || [];
+  const errors = useSelector((state) => state.user.errors) || [];
 
   let passwordHasError = false;
   let passwordHelperText = '';
@@ -47,7 +47,7 @@ export default function SignIn() {
   let emailHelperText = '';
 
   if (errors.length > 0) {
-    var errorType = errors.length > 0 ? errors[0].type[0] : '';
+    const errorType = errors.length > 0 ? errors[0].type[0] : '';
     switch (errorType) {
       case 'password':
         passwordHasError = true;

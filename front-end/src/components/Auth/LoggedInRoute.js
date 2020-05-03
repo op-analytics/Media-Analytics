@@ -7,11 +7,9 @@ const LoggedInRoute = ({ component: Component, ...routeProps }) => {
   const isAuthenticated = useSelector(state => state.user.authenticated);
   return (
     <Route
-      //eslint-disable-next-line react/jsx-props-no-spreading
       {...routeProps}
       render={props =>
         isAuthenticated === true ? (
-          //eslint-disable-next-line react/jsx-props-no-spreading
           <Component {...props} />
         ) : (
           <Redirect to="/login" />
