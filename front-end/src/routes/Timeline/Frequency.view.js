@@ -11,7 +11,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import Form from '../../components/Form';
 import LineCharts from '../../components/LineCharts';
 import { getFrequencies } from '../../state/ducks/timeline';
-import { YAxis } from 'recharts';
 
 const useStyles = makeStyles(() => ({
   container: {
@@ -85,7 +84,7 @@ function Timeline() {
     setWords(wordsList);
     setYearFrom(year_from)
     setYearTo(year_to)
-    dispatch(getFrequencies(wordsList, yearFrom, yearTo, mediaOutlets, displayOption));
+    dispatch(getFrequencies(wordsList, yearFrom, yearTo, mediaOutlets));
   };
 
   return (

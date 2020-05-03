@@ -12,11 +12,19 @@ import {
   YAxis,
   Legend,
 } from 'recharts';
-import { createLegendPayload, stringToColour, CustomizedDot } from './utils';
+import {
+  createLegendPayload,
+  stringToColour,
+  CustomizedDot,
+  singleDataset,
+  multipleDatasets,
+  byWordDataset,
+  byOutletDataset,
+} from './utils';
 
 const useStyles = makeStyles(() => ({
   chartContainer: {
-    width: '80vw',
+    width: '100%',
     height: '50vh',
     flex: '0 1 auto',
     paddingBottom: '6vh',
@@ -65,13 +73,32 @@ function LineCharts({
 }) {
   const classes = useStyles();
   let displayed = [];
+  let processedData = {};
+
+  switch (displayOption) {
+    case 'multiple':
+      processedData = multipleDatasets(datasets, allMediaOutlets);
+      break;
+    case 'single':
+      processedData = singleDataset(datasets);
+      break;
+    case 'byOutlet':
+      processedData = byOutletDataset(datasets, allMediaOutlets);
+      break;
+    case 'byWord':
+      processedData = byWordDataset(datasets);
+      break;
+    default:
+      processedData = datasets;
+  }
+
   return (
     <Grid container spacing={1} justify="center">
       {words.map(word => (
         <Grid key={word} item container xs={12} spacing={2} justify="center">
           {mediaOutlets.map(mediaOutlet => {
             {
-              let data = datasets.find(obj =>
+              let data = processedData.find(obj =>
                 obj.data.find(objData =>
                   Object.keys(objData).find(key =>
                     key.includes(mediaOutlet + word),
@@ -90,10 +117,7 @@ function LineCharts({
                         : 12
                     }
                   >
-                    <div
-                      className={classes.chartContainer}
-                      key={data.title}
-                    >
+                    <div className={classes.chartContainer} key={data.title}>
                       <h1 className={classes.chartTitle}>{data.title}</h1>
                       <ResponsiveContainer>
                         <LineChart
@@ -125,6 +149,7 @@ function LineCharts({
                               displayOption,
                             )}
                           />
+                          <Tooltip itemSorter={item1 => item1.value * -1} />
 
                           {words.map(line_word =>
                             mediaOutlets.map((line_mediaOutlet, index) => {
@@ -173,7 +198,6 @@ function LineCharts({
                               );
                             }),
                           )}
-                          <Tooltip />
                         </LineChart>
                       </ResponsiveContainer>
                     </div>
