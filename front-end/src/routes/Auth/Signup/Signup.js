@@ -13,12 +13,12 @@ import MuiAlert from '@material-ui/lab/Alert';
 import React, { useState } from 'react';
 import ReCAPTCHA from 'react-google-recaptcha';
 import { useForm } from 'react-hook-form';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { signup } from '../../../state/ducks/user';
 
 const CAPTCHA_KEY = process.env.REACT_APP_CAPTCHA_KEY;
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
     display: 'flex',
@@ -50,6 +50,48 @@ export default function SignUp() {
   const [isHuman, setIsHuman] = useState(false);
   const [snackBarOpen, setSnackBarOpen] = useState(false);
 
+  const errors = useSelector((state) => state.user.errors) || [];
+
+  let nameHasError = false;
+  let nameHelperText = '';
+  let emailHasError = false;
+  let emailHelperText = '';
+  let passwordHasError = false;
+  let passwordHelperText = '';
+  let confirmPasswordHasError = false;
+  let confirmPasswordHelperText = '';
+
+  if (errors.length > 0) {
+    const errorType = errors.length > 0 ? errors[0].type[0] : '';
+    switch (errorType) {
+      case 'name':
+        nameHasError = true;
+        nameHelperText = errors[0].message;
+        break;
+      case 'email':
+        emailHasError = true;
+        emailHelperText = errors[0].message;
+        break;
+      case 'password':
+        passwordHasError = true;
+        passwordHelperText = errors[0].message;
+        break;
+      case 'confirmPassword':
+        confirmPasswordHasError = true;
+        confirmPasswordHelperText = errors[0].message;
+        break;
+      case 'general':
+        nameHasError = true;
+        emailHasError = true;
+        passwordHasError = true;
+        confirmPasswordHasError = true;
+        confirmPasswordHelperText = errors[0].message;
+        break;
+      default:
+        break;
+    }
+  }
+
   // eslint-disable-next-line no-console
   const submit = ({ name, email, password, confirmPassword }) => {
     if (isHuman) {
@@ -59,10 +101,10 @@ export default function SignUp() {
     }
   };
 
-  const handleClose = reason => reason !== 'clickaway' && setSnackBarOpen(false);
+  const handleClose = (reason) =>
+    reason !== 'clickaway' && setSnackBarOpen(false);
 
   const Alert = props => {
-    //eslint-disable-next-line react/jsx-props-no-spreading
     return <MuiAlert elevation={6} variant="filled" {...props} />;
   };
 
@@ -94,6 +136,8 @@ export default function SignUp() {
                   autoFocus
                   autoComplete="name"
                   inputRef={register}
+                  error={nameHasError}
+                  helperText={nameHelperText}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -106,6 +150,8 @@ export default function SignUp() {
                   name="email"
                   autoComplete="email"
                   inputRef={register}
+                  error={emailHasError}
+                  helperText={emailHelperText}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -119,6 +165,8 @@ export default function SignUp() {
                   id="password"
                   autoComplete="off"
                   inputRef={register}
+                  error={passwordHasError}
+                  helperText={passwordHelperText}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -132,6 +180,8 @@ export default function SignUp() {
                   id="confirmPassword"
                   autoComplete="off"
                   inputRef={register}
+                  error={confirmPasswordHasError}
+                  helperText={confirmPasswordHelperText}
                 />
               </Grid>
             </Grid>

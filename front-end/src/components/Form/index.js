@@ -95,7 +95,7 @@ Form.propTypes = {
       required: PropTypes.bool,
     }),
   ).isRequired,
-  /** The submit buttons text*/
+  /** The submit buttons text */
   buttonText: PropTypes.string,
 };
 

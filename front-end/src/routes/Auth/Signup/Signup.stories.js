@@ -12,7 +12,7 @@ const store = mockStore(initialState);
 export default {
   title: 'Routes/Auth',
   component: Signup,
-  //eslint-disable-next-line react/display-name
+  // eslint-disable-next-line react/display-name
   decorators: [storyFn => <Provider store={store}>{storyFn()}</Provider>],
 };
 

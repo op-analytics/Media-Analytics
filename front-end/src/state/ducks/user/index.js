@@ -19,7 +19,7 @@ const initialState = {
   user: null,
   authenticated: false,
   loading: false,
-  error: null,
+  errors: [],
 };
 // Reducer
 export default function reducer(state = initialState, action = {}) {
@@ -27,18 +27,18 @@ export default function reducer(state = initialState, action = {}) {
     case POST_SIGNUP:
       return { ...state, loading: true };
     case POST_SIGNUP_SUCCESS:
-      return { ...state, loading: false };
+      return { ...state, loading: false, errors: [] };
 
     case POST_LOGIN:
       return { ...state, loading: true };
     case POST_LOGIN_SUCCESS:
-      return { ...state, loading: false };
+      return { ...state, loading: false, errors: [] };
 
     case GET_USER:
       return { ...state, loading: true };
 
     case GET_USER_SUCCESS:
-      return { ...state, loading: false, user: action.payload };
+      return { ...state, loading: false, user: action.payload, errors: [] };
 
     case AUTHENTICATE:
       return { ...state, authenticated: true };
@@ -46,7 +46,7 @@ export default function reducer(state = initialState, action = {}) {
       return { ...state, authenticated: false };
 
     case FETCH_FAILURE:
-      return { ...state, loading: false, error: action.payload };
+      return { ...state, loading: false, errors: action.payload };
     default:
       return state;
   }

@@ -35,14 +35,16 @@ module.exports = (function() {
     latentAssociationData = [];
     for (let media_outlet of value.media_outlets) {
       // Query database.
+      const cleanedConcept1 = value.concept_1.map((word)=>word.trim().toLowerCase());
       const concept1Data = await LatentAssociation.find({
-        word: value.concept_1,
+        word: cleanedConcept1,
         year_from: { $gte: value.year_from - 5 },
         year_to: { $lte: value.year_to },
         media_outlet: media_outlet,
       });
+      const cleanedConcept2 = value.concept_2.map((word)=>word.trim().toLowerCase());
       const concept2Data = await LatentAssociation.find({
-        word: value.concept_2,
+        word: cleanedConcept2,
         year_from: { $gte: value.year_from - 5 },
         year_to: { $lte: value.year_to },
         media_outlet: media_outlet,

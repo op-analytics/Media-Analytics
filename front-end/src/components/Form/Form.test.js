@@ -12,7 +12,6 @@ const propsWith2Fields = {
   formData: [{ name: 'test' }, { name: 'test2' }],
 };
 
-// eslint-disable-next-line react/jsx-props-no-spreading
 const getWrapper = props => shallow(<Form {...props} />);
 
 describe('Form', () => {
@@ -21,13 +20,11 @@ describe('Form', () => {
   });
 
   it('renders correctly with one field', () => {
-    // eslint-disable-next-line react/jsx-props-no-spreading
     const component = shallow(<Form {...propsWith1Field} />);
     expect(component).toMatchSnapshot();
   });
 
   it('renders correctly with more than one field', () => {
-    // eslint-disable-next-line react/jsx-props-no-spreading
     const component = shallow(<Form {...propsWith2Fields} />);
     expect(component).toMatchSnapshot();
   });

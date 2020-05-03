@@ -6,7 +6,7 @@ export default function* rootSagas() {
   try {
     yield all([...timelineSagas, ...userSagas]);
   } catch (e) {
-    //eslint-disable-next-line no-console
+    // eslint-disable-next-line no-console
     console.log('Error:', e);
   }
 }
