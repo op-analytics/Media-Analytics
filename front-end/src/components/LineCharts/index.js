@@ -27,7 +27,7 @@ const useStyles = makeStyles(() => ({
     height: '50vh',
     flex: '0 1 auto',
     //maxWidth: '1000px',
-    paddingBottom: '6vh',
+    paddingBottom: '10vh',
   },
   chartTitle: {
     textAlign: 'center',
@@ -76,7 +76,7 @@ function LineCharts({
   return (
     <Grid container spacing={1} justify="center">
       {words.map(word => (
-        <Grid key={word} item container xs={12} spacing={1} justify="center">
+        <Grid key={word} item container xs={12} spacing={2} justify="center">
           {mediaOutlets.map(mediaOutlet => {
             {
               let data = datasets.find(obj =>
