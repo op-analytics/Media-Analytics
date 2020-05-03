@@ -16,7 +16,8 @@ module.exports = {
       return conn;
     } catch (err) {
       //eslint-disable-next-line
-      console.log('Error to connect on mongo', err);
+      console.log('Error connecting to mongo');
+      throw err;
     }
   },
   disconnect: async () => await mongoose.connection.close(),
