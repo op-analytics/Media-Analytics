@@ -44,11 +44,11 @@ const allMediaOutlets = [
   { name: 'HuffPost', value: 'hp' },
 ];
 
-const chartTypes = [
-  { name: 'Single Chart', value: 'single' },
-  { name: 'Mulitple Charts', value: 'multiple' },
-  { name: 'By Outlet Charts', value: 'byOutlet' },
-  { name: 'By Word Charts', value: 'byWord' },
+const displayOptions = [
+  { name: 'On a single chart', value: 'single' },
+  { name: 'On individual charts', value: 'multiple' },
+  { name: 'Grouped by media outlet', value: 'byOutlet' },
+  { name: 'Grouped by word', value: 'byWord' },
 ];
 
 const yAxisKeys = [
@@ -66,7 +66,7 @@ function Timeline() {
   const [yAxisKey, setYAxisKey] = useState('freq');
   const [absolute, setAbsolute] = useState(false);
   const [mediaOutlets, setMediaOutlets] = useState(['nyt']);
-  const [chartType, setChartType] = useState('multiple');
+  const [displayOption, setDisplayOption] = useState('multiple');
   const [words, setWords] = useState([]);
   const [yearFrom, setYearFrom] = useState();
   const [yearTo, setYearTo] = useState();
@@ -85,7 +85,7 @@ function Timeline() {
     setWords(wordsList);
     setYearFrom(year_from)
     setYearTo(year_to)
-    dispatch(getFrequencies(wordsList, yearFrom, yearTo, mediaOutlets, chartType));
+    dispatch(getFrequencies(wordsList, yearFrom, yearTo, mediaOutlets, displayOption));
   };
 
   return (
@@ -129,16 +129,16 @@ function Timeline() {
           </Select>
         </FormControl>
         <FormControl className={classes.formControl}>
-          <InputLabel className={classes.label} id="chart-type-select-label">
-            Chart Type
+          <InputLabel className={classes.label} id="display-options-select-label">
+            Display options
           </InputLabel>
           <Select
-            labelId="chart-type-select-label"
-            id="chart-type-select"
-            value={chartType}
-            onChange={e => setChartType(e.target.value)}
+            labelId="display-options-select-label"
+            id="display-options-select"
+            value={displayOption}
+            onChange={e => setDisplayOption(e.target.value)}
           >
-            {chartTypes.map(type => (
+            {displayOptions.map(type => (
               <MenuItem key={type.name} value={type.value}>
                 {type.name}
               </MenuItem>
@@ -172,7 +172,7 @@ function Timeline() {
             allMediaOutlets={allMediaOutlets}
             yearFrom={yearFrom}
             yearTo={yearTo}
-            chartType={chartType}
+            chartType={displayOption}
           />
         )}
       </div>

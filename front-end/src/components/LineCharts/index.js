@@ -69,7 +69,7 @@ function LineCharts({
   allMediaOutlets,
   yearFrom,
   yearTo,
-  chartType,
+  displayOption,
 }) {
   const classes = useStyles();
   let displayed = [];
@@ -92,7 +92,8 @@ function LineCharts({
                   <Grid
                     key={word + mediaOutlet}
                     item
-                    xs={chartType === 'multiple' ? 12 / mediaOutlets.length : 12}
+                    xs={displayOption
+                   === 'multiple' ? 12 / mediaOutlets.length : 12}
                   >
                     <div
                       className={classes.chartContainerInGrid}
@@ -199,7 +200,7 @@ LineCharts.propTypes = {
   ).isRequired,
   yearFrom: PropTypes.number.isRequired,
   yearTo: PropTypes.number.isRequired,
-  chartType: PropTypes.string.isRequired,
+  displayOption: PropTypes.string.isRequired,
 };
 
 export default LineCharts;
