@@ -9,7 +9,7 @@ import Select from '@material-ui/core/Select';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import ToggleButton from '@material-ui/lab/ToggleButton';
-// import Autocomplete from '@material-ui/lab/Autocomplete';
+import Autocomplete from '@material-ui/lab/Autocomplete';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import LineCharts from '../../components/LineCharts';
@@ -46,17 +46,11 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-// const mediaOutlets = [
-//   { title: 'New York Times', value: 'nyt' },
-//   { title: 'HuffPost', value: 'hp' },
-//   { title: 'The Guardian', value: 'guardian' },
-// ];
-
 const mediaOutlets = [
-  { name: 'New York Times', value: 'nyt' },
-  { name: 'Wall Street Journal', value: 'wsj' },
-  { name: 'The Guardian', value: 'guardian' },
-  { name: 'HuffPost', value: 'hp' },
+  { title: 'New York Times', name: 'New York Times', value: 'nyt' },
+  { title: 'Wall Street Journal', name: 'Wall Street Journal', value: 'wsj' },
+  { title: 'The Guardian', name: 'The Guardian', value: 'guardian' },
+  { title: 'HuffPost', name: 'HuffPost', value: 'hp' },
 ];
 
 const displayOptions = [
@@ -85,28 +79,12 @@ function Timeline() {
   const [outlets, setOutlets] = useState(['nyt']);
   const [displayOption, setDisplayOption] = useState('multiple');
   const [words, setWords] = useState([]);
-  const [yearFrom, setYearFrom] = useState();
-  const [yearTo, setYearTo] = useState();
   const loading = useSelector(state => state.timeline.loading);
   const frequencies = useSelector(state => state.timeline.frequencies);
 
-  const onSubmitHandler = ({
-    year_from: yearFrom,
-    year_to: yearTo,
-    words: wordsString,
-  }) => {
-    let wordsList = wordsString.split(',')
-    let year_from = Number(yearFrom)
-    let year_to = Number(yearTo)
-    setWords(wordsList);
-    setYearFrom(year_from)
-    setYearTo(year_to)
-    dispatch(getFrequencies(wordsList, yearFrom, yearTo, outlets));
-  const [words, setWords] = useState([]);
-  // const [outlets, setOutlets] = useState([]);h
-
-  const loading = useSelector(state => state.timeline.loading);
-  const frequencies = useSelector(state => state.timeline.frequencies);
+  const onSubmitHandler = () => {
+    dispatch(getFrequencies(words, yearFrom, yearTo, outlets));
+  };
 
   return (
     <>
@@ -212,6 +190,28 @@ function Timeline() {
                 </ToggleButton>
               </FormControl>
             </Grid>
+            <Grid item md xs={12}>
+              <FormControl className={classes.formControl}>
+                <InputLabel
+                  className={classes.label}
+                  id="display-option-select-label"
+                >
+                  Y-Axis Key
+                </InputLabel>
+                <Select
+                  labelId="display-option-select-label"
+                  id="display-option-select"
+                  value={displayOption}
+                  onChange={e => setDisplayOption(e.target.value)}
+                >
+                  {displayOptions.map(option => (
+                    <MenuItem key={option.value} value={option.value}>
+                      {option.name}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </Grid>
             {
               // Submit button
             }
@@ -239,9 +239,7 @@ function Timeline() {
             xAxisKey="year"
             yAxisKey={yAxisKey}
             displayAbsolute={absolute}
-            tooltipItems={[
-              { key: "rank", title:"rank" }
-            ]}
+            tooltipItems={[{ key: 'rank', title: 'rank' }]}
             words={words}
             mediaOutlets={outlets}
             allMediaOutlets={outlets}

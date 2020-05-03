@@ -72,7 +72,7 @@ function LineCharts({
   displayOption,
 }) {
   const classes = useStyles();
-  let displayed = [];
+  const displayed = [];
   let processedData = {};
   let displayAbsoluteLargestValue = 0;
 
@@ -182,13 +182,11 @@ function LineCharts({
                                 <Line
                                   key={line_mediaOutlet + line_word}
                                   type="monotone"
-                                  name={
+                                  name={`${
                                     allMediaOutlets.find(
                                       obj => obj.value === line_mediaOutlet,
-                                    ).name +
-                                    ' - ' +
-                                    line_word
-                                  }
+                                    ).name
+                                  } - ${line_word}`}
                                   dataKey={
                                     line_mediaOutlet + line_word + yAxisKey
                                   }
