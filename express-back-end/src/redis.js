@@ -1,26 +1,20 @@
 const redis = require('redis');
-const assert = require('assert');
-const { AbortError, AggregateError, ReplyError } = require('redis');
+const config = require('./config');
+const { promisify } = require('util');
 
-let client = redis.createClient(database);
-module.exports = {
-  redis,
-  client,
-  connect: database => {
-    client = redis.createClient(database);
+const client = redis.createClient(config.redisURI);
 
-    client.on('ready', function() {
-      //eslint-disable-next-line
-      console.log('Redis is ready');
-    });
+client.on('ready', function() {
+  //eslint-disable-next-line
+  console.log('Redis is ready');
+});
 
-    client.on('error', function(err) {
-      //eslint-disable-next-line
-      console.log('Error in Redis');
-      throw err;
-    });
+client.on('error', function(err) {
+  //eslint-disable-next-line
+  console.log('Error in Redis');
+  throw err;
+});
 
-    return client;
-  },
-  disconnect: (clientToDisconnect = client) => clientToDisconnect.quit(),
-};
+client.get = promisify(client.get).bind(client);
+
+module.exports = client;

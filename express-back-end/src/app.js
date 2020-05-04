@@ -6,7 +6,6 @@ const helmet = require('helmet');
 const cors = require('cors');
 
 const db = require('./db');
-const redis = require('./redis');
 const config = require('./config');
 
 const { checkTokenSetUser } = require('./api/auth/middlewares');
@@ -28,9 +27,6 @@ app.use(cors());
 // Connect to mongodb
 db.connect(config.mongooseURI);
 db.mongoose.set('debug', config.mongooseDebug);
-
-// Connect to redis
-redis.connect(config.redisURI);
 
 app.use(checkTokenSetUser);
 
