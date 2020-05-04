@@ -25,7 +25,7 @@ module.exports = (function() {
 
   const GetUserData = (req, res) => {
     res.json({
-      data: {...req.user}
+      data: { ...req.user },
     });
   };
 
@@ -97,7 +97,7 @@ module.exports = (function() {
     }
 
     // Try get user with email
-    const user = await User.findOne({ email: req.body.email });
+    const user = await User.findOne({ email: req.body.email }).exec();
     if (!user) {
       res.status(400).json({
         errors: [createValidationError('Incorrect information')],
