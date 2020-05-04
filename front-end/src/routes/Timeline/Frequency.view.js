@@ -73,17 +73,20 @@ const yAxisKeys = [
 function Timeline() {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const [yearFrom, setYearFrom] = useState();
-  const [yearTo, setYearTo] = useState();
+  const [yearFrom, setYearFrom] = useState('');
+  const [yearTo, setYearTo] = useState('');
   const [yAxisKey, setYAxisKey] = useState('freq');
   const [absolute, setAbsolute] = useState(false);
   const [outlets, setOutlets] = useState([]);
   const [displayOption, setDisplayOption] = useState('multiple');
   const [words, setWords] = useState([]);
+  const [formSubmitted, setFormSubmitted] = useState(false);
   const loading = useSelector(state => state.timeline.loading);
   const frequencies = useSelector(state => state.timeline.frequencies);
 
-  const onSubmitHandler = () => {
+  const onSubmitHandler = e => {
+    e.preventDefault();
+    setFormSubmitted(true);
     dispatch(getFrequencies(words, yearFrom, yearTo, outlets));
   };
 
@@ -136,7 +139,7 @@ function Timeline() {
                   label="Year from:"
                   name="year_from"
                   value={yearFrom}
-                  onChange={e => setYearFrom(e.target.value)}
+                  onChange={e => setYearFrom(Number(e.target.value))}
                   required
                 />
               </FormControl>
@@ -149,7 +152,7 @@ function Timeline() {
                   label="Year to:"
                   name="year_to"
                   value={yearTo}
-                  onChange={e => setYearTo(e.target.value)}
+                  onChange={e => setYearTo(Number(e.target.value))}
                   required
                 />
               </FormControl>
@@ -181,6 +184,7 @@ function Timeline() {
               <FormControl className={classes.formControl}>
                 <ToggleButton
                   selected={absolute}
+                  value={absolute}
                   onChange={() => {
                     setAbsolute(!absolute);
                   }}
@@ -234,19 +238,21 @@ function Timeline() {
         {loading ? (
           <CircularProgress />
         ) : (
-          <LineCharts
-            datasets={frequencies}
-            xAxisKey="year"
-            yAxisKey={yAxisKey}
-            displayAbsolute={absolute}
-            tooltipItems={[{ key: 'rank', title: 'rank' }]}
-            words={words}
-            mediaOutlets={outlets}
-            allMediaOutlets={mediaOutlets}
-            yearFrom={yearFrom}
-            yearTo={yearTo}
-            displayOption={displayOption}
-          />
+          formSubmitted && (
+            <LineCharts
+              datasets={frequencies}
+              xAxisKey="year"
+              yAxisKey={yAxisKey}
+              displayAbsolute={absolute}
+              tooltipItems={[{ key: 'rank', title: 'rank' }]}
+              words={words}
+              mediaOutlets={outlets}
+              allMediaOutlets={mediaOutlets}
+              yearFrom={yearFrom}
+              yearTo={yearTo}
+              displayOption={displayOption}
+            />
+          )
         )}
       </div>
     </>
