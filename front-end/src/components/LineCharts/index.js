@@ -93,20 +93,20 @@ function LineCharts({
       processedData = datasets;
   }
   if (displayAbsolute) {
-    words.map(word => {
-      mediaOutlets.map(mediaOutlet => {
-        let data = processedData.find(obj =>
+    words.forEach(word => {
+      mediaOutlets.forEach(mediaOutlet => {
+        const data = processedData.find(obj =>
           obj.data.find(objData =>
             Object.keys(objData).find(key => key.includes(mediaOutlet + word)),
           ),
         );
         if (data) {
-          for (let dataObj of data.data) {
-            let currentData = dataObj[mediaOutlet + word + yAxisKey];
+          data.data.forEach(dataObj => {
+            const currentData = dataObj[mediaOutlet + word + yAxisKey];
             if (currentData > displayAbsoluteLargestValue) {
               displayAbsoluteLargestValue = currentData;
             }
-          }
+          });
         }
       });
     });
@@ -117,117 +117,112 @@ function LineCharts({
       {words.map(word => (
         <Grid key={word} item container xs={12} spacing={2} justify="center">
           {mediaOutlets.map(mediaOutlet => {
-            {
-              let data = processedData.find(obj =>
-                obj.data.find(objData =>
-                  Object.keys(objData).find(key =>
-                    key.includes(mediaOutlet + word),
-                  ),
+            const data = processedData.find(obj =>
+              obj.data.find(objData =>
+                Object.keys(objData).find(key =>
+                  key.includes(mediaOutlet + word),
                 ),
-              );
+              ),
+            );
 
-              if (data && !displayed.includes(data.title)) {
-                displayed.push(data.title);
-                return (
-                  <Grid
-                    key={word + mediaOutlet}
-                    item
-                    xs={
-                      displayOption === 'multiple'
-                        ? 12 / mediaOutlets.length
-                        : 12
-                    }
-                  >
-                    <div className={classes.chartContainer} key={data.title}>
-                      <h1 className={classes.chartTitle}>{data.title}</h1>
-                      <ResponsiveContainer>
-                        <LineChart
-                          data={data.data}
-                          margin={{
-                            top: 10,
-                            right: 30,
-                            left: 0,
-                            bottom: 0,
-                          }}
-                        >
-                          <CartesianGrid strokeDasharray="3 3" />
-                          <XAxis
-                            type="number"
-                            domain={[yearFrom, yearTo]}
-                            dataKey={xAxisKey}
-                            tickCount={Math.abs(yearTo - yearFrom)}
-                          />
-                          <YAxis
-                            domain={
-                              displayAbsolute
-                                ? [0, displayAbsoluteLargestValue]
-                                : ['auto', 'auto']
-                            }
-                          />
-                          <Legend
-                            payload={createLegendPayload(
-                              data,
-                              words,
-                              mediaOutlets,
-                              yAxisKey,
-                              allMediaOutlets,
-                              displayOption,
-                            )}
-                          />
-                          <Tooltip itemSorter={item1 => item1.value * -1} />
-
-                          {words.map(line_word =>
-                            mediaOutlets.map((line_mediaOutlet, index) => {
-                              return (
-                                <Line
-                                  key={line_mediaOutlet + line_word}
-                                  type="monotone"
-                                  name={`${
-                                    allMediaOutlets.find(
-                                      obj => obj.value === line_mediaOutlet,
-                                    ).name
-                                  } - ${line_word}`}
-                                  dataKey={
-                                    line_mediaOutlet + line_word + yAxisKey
-                                  }
-                                  stroke={
-                                    displayOption === 'byWord'
-                                      ? stringToColour(line_mediaOutlet)
-                                      : stringToColour(line_word)
-                                  }
-                                  fill={
-                                    displayOption === 'byWord'
-                                      ? stringToColour(line_mediaOutlet)
-                                      : stringToColour(line_word)
-                                  }
-                                  connectNulls
-                                  strokeWidth={3}
-                                  dot={
-                                    <CustomizedDot
-                                      number={
-                                        displayOption === 'byWord' ? 0 : index
-                                      }
-                                    />
-                                  }
-                                  activeDot={{
-                                    stroke:
-                                      displayOption === 'byWord'
-                                        ? stringToColour(line_mediaOutlet)
-                                        : stringToColour(line_word),
-                                    strokeWidth: 7,
-                                    border: 'white',
-                                  }}
-                                />
-                              );
-                            }),
+            if (data && !displayed.includes(data.title)) {
+              displayed.push(data.title);
+              return (
+                <Grid
+                  key={word + mediaOutlet}
+                  item
+                  xs={
+                    displayOption === 'multiple' ? 12 / mediaOutlets.length : 12
+                  }
+                >
+                  <div className={classes.chartContainer} key={data.title}>
+                    <h1 className={classes.chartTitle}>{data.title}</h1>
+                    <ResponsiveContainer>
+                      <LineChart
+                        data={data.data}
+                        margin={{
+                          top: 10,
+                          right: 30,
+                          left: 0,
+                          bottom: 0,
+                        }}
+                      >
+                        <CartesianGrid strokeDasharray="3 3" />
+                        <XAxis
+                          type="number"
+                          domain={[yearFrom, yearTo]}
+                          dataKey={xAxisKey}
+                          tickCount={Math.abs(yearTo - yearFrom)}
+                        />
+                        <YAxis
+                          domain={
+                            displayAbsolute
+                              ? [0, displayAbsoluteLargestValue]
+                              : ['auto', 'auto']
+                          }
+                        />
+                        <Legend
+                          payload={createLegendPayload(
+                            data,
+                            words,
+                            mediaOutlets,
+                            yAxisKey,
+                            allMediaOutlets,
+                            displayOption,
                           )}
-                        </LineChart>
-                      </ResponsiveContainer>
-                    </div>
-                  </Grid>
-                );
-              }
+                        />
+                        <Tooltip itemSorter={item1 => item1.value * -1} />
+
+                        {words.map(lineWord =>
+                          mediaOutlets.map((lineMediaOutlet, index) => {
+                            return (
+                              <Line
+                                key={lineMediaOutlet + lineWord}
+                                type="monotone"
+                                name={`${
+                                  allMediaOutlets.find(
+                                    obj => obj.value === lineMediaOutlet,
+                                  ).name
+                                } - ${lineWord}`}
+                                dataKey={lineMediaOutlet + lineWord + yAxisKey}
+                                stroke={
+                                  displayOption === 'byWord'
+                                    ? stringToColour(lineMediaOutlet)
+                                    : stringToColour(lineWord)
+                                }
+                                fill={
+                                  displayOption === 'byWord'
+                                    ? stringToColour(lineMediaOutlet)
+                                    : stringToColour(lineWord)
+                                }
+                                connectNulls
+                                strokeWidth={3}
+                                dot={
+                                  <CustomizedDot
+                                    number={
+                                      displayOption === 'byWord' ? 0 : index
+                                    }
+                                  />
+                                }
+                                activeDot={{
+                                  stroke:
+                                    displayOption === 'byWord'
+                                      ? stringToColour(lineMediaOutlet)
+                                      : stringToColour(lineWord),
+                                  strokeWidth: 7,
+                                  border: 'white',
+                                }}
+                              />
+                            );
+                          }),
+                        )}
+                      </LineChart>
+                    </ResponsiveContainer>
+                  </div>
+                </Grid>
+              );
             }
+            return null;
           })}
         </Grid>
       ))}

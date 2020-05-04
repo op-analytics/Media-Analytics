@@ -61,11 +61,6 @@ const displayOptions = [
   { name: 'Grouped by word', value: 'byWord' },
 ];
 
-const yAxisKeys = [
-  { name: 'Frequency', value: 'freq' },
-  { name: 'Count', value: 'count' },
-  { name: 'Rank', value: 'rank' },
-];
 /**
  * The frequency timeline page component
  * @component
