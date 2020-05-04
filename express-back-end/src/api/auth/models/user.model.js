@@ -1,5 +1,5 @@
 const { Schema, model } = require('mongoose');
-const { client } = require('../../../redis');
+const client = require('../../../redis');
 
 const User = new Schema({
   name: {
@@ -20,9 +20,26 @@ const User = new Schema({
   },
 });
 
-User.methods.usedTokens = function() {
+User.methods.usedTokens = async function() {
   const userId = this._id;
-  return client.get(`${userId}_tokens`);
+  const userTokens = await client.get(`${userId}_tokens`);
+  return userTokens ? userTokens : 0;
+};
+
+User.methods.resetTokens = function() {
+  const userId = this._id;
+  client.set(`${userId}_tokens`, 0);
+};
+
+User.methods.useToken = async function() {
+  const userId = this._id;
+  const currentTokens = await this.usedTokens();
+  if (currentTokens > 0) {
+    client.set(`${userId}_tokens`, currentTokens - 1);
+    return true;
+  }
+  console.log(`User ${userId}: Attempted to use tokens that did not exist`);
+  return false;
 };
 
 User.path('email').validate(value => {
