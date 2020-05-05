@@ -6,7 +6,6 @@ const props = {
   onSubmitHandler: jest.fn(),
 };
 
-// eslint-disable-next-line react/jsx-props-no-spreading
 const getWrapper = () => shallow(<Form {...props} />);
 
 describe('Form', () => {
@@ -15,7 +14,6 @@ describe('Form', () => {
   });
 
   it('renders correctly', () => {
-    // eslint-disable-next-line react/jsx-props-no-spreading
     const component = shallow(<Form {...props} />);
     expect(component).toMatchSnapshot();
   });

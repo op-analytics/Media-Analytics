@@ -34,11 +34,9 @@ const getProps = dataSource => ({
 });
 
 export const LineChartWithOneDataSource = () => (
-  // eslint-disable-next-line react/jsx-props-no-spreading
   <LineCharts {...getProps(chartDatasetsWithOneWord)} />
 );
 
 export const LineChartWithTwoDataSources = () => (
-  // eslint-disable-next-line react/jsx-props-no-spreading
   <LineCharts {...getProps(chartDatasetsWithTwoWords)} />
 );

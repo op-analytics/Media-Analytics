@@ -30,5 +30,8 @@ module.exports = {
     'arrow-parens': 0,
     'no-tabs': 'error',
     'import/prefer-default-export': 0,
+    'react/jsx-props-no-spreading': 0,
+    'react/jsx-wrap-multilines': 0,
+    'react/jsx-curly-newline': 0,
   },
 };

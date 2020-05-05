@@ -14,7 +14,7 @@ const mockStore = configureStore();
 const getWrapper = authenticated => {
   const initialState = { user: { authenticated } };
   const store = mockStore(initialState);
-  //eslint-disable-next-line react/display-name
+  // eslint-disable-next-line react/display-name
   return storyFn => (
     <Provider store={store}>
       <Router>{storyFn()}</Router>

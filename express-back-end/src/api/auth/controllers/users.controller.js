@@ -25,7 +25,7 @@ module.exports = (function() {
 
   const GetUserData = (req, res) => {
     res.json({
-      data: {...req.user}
+      data: { ...req.user },
     });
   };
 
@@ -43,6 +43,8 @@ module.exports = (function() {
       });
       return;
     }
+
+    UserData.email = UserData.email.toLowerCase();
 
     // Check email is not already taken
     const emailAlreadyTaken = await User.findOne({ email: UserData.email });
@@ -95,9 +97,10 @@ module.exports = (function() {
       });
       return;
     }
+    UserData.email = UserData.email.toLowerCase();
 
     // Try get user with email
-    const user = await User.findOne({ email: req.body.email });
+    const user = await User.findOne({ email: UserData.email });
     if (!user) {
       res.status(400).json({
         errors: [createValidationError('Incorrect information')],
@@ -106,7 +109,7 @@ module.exports = (function() {
     }
 
     // Check passwords match
-    const validPass = await bcrypt.compare(req.body.password, user.password);
+    const validPass = await bcrypt.compare(UserData.password, user.password);
     if (!validPass) {
       res.status(400).json({
         errors: [createValidationError('Incorrect information')],

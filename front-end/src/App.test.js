@@ -14,13 +14,13 @@ const initialState = {
 
 const store = mockStore(initialState);
 
-const getWrapped = () => {
+const getWrapped = () => (
   <Provider store={store}>
     <Router>
       <App />
     </Router>
-  </Provider>;
-};
+  </Provider>
+);
 
 it('renders without crashing', () => {
   const div = document.createElement('div');

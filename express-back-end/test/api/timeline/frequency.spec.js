@@ -132,6 +132,74 @@ describe('Frequency', () => {
       });
     });
 
+    it('It should return data when given words starting or ending with spaces', async () => {
+      await Frequency.insertMany([
+        {
+          word: 'man',
+          year: '2003',
+          rank: 420,
+          count: 69,
+          freq: 0.002435,
+        },
+        {
+          word: 'man',
+          year: '2002',
+          rank: 600,
+          count: 56,
+          freq: 0.001435,
+        },
+        {
+          word: 'man',
+          year: '2001',
+          rank: 700,
+          count: 38,
+          freq: 0.000435,
+        },
+      ]);
+
+      const res = await request(app)
+        .post('/api/timeline/frequency')
+        .send({ words: [' man '], year_from: 2000, year_to: 2004 })
+        .expect(200);
+
+      await expect(res.body.data).to.be.an('array');
+      await expect(res.body.data[0].data).to.have.lengthOf(3);
+    });
+
+    it('It should return data when given words with upper case characters', async () => {
+      await Frequency.insertMany([
+        {
+          word: 'man',
+          year: '2003',
+          rank: 420,
+          count: 69,
+          freq: 0.002435,
+        },
+        {
+          word: 'man',
+          year: '2002',
+          rank: 600,
+          count: 56,
+          freq: 0.001435,
+        },
+        {
+          word: 'man',
+          year: '2001',
+          rank: 700,
+          count: 38,
+          freq: 0.000435,
+        },
+      ]);
+
+      const res = await request(app)
+        .post('/api/timeline/frequency')
+        .send({ words: ['mAn'], year_from: 2000, year_to: 2004 })
+        .expect(200);
+
+      await expect(res.body.data).to.be.an('array');
+      await expect(res.body.data[0].data).to.have.lengthOf(3);
+    });
+
     it('It should fail to return data if it does not exist', async () => {
       const res = await request(app)
         .post('/api/timeline/frequency')
