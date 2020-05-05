@@ -56,7 +56,6 @@ const userModel = {
   logout: thunk(async actions => {
     userService.logout();
     actions.setUser(null);
-    window.location.reload();
   }),
 
   setErrors: action((state, payload) => {

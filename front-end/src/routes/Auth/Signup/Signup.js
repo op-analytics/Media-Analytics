@@ -4,6 +4,7 @@ import Container from '@material-ui/core/Container';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
 import Link from '@material-ui/core/Link';
+import { Link as RouterLink } from 'react-router-dom';
 import Snackbar from '@material-ui/core/Snackbar';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
@@ -94,7 +95,7 @@ export default function SignUp() {
   // eslint-disable-next-line no-console
   const submit = ({ name, email, password, confirmPassword }) => {
     if (isHuman) {
-      signup({name, email, password, confirmPassword});
+      signup({ name, email, password, confirmPassword });
     } else {
       setSnackBarOpen(true);
     }
@@ -194,7 +195,7 @@ export default function SignUp() {
             </Button>
             <Grid container justify="flex-end">
               <Grid item>
-                <Link href="/login" variant="body2">
+                <Link component={RouterLink} to="/login" variant="body2">
                   Already have an account? Sign in
                 </Link>
               </Grid>
