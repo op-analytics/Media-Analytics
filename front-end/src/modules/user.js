@@ -30,6 +30,17 @@ const userModel = {
     }
   }),
 
+  authenticate: thunk(async (actions, payload) => {
+    try {
+      await userService.authenticate(payload);
+      const user = await userService.getLoggedInUser();
+      actions.setUser(user);
+    } catch ({ response }) {
+      const errors = getErrorsFromResponse(response);
+      actions.setErrors(errors);
+    }
+  }),
+
   signup: thunk(async (actions, payload) => {
     try {
       const token = await userService.signup(payload);
