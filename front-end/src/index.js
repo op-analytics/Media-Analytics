@@ -1,3 +1,5 @@
+import { createMuiTheme, ThemeProvider } from '@material-ui/core';
+import blue from '@material-ui/core/colors/blue';
 import axios from 'axios';
 import { ConnectedRouter } from 'connected-react-router';
 import jwtDecode from 'jwt-decode';
@@ -26,10 +28,18 @@ if (token) {
   }
 }
 
+const muiTheme = createMuiTheme({
+  palette: {
+    primary: blue,
+  },
+});
+
 ReactDOM.render(
   <Provider store={store}>
     <ConnectedRouter history={history}>
-      <App />
+      <ThemeProvider theme={muiTheme}>
+        <App />
+      </ThemeProvider>
     </ConnectedRouter>
   </Provider>,
   document.getElementById('root'),
