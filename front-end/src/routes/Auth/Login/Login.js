@@ -10,10 +10,9 @@ import Typography from '@material-ui/core/Typography';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { useDispatch, useSelector } from 'react-redux';
-import { login } from '../../../state/ducks/user';
+import { useStoreActions, useStoreState } from 'easy-peasy';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   paper: {
     marginTop: theme.spacing(8),
     display: 'flex',
@@ -36,10 +35,11 @@ const useStyles = makeStyles((theme) => ({
 export default function SignIn() {
   const classes = useStyles();
   const { register, handleSubmit } = useForm();
-  const dispatch = useDispatch();
-  const submit = ({ email, password }) => dispatch(login(email, password));
 
-  const errors = useSelector((state) => state.user.errors) || [];
+  const login = useStoreActions(state => state.user.login);
+  const errors = useStoreState(state => state.user.errors);
+
+  const submit = ({ email, password }) => login({ email, password });
 
   let passwordHasError = false;
   let passwordHelperText = '';

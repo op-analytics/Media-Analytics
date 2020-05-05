@@ -27,7 +27,7 @@ export default {
   },
 
   authenticate(token) {
-    const XAuthToken = `Bearer ${token}`;
+    const XAuthToken = `${token}`;
     localStorage.setItem('XAuthToken', XAuthToken);
     axios.defaults.headers.common.Authorization = XAuthToken;
   },

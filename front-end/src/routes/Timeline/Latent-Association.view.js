@@ -1,7 +1,7 @@
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { makeStyles } from '@material-ui/core/styles';
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useStoreActions, useStoreState } from 'easy-peasy';
 import {
   CartesianGrid,
   Line,
@@ -13,7 +13,6 @@ import {
 } from 'recharts';
 import Form from '../../components/Form';
 import { createTooltip } from '../../components/LineCharts/utils';
-import { getAssociations } from '../../state/ducks/timeline';
 
 const useStyles = makeStyles(() => ({
   chartContainer: {
@@ -68,11 +67,13 @@ const formData = [
  * @component
  */
 function Timeline() {
-  const associations = useSelector(state => state.timeline.associations);
-  const loading = useSelector(state => state.timeline.loading);
+  const associations = useStoreState(state => state.timeline.associations);
+  const loading = useStoreState(state => state.timeline.loading);
 
   const classes = useStyles();
-  const dispatch = useDispatch();
+  const getAssociations = useStoreActions(
+    state => state.timeline.getAssociations,
+  );
 
   const onSubmitHandler = ({
     year_from: yearFrom,
@@ -84,9 +85,12 @@ function Timeline() {
     const concept2Array = concept2.split(',');
     const yearFromInt = parseInt(yearFrom, 10);
     const yearToInt = parseInt(yearTo, 10);
-    dispatch(
-      getAssociations(concept1Array, concept2Array, yearFromInt, yearToInt),
-    );
+    getAssociations({
+      concept_1: concept1Array,
+      concept_2: concept2Array,
+      year_from: yearFromInt,
+      year_to: yearToInt,
+    });
   };
 
   return (

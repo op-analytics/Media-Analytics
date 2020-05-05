@@ -1,10 +1,10 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useStoreState } from 'easy-peasy';
 import { Redirect, Route } from 'react-router-dom';
 
 const LoggedOutRoute = ({ component: Component, ...rest }) => {
-  const authenticated = useSelector(state => state.user.authenticated);
+  const authenticated = useStoreState(state => state.user.authenticated);
   return (
     <Route
       {...rest}
