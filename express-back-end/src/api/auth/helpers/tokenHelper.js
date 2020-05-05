@@ -11,8 +11,8 @@ module.exports = class TokenHelper {
     return userTokens ? userTokens : 0;
   }
 
-  async resetTokens() {
-    client.set(this.tokenKey, 0);
+  async hasTokens() {
+    return (await this.usedTokens()) < this.limit;
   }
 
   async useToken() {
@@ -23,5 +23,9 @@ module.exports = class TokenHelper {
     }
     console.log(`User ${userId}: Attempted to use tokens that did not exist`);
     return false;
+  }
+
+  async resetTokens() {
+    client.set(this.tokenKey, 0);
   }
 };
