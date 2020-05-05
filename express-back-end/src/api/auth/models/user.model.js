@@ -13,7 +13,7 @@ const User = new Schema({
   },
   tokenLimit: {
     type: Number,
-    default: 0,
+    default: 100,
   },
   password: {
     type: String,
