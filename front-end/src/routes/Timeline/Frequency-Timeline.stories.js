@@ -1,12 +1,10 @@
 import React from 'react';
-import { Provider } from 'react-redux';
-import configureStore from 'redux-mock-store';
+import { StoreProvider, createStore, action } from 'easy-peasy';
 import Timeline from './Frequency.view';
-
-const mockStore = configureStore();
 
 const initialState = {
   timeline: {
+    getFrequencies: action(() => ({})),
     frequencies: [
       {
         title: 'cat',
@@ -19,13 +17,15 @@ const initialState = {
   },
 };
 
-const store = mockStore(initialState);
+const store = createStore(initialState);
 
 export default {
   title: 'Timeline/Frequency',
   component: Timeline,
   // eslint-disable-next-line react/display-name
-  decorators: [storyFn => <Provider store={store}>{storyFn()}</Provider>],
+  decorators: [
+    storyFn => <StoreProvider store={store}>{storyFn()}</StoreProvider>,
+  ],
 };
 
 export const FrequencyTimeline = () => <Timeline />;
