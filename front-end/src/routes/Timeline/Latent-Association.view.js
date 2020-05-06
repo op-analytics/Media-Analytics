@@ -1,4 +1,5 @@
 import Button from '@material-ui/core/Button';
+import Card from '@material-ui/core/Card';
 import Chip from '@material-ui/core/Chip';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import FormControl from '@material-ui/core/FormControl';
@@ -12,8 +13,22 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import ChipInput from 'material-ui-chip-input';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { CartesianGrid, Legend, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
-import { byOutletLatentAssociationDatasets, createLatentAssociationLegendPayload, singleLatentAssociationDataset, stringToColour } from '../../components/LineCharts/utils';
+import {
+  CartesianGrid,
+  Legend,
+  Line,
+  LineChart,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
+} from 'recharts';
+import {
+  byOutletLatentAssociationDatasets,
+  createLatentAssociationLegendPayload,
+  singleLatentAssociationDataset,
+  stringToColour,
+} from '../../components/LineCharts/utils';
 import { getAssociations } from '../../state/ducks/timeline';
 
 const useStyles = makeStyles(theme => ({
@@ -22,18 +37,16 @@ const useStyles = makeStyles(theme => ({
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'column',
-    //overflow: 'hidden',
+    overflow: 'hidden',
     width: '94%',
-  },
-  chartContainer: {
-    height: '100%',
   },
   label: {
     backgroundColor: 'white',
   },
   form: {
-    width: '45%',
+    width: '100%',
     height: '100%',
+    padding: '2rem',
   },
   input: {
     border: 'solid 1px black',
@@ -54,6 +67,7 @@ const useStyles = makeStyles(theme => ({
     height: '50vh',
     flex: '0 1 auto',
     paddingBottom: '6vh',
+    marginTop:'5vh',
   },
   chartTitle: {
     textAlign: 'center',
@@ -78,6 +92,10 @@ const useStyles = makeStyles(theme => ({
       textTransform: 'uppercase',
     },
   },
+  Card: {
+    width: '45vw',
+    minWidth: '400px',
+  }
 }));
 
 // TODO Update other functions to use title instead of name, title is required for
@@ -100,29 +118,27 @@ const displayOptions = [
 function Timeline() {
   const associations = useSelector(state => state.timeline.associations);
   const loading = useSelector(state => state.timeline.loading);
-  const [formSubmitted, setFormSubmitted] = useState(false);
-  const [outlets, setOutlets] = useState(['nyt']);
-  const [displayOption, setDisplayOption] = useState('single');
-  const [concept1, setConcept1] = useState(['lady']);
-  const [concept2, setConcept2] = useState(['cat']);
-  const [yearFrom, setYearFrom] = useState('1970');
-  const [yearTo, setYearTo] = useState('2020');
-  const displayed = [];
 
+  const [formSubmitted, setFormSubmitted] = useState(false);
+  const [concept1, setConcept1] = useState([]);
+  const [concept2, setConcept2] = useState([]);
+  const [yearFrom, setYearFrom] = useState();
+  const [yearTo, setYearTo] = useState();
+  const [outlets, setOutlets] = useState([]);
+  const [displayOption, setDisplayOption] = useState('single');
+
+  const displayed = [];
   const classes = useStyles();
   const dispatch = useDispatch();
 
-  const handleDelete = (chip) => {
+  const handleDelete = chip => {
     setConcept1(concept1.filter(word => word != chip));
   };
 
-  const handleAddChip = (chip) => {
+  const handleAddChip = chip => {
     setConcept1([...concept1, chip]);
   };
 
-  const handleDeleteChip = (chip) => {
-    setConcept1(concept1.filter(word => word != chip));
-  }
   const onSubmitHandler = e => {
     e.preventDefault();
     setFormSubmitted(true);
@@ -141,132 +157,134 @@ function Timeline() {
     <>
       <h3>Latent association over time</h3>
       <div className={classes.container}>
-        <form className={classes.form} onSubmit={onSubmitHandler}>
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <FormControl className={classes.formControl}>
-                <ChipInput
-                  label="Concept One:"
-                  name="concept_1"
-                  newChipKeyCodes={[13, 32]} // Make new chip on enter and space key codes
-                  blurBehavior="add" // Fix android chrome bug
-                  required={!concept1.length}
-                  value={concept1}
-                  onAdd={chip => handleAddChip(chip)}
-                  onDelete={chip => handleDelete(chip)}
-                  chipRenderer={({ value }, key) => (
-                    <Chip
-                      key={key}
-                      style={{ margin: '8px 8px 8px 0px', float: 'left' }}
-                      color="secondary"
-                      label={value}
-                      onDelete={e => handleDelete(value)}
-                    />
-                  )}
-                />
-              </FormControl>
-            </Grid>
-            <Grid item xs={12}>
-              <FormControl className={classes.formControl}>
-                <ChipInput
-                  label="Concept Two:"
-                  name="concept_2"
-                  newChipKeyCodes={[13, 32]} // Make new chip on enter and space key codes
-                  blurBehavior="add" // Fix android chrome bug
-                  onChange={newWords => setConcept2(newWords)}
-                  required={!concept2.length}
-                />
-              </FormControl>
-            </Grid>
-            <Grid item xs={12}>
-              <FormControl className={classes.formControl}>
-                <Autocomplete
-                  multiple
-                  id="tags-standard"
-                  options={mediaOutlets}
-                  getOptionLabel={option => option.title}
-                  filterSelectedOptions
-                  required={!outlets.length}
-                  onChange={(_, value) =>
-                    setOutlets(value.map(({ value: code }) => code))
-                  }
-                  renderInput={params => (
-                    <TextField
-                      {...params}
-                      variant="standard"
-                      label="Media Outlets"
-                      placeholder="Add a media outlet"
-                    />
-                  )}
-                />
-              </FormControl>
-            </Grid>
-            <Grid item md={3} sm={6} xs={12}>
-              <FormControl className={classes.formControl}>
-                <TextField
-                  className={classes.textField}
-                  type="number"
-                  label="Year from:"
-                  name="year_from"
-                  value={yearFrom}
-                  onChange={e => setYearFrom(Number(e.target.value))}
-                  required
-                />
-              </FormControl>
-            </Grid>
-            <Grid item md={3} sm={6} xs={12}>
-              <FormControl className={classes.formControl}>
-                <TextField
-                  className={classes.textField}
-                  type="number"
-                  label="Year to:"
-                  name="year_to"
-                  value={yearTo}
-                  onChange={e => setYearTo(Number(e.target.value))}
-                  required
-                />
-              </FormControl>
-            </Grid>
-            <Grid item md={6} sm={6} xs={12}>
-              <FormControl className={classes.formControl}>
-                <InputLabel
-                  className={classes.label}
-                  id="display-option-select-label"
-                >
-                  Display Options
-                </InputLabel>
-                <Select
-                  labelId="display-option-select-label"
-                  id="display-option-select"
-                  value={displayOption}
-                  onChange={e => setDisplayOption(e.target.value)}
-                >
-                  {displayOptions.map(option => (
-                    <MenuItem key={option.value} value={option.value}>
-                      {option.name}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            </Grid>
-            {
-              // Submit button
-            }
-            <Grid container item sm={12} justify="center">
-              <Grid item xs={3} align="center">
-                <Button
-                  variant="contained"
-                  color="primary"
-                  type="submit"
-                  className={classes.submitButton}
-                  margin="0 auto"
-                >
-                  Submit
-                </Button>
+        <Card className={classes.Card}>
+          <form className={classes.form} onSubmit={onSubmitHandler}>
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <FormControl className={classes.formControl}>
+                  <ChipInput
+                    label="Concept One:"
+                    name="concept_1"
+                    newChipKeyCodes={[13, 32]} // Make new chip on enter and space key codes
+                    blurBehavior="add" // Fix android chrome bug
+                    required={!concept1.length}
+                    value={concept1}
+                    onAdd={chip => handleAddChip(chip)}
+                    onDelete={chip => handleDelete(chip)}
+                    chipRenderer={({ value }, key) => (
+                      <Chip
+                        key={key}
+                        style={{ margin: '0px 8px 8px 0px', float: 'left' }}
+                        color="secondary"
+                        label={value}
+                        onDelete={e => handleDelete(value)}
+                      />
+                    )}
+                  />
+                </FormControl>
+              </Grid>
+              <Grid item xs={12}>
+                <FormControl className={classes.formControl}>
+                  <ChipInput
+                    label="Concept Two:"
+                    name="concept_2"
+                    newChipKeyCodes={[13, 32]} // Make new chip on enter and space key codes
+                    blurBehavior="add" // Fix android chrome bug
+                    onChange={newWords => setConcept2(newWords)}
+                    required={!concept2.length}
+                  />
+                </FormControl>
+              </Grid>
+              <Grid item xs={12}>
+                <FormControl className={classes.formControl}>
+                  <Autocomplete
+                    multiple
+                    id="tags-standard"
+                    options={mediaOutlets}
+                    getOptionLabel={option => option.title}
+                    filterSelectedOptions
+                    required={!outlets.length}
+                    onChange={(_, value) =>
+                      setOutlets(value.map(({ value: code }) => code))
+                    }
+                    renderInput={params => (
+                      <TextField
+                        {...params}
+                        variant="standard"
+                        label="Media Outlets"
+                        placeholder="Add a media outlet"
+                      />
+                    )}
+                  />
+                </FormControl>
+              </Grid>
+              <Grid item md={3} sm={6} xs={12}>
+                <FormControl className={classes.formControl}>
+                  <TextField
+                    className={classes.textField}
+                    type="number"
+                    label="Year from:"
+                    name="year_from"
+                    value={yearFrom}
+                    onChange={e => setYearFrom(Number(e.target.value))}
+                    required
+                  />
+                </FormControl>
+              </Grid>
+              <Grid item md={3} sm={6} xs={12}>
+                <FormControl className={classes.formControl}>
+                  <TextField
+                    className={classes.textField}
+                    type="number"
+                    label="Year to:"
+                    name="year_to"
+                    value={yearTo}
+                    onChange={e => setYearTo(Number(e.target.value))}
+                    required
+                  />
+                </FormControl>
+              </Grid>
+              <Grid item md={6} sm={6} xs={12}>
+                <FormControl className={classes.formControl}>
+                  <InputLabel
+                    className={classes.label}
+                    id="display-option-select-label"
+                  >
+                    Display Options
+                  </InputLabel>
+                  <Select
+                    labelId="display-option-select-label"
+                    id="display-option-select"
+                    value={displayOption}
+                    onChange={e => setDisplayOption(e.target.value)}
+                  >
+                    {displayOptions.map(option => (
+                      <MenuItem key={option.value} value={option.value}>
+                        {option.name}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </Grid>
+              {
+                // Submit button
+              }
+              <Grid container item sm={12} justify="center">
+                <Grid item xs={3} align="center">
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    type="submit"
+                    className={classes.submitButton}
+                    margin="0 auto"
+                  >
+                    Submit
+                  </Button>
+                </Grid>
               </Grid>
             </Grid>
-          </Grid>
-        </form>
+          </form>
+        </Card>
 
         {loading ? (
           <CircularProgress />

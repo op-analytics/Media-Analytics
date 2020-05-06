@@ -325,6 +325,9 @@ export function byWordDataset(dataset) {
  * @returns {Object[]}
  */
 export function singleLatentAssociationDataset(dataset) {
+  if(!dataset){
+    return null
+  }
   let summaryObject = {
     title: 'Summary',
     data: [],
@@ -363,6 +366,9 @@ export function byOutletLatentAssociationDatasets(
   allMediaOutlets,
   outlet,
 ) {
+  if(!dataset){
+    return null
+  }
   let summaryObject = {
     title: '',
     data: [],
@@ -389,7 +395,7 @@ export function byOutletLatentAssociationDatasets(
 
 
 /**
- * A legend item factory for creating latent association legend items dynamicaly
+ * A legend item factory for creating latent association legend items dynamically
  *
  * @param {Object} data Data being used for the chart
  * @param {Object[]} mediaOutlets
