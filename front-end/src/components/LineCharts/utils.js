@@ -211,7 +211,6 @@ export function singleDataset(dataset) {
   return result;
 }
 
-
 /**
  * Structure a dataset for by outlet charts
  *
@@ -273,7 +272,8 @@ export function byOutletDataset(dataset, allMediaOutlets) {
       // Similar to above. Only add to result if not already there, a reference has
       // been edited and doesn't need added again.
       if (!resultMediaOutlet) {
-        let fullName = allMediaOutlets.find(obj => obj.value === mediaOutlet).name;
+        let fullName = allMediaOutlets.find(obj => obj.value === mediaOutlet)
+          .name;
         let newResultMediaOutlet = {
           title: fullName,
           data: mediaOutletData,
@@ -317,3 +317,105 @@ export function byWordDataset(dataset) {
   });
   return result;
 }
+
+/**
+ * Structure a latent association dataset for a single chart display
+ *
+ * @param {Object} dataset Dataset to alter
+ * @returns {Object[]}
+ */
+export function singleLatentAssociationDataset(dataset) {
+  let summaryObject = {
+    title: 'Summary',
+    data: [],
+  };
+  for (let association of dataset) {
+    let yearRangeObject = summaryObject.data.find(
+      obj => obj.yearRange === association.yearRange,
+    );
+
+    if (!yearRangeObject) {
+      yearRangeObject = { yearRange: association.yearRange };
+      summaryObject.data.push(yearRangeObject);
+    }
+
+    yearRangeObject['association' + association.media_outlet] =
+      association.association;
+    yearRangeObject['mediaOutlet' + association.media_outlet] =
+      association.media_outlet;
+  }
+  summaryObject.data.sort(
+    (x, y) =>
+      Number(x.yearRange.split('-')[0]) - Number(y.yearRange.split('-')[0]),
+  );
+  return summaryObject;
+}
+
+/**
+ * Structure a latent association dataset for by outlet chart display
+ *
+ * @param {Object} dataset Dataset to alter
+ * @param {Object[Object]} Mappings of mediaoutlet abbrivations to fullnames
+ * @returns {Object[]}
+ */
+export function byOutletLatentAssociationDatasets(
+  dataset,
+  allMediaOutlets,
+  outlet,
+) {
+  let summaryObject = {
+    title: '',
+    data: [],
+  };
+  let outletData = dataset.map(obj =>
+    obj.media_outlet === outlet ? obj : null,
+  );
+  for (let datum of outletData) {
+    if (datum) {
+      summaryObject.data.push({
+        yearRange: datum.yearRange,
+        ['association' + outlet]: datum.association,
+        ['mediaOutlet' + outlet]: datum.media_outlet,
+      });
+    }
+  }
+  summaryObject.title = allMediaOutlets.find(obj => obj.value === outlet).name;
+  summaryObject.data.sort(
+    (x, y) =>
+      Number(x.yearRange.split('-')[0]) - Number(y.yearRange.split('-')[0]),
+  );
+  return summaryObject;
+}
+
+
+/**
+ * A legend item factory for creating latent association legend items dynamicaly
+ *
+ * @param {Object} data Data being used for the chart
+ * @param {Object[]} mediaOutlets
+ * @returns {Element}
+ */
+export const createLatentAssociationLegendPayload = (
+  data,
+  mediaOutlets,
+  allMediaOutlets,
+) => {
+  const legendItems = [];
+  for (let yearData of data.data) {
+    for (let mediaOutlet of mediaOutlets) {
+      if (Object.keys(yearData).includes("association"+mediaOutlet)) {
+        if (
+          legendItems.findIndex(item => item.id === mediaOutlet) === -1
+        ) {
+          legendItems.push({
+            id: mediaOutlet,
+            value:
+              allMediaOutlets.find(obj => obj.value === mediaOutlet).name,
+            color: stringToColour(mediaOutlet)
+          });
+        }
+      }
+    }
+  }
+  return legendItems;
+};

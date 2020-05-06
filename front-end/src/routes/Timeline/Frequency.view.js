@@ -87,7 +87,7 @@ function Timeline() {
 
   return (
     <>
-      <h3>Word Frequncy Timeline</h3>
+      <h3>Word Frequency Timeline</h3>
       <div className={classes.container}>
         <form className={classes.form} onSubmit={onSubmitHandler}>
           <Grid container spacing={2}>
