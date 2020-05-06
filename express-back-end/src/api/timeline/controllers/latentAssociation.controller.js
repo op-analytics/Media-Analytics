@@ -16,6 +16,15 @@ const extractVectors = concept => {
 };
 
 const GetLatentAssociation = async (req, res) => {
+  const userTokenHelper = new TokenHelper(req.user);
+
+  // Responed with an error if the user has no tokens available
+  if (!userTokenHelper.hasTokens()) {
+    res.status(429).json({
+      message: 'No tokens available to make this request',
+    });
+    return;
+  }
   const { error, value } = LatentAssociationSchema.validate(req.body, {
     abortEarly: false,
     allowUnknown: true,
@@ -69,6 +78,7 @@ const GetLatentAssociation = async (req, res) => {
       }
     }
     res.json({ data: latentAssociationData });
+    userTokenHelper.useToken();
     return;
   }
   res.status(404).json({
