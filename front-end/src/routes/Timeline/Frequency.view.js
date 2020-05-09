@@ -131,7 +131,6 @@ function Timeline() {
                     options={mediaOutlets}
                     getOptionLabel={option => option.title}
                     filterSelectedOptions
-                    required={!outlets.length}
                     onChange={(_, value) => {
                       const newOutlets = value.map(({ value: code }) => code);
                       const newOutletExists = !newOutlets.every(item =>
@@ -148,6 +147,7 @@ function Timeline() {
                         variant="standard"
                         label="Media Outlets"
                         placeholder="Add a media outlet"
+                        required={!outlets.length}
                       />
                     )}
                   />
