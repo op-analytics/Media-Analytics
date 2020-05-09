@@ -39,6 +39,8 @@ const useStyles = makeStyles(theme => ({
     flexDirection: 'column',
     overflow: 'hidden',
     width: '94%',
+    paddingTop: '2rem',
+    paddingBottom: '1rem',
   },
   label: {
     backgroundColor: 'white',

@@ -28,6 +28,7 @@ const useStyles = makeStyles(() => ({
     height: '50vh',
     flex: '0 1 auto',
     paddingBottom: '6vh',
+    paddingTop: '2rem',
   },
   chartTitle: {
     textAlign: 'center',
@@ -35,6 +36,7 @@ const useStyles = makeStyles(() => ({
       textTransform: 'uppercase',
     },
   },
+
   tooltip: {
     width: '200px',
     margin: 0,
@@ -139,6 +141,7 @@ function LineCharts({
                     <h1 className={classes.chartTitle}>{data.title}</h1>
                     <ResponsiveContainer>
                       <LineChart
+                        className={classes.chart}
                         data={data.data}
                         margin={{
                           top: 10,
