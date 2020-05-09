@@ -83,7 +83,7 @@ function Timeline() {
   const [outlets, setOutlets] = useState([]);
   const [displayOption, setDisplayOption] = useState('multiple');
   const [words, setWords] = useState([]);
-  const [formSubmitted, setFormSubmitted] = useState(false);
+  const [formSubmitted, setFormSubmitted] = useState(true);
   const loading = useSelector(state => state.timeline.loading);
   const frequencies = useSelector(state => state.timeline.frequencies);
 
@@ -107,7 +107,15 @@ function Timeline() {
                     name="words"
                     newChipKeyCodes={[13, 32]} // Make new chip on enter and space key codes
                     blurBehavior="add" // Fix android chrome bug
-                    onChange={newWords => setWords(newWords)}
+                    onChange={newWords => {
+                      const newWordExists = !newWords.every(item =>
+                        words.includes(item),
+                      );
+                      if (newWordExists && outlets.length) {
+                        setFormSubmitted(false);
+                      }
+                      setWords(newWords);
+                    }}
                     required={!words.length}
                   />
                 </FormControl>
@@ -121,9 +129,16 @@ function Timeline() {
                     getOptionLabel={option => option.title}
                     filterSelectedOptions
                     required={!outlets.length}
-                    onChange={(_, value) =>
-                      setOutlets(value.map(({ value: code }) => code))
-                    }
+                    onChange={(_, value) => {
+                      const newOutlets = value.map(({ value: code }) => code);
+                      const newOutletExists = !newOutlets.every(item =>
+                        outlets.includes(item),
+                      );
+                      if (newOutletExists && words.length) {
+                        setFormSubmitted(false);
+                      }
+                      setOutlets(newOutlets);
+                    }}
                     renderInput={params => (
                       <TextField
                         {...params}
@@ -231,6 +246,7 @@ function Timeline() {
                     type="submit"
                     className={classes.submitButton}
                     margin="0 auto"
+                    disabled={formSubmitted}
                   >
                     Submit
                   </Button>

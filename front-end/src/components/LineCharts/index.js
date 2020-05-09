@@ -1,26 +1,9 @@
-import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
+import { makeStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 import React from 'react';
-import {
-  CartesianGrid,
-  Line,
-  LineChart,
-  ResponsiveContainer,
-  Tooltip,
-  XAxis,
-  YAxis,
-  Legend,
-} from 'recharts';
-import {
-  createLegendPayload,
-  stringToColour,
-  CustomizedDot,
-  singleDataset,
-  multipleDatasets,
-  byWordDataset,
-  byOutletDataset,
-} from './utils';
+import { CartesianGrid, Legend, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
+import { byOutletDataset, byWordDataset, createLegendPayload, CustomizedDot, multipleDatasets, singleDataset, stringToColour } from './utils';
 
 const useStyles = makeStyles(() => ({
   chartContainer: {
@@ -36,7 +19,6 @@ const useStyles = makeStyles(() => ({
       textTransform: 'uppercase',
     },
   },
-
   tooltip: {
     width: '200px',
     margin: 0,
