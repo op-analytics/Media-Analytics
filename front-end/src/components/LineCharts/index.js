@@ -138,6 +138,7 @@ function LineCharts({
                           domain={[yearFrom, yearTo]}
                           dataKey={xAxisKey}
                           tickCount={Math.abs(yearTo - yearFrom)}
+                          allowDataOverflow={true} // Forces displayed data to match domain.
                         />
                         <YAxis
                           domain={

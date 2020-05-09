@@ -1,16 +1,16 @@
-import CircularProgress from '@material-ui/core/CircularProgress';
-import ChipInput from 'material-ui-chip-input';
-import FormControl from '@material-ui/core/FormControl';
 import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
 import Card from '@material-ui/core/Card';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import FormControl from '@material-ui/core/FormControl';
+import Grid from '@material-ui/core/Grid';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
-import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
-import ToggleButton from '@material-ui/lab/ToggleButton';
+import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
+import ToggleButton from '@material-ui/lab/ToggleButton';
+import ChipInput from 'material-ui-chip-input';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import LineCharts from '../../components/LineCharts';
@@ -87,10 +87,13 @@ function Timeline() {
   const loading = useSelector(state => state.timeline.loading);
   const frequencies = useSelector(state => state.timeline.frequencies);
 
+  const minYear = 1970;
+  const maxYear = 2020;
+
   const onSubmitHandler = e => {
     e.preventDefault();
     setFormSubmitted(true);
-    dispatch(getFrequencies(words, yearFrom, yearTo, outlets));
+    dispatch(getFrequencies(words, minYear, maxYear, outlets));
   };
 
   return (
@@ -157,8 +160,13 @@ function Timeline() {
                     type="number"
                     label="Year from:"
                     name="year_from"
-                    value={yearFrom}
-                    onChange={e => setYearFrom(Number(e.target.value))}
+                    InputProps={{ inputProps: { min: minYear, max: maxYear } }}
+                    onChange={e => {
+                      const newYear = Number(e.target.value);
+                      if (newYear >= minYear && newYear <= maxYear) {
+                        setYearFrom(newYear);
+                      }
+                    }}
                     required
                   />
                 </FormControl>
@@ -170,8 +178,13 @@ function Timeline() {
                     type="number"
                     label="Year to:"
                     name="year_to"
-                    value={yearTo}
-                    onChange={e => setYearTo(Number(e.target.value))}
+                    InputProps={{ inputProps: { min: minYear, max: maxYear } }}
+                    onChange={e => {
+                      const newYear = Number(e.target.value);
+                      if (newYear >= minYear && newYear <= maxYear) {
+                        setYearTo(newYear);
+                      }
+                    }}
                     required
                   />
                 </FormControl>
