@@ -31,7 +31,7 @@ const links = [
  */
 function App() {
   return (
-    <Nav title="NYT Analytics" links={links}>
+    <Nav title="Media-Analytics.org" links={links}>
       <Switch>
         <Route exact path="/" render={() => <Redirect to="/frequency" />} />
         <LoggedOutRoute path="/signup" component={Signup} />
