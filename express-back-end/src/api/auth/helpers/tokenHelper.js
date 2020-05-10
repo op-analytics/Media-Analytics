@@ -4,6 +4,7 @@ module.exports = class TokenHelper {
   constructor(user) {
     this.tokenKey = `${user._id}_tokens`;
     this.limit = user.tokenLimit;
+    this.userId = user._id;
   }
 
   async usedTokens() {
@@ -18,10 +19,10 @@ module.exports = class TokenHelper {
   async useToken() {
     const currentTokens = await this.usedTokens();
     if (currentTokens < this.limit) {
-      client.set(`${userId}_tokens`, currentTokens + 1);
+      client.set(this.tokenKey, currentTokens + 1);
       return true;
     }
-    console.log(`User ${userId}: Attempted to use tokens that did not exist`);
+    console.log(`User ${this.userId}: Attempted to use tokens that did not exist`);
     return false;
   }
 

@@ -11,7 +11,7 @@ const sortOnKey = (objects, key) => {
 const GetFrequency = async (req, res) => {
   const userTokenHelper = new TokenHelper(req.user);
 
-  // Responed with an error if the user has no tokens available
+  // Respond with an error if the user has no tokens available
   if (!userTokenHelper.hasTokens()) {
     res.status(429).json({
       message: 'No tokens available to make this request',
