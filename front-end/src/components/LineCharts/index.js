@@ -2,8 +2,26 @@ import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { CartesianGrid, Legend, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
-import { byOutletDataset, byWordDataset, createLegendPayload, CustomizedDot, multipleDatasets, singleDataset, stringToColour } from './utils';
+import {
+  CartesianGrid,
+  Legend,
+  Line,
+  LineChart,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
+} from 'recharts';
+import {
+  byOutletDataset,
+  byWordDataset,
+  createLegendPayload,
+  CustomizedDot,
+  multipleDatasets,
+  singleDataset,
+  stringToColour,
+  createTooltip,
+} from './utils';
 
 const useStyles = makeStyles(() => ({
   chartContainer: {
@@ -20,7 +38,6 @@ const useStyles = makeStyles(() => ({
     },
   },
   tooltip: {
-    width: '200px',
     margin: 0,
     lineHeight: '24px',
     border: '1px solid #f5f5f5',
@@ -157,7 +174,17 @@ function LineCharts({
                             displayOption,
                           )}
                         />
-                        <Tooltip itemSorter={item1 => item1.value * -1} />
+                        <Tooltip
+                          itemSorter={item1 => item1.value * -1}
+                          content={createTooltip(
+                            classes,
+                            words,
+                            mediaOutlets,
+                            displayOption,
+                            yAxisKey,
+                            allMediaOutlets
+                          )}
+                        />
 
                         {words.map(lineWord =>
                           mediaOutlets.map((lineMediaOutlet, index) => {

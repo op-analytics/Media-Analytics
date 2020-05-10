@@ -13,30 +13,76 @@ import Triangle from '@material-ui/icons/ChangeHistory';
  * @param {Object[]} items The items to render on the tooltip
  * @returns {Element}
  */
-export const createTooltip = (classes, items, words, mediaOutlets) => {
+export const createTooltip = (
+  classes,
+  words,
+  mediaOutlets,
+  displayOption,
+  yAxisKey,
+  allMediaOutlets,
+) => {
   const ToolTip = ({ active, payload, label }) => {
     if (active) {
       return (
         <div className={classes.tooltip}>
           <h3>{label}</h3>
-          {items.map(item => {
-            return mediaOutlets.map(mediaOutlet => {
-              return words.map(word => {
-                let payloadItem =
-                  payload[0].payload[mediaOutlet + word + item.key];
-                if (item.formatFunction)
-                  payloadItem = item.formatFunction(payloadItem);
-                if (payloadItem) {
-                  return (
-                    <p className={classes.tooltipLabel} key={item.title}>
-                      <span className={classes.tooltipLabelFirstWord}>
-                        {`${mediaOutlet} - ${word}: `}
-                      </span>
-                      {Math.round(payloadItem * 1000000) / 1000000}
-                    </p>
-                  );
-                }
-              });
+          {mediaOutlets.map(mediaOutlet => {
+            return words.map(word => {
+              let payloadItem =
+                payload[0].payload[mediaOutlet + word + yAxisKey];
+
+              const formattedWord = word
+                .toLowerCase()
+                .split(' ')
+                .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+                .join(' ');
+
+              const formattedOutlet = allMediaOutlets.find(
+                obj => obj.value === mediaOutlet,
+              ).name;
+
+              let tooltipLabel = '';
+              switch (displayOption) {
+                case 'multiple':
+                  tooltipLabel = '';
+                  break;
+                case 'byWord':
+                  tooltipLabel = formattedOutlet + ': ';
+                  break;
+                case 'byOutlet':
+                  tooltipLabel = formattedWord + ': ';
+                  break;
+                default:
+                  tooltipLabel = `${formattedOutlet} - ${formattedWord}: `;
+              }
+
+              if (payloadItem) {
+                return (
+                  <p
+                    style={{
+                      color:
+                        displayOption === 'byWord'
+                          ? stringToColour(mediaOutlet)
+                          : stringToColour(word),
+                    }}
+                    className={classes.tooltipLabel}
+                    key={word + mediaOutlets + yAxisKey}
+                  >
+                    <span
+                      style={{
+                        color:
+                          displayOption === 'byWord'
+                            ? stringToColour(mediaOutlet)
+                            : stringToColour(word),
+                      }}
+                      className={classes.tooltipLabelFirstWord}
+                    >
+                      {tooltipLabel}
+                    </span>
+                    {payloadItem}
+                  </p>
+                );
+              }
             });
           })}
         </div>
@@ -89,7 +135,7 @@ export const createLegendPayload = (
                     ? stringToColour(mediaOutlet)
                     : stringToColour(word),
                 type: icons[displayOption === 'byWord' ? 0 : index].legend,
-                value: ""
+                value: '',
               };
 
               const formattedWord = word
