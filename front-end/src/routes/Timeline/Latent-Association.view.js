@@ -133,12 +133,16 @@ function Timeline() {
   const classes = useStyles();
   const dispatch = useDispatch();
 
-  const handleDelete = chip => {
-    setConcept1(concept1.filter(word => word != chip));
+  const wordLimit = 5
+
+  const handleDelete = (chip, state, setState) => {
+    setState(state.filter(word => word != chip));
   };
 
-  const handleAddChip = chip => {
-    setConcept1([...concept1, chip]);
+  const handleAddChip = (chip, state, setState) => {
+    if (state.length < wordLimit){
+      setState([...state, chip]);
+    }
   };
 
   const onSubmitHandler = e => {
@@ -171,15 +175,15 @@ function Timeline() {
                     blurBehavior="add" // Fix android chrome bug
                     required={!concept1.length}
                     value={concept1}
-                    onAdd={chip => handleAddChip(chip)}
-                    onDelete={chip => handleDelete(chip)}
+                    onAdd={chip => handleAddChip(chip, concept1, setConcept1 )}
+                    onDelete={chip => handleDelete(chip, concept1, setConcept1)}
                     chipRenderer={({ value }, key) => (
                       <Chip
                         key={key}
                         style={{ margin: '0px 8px 8px 0px', float: 'left' }}
                         color="secondary"
                         label={value}
-                        onDelete={e => handleDelete(value)}
+                        onDelete={e => handleDelete(value, concept1, setConcept1)}
                       />
                     )}
                   />
