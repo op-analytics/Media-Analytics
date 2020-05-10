@@ -11,8 +11,8 @@ import {
   XAxis,
   YAxis,
 } from 'recharts';
-import { createTooltip } from './utils';
 import { CSVLink } from 'react-csv';
+import { createTooltip } from './utils';
 
 const useStyles = makeStyles(() => ({
   chartContainer: {
@@ -95,7 +95,7 @@ function LineCharts({
             </LineChart>
           </ResponsiveContainer>
           <Box display="flex" justifyContent="flex-end" p={3}>
-            <CSVLink data={data.data} filename={data.title + '-word-freq.csv'}>
+            <CSVLink data={data.data} filename={`${data.title}-word-freq.csv`}>
               Download as CSV
             </CSVLink>
           </Box>
