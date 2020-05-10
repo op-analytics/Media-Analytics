@@ -397,8 +397,9 @@ export function singleLatentAssociationDataset(dataset) {
   if (!dataset) {
     return null;
   }
+  console.log('dataset', dataset);
   let summaryObject = {
-    title: 'Summary',
+    title: dataset[0].media_outlet,
     data: [],
   };
   for (let association of dataset) {
@@ -410,51 +411,9 @@ export function singleLatentAssociationDataset(dataset) {
       yearRangeObject = { yearRange: association.yearRange };
       summaryObject.data.push(yearRangeObject);
     }
-
-    yearRangeObject['association' + association.media_outlet] =
-      association.association;
-    yearRangeObject['mediaOutlet' + association.media_outlet] =
-      association.media_outlet;
+    yearRangeObject['association'] = association.association;
+    yearRangeObject['mediaOutlet'] = association.media_outlet;
   }
-  summaryObject.data.sort(
-    (x, y) =>
-      Number(x.yearRange.split('-')[0]) - Number(y.yearRange.split('-')[0]),
-  );
-  return summaryObject;
-}
-
-/**
- * Structure a latent association dataset for by outlet chart display
- *
- * @param {Object} dataset Dataset to alter
- * @param {Object[Object]} Mappings of mediaoutlet abbrivations to fullnames
- * @returns {Object[]}
- */
-export function byOutletLatentAssociationDatasets(
-  dataset,
-  allMediaOutlets,
-  outlet,
-) {
-  if (!dataset) {
-    return null;
-  }
-  let summaryObject = {
-    title: '',
-    data: [],
-  };
-  let outletData = dataset.map(obj =>
-    obj.media_outlet === outlet ? obj : null,
-  );
-  for (let datum of outletData) {
-    if (datum) {
-      summaryObject.data.push({
-        yearRange: datum.yearRange,
-        ['association' + outlet]: datum.association,
-        ['mediaOutlet' + outlet]: datum.media_outlet,
-      });
-    }
-  }
-  summaryObject.title = allMediaOutlets.find(obj => obj.value === outlet).name;
   summaryObject.data.sort(
     (x, y) =>
       Number(x.yearRange.split('-')[0]) - Number(y.yearRange.split('-')[0]),

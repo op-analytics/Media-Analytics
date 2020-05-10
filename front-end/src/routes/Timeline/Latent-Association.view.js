@@ -4,9 +4,6 @@ import Chip from '@material-ui/core/Chip';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import FormControl from '@material-ui/core/FormControl';
 import Grid from '@material-ui/core/Grid';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import Select from '@material-ui/core/Select';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
@@ -24,7 +21,6 @@ import {
   YAxis,
 } from 'recharts';
 import {
-  byOutletLatentAssociationDatasets,
   createLatentAssociationLegendPayload,
   singleLatentAssociationDataset,
   stringToColour,
@@ -69,7 +65,7 @@ const useStyles = makeStyles(theme => ({
     height: '50vh',
     flex: '0 1 auto',
     paddingBottom: '6vh',
-    marginTop:'5vh',
+    marginTop: '5vh',
   },
   chartTitle: {
     textAlign: 'center',
@@ -97,7 +93,7 @@ const useStyles = makeStyles(theme => ({
   Card: {
     width: '45vw',
     minWidth: '400px',
-  }
+  },
 }));
 
 // TODO Update other functions to use title instead of name, title is required for
@@ -127,20 +123,18 @@ function Timeline() {
   const [yearFrom, setYearFrom] = useState();
   const [yearTo, setYearTo] = useState();
   const [outlets, setOutlets] = useState([]);
-  const [displayOption, setDisplayOption] = useState('single');
 
-  const displayed = [];
   const classes = useStyles();
   const dispatch = useDispatch();
 
-  const wordLimit = 5
+  const wordLimit = 5;
 
   const handleDelete = (chip, state, setState) => {
     setState(state.filter(word => word != chip));
   };
 
   const handleAddChip = (chip, state, setState) => {
-    if (state.length < wordLimit){
+    if (state.length < wordLimit) {
       setState([...state, chip]);
     }
   };
@@ -148,14 +142,6 @@ function Timeline() {
   const onSubmitHandler = e => {
     e.preventDefault();
     setFormSubmitted(true);
-    console.log(
-      'concept1, concept2, yearFrom, yearTo, outlets',
-      concept1,
-      concept2,
-      yearFrom,
-      yearTo,
-      outlets,
-    );
     dispatch(getAssociations(concept1, concept2, yearFrom, yearTo, outlets));
   };
 
@@ -175,7 +161,7 @@ function Timeline() {
                     blurBehavior="add" // Fix android chrome bug
                     required={!concept1.length}
                     value={concept1}
-                    onAdd={chip => handleAddChip(chip, concept1, setConcept1 )}
+                    onAdd={chip => handleAddChip(chip, concept1, setConcept1)}
                     onDelete={chip => handleDelete(chip, concept1, setConcept1)}
                     chipRenderer={({ value }, key) => (
                       <Chip
@@ -183,7 +169,9 @@ function Timeline() {
                         style={{ margin: '0px 8px 8px 0px', float: 'left' }}
                         color="secondary"
                         label={value}
-                        onDelete={e => handleDelete(value, concept1, setConcept1)}
+                        onDelete={_ =>
+                          handleDelete(value, concept1, setConcept1)
+                        }
                       />
                     )}
                   />
@@ -196,28 +184,41 @@ function Timeline() {
                     name="concept_2"
                     newChipKeyCodes={[13, 32]} // Make new chip on enter and space key codes
                     blurBehavior="add" // Fix android chrome bug
-                    onChange={newWords => setConcept2(newWords)}
                     required={!concept2.length}
+                    value={concept2}
+                    onAdd={chip => handleAddChip(chip, concept2, setConcept2)}
+                    onDelete={chip => handleDelete(chip, concept2, setConcept2)}
+                    chipRenderer={({ value }, key) => (
+                      <Chip
+                        key={key}
+                        style={{ margin: '0px 8px 8px 0px', float: 'left' }}
+                        color="default"
+                        label={value}
+                        onDelete={_ =>
+                          handleDelete(value, concept2, setConcept2)
+                        }
+                      />
+                    )}
                   />
                 </FormControl>
               </Grid>
               <Grid item xs={12}>
                 <FormControl className={classes.formControl}>
                   <Autocomplete
-                    multiple
-                    id="tags-standard"
+                    id="outlet"
                     options={mediaOutlets}
                     getOptionLabel={option => option.title}
                     filterSelectedOptions
                     required={!outlets.length}
-                    onChange={(_, value) =>
-                      setOutlets(value.map(({ value: code }) => code))
+                    onChange={(_, value) => {
+                      setOutlets([value.value])
+                    }
                     }
                     renderInput={params => (
                       <TextField
                         {...params}
                         variant="standard"
-                        label="Media Outlets"
+                        label="Media Outlet"
                         placeholder="Add a media outlet"
                       />
                     )}
@@ -250,28 +251,6 @@ function Timeline() {
                   />
                 </FormControl>
               </Grid>
-              <Grid item md={6} sm={6} xs={12}>
-                <FormControl className={classes.formControl}>
-                  <InputLabel
-                    className={classes.label}
-                    id="display-option-select-label"
-                  >
-                    Display Options
-                  </InputLabel>
-                  <Select
-                    labelId="display-option-select-label"
-                    id="display-option-select"
-                    value={displayOption}
-                    onChange={e => setDisplayOption(e.target.value)}
-                  >
-                    {displayOptions.map(option => (
-                      <MenuItem key={option.value} value={option.value}>
-                        {option.name}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
-              </Grid>
               {
                 // Submit button
               }
@@ -297,26 +276,13 @@ function Timeline() {
         ) : (
           formSubmitted &&
           outlets.map(outlet => {
-            let data = null;
-            switch (displayOption) {
-              case 'byOutlet':
-                data = byOutletLatentAssociationDatasets(
-                  associations,
-                  mediaOutlets,
-                  outlet,
-                );
-                break;
-              case 'single':
-                data = singleLatentAssociationDataset(associations);
-                break;
-              default:
-                data = singleLatentAssociationDataset(associations);
-            }
-            if (data && !displayed.includes(data.title)) {
-              displayed.push(data.title);
+            let data = singleLatentAssociationDataset(associations);
+            if (data) {
               return (
                 <div className={classes.chartContainer}>
-                  <h1 className={classes.chartTitle}>{data.title}</h1>
+                  <h1 className={classes.chartTitle}>
+                    {mediaOutlets.find(obj => obj.value === outlet).name}
+                  </h1>
                   <ResponsiveContainer>
                     <LineChart
                       data={data.data}
@@ -338,24 +304,19 @@ function Timeline() {
                         )}
                       />
                       <Tooltip />
-                      {outlets.map(outlet => (
-                        <Line
-                          type="linear"
-                          name={
-                            mediaOutlets.find(obj => obj.value === outlet).name
-                          }
-                          dataKey={'association' + outlet}
-                          stroke={stringToColour(outlet)}
-                          fill={stringToColour(outlet)}
-                          strokeWidth={3}
-                          dot={{ strokeWidth: 5 }}
-                          activeDot={{
-                            stroke: stringToColour(outlet),
-                            strokeWidth: 7,
-                            border: 'white',
-                          }}
-                        />
-                      ))}
+                      <Line
+                        type="linear"
+                        dataKey={'association'}
+                        stroke={stringToColour(outlet)}
+                        fill={stringToColour(outlet)}
+                        strokeWidth={3}
+                        dot={{ strokeWidth: 5 }}
+                        activeDot={{
+                          stroke: stringToColour(outlet),
+                          strokeWidth: 7,
+                          border: 'white',
+                        }}
+                      />
                     </LineChart>
                   </ResponsiveContainer>
                 </div>
