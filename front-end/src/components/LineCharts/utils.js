@@ -73,25 +73,48 @@ export const createLegendPayload = (
   displayOption,
 ) => {
   const legendItems = [];
-  for (let yearData of data.data) {
-    for (let [index, mediaOutlet] of mediaOutlets.entries()) {
-      for (let word of words) {
-        if (Object.keys(yearData).includes(mediaOutlet + word + YAxisKey)) {
-          if (
-            legendItems.findIndex(item => item.id === mediaOutlet + word) === -1
-          ) {
-            legendItems.push({
-              id: mediaOutlet + word,
-              value:
-                allMediaOutlets.find(obj => obj.value === mediaOutlet).name +
-                ' - ' +
-                word,
-              color:
-                displayOption === 'byWord'
-                  ? stringToColour(mediaOutlet)
-                  : stringToColour(word),
-              type: icons[displayOption === 'byWord' ? 0 : index].legend,
-            });
+  if (displayOption !== 'multiple') {
+    for (let yearData of data.data) {
+      for (let [index, mediaOutlet] of mediaOutlets.entries()) {
+        for (let word of words) {
+          if (Object.keys(yearData).includes(mediaOutlet + word + YAxisKey)) {
+            if (
+              legendItems.findIndex(item => item.id === mediaOutlet + word) ===
+              -1
+            ) {
+              const legendItem = {
+                id: mediaOutlet + word,
+                color:
+                  displayOption === 'byWord'
+                    ? stringToColour(mediaOutlet)
+                    : stringToColour(word),
+                type: icons[displayOption === 'byWord' ? 0 : index].legend,
+                value: ""
+              };
+
+              const formattedWord = word
+                .toLowerCase()
+                .split(' ')
+                .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+                .join(' ');
+
+              const formattedOutlet = allMediaOutlets.find(
+                obj => obj.value === mediaOutlet,
+              ).name;
+
+              switch (displayOption) {
+                case 'byOutlet':
+                  legendItem.value = formattedWord;
+                  break;
+                case 'byWord':
+                  legendItem.value = formattedOutlet;
+                  break;
+                default:
+                  legendItem.value = formattedOutlet + ' - ' + formattedWord;
+              }
+
+              legendItems.push(legendItem);
+            }
           }
         }
       }
@@ -325,8 +348,8 @@ export function byWordDataset(dataset) {
  * @returns {Object[]}
  */
 export function singleLatentAssociationDataset(dataset) {
-  if(!dataset){
-    return null
+  if (!dataset) {
+    return null;
   }
   let summaryObject = {
     title: 'Summary',
@@ -366,8 +389,8 @@ export function byOutletLatentAssociationDatasets(
   allMediaOutlets,
   outlet,
 ) {
-  if(!dataset){
-    return null
+  if (!dataset) {
+    return null;
   }
   let summaryObject = {
     title: '',
@@ -393,7 +416,6 @@ export function byOutletLatentAssociationDatasets(
   return summaryObject;
 }
 
-
 /**
  * A legend item factory for creating latent association legend items dynamically
  *
@@ -409,15 +431,12 @@ export const createLatentAssociationLegendPayload = (
   const legendItems = [];
   for (let yearData of data.data) {
     for (let mediaOutlet of mediaOutlets) {
-      if (Object.keys(yearData).includes("association"+mediaOutlet)) {
-        if (
-          legendItems.findIndex(item => item.id === mediaOutlet) === -1
-        ) {
+      if (Object.keys(yearData).includes('association' + mediaOutlet)) {
+        if (legendItems.findIndex(item => item.id === mediaOutlet) === -1) {
           legendItems.push({
             id: mediaOutlet,
-            value:
-              allMediaOutlets.find(obj => obj.value === mediaOutlet).name,
-            color: stringToColour(mediaOutlet)
+            value: allMediaOutlets.find(obj => obj.value === mediaOutlet).name,
+            color: stringToColour(mediaOutlet),
           });
         }
       }
