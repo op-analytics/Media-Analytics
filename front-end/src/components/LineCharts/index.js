@@ -4,15 +4,33 @@ import { makeStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { CSVLink } from 'react-csv';
-import { CartesianGrid, Legend, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
-import { byOutletDataset, byWordDataset, createLegendPayload, createTooltip, CustomizedDot, multipleDatasets, singleDataset, stringToColour } from './utils';
+import {
+  CartesianGrid,
+  Legend,
+  Line,
+  LineChart,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
+} from 'recharts';
+import {
+  byOutletDataset,
+  byWordDataset,
+  createLegendPayload,
+  createTooltip,
+  CustomizedDot,
+  multipleDatasets,
+  singleDataset,
+  stringToColour,
+} from './utils';
 
 const useStyles = makeStyles(() => ({
   chartContainer: {
     width: '100%',
     height: '50vh',
     flex: '0 1 auto',
-    paddingBottom: '12vh',
+    paddingBottom: '6vh',
     paddingTop: '2rem',
   },
   chartTitle: {
@@ -166,7 +184,7 @@ function LineCharts({
                             mediaOutlets,
                             displayOption,
                             yAxisKey,
-                            allMediaOutlets
+                            allMediaOutlets,
                           )}
                         />
 
@@ -216,6 +234,14 @@ function LineCharts({
                       </LineChart>
                     </ResponsiveContainer>
                   </div>
+                  <Box display="flex" justifyContent="center">
+                    <CSVLink
+                      data={data.data}
+                      filename={`${data.title}-word-freq.csv`}
+                    >
+                      Download as CSV
+                    </CSVLink>
+                  </Box>
                 </Grid>
               );
             }
@@ -223,11 +249,6 @@ function LineCharts({
           })}
         </Grid>
       ))}
-      <Box display="flex" justifyContent="flex-end" p={3}>
-          <CSVLink data={data.data} filename={`${data.title}-word-freq.csv`}>
-            Download as CSV
-          </CSVLink>
-        </Box>
     </Grid>
   );
 }
