@@ -137,7 +137,7 @@ function LineCharts({
                   }
                 >
                   <div className={classes.chartContainer} key={data.title}>
-                    <h1 className={classes.chartTitle}>{data.title}</h1>
+                    <h3 className={classes.chartTitle}>{data.title}</h3>
                     <ResponsiveContainer>
                       <LineChart
                         className={classes.chart}
