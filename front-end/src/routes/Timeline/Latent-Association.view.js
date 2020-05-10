@@ -280,9 +280,9 @@ function Timeline() {
             if (data) {
               return (
                 <div className={classes.chartContainer}>
-                  <h1 className={classes.chartTitle}>
+                  <h3 className={classes.chartTitle}>
                     {mediaOutlets.find(obj => obj.value === outlet).name}
-                  </h1>
+                  </h3>
                   <ResponsiveContainer>
                     <LineChart
                       data={data.data}
