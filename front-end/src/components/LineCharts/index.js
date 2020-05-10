@@ -1,34 +1,18 @@
+import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 import React from 'react';
-import {
-  CartesianGrid,
-  Legend,
-  Line,
-  LineChart,
-  ResponsiveContainer,
-  Tooltip,
-  XAxis,
-  YAxis,
-} from 'recharts';
-import {
-  byOutletDataset,
-  byWordDataset,
-  createLegendPayload,
-  CustomizedDot,
-  multipleDatasets,
-  singleDataset,
-  stringToColour,
-  createTooltip,
-} from './utils';
+import { CSVLink } from 'react-csv';
+import { CartesianGrid, Legend, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
+import { byOutletDataset, byWordDataset, createLegendPayload, createTooltip, CustomizedDot, multipleDatasets, singleDataset, stringToColour } from './utils';
 
 const useStyles = makeStyles(() => ({
   chartContainer: {
     width: '100%',
     height: '50vh',
     flex: '0 1 auto',
-    paddingBottom: '6vh',
+    paddingBottom: '12vh',
     paddingTop: '2rem',
   },
   chartTitle: {
@@ -239,6 +223,11 @@ function LineCharts({
           })}
         </Grid>
       ))}
+      <Box display="flex" justifyContent="flex-end" p={3}>
+          <CSVLink data={data.data} filename={`${data.title}-word-freq.csv`}>
+            Download as CSV
+          </CSVLink>
+        </Box>
     </Grid>
   );
 }
