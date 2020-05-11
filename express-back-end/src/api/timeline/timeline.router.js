@@ -41,7 +41,7 @@ router.post(
   '/frequency',
   [ensureLoggedIn, validateBody(FrequencySchema)],
   async (req, res) => {
-    const { words, year_from, year_to } = req;
+    const { words, year_from: yearFrom, year_to: yearTo } = req;
     words = req.words.map(word => word.trim().toLowerCase());
 
     const frequencyData = await FrequencyController.GetFrequency(

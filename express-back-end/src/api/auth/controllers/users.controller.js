@@ -1,13 +1,7 @@
-const { SignupSchema, LoginSchema } = require('../schemas');
 const User = require('../models/user.model');
 const config = require('../../../config');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-
-const createValidationError = (message, type = ['general']) => ({
-  type,
-  message,
-});
 
 function TokenizeUser(user) {
   return jwt.sign(
@@ -24,24 +18,24 @@ function TokenizeUser(user) {
 }
 
 async function GetUser(email) {
-  return await User.findOne({ email: UserData.email }).exec();
+  return User.findOne({ email }).exec();
 }
 
 async function EmailTaken(email) {
-  return await User.findOne({ email });
+  return Boolean(await GetUser(email));
 }
 
 async function hashPassword(password) {
   const salt = await bcrypt.genSalt(10);
-  return await bcrypt.hash(UserData.password, salt);
+  return bcrypt.hash(password, salt);
 }
 
 async function PasswordsMatch(password1, password2) {
-  return await bcrypt.compare(password1, password2);
+  return bcrypt.compare(password1, password2);
 }
 
 async function Signup(name, email, password) {
-  const hashedPassword = await hashedPassword();
+  const hashedPassword = await hashPassword(password);
 
   const user = new User({
     name,
@@ -55,7 +49,7 @@ async function Signup(name, email, password) {
   return TokenizeUser(result);
 }
 
-module.exports = {
+export default {
   Signup,
   GetUser,
   PasswordsMatch,

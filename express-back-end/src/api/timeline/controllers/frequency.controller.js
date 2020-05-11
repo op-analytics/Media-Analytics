@@ -1,5 +1,4 @@
 const Frequency = require('../models/frequency.model');
-const { FrequencySchema } = require('../schemas');
 
 function sortOnKey(objects, key) {
   for (object of objects) {

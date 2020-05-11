@@ -1,8 +1,7 @@
 const LatentAssociation = require('../models/latentAssociation.model');
-const { LatentAssociationSchema } = require('../schemas');
 const math = require('mathjs');
 
-function extractVectors {
+function extractVectors(concept) {
   let vectorData = {};
   for (let data of concept) {
     const vectorDataKey = data.year_from + '-' + data.year_to;
@@ -13,14 +12,14 @@ function extractVectors {
     }
   }
   return vectorData;
-};
+}
 
 async function getConceptData(concept, yearFrom, yearTo) {
-  return await LatentAssociation.find({
+  return LatentAssociation.find({
     word: concept,
     year_from: { $gte: yearFrom - 5 },
     year_to: { $lte: yearTo },
-  });
+  }).exec();
 }
 
 function CleanConcept(concept) {
@@ -60,8 +59,6 @@ function ShapeData(concept1Data, concept2Data) {
 }
 
 async function GetLatentAssociation(concept1, concept2, yearFrom, yearTo) {
-  const cleanedConcept1 = value.concept_1.map(word => word.trim().toLowerCase());
-
   const concept1Data = getConceptData(concept1, yearFrom, yearTo);
   const concept2Data = getConceptData(concept2, yearFrom, yearTo);
 

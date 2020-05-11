@@ -1,5 +1,4 @@
 const { SignupSchema, LoginSchema } = require('./schemas');
-const User = require('../models/user.model');
 const express = require('express');
 const router = express.Router();
 const UserController = require('./controllers/users.controller');
@@ -40,13 +39,13 @@ router.post('/signup', validateBody(SignupSchema), async (req, res) => {
 });
 
 router.post('/login', validateBody(LoginSchema), (req, res) => {
-  const { email, name, password } = req;
+  const { email, password } = req;
   email = email.toLowerCase();
 
   // Try get user with the given email
   const user = UserController.GetUser(UserData.email);
 
-  if (!user || !UserController.PasswordsMatch(req.password, user.password)) {
+  if (!user || !UserController.PasswordsMatch(password, user.password)) {
     return res.status(400).json({
       errors: [createValidationError('Incorrect information')],
     });
