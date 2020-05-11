@@ -39,7 +39,23 @@ router.post('/signup', validateBody(SignupSchema), async (req, res) => {
   }
 });
 
-router.post('/login', UserController.Login);
+router.post('/login', validateBody(LoginSchema), (req, res) => {
+  const { email, name, password } = req;
+  email = email.toLowerCase();
+
+  // Try get user with the given email
+  const user = UserController.GetUser(UserData.email);
+
+  if (!user || !UserController.PasswordsMatch(req.password, user.password)) {
+    return res.status(400).json({
+      errors: [createValidationError('Incorrect information')],
+    });
+  }
+
+  return {
+    token: UserController.TokeniseUser(user),
+  };
+});
 
 router.get('/user', ensureLoggedIn, (req, res) => {
   res.json({

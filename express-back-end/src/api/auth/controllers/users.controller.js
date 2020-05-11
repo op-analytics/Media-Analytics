@@ -9,7 +9,7 @@ const createValidationError = (message, type = ['general']) => ({
   message,
 });
 
-function tokenizeUser(user) {
+function TokenizeUser(user) {
   return jwt.sign(
     {
       _id: user._id,
@@ -23,6 +23,10 @@ function tokenizeUser(user) {
   );
 }
 
+async function GetUser(email) {
+  return await User.findOne({ email: UserData.email }).exec();
+}
+
 async function EmailTaken(email) {
   return await User.findOne({ email });
 }
@@ -30,6 +34,10 @@ async function EmailTaken(email) {
 async function hashPassword(password) {
   const salt = await bcrypt.genSalt(10);
   return await bcrypt.hash(UserData.password, salt);
+}
+
+async function PasswordsMatch(password1, password2) {
+  return await bcrypt.compare(password1, password2);
 }
 
 async function Signup(name, email, password) {
@@ -44,54 +52,12 @@ async function Signup(name, email, password) {
   const result = await user.save();
 
   // Tokenize data
-  return tokenizeUser(result);
-}
-
-async function Login(req, res) {
-  // Validate against schema
-  const { error, value: UserData } = LoginSchema.validate(req.body, {
-    abortEarly: false,
-    allowUnknown: true,
-  });
-  if (error) {
-    res.status(422).json({
-      errors: error.details.map(error =>
-        createValidationError(error.message, error.path),
-      ),
-    });
-    return;
-  }
-  UserData.email = UserData.email.toLowerCase();
-
-  // Try get user with email
-  const user = await User.findOne({ email: UserData.email });
-  if (!user) {
-    res.status(400).json({
-      errors: [createValidationError('Incorrect information')],
-    });
-    return;
-  }
-
-  // Check passwords match
-  const validPass = await bcrypt.compare(UserData.password, user.password);
-  if (!validPass) {
-    res.status(400).json({
-      errors: [createValidationError('Incorrect information')],
-    });
-    return;
-  }
-
-  //tokenise users data and return it
-  const token = tokenizeUser(user);
-
-  res.json({
-    token,
-  });
+  return TokenizeUser(result);
 }
 
 module.exports = {
   Signup,
-  Login,
-  GetUserData,
-  CheckEmailTaken: EmailTaken,
+  GetUser,
+  PasswordsMatch,
+  EmailTaken,
 };
