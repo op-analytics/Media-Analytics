@@ -56,9 +56,19 @@ export default function reducer(state = initialState, action = {}) {
 }
 
 // Action Creators
-export const getFrequencies = (words, yearFrom, yearTo) => ({
+export const getFrequencies = (
+  words,
+  yearFrom,
+  yearTo,
+  mediaOutlets,
+) => ({
   type: GET_FREQUENCY,
-  payload: { words, year_from: yearFrom, year_to: yearTo },
+  payload: {
+    words,
+    year_from: yearFrom,
+    year_to: yearTo,
+    media_outlets: mediaOutlets,
+  },
 });
 
 export const getFrequencySuccess = frequencies => ({
@@ -71,13 +81,20 @@ export const getFrequencyFailure = error => ({
   payload: error,
 });
 
-export const getAssociations = (concept1, concept2, yearFrom, yearTo) => ({
+export const getAssociations = (
+  concept1,
+  concept2,
+  yearFrom,
+  yearTo,
+  mediaOutlets,
+) => ({
   type: GET_ASSOCIATION,
   payload: {
     concept_1: concept1,
     concept_2: concept2,
     year_from: yearFrom,
     year_to: yearTo,
+    media_outlets: mediaOutlets,
   },
 });
 

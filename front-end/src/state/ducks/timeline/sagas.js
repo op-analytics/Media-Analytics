@@ -19,11 +19,7 @@ function* fetchFrequencies(action) {
       `${API_URL}/timeline/frequency`,
       action.payload,
     );
-    const cleanedData = response.data.data.map(dataset => ({
-      title: dataset.word,
-      data: dataset.data,
-    }));
-    yield put(getFrequencySuccess(cleanedData));
+    yield put(getFrequencySuccess(response.data.data));
   } catch (err) {
     yield put(getFrequencyFailure(err));
   }

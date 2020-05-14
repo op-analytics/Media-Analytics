@@ -32,19 +32,18 @@ module.exports = (function() {
       });
       return;
     }
+<<<<<<< HEAD
     latentAssociationData = [];
     for (let media_outlet of value.media_outlets) {
       // Query database.
-      const cleanedConcept1 = value.concept_1.map((word)=>word.trim().toLowerCase());
       const concept1Data = await LatentAssociation.find({
-        word: cleanedConcept1,
+        word: value.concept_1,
         year_from: { $gte: value.year_from - 5 },
         year_to: { $lte: value.year_to },
         media_outlet: media_outlet,
       });
-      const cleanedConcept2 = value.concept_2.map((word)=>word.trim().toLowerCase());
       const concept2Data = await LatentAssociation.find({
-        word: cleanedConcept2,
+        word: value.concept_2,
         year_from: { $gte: value.year_from - 5 },
         year_to: { $lte: value.year_to },
         media_outlet: media_outlet,
@@ -78,6 +77,48 @@ module.exports = (function() {
               media_outlet: media_outlet,
             });
           }
+=======
+
+    const cleanedConcept1 = value.concept_1.map((word)=>word.trim().toLowerCase());
+    const concept1Data = await LatentAssociation.find({
+      word: cleanedConcept1,
+      year_from: { $gte: value.year_from - 5 },
+      year_to: { $lte: value.year_to },
+    });
+
+    const cleanedConcept2 = value.concept_2.map((word)=>word.trim().toLowerCase());
+    const concept2Data = await LatentAssociation.find({
+      word: cleanedConcept2,
+      year_from: { $gte: value.year_from - 5 },
+      year_to: { $lte: value.year_to },
+    });
+
+    if (concept1Data.length > 0 && concept2Data.length > 0) {
+      latentAssociationData = [];
+      concept1Vectors = extractVectors(concept1Data);
+      concept2Vectors = extractVectors(concept2Data);
+      let yearRanges = [];
+      if (
+        Object.keys(concept1Vectors).length > Object.keys(concept2Vectors).length
+      ) {
+        yearRanges = Object.keys(concept1Vectors);
+      } else {
+        yearRanges = Object.keys(concept2Vectors);
+      }
+      yearRanges.sort(x => x.split('-')[0]);
+
+      for (let yearRange of yearRanges) {
+        yearRangeVectors1 = concept1Vectors[yearRange];
+        yearRangeVectors2 = concept2Vectors[yearRange];
+        if (yearRangeVectors1 && yearRangeVectors2) {
+          latentAssociationData.push({
+            yearRange: yearRange,
+            association: math.dot(
+              math.mean(yearRangeVectors1, 0),
+              math.mean(yearRangeVectors2, 0),
+            ),
+          });
+>>>>>>> origin/227-request-data-preprocessing
         }
       }
     }

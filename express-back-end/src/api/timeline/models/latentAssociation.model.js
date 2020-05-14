@@ -5,16 +5,20 @@ const Latent_Association = new Schema({
     type: String,
     required: true,
   },
-  vectors: {
-    type: Array,
-    required: true,
-  },
   year_from: {
     type: Number,
     required: true,
   },
   year_to: {
     type: Number,
+    required: true,
+  },
+  media_outlet:{
+    type: String,
+    required: true,
+  },
+  vectors: {
+    type: Array,
     required: true,
   },
 });
