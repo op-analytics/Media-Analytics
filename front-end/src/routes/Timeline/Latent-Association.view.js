@@ -157,7 +157,7 @@ function Timeline() {
                   <ChipInput
                     label="Concept One:"
                     name="concept_1"
-                    newChipKeyCodes={[13, 32]} // Make new chip on enter and space key codes
+                    newChipKeyCodes={[13, 32, 188]} // Make new chip on enter, space or comma key codes
                     blurBehavior="add" // Fix android chrome bug
                     required={!concept1.length}
                     value={concept1}
@@ -182,7 +182,7 @@ function Timeline() {
                   <ChipInput
                     label="Concept Two:"
                     name="concept_2"
-                    newChipKeyCodes={[13, 32]} // Make new chip on enter and space key codes
+                    newChipKeyCodes={[13, 32, 188]} // Make new chip on enter, space or comma key codes
                     blurBehavior="add" // Fix android chrome bug
                     required={!concept2.length}
                     value={concept2}

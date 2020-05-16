@@ -108,7 +108,7 @@ function Timeline() {
                   <ChipInput
                     label="Words:"
                     name="words"
-                    newChipKeyCodes={[13, 32]} // Make new chip on enter and space key codes
+                    newChipKeyCodes={[13, 32, 188]} // Make new chip on enter, space or comma key codes
                     blurBehavior="add" // Fix android chrome bug
                     onChange={newWords => {
                       const newWordExists = !newWords.every(item =>
