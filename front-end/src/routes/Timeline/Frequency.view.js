@@ -78,7 +78,7 @@ function Timeline() {
   const dispatch = useDispatch();
   const [yearFrom, setYearFrom] = useState('');
   const [yearTo, setYearTo] = useState('');
-  const [yAxisKey, setYAxisKey] = useState('freq');
+  const [yAxisMetric, setYAxisMetric] = useState('freq');
   const [absolute, setAbsolute] = useState(false);
   const [outlets, setOutlets] = useState([]);
   const [displayOption, setDisplayOption] = useState('multiple');
@@ -196,15 +196,15 @@ function Timeline() {
                 <FormControl className={classes.formControl}>
                   <InputLabel
                     className={classes.label}
-                    id="y-axis-key-select-label"
+                    id="y-axis-metric-select-label"
                   >
-                    Y-Axis Key
+                    Y-Axis Metric
                   </InputLabel>
                   <Select
-                    labelId="y-axis-key-select-label"
-                    id="y-axis-key-select"
-                    value={yAxisKey}
-                    onChange={e => setYAxisKey(e.target.value)}
+                    labelId="y-axis-metric-select-label"
+                    id="y-axis-metric-select"
+                    value={yAxisMetric}
+                    onChange={e => setYAxisMetric(e.target.value)}
                   >
                     <MenuItem value="freq">Frequency</MenuItem>
                     <MenuItem value="count">Count</MenuItem>
@@ -276,7 +276,7 @@ function Timeline() {
             <LineCharts
               datasets={frequencies}
               xAxisKey="year"
-              yAxisKey={yAxisKey}
+              yAxisKey={yAxisMetric}
               displayAbsolute={absolute}
               tooltipItems={[{ key: 'rank', title: 'rank' }]}
               words={words}
