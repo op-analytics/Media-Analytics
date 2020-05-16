@@ -1,9 +1,11 @@
 const express = require('express');
 
 const router = express.Router();
-const LatentAssociationController = require('./controllers/latentAssociation.controller');
-const FrequencyController = require('./controllers/frequency.controller');
-const MainController = require('./controllers/main.controller');
+const {
+  LatentAssociationController,
+  FrequencyController,
+  MainController,
+} = require('./controllers/');
 const { ensureLoggedIn } = require('../auth/middlewares');
 const { validateBody } = require('../middlewares/');
 const { FrequencySchema, LatentAssociationSchema } = require('./schemas');

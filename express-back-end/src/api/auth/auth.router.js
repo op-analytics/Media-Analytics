@@ -2,16 +2,16 @@ const express = require('express');
 const { SignupSchema, LoginSchema } = require('./schemas');
 
 const router = express.Router();
-const UserController = require('./controllers/auth.controller');
+const { AuthController } = require('./controllers/');
 const { ensureLoggedIn } = require('./middlewares');
 const { validateBody } = require('../middlewares');
 
-router.get('/', UserController.home);
+router.get('/', AuthController.home);
 
-router.post('/signup', validateBody(SignupSchema), UserController.signup);
+router.post('/signup', validateBody(SignupSchema), AuthController.signup);
 
-router.post('/login', validateBody(LoginSchema), UserController.login);
+router.post('/login', validateBody(LoginSchema), AuthController.login);
 
-router.get('/user', ensureLoggedIn, UserController.getUser);
+router.get('/user', ensureLoggedIn, AuthController.getUser);
 
 module.exports = router;
