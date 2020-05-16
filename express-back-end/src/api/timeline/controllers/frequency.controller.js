@@ -1,44 +1,15 @@
-const Frequency = require('../models/frequency.model');
+const Frequency = require('../lib/frequency');
 
-function sortOnKey(objects, key) {
-  for (object of objects) {
-    object.data.sort((x, y) => x[key] - y[key]);
-  }
-}
+exports.getData = async (req, res) => {
+  const { words: dirtyWords, year_from: yearFrom, year_to: yearTo } = req.body;
+  const words = dirtyWords.map(word => word.trim().toLowerCase());
 
-function shapeData(dbData) {
-  let frequencyData = [];
-  for (frequencyDataObj of dbData) {
-    let word = frequencyDataObj.word;
-    let dataIndex = frequencyData.findIndex(fd => fd.word == word);
-    let wordData = {
-      year: frequencyDataObj.year,
-      rank: frequencyDataObj.rank,
-      count: frequencyDataObj.count,
-      freq: frequencyDataObj.freq,
-    };
-    if (dataIndex == -1) {
-      frequencyData.push({ word: word, data: [wordData] });
-    } else {
-      // If the word already exists in frequency data,
-      // just append the current year's data.
-      frequencyData[dataIndex].data.push(wordData);
-    }
-  }
-  return frequencyData;
-}
+  const frequencyData = await Frequency.GetFrequency(words, yearFrom, yearTo);
 
-async function GetFrequency(words, yearFrom, yearTo) {
-  const frequencyDataDB = await Frequency.find({
-    word: words,
-    year: { $gte: yearFrom, $lte: yearTo },
+  if (frequencyData.length > 0) return res.json({ data: frequencyData });
+
+  return res.status(404).json({
+    error: 'No frequency data was found for given parameters',
   });
-  const frequencyData = shapeData(frequencyDataDB);
-
-  sortOnKey(frequencyData, 'year');
-  return frequencyData;
-}
-
-module.exports = {
-  GetFrequency,
 };
+

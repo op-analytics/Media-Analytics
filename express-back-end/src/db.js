@@ -11,13 +11,14 @@ module.exports = {
         useFindAndModify: false,
       });
 
-      //eslint-disable-next-line
+      // eslint-disable-next-line
       console.log(`MongoDb Connected`);
       return conn;
     } catch (err) {
-      //eslint-disable-next-line
+      // eslint-disable-next-line
       console.log('Error to connect on mongo', err);
+      throw err;
     }
   },
-  disconnect: async () => await mongoose.connection.close(),
+  disconnect: async () => mongoose.connection.close(),
 };

@@ -13,7 +13,7 @@ const validateBody = schema => {
   // Return a function that:
   return (req, res, next) => {
     // Validates using the given schema and options
-    const { error, value: UserData } = schema.validate(req.body, {
+    const { error } = schema.validate(req.body, {
       abortEarly: false,
       allowUnknown: true,
     });
@@ -21,9 +21,7 @@ const validateBody = schema => {
     // If there are errors we should respond with them
     if (error)
       res.status(422).json({
-        errors: error.details.map(error =>
-          createValidationError(error.message, error.path),
-        ),
+        errors: error.details.map(e => createValidationError(e.message, e.path)),
       });
     // Else call next
     else next();

@@ -1,4 +1,5 @@
 const express = require('express');
+
 const router = express.Router();
 const timeline = require('./timeline/timeline.router');
 const auth = require('./auth/auth.router');

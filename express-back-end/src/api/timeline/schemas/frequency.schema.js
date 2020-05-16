@@ -1,4 +1,5 @@
 const Joi = require('@hapi/joi');
+
 module.exports = Joi.object({
   words: Joi.array()
     .items(Joi.string())
