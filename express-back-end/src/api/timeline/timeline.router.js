@@ -5,7 +5,7 @@ const LatentAssociationController = require('./controllers/latentAssociation.con
 const FrequencyController = require('./controllers/frequency.controller');
 const MainController = require('./controllers/main.controller');
 const { ensureLoggedIn } = require('../auth/middlewares');
-const { validateBody } = require('../middlewares/validation');
+const { validateBody } = require('../middlewares/');
 const { FrequencySchema, LatentAssociationSchema } = require('./schemas');
 
 router.get('/', MainController.home);

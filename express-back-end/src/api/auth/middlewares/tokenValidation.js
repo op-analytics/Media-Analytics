@@ -26,8 +26,4 @@ function checkTokenSetUser(req, res, next) {
   next();
 }
 
-module.exports = {
-  checkTokenSetUser,
-  getTokenFromRequest,
-  getTokenFromBearer,
-};
+module.exports = checkTokenSetUser;

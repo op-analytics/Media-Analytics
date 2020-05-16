@@ -28,6 +28,4 @@ const validateBody = schema => {
   };
 };
 
-module.exports = {
-  validateBody,
-};
+module.exports = validateBody;

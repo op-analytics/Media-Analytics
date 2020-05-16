@@ -1,7 +1,7 @@
-const auth = require('./auth');
+const ensureLoggedIn = require('./ensureLoggedIn');
 const tokenValidation = require('./tokenValidation');
 
 module.exports = {
-  ...auth,
-  ...tokenValidation,
+  ensureLoggedIn,
+  tokenValidation,
 };

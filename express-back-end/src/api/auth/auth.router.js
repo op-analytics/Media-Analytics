@@ -4,7 +4,7 @@ const { SignupSchema, LoginSchema } = require('./schemas');
 const router = express.Router();
 const UserController = require('./controllers/auth.controller');
 const { ensureLoggedIn } = require('./middlewares');
-const { validateBody } = require('../middlewares/validation');
+const { validateBody } = require('../middlewares');
 
 router.get('/', UserController.home);
 
