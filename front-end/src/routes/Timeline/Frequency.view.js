@@ -313,8 +313,8 @@ function Timeline() {
               words={words}
               mediaOutlets={outlets}
               allMediaOutlets={mediaOutlets}
-              yearFrom={yearFrom}
-              yearTo={yearTo}
+              yearFrom={Number(yearFrom)}
+              yearTo={Number(yearTo)}
               displayOption={displayOption}
             />
           )
