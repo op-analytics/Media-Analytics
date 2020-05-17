@@ -1,6 +1,6 @@
 const { Schema, model } = require('mongoose');
 
-const Latent_Association = new Schema({
+const LatentAssociation = new Schema({
   word: {
     type: String,
     required: true,
@@ -19,6 +19,6 @@ const Latent_Association = new Schema({
   },
 });
 
-Latent_Association.set('collection', 'latent_association');
+LatentAssociation.set('collection', 'latent_association');
 
-module.exports = model('latent_association', Latent_Association);
+module.exports = model('latent_association', LatentAssociation);
