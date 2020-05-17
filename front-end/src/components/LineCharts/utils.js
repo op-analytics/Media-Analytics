@@ -293,10 +293,9 @@ export function byOutletDataset(dataset, allMediaOutlets) {
   let result = [];
   dataset.forEach(wordDataset => {
     // Title and data to be appended to result
-    let mediaOutletData = [];
     for (let mediaOutlet in wordDataset.data) {
       let yearObject;
-      mediaOutletData = [];
+      let mediaOutletData = [];
       wordDataset.data[mediaOutlet].forEach(wordData => {
         // Get a reference to the current media outlet data if it already exists.
         let mediaOutletInResult = result.find(

@@ -262,8 +262,8 @@ LineCharts.propTypes = {
   /** The datasets to render line charts for */
   datasets: PropTypes.arrayOf(
     PropTypes.shape({
-      title: PropTypes.string.isRequired,
-      data: PropTypes.arrayOf(PropTypes.shape({}).isRequired).isRequired,
+      word: PropTypes.string.isRequired,
+      data: PropTypes.shape({}.isRequired).isRequired,
     }),
   ).isRequired,
   /** The key for the x axis of the datasets */
