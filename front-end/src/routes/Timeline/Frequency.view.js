@@ -150,6 +150,9 @@ function Timeline() {
                     options={mediaOutlets}
                     getOptionLabel={option => option.title}
                     filterSelectedOptions
+                    filterOptions={(options, _) =>
+                      outlets.length < parameterLimit ? options : []
+                    }
                     onChange={(_, value) => {
                       const newOutlets = value.map(({ value: code }) => code);
                       const newOutletExists = !newOutlets.every(item =>
@@ -167,6 +170,11 @@ function Timeline() {
                         label="Media Outlets"
                         placeholder="Add a media outlet"
                         required={!outlets.length}
+                        helperText={
+                          outlets.length == parameterLimit
+                            ? `There is a ${parameterLimit} outlet limit per request`
+                            : ''
+                        }
                       />
                     )}
                   />
