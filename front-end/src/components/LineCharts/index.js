@@ -134,9 +134,10 @@ function LineCharts({
                 <Grid
                   key={word + mediaOutlet}
                   item
-                  xs={
+                  lg={
                     displayOption === 'multiple' ? 12 / mediaOutlets.length : 12
                   }
+                  xs={12}
                 >
                   <div className={classes.chartContainer} key={data.title}>
                     <h3 className={classes.chartTitle}>{data.title}</h3>
