@@ -1,9 +1,7 @@
-import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, ThemeProvider } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { CSVLink } from 'react-csv';
 import {
   CartesianGrid,
   Legend,
@@ -114,6 +112,12 @@ function LineCharts({
       });
     });
   }
+
+  let dataArray = processedData.map( val =>  {
+    return val.data;
+  });
+  let csvData = [].concat.apply([], dataArray);
+  console.log(csvData);
 
   return (
     <Grid container spacing={1} justify="center">
@@ -234,14 +238,6 @@ function LineCharts({
                       </LineChart>
                     </ResponsiveContainer>
                   </div>
-                  <Box display="flex" justifyContent="center">
-                    <CSVLink
-                      data={data.data}
-                      filename={`${data.title}-word-freq.csv`}
-                    >
-                      Download as CSV
-                    </CSVLink>
-                  </Box>
                 </Grid>
               );
             }

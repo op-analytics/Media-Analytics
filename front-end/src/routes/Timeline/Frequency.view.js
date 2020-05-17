@@ -11,10 +11,11 @@ import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import ToggleButton from '@material-ui/lab/ToggleButton';
 import ChipInput from 'material-ui-chip-input';
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import LineCharts from '../../components/LineCharts';
 import { getFrequencies } from '../../state/ducks/timeline';
+import CsvDownloadButton from '../../components/CsvDownloadButton';
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -69,6 +70,26 @@ const displayOptions = [
   { name: 'Grouped by word', value: 'byWord' },
 ];
 
+const getDownloadData = (currentData, key, yearFrom, yearTo) => {
+  const dataToDownload = [];
+  currentData.forEach(({ data, word }) => {
+    Object.entries(data).forEach(([mediaOutlet, values]) =>
+      values.forEach(item => {
+        const year = item['year'];
+        if (year <= yearTo && year >= yearFrom)
+          dataToDownload.push({
+            year,
+            value: item[key],
+            mediaOutlet: mediaOutlets.find(obj => obj.value === mediaOutlet)
+              .name,
+            word,
+          });
+      }),
+    );
+  });
+  return dataToDownload;
+};
+
 /**
  * The frequency timeline page component
  * @component
@@ -87,6 +108,21 @@ function Timeline() {
   const loading = useSelector(state => state.timeline.loading);
   const frequencies = useSelector(state => state.timeline.frequencies);
 
+  // TODO: Pass this the CsvDownloadButton
+  const dataToDownload = useMemo(() => getDownloadData(frequencies, yAxisKey,yearFrom,yearTo), [
+    frequencies,
+    yAxisKey,
+    yearFrom,
+    yearTo,
+  ]);
+
+  const csvHeaders = useMemo(()=>[
+    { label: 'media outlet', key: 'mediaOutlet' },
+    { label: 'word', key: 'word' },
+    { label: 'year', key: 'year' },
+    { label: yAxisKey, key: 'value' },
+  ],[yAxisKey]);
+
   const minYear = 1970;
   const maxYear = 2020;
 
@@ -98,6 +134,11 @@ function Timeline() {
 
   return (
     <>
+      <CsvDownloadButton
+        data={dataToDownload}
+        headers={csvHeaders}
+        filename="test.csv"
+      />
       <h3>Word Frequency Timeline</h3>
       <div className={classes.container}>
         <Card className={classes.Card}>
