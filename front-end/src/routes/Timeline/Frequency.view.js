@@ -1,5 +1,6 @@
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
+import Chip from '@material-ui/core/Chip';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import FormControl from '@material-ui/core/FormControl';
 import Grid from '@material-ui/core/Grid';
@@ -89,11 +90,25 @@ function Timeline() {
 
   const minYear = 1970;
   const maxYear = 2020;
+  const parameterLimit = 4;
 
   const onSubmitHandler = e => {
     e.preventDefault();
     setFormSubmitted(true);
     dispatch(getFrequencies(words, minYear, maxYear, outlets));
+  };
+
+  const handleDelete = (chip, state, setState) => {
+    setState(state.filter(word => word != chip));
+  };
+
+  const handleAddChip = (chip, state, setState) => {
+    if (state.length < parameterLimit) {
+      setState([...state, chip]);
+      if (words.length && outlets.length) {
+        setFormSubmitted(false);
+      }
+    }
   };
 
   return (
@@ -110,16 +125,20 @@ function Timeline() {
                     name="words"
                     newChipKeyCodes={[13, 32, 188]} // Make new chip on enter, space or comma key codes
                     blurBehavior="add" // Fix android chrome bug
-                    onChange={newWords => {
-                      const newWordExists = !newWords.every(item =>
-                        words.includes(item),
-                      );
-                      if (newWordExists && outlets.length) {
-                        setFormSubmitted(false);
-                      }
-                      setWords(newWords);
-                    }}
                     required={!words.length}
+                    value={words}
+                    onAdd={chip => {
+                      handleAddChip(chip, words, setWords);
+                    }}
+                    onDelete={chip => handleDelete(chip, words, setWords)}
+                    chipRenderer={({ value }, key) => (
+                      <Chip
+                        key={key}
+                        style={{ margin: '0px 8px 8px 0px', float: 'left' }}
+                        label={value}
+                        onDelete={_ => handleDelete(value, words, setWords)}
+                      />
+                    )}
                   />
                 </FormControl>
               </Grid>
