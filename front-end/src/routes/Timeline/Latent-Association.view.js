@@ -104,11 +104,6 @@ const mediaOutlets = [
   { title: 'The Guardian', name: 'The Guardian', value: 'guardian' },
 ];
 
-const displayOptions = [
-  { name: 'On a single chart', value: 'single' },
-  { name: 'Seperated by media outlet', value: 'byOutlet' },
-];
-
 /**
  * The latent association page component
  * @component
@@ -130,7 +125,7 @@ function Timeline() {
   const wordLimit = 5;
 
   const handleDelete = (chip, state, setState) => {
-    setState(state.filter(word => word != chip));
+    setState(state.filter(word => word !== chip));
   };
 
   const handleAddChip = (chip, state, setState) => {
@@ -211,9 +206,8 @@ function Timeline() {
                     filterSelectedOptions
                     required={!outlets.length}
                     onChange={(_, value) => {
-                      setOutlets([value.value])
-                    }
-                    }
+                      setOutlets([value.value]);
+                    }}
                     renderInput={params => (
                       <TextField
                         {...params}
@@ -321,6 +315,8 @@ function Timeline() {
                   </ResponsiveContainer>
                 </div>
               );
+            } else {
+              return null;
             }
           })
         )}

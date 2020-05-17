@@ -12,7 +12,7 @@ import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import ToggleButton from '@material-ui/lab/ToggleButton';
 import ChipInput from 'material-ui-chip-input';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import LineCharts from '../../components/LineCharts';
 import { getFrequencies } from '../../state/ducks/timeline';
@@ -88,6 +88,10 @@ function Timeline() {
   const loading = useSelector(state => state.timeline.loading);
   const frequencies = useSelector(state => state.timeline.frequencies);
 
+  useEffect(() => {
+    outlets.length ? setFormSubmitted(false) : setFormSubmitted(true);
+  }, [outlets.length]);
+
   const minYear = 1970;
   const maxYear = 2020;
   const parameterLimit = 4;
@@ -99,15 +103,12 @@ function Timeline() {
   };
 
   const handleDelete = (chip, state, setState) => {
-    setState(state.filter(word => word != chip));
+    setState(state.filter(word => word !== chip));
   };
 
   const handleAddChip = (chip, state, setState) => {
     if (state.length < parameterLimit) {
       setState([...state, chip]);
-      if (words.length && outlets.length) {
-        setFormSubmitted(false);
-      }
     }
   };
 
@@ -134,7 +135,10 @@ function Timeline() {
                     chipRenderer={({ value }, key) => (
                       <Chip
                         key={key}
-                        style={{ margin: '0px 8px 8px 0px', float: 'left' }}
+                        style={{
+                          margin: '0px 8px 8px 0px',
+                          float: 'left',
+                        }}
                         label={value}
                         onDelete={_ => handleDelete(value, words, setWords)}
                       />
@@ -171,7 +175,7 @@ function Timeline() {
                         placeholder="Add a media outlet"
                         required={!outlets.length}
                         helperText={
-                          outlets.length == parameterLimit
+                          outlets.length === parameterLimit
                             ? `There is a ${parameterLimit} outlet limit per request`
                             : ''
                         }

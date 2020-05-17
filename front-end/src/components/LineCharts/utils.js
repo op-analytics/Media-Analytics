@@ -82,6 +82,8 @@ export const createTooltip = (
                     {payloadItem}
                   </p>
                 );
+              } else {
+                return null;
               }
             });
           })}
@@ -120,9 +122,9 @@ export const createLegendPayload = (
 ) => {
   const legendItems = [];
   if (displayOption !== 'multiple') {
-    for (let yearData of data.data) {
+    data.data.forEach(yearData => {
       for (let [index, mediaOutlet] of mediaOutlets.entries()) {
-        for (let word of words) {
+        words.forEach(word => {
           if (Object.keys(yearData).includes(mediaOutlet + word + YAxisKey)) {
             if (
               legendItems.findIndex(item => item.id === mediaOutlet + word) ===
@@ -162,9 +164,9 @@ export const createLegendPayload = (
               legendItems.push(legendItem);
             }
           }
-        }
+        });
       }
-    }
+    });
   }
   return legendItems;
 };
@@ -215,10 +217,10 @@ export const CustomizedDot = props => {
  */
 export function multipleDatasets(dataset, allMediaOutlets) {
   let result = [];
-  dataset.map(wordDataset => {
-    for (const mediaOutlet in wordDataset.data) {
+  dataset.forEach(wordDataset => {
+    for (let mediaOutlet in wordDataset.data) {
       let mediaOutletData = [];
-      wordDataset.data[mediaOutlet].map(wordData => {
+      wordDataset.data[mediaOutlet].forEach(wordData => {
         // Creating keys for the year data using using the media outlet and word.
         let yearObject = { year: wordData.year };
         yearObject[mediaOutlet + wordDataset.word + 'rank'] = wordData.rank;
@@ -254,9 +256,9 @@ export function singleDataset(dataset) {
     title: 'Summary',
     data: [],
   };
-  dataset.map(wordDataset => {
-    for (const mediaOutlet in wordDataset.data) {
-      wordDataset.data[mediaOutlet].map(wordData => {
+  dataset.forEach(wordDataset => {
+    for (let mediaOutlet in wordDataset.data) {
+      wordDataset.data[mediaOutlet].forEach(wordData => {
         // Check if the year already exists in the summary object
         let yearObject = summaryObject.data.find(
           obj => obj.year === wordData.year,
@@ -289,21 +291,18 @@ export function singleDataset(dataset) {
  */
 export function byOutletDataset(dataset, allMediaOutlets) {
   let result = [];
-  dataset.map(wordDataset => {
+  dataset.forEach(wordDataset => {
     // Title and data to be appended to result
-    let currentMediaOutlet = '';
     let mediaOutletData = [];
-    for (const mediaOutlet in wordDataset.data) {
+    for (let mediaOutlet in wordDataset.data) {
       let yearObject;
       mediaOutletData = [];
-      currentMediaOutlet = mediaOutlet;
-
-      wordDataset.data[mediaOutlet].map(wordData => {
+      wordDataset.data[mediaOutlet].forEach(wordData => {
         // Get a reference to the current media outlet data if it already exists.
         let mediaOutletInResult = result.find(
           obj =>
             obj.title ===
-            allMediaOutlets.find(obj => obj.value === currentMediaOutlet).name,
+            allMediaOutlets.find(obj => obj.value === mediaOutlet).name,
         );
         if (mediaOutletInResult) {
           mediaOutletData = mediaOutletInResult.data;
@@ -336,7 +335,7 @@ export function byOutletDataset(dataset, allMediaOutlets) {
       let resultMediaOutlet = result.find(
         obj =>
           obj.title ===
-          allMediaOutlets.find(obj => obj.value === currentMediaOutlet).name,
+          allMediaOutlets.find(obj => obj.value === mediaOutlet).name,
       );
       // Similar to above. Only add to result if not already there, a reference has
       // been edited and doesn't need added again.
@@ -362,9 +361,9 @@ export function byOutletDataset(dataset, allMediaOutlets) {
  */
 export function byWordDataset(dataset) {
   let result = [];
-  dataset.map(wordDataset => {
-    for (const mediaOutlet in wordDataset.data) {
-      wordDataset.data[mediaOutlet].map(wordData => {
+  dataset.forEach(wordDataset => {
+    for (let mediaOutlet in wordDataset.data) {
+      wordDataset.data[mediaOutlet].forEach(wordData => {
         // Creating keys for the year data using using the media outlet and word.
         let yearObject = { year: wordData.year };
         yearObject[mediaOutlet + wordDataset.word + 'rank'] = wordData.rank;
@@ -397,11 +396,12 @@ export function singleLatentAssociationDataset(dataset) {
   if (!dataset) {
     return null;
   }
-  console.log('dataset', dataset);
+
   let summaryObject = {
     title: dataset[0].media_outlet,
     data: [],
   };
+
   for (let association of dataset) {
     let yearRangeObject = summaryObject.data.find(
       obj => obj.yearRange === association.yearRange,
