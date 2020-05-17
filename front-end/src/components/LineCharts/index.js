@@ -142,7 +142,6 @@ function LineCharts({
                     <h3 className={classes.chartTitle}>{data.title}</h3>
                     <ResponsiveContainer>
                       <LineChart
-                        className={classes.chart}
                         data={data.data}
                         margin={{
                           top: 10,
@@ -165,6 +164,7 @@ function LineCharts({
                               ? [0, displayAbsoluteLargestValue]
                               : ['auto', 'auto']
                           }
+                          width={75}
                         />
                         <Legend
                           payload={createLegendPayload(
