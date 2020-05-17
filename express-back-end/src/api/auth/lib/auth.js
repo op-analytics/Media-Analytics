@@ -46,7 +46,7 @@ async function Signup(name, email, password) {
   return user.save();
 }
 
-export default {
+module.exports = {
   TokenizeUser,
   Signup,
   GetUser,
