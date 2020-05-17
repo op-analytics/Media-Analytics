@@ -16,9 +16,9 @@ from mongoengine import (
 
 connect(
     db="nyta",
-    username="admin",
-    password="P@ssw0rd",
-    host="mongodb://localhost:7456/nyta?authSource=admin",
+    username="yourUsername",
+    password="yourPassword",
+    host="mongodb://dbServer:port/nyta?authSource=admin",
 )
 
 
