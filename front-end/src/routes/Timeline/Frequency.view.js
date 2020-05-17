@@ -12,7 +12,7 @@ import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import ToggleButton from '@material-ui/lab/ToggleButton';
 import ChipInput from 'material-ui-chip-input';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import LineCharts from '../../components/LineCharts';
 import { getFrequencies } from '../../state/ducks/timeline';
@@ -88,10 +88,6 @@ function Timeline() {
   const loading = useSelector(state => state.timeline.loading);
   const frequencies = useSelector(state => state.timeline.frequencies);
 
-  useEffect(() => {
-    outlets.length ? setFormSubmitted(false) : setFormSubmitted(true);
-  }, [outlets.length]);
-
   const minYear = 1970;
   const maxYear = 2020;
   const parameterLimit = 4;
@@ -109,6 +105,7 @@ function Timeline() {
   const handleAddChip = (chip, state, setState) => {
     if (state.length < parameterLimit) {
       setState([...state, chip]);
+      outlets.length ? setFormSubmitted(false) : setFormSubmitted(true);
     }
   };
 
