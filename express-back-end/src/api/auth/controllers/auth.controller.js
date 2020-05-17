@@ -44,7 +44,7 @@ exports.login = async (req, res) => {
       .json({ errors: [createValidationError('Incorrect information')] });
   }
 
-  return { token: Auth.TokeniseUser(user) };
+  return { token: Auth.TokenizeUser(user) };
 };
 
 exports.getUser = (req, res) => {
