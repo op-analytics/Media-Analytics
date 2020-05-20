@@ -62,6 +62,7 @@ const useStyles = makeStyles(theme => ({
   },
   chartContainer: {
     width: '100%',
+    maxWidth: "70vw",
     height: '50vh',
     flex: '0 1 auto',
     paddingBottom: '6vh',
@@ -293,8 +294,9 @@ function Timeline() {
                       <Legend
                         payload={createLatentAssociationLegendPayload(
                           data,
-                          outlets,
-                          mediaOutlets,
+                          concept1,
+                          concept2,
+                          outlets[0]
                         )}
                       />
                       <Tooltip />

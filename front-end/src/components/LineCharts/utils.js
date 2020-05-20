@@ -429,20 +429,25 @@ export function singleLatentAssociationDataset(dataset) {
  */
 export const createLatentAssociationLegendPayload = (
   data,
-  mediaOutlets,
-  allMediaOutlets,
+  concept1,
+  concept2,
+  mediaOutlet,
 ) => {
   const legendItems = [];
   for (let yearData of data.data) {
-    for (let mediaOutlet of mediaOutlets) {
-      if (Object.keys(yearData).includes('association' + mediaOutlet)) {
-        if (legendItems.findIndex(item => item.id === mediaOutlet) === -1) {
-          legendItems.push({
-            id: mediaOutlet,
-            value: allMediaOutlets.find(obj => obj.value === mediaOutlet).name,
-            color: stringToColour(mediaOutlet),
-          });
-        }
+    if (Object.keys(yearData).includes('association')) {
+      if (legendItems.findIndex(item => item.id === mediaOutlet) === -1) {
+        let concept1Formatted = concept1
+          .map(item => item.charAt(0).toUpperCase() + item.substr(1))
+          .join(', ');
+        let concept2Formatted = concept2
+          .map(item => item.charAt(0).toUpperCase() + item.substr(1))
+          .join(', ');
+        legendItems.push({
+          id: mediaOutlet,
+          value: `[${concept1Formatted}] & [${concept2Formatted}]`,
+          color: stringToColour(mediaOutlet),
+        });
       }
     }
   }
