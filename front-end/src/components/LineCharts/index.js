@@ -66,7 +66,7 @@ function LineCharts({
   datasets,
   xAxisKey,
   yAxisKey,
-  displayAbsolute,
+  displayNormalised,
   words,
   mediaOutlets,
   allMediaOutlets,
@@ -77,7 +77,31 @@ function LineCharts({
   const classes = useStyles();
   const displayed = [];
   let processedData = {};
-  let displayAbsoluteLargestValue = 0;
+
+  let normalisedDatasets = JSON.parse(JSON.stringify(datasets));
+  Object.values(normalisedDatasets).forEach(wordData => {
+    Object.values(wordData.data).forEach(outletData => {
+      let firstYearData = outletData.find(obj => obj.year === String(yearFrom));
+      if (!firstYearData) {
+        firstYearData = Object.values(outletData)[0];
+      }
+      let min = firstYearData[yAxisKey];
+      let max = firstYearData[yAxisKey];
+      Object.values(outletData).forEach(yearData => {
+        if (yearData.year >= yearFrom && yearData.year <= yearTo) {
+          if (yearData[yAxisKey] > max) max = yearData[yAxisKey];
+          if (yearData[yAxisKey] < min) min = yearData[yAxisKey];
+        }
+      });
+      Object.values(outletData).forEach(yearData => {
+        yearData[yAxisKey] = (yearData[yAxisKey] - min) / (max - min);
+      });
+    });
+  });
+
+  if (displayNormalised) {
+    datasets = normalisedDatasets;
+  }
 
   switch (displayOption) {
     case 'multiple':
@@ -94,25 +118,6 @@ function LineCharts({
       break;
     default:
       processedData = datasets;
-  }
-  if (displayAbsolute) {
-    words.forEach(word => {
-      mediaOutlets.forEach(mediaOutlet => {
-        const data = processedData.find(obj =>
-          obj.data.find(objData =>
-            Object.keys(objData).find(key => key.includes(mediaOutlet + word)),
-          ),
-        );
-        if (data) {
-          data.data.forEach(dataObj => {
-            const currentData = dataObj[mediaOutlet + word + yAxisKey];
-            if (currentData > displayAbsoluteLargestValue) {
-              displayAbsoluteLargestValue = currentData;
-            }
-          });
-        }
-      });
-    });
   }
 
   return (
@@ -148,7 +153,7 @@ function LineCharts({
                           top: 10,
                           right: 30,
                           left: 0,
-                          bottom: 0,
+                          bottom: 5,
                         }}
                       >
                         <CartesianGrid strokeDasharray="3 3" />
@@ -160,12 +165,9 @@ function LineCharts({
                           allowDataOverflow={true} // Forces displayed data to match domain.
                         />
                         <YAxis
-                          domain={
-                            displayAbsolute
-                              ? [0, displayAbsoluteLargestValue]
-                              : ['auto', 'auto']
-                          }
+                          domain={displayNormalised ? [0, 1] : ['auto', 'auto']}
                           width={75}
+                          allowDataOverflow={true} // Forces displayed data to match domain.
                         />
                         <Legend
                           payload={createLegendPayload(
@@ -270,7 +272,7 @@ LineCharts.propTypes = {
   xAxisKey: PropTypes.string,
   /** The key for the y axis of the datasets */
   yAxisKey: PropTypes.string.isRequired,
-  displayAbsolute: PropTypes.bool.isRequired,
+  displayNormalised: PropTypes.bool.isRequired,
   words: PropTypes.arrayOf(PropTypes.string).isRequired,
   mediaOutlets: PropTypes.arrayOf(PropTypes.string).isRequired,
   allMediaOutlets: PropTypes.arrayOf(

@@ -80,7 +80,7 @@ function Timeline() {
   const [yearFrom, setYearFrom] = useState('');
   const [yearTo, setYearTo] = useState('');
   const [yAxisMetric, setYAxisMetric] = useState('freq');
-  const [absolute, setAbsolute] = useState(false);
+  const [normalised, setNormalised] = useState(false);
   const [outlets, setOutlets] = useState([]);
   const [displayOption, setDisplayOption] = useState('multiple');
   const [words, setWords] = useState([]);
@@ -243,14 +243,14 @@ function Timeline() {
               <Grid item md={3} sm={6} xs={12}>
                 <FormControl className={classes.formControl}>
                   <ToggleButton
-                    selected={absolute}
-                    value={absolute}
+                    selected={normalised}
+                    value={normalised}
                     onChange={() => {
-                      setAbsolute(!absolute);
+                      setNormalised(!normalised);
                     }}
                     className={classes.ToggleButton}
                   >
-                    Display Absolute
+                    {normalised ? 'Display Absolute': 'Display Normalised'}
                   </ToggleButton>
                 </FormControl>
               </Grid>
@@ -305,7 +305,7 @@ function Timeline() {
               datasets={frequencies}
               xAxisKey="year"
               yAxisKey={yAxisMetric}
-              displayAbsolute={absolute}
+              displayNormalised={normalised}
               tooltipItems={[{ key: 'rank', title: 'rank' }]}
               words={words}
               mediaOutlets={outlets}

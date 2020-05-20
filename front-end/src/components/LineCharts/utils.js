@@ -56,7 +56,7 @@ export const createTooltip = (
                   tooltipLabel = `${formattedOutlet} - ${formattedWord}: `;
               }
 
-              if (payloadItem) {
+              if (payloadItem !== null) {
                 return (
                   <p
                     style={{
