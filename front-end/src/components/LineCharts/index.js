@@ -28,6 +28,7 @@ import {
 const useStyles = makeStyles(() => ({
   chartContainer: {
     width: '100%',
+    maxWidth: '60vw',
     height: '50vh',
     flex: '0 1 auto',
     paddingBottom: '6vh',
@@ -54,6 +55,12 @@ const useStyles = makeStyles(() => ({
     '&:first-letter': {
       textTransform: 'uppercase',
     },
+  },
+  gridItemChart: {
+    display:"flex",
+    flexDirection:"column",
+    alignItems:"center",
+    justifyContent:"center",
   },
 }));
 
@@ -143,6 +150,7 @@ function LineCharts({
                     displayOption === 'multiple' ? 12 / mediaOutlets.length : 12
                   }
                   xs={12}
+                  className={classes.ChartGrid}
                 >
                   <div className={classes.chartContainer} key={data.title}>
                     <h3 className={classes.chartTitle}>{data.title}</h3>
