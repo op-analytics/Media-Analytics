@@ -29,23 +29,25 @@ export async function signup(
   req: Request,
   res: Response,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-): Promise<Response<any>> {
+): Promise<void> {
   const { email: emailDirty, name, password } = req.body;
   const email = emailDirty.toLowerCase();
 
   // Check email is not already taken
   if (await EmailTaken(email)) {
-    return res.status(422).json({
+    res.status(422).json({
       errors: [createValidationError('Email already taken', ['email'])],
     });
+    return;
   }
 
   // Try signup user but responed with an error if it fails
   try {
     const user = await Signup(name, email, password);
-    return res.json({ token: TokenizeUser(user) });
+    res.json({ token: TokenizeUser(user) });
+    return;
   } catch (e) {
-    return res
+    res
       .status(500)
       .json(createValidationError('There was an error creating your user'));
   }
@@ -55,7 +57,7 @@ export async function login(
   req: Request,
   res: Response,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-): Promise<Response<any>> {
+): Promise<void> {
   const { email: emailDirty, password } = req.body;
   const email = emailDirty.toLowerCase();
 
@@ -63,12 +65,13 @@ export async function login(
   const user = await GetUser(email);
 
   if (!user || !(await PasswordsMatch(password, user.password))) {
-    return res
+    res
       .status(400)
       .json({ errors: [createValidationError('Incorrect information')] });
+    return;
   }
 
-  return res.json({ token: TokenizeUser(user) });
+  res.json({ token: TokenizeUser(user) });
 }
 
 export function getUser(req: UserRequest, res: Response): void {

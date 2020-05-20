@@ -1,15 +1,20 @@
 import math from 'mathjs';
-import LatentAssociation from '../models/latentAssociation.model';
-import { LatentAssociationData } from '../types';
+import LatentAssociation, {
+  LatentAssociationDocument,
+} from '../models/latentAssociation.model';
 
-// interface Vectors {}
+// NOTE: this may not be correct
+type Vectors = Record<string, number[][]>;
+
+interface LatentAssociationData {
+  yearRange: string;
+  association: number;
+}
 
 // TODO: Fix these types
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function extractVectors(concept: any): any {
-  const vectorData: Record<string, number[][]> = {};
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  concept.forEach((data: Record<string, any>) => {
+function extractVectors(concept: LatentAssociationDocument[]): Vectors {
+  const vectorData: Vectors = {};
+  concept.forEach((data: LatentAssociationDocument) => {
     const vectorDataKey = `${data.year_from}-${data.year_to}`;
     if (!vectorData[vectorDataKey]) {
       vectorData[vectorDataKey] = [data.vectors];
@@ -24,10 +29,10 @@ async function getConceptData(
   concept: string[],
   yearFrom: number,
   yearTo: number,
-  // NOTE: This might be wrong ask Liam for confirmation
-): Promise<LatentAssociationData[]> {
+  // NOTE: This might be wrong ask Liam for confirmation on typing
+): Promise<LatentAssociationDocument[]> {
   return LatentAssociation.find({
-    word: concept,
+    word: { $in: concept },
     // eslint-disable-next-line @typescript-eslint/camelcase
     year_from: { $gte: yearFrom - 5 },
     // eslint-disable-next-line @typescript-eslint/camelcase
@@ -39,11 +44,11 @@ function CleanConcept(concept: string[]): string[] {
   return concept.map(word => word.trim().toLowerCase());
 }
 
-// TODO: Fix typing in this function
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function ShapeData(concept1Data: any, concept2Data: any): any {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const latentAssociationData: { yearRange: string; association: any }[] = [];
+function ShapeData(
+  concept1Data: LatentAssociationDocument[],
+  concept2Data: LatentAssociationDocument[],
+): LatentAssociationData[] {
+  const latentAssociationData: LatentAssociationData[] = [];
   if (concept1Data.length > 0 && concept2Data.length > 0) {
     const concept1Vectors = extractVectors(concept1Data);
     const concept2Vectors = extractVectors(concept2Data);
@@ -81,8 +86,8 @@ async function GetLatentAssociation(
   yearTo: number,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
 ): Promise<any> {
-  const concept1Data = getConceptData(concept1, yearFrom, yearTo);
-  const concept2Data = getConceptData(concept2, yearFrom, yearTo);
+  const concept1Data = await getConceptData(concept1, yearFrom, yearTo);
+  const concept2Data = await getConceptData(concept2, yearFrom, yearTo);
 
   return ShapeData(concept1Data, concept2Data);
 }

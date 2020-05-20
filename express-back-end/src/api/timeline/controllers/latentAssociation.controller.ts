@@ -1,8 +1,7 @@
 import { Request, Response } from 'express';
 import { CleanConcept, GetLatentAssociation } from '../lib/latentAssociation';
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export async function getData(req: Request, res: Response) {
+export async function getData(req: Request, res: Response): Promise<void> {
   const {
     concept_1: dirtyConcept1,
     concept_2: dirtyConcept2,
@@ -17,10 +16,12 @@ export async function getData(req: Request, res: Response) {
     yearFrom,
     yearTo,
   );
-  if (latentAssociationData.length > 0)
-    return res.json({ data: latentAssociationData });
+  if (latentAssociationData.length > 0) {
+    res.json({ data: latentAssociationData });
+    return;
+  }
 
-  return res.status(404).json({
+  res.status(404).json({
     error: 'No latent association data was found for given parameters',
   });
 }

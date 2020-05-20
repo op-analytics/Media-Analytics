@@ -1,5 +1,6 @@
 import Frequency from '../models/frequency.model';
 
+// TODO: Fix the types in this file
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function sortOnKey(objects: { data: Record<string, any> }[], key: string): void {
   objects.forEach(object => {
