@@ -113,12 +113,6 @@ function LineCharts({
     });
   }
 
-  let dataArray = processedData.map( val =>  {
-    return val.data;
-  });
-  let csvData = [].concat.apply([], dataArray);
-  console.log(csvData);
-
   return (
     <Grid container spacing={1} justify="center">
       {words.map(word => (

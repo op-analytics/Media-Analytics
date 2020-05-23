@@ -7,7 +7,7 @@ import { CSVLink } from 'react-csv';
 
 const useStyles = makeStyles(theme => ({
   fab: {
-    position: 'absolute',
+    position: 'fixed',
     bottom: 20,
     right: 20,
   },
