@@ -183,11 +183,15 @@ function Timeline() {
 
   return (
     <>
-      <CsvDownloadButton
-        data={dataToDownload}
-        headers={csvHeaders}
-        filename="ma-latent-association.csv"
-      />
+      {formSubmitted && associations && !loading ? (
+        <CsvDownloadButton
+          data={dataToDownload}
+          headers={csvHeaders}
+          filename="ma-latent-association.csv"
+        />
+      ) : (
+        null
+      )}
       <h3>Latent association over time</h3>
       <div className={classes.container}>
         <Card className={classes.Card}>

@@ -134,11 +134,15 @@ function Timeline() {
 
   return (
     <>
-      <CsvDownloadButton
-        data={dataToDownload}
-        headers={csvHeaders}
-        filename="test.csv"
-      />
+      {formSubmitted && dataToDownload.length && !loading ? (
+        <CsvDownloadButton
+          data={dataToDownload}
+          headers={csvHeaders}
+          filename="ma-word-frequency.csv"
+        />
+      ) : (
+        null
+      )}
       <h3>Word Frequency Timeline</h3>
       <div className={classes.container}>
         <Card className={classes.Card}>
