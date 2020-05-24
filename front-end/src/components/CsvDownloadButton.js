@@ -11,6 +11,10 @@ const useStyles = makeStyles(theme => ({
     bottom: 20,
     right: 20,
   },
+  icon: {
+    display: 'block',
+    margin: 'auto',
+  },
 }));
 
 export default function CsvDownloadButton({ data, filename, headers }) {
@@ -19,7 +23,7 @@ export default function CsvDownloadButton({ data, filename, headers }) {
     <TooltipUI title="Download as csv" placement="right" arrow>
       <Fab color="secondary" aria-label="download" className={classes.fab}>
         <CSVLink data={data} headers={headers} filename={filename}>
-          <GetAppIcon fontSize="large" />
+          <GetAppIcon fontSize="large" className={classes.icon}/>
         </CSVLink>
       </Fab>
     </TooltipUI>
