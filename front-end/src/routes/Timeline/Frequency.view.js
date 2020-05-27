@@ -57,10 +57,10 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const mediaOutlets = [
-  { title: 'New York Times', name: 'New York Times', value: 'nyt' },
-  { title: 'Wall Street Journal', name: 'Wall Street Journal', value: 'wsj' },
-  { title: 'The Guardian', name: 'The Guardian', value: 'guardian' },
-  { title: 'HuffPost', name: 'HuffPost', value: 'hp' },
+  { title: 'New York Times', value: 'nyt' },
+  { title: 'Wall Street Journal', value: 'wsj' },
+  { title: 'The Guardian', value: 'guardian' },
+  { title: 'HuffPost', value: 'hp' },
 ];
 
 const displayOptions = [
@@ -69,6 +69,12 @@ const displayOptions = [
   { name: 'Grouped by media outlet', value: 'byOutlet' },
   { name: 'Grouped by word', value: 'byWord' },
 ];
+
+const yAxisMetrics = [
+  {name: "Frequency", value: 'freq'},
+  {name: "Count", value: 'count'},
+  {name: "Rank", value: 'rank'},
+]
 
 /**
  * The frequency timeline page component
@@ -234,9 +240,11 @@ function Timeline() {
                     value={yAxisMetric}
                     onChange={e => setYAxisMetric(e.target.value)}
                   >
-                    <MenuItem value="freq">Frequency</MenuItem>
-                    <MenuItem value="count">Count</MenuItem>
-                    <MenuItem value="rank">Rank</MenuItem>
+                    {yAxisMetrics.map(metric => (
+                      <MenuItem key={metric.value} value={metric.value}>
+                        {metric.name}
+                      </MenuItem>
+                    ))}
                   </Select>
                 </FormControl>
               </Grid>
@@ -308,8 +316,8 @@ function Timeline() {
               displayNormalised={normalised}
               tooltipItems={[{ key: 'rank', title: 'rank' }]}
               words={words}
-              mediaOutlets={outlets}
-              allMediaOutlets={mediaOutlets}
+              outlets={outlets}
+              mediaOutlets={mediaOutlets}
               yearFrom={Number(yearFrom)}
               yearTo={Number(yearTo)}
               displayOption={displayOption}

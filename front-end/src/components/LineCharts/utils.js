@@ -16,20 +16,21 @@ import Triangle from '@material-ui/icons/ChangeHistory';
 export const createTooltip = (
   classes,
   words,
-  mediaOutlets,
+  outlets,
   displayOption,
   yAxisKey,
-  allMediaOutlets,
+  mediaOutlets,
 ) => {
   const ToolTip = ({ active, payload, label }) => {
     if (active) {
       return (
         <div className={classes.tooltip}>
           <h3>{label}</h3>
-          {mediaOutlets.map(mediaOutlet => {
+          {outlets.map(outlet => {
             return words.map(word => {
-              let payloadItem =
-                payload[0].payload[mediaOutlet + word + yAxisKey];
+              const formattedOutlet = mediaOutlets.find(
+                obj => obj.value === outlet,
+              ).title;
 
               const formattedWord = word
                 .toLowerCase()
@@ -37,9 +38,8 @@ export const createTooltip = (
                 .map(word => word.charAt(0).toUpperCase() + word.slice(1))
                 .join(' ');
 
-              const formattedOutlet = allMediaOutlets.find(
-                obj => obj.value === mediaOutlet,
-              ).name;
+              let payloadItem =
+                payload[0].payload[outlet + word + yAxisKey];
 
               let tooltipLabel = '';
               switch (displayOption) {
@@ -62,17 +62,17 @@ export const createTooltip = (
                     style={{
                       color:
                         displayOption === 'byWord'
-                          ? stringToColour(mediaOutlet)
+                          ? stringToColour(outlet)
                           : stringToColour(word),
                     }}
                     className={classes.tooltipLabel}
-                    key={word + mediaOutlets + yAxisKey}
+                    key={word + outlets + yAxisKey}
                   >
                     <span
                       style={{
                         color:
                           displayOption === 'byWord'
-                            ? stringToColour(mediaOutlet)
+                            ? stringToColour(outlet)
                             : stringToColour(word),
                       }}
                       className={classes.tooltipLabelFirstWord}
@@ -108,37 +108,28 @@ const icons = {
  *
  * @param {Object} data Data being used for the chart
  * @param {Object[]} words
- * @param {Object[]} mediaOutlets
+ * @param {Object[]} outlets
  * @param {String} YAxisKey
  * @returns {Element}
  */
 export const createLegendPayload = (
   data,
   words,
-  mediaOutlets,
+  outlets,
   YAxisKey,
-  allMediaOutlets,
+  mediaOutlets,
   displayOption,
 ) => {
   const legendItems = [];
   if (displayOption !== 'multiple') {
-    data.data.forEach(yearData => {
-      for (let [index, mediaOutlet] of mediaOutlets.entries()) {
+    data.forEach(yearData => {
+      for (let [index, outlet] of outlets.entries()) {
         words.forEach(word => {
-          if (Object.keys(yearData).includes(mediaOutlet + word + YAxisKey)) {
-            if (
-              legendItems.findIndex(item => item.id === mediaOutlet + word) ===
-              -1
-            ) {
-              const legendItem = {
-                id: mediaOutlet + word,
-                color:
-                  displayOption === 'byWord'
-                    ? stringToColour(mediaOutlet)
-                    : stringToColour(word),
-                type: icons[displayOption === 'byWord' ? 0 : index].legend,
-                value: '',
-              };
+          if (Object.keys(yearData).includes(outlet + word + YAxisKey)) {
+            if (!legendItems.some(item => item.id === outlet + word)) {
+              const formattedOutlet = mediaOutlets.find(
+                obj => obj.value === outlet,
+              ).title;
 
               const formattedWord = word
                 .toLowerCase()
@@ -146,9 +137,15 @@ export const createLegendPayload = (
                 .map(word => word.charAt(0).toUpperCase() + word.slice(1))
                 .join(' ');
 
-              const formattedOutlet = allMediaOutlets.find(
-                obj => obj.value === mediaOutlet,
-              ).name;
+              const legendItem = {
+                id: outlet + word,
+                color:
+                  displayOption === 'byWord'
+                    ? stringToColour(outlet)
+                    : stringToColour(word),
+                type: icons[displayOption === 'byWord' ? 0 : index].legend,
+                value: '',
+              };
 
               switch (displayOption) {
                 case 'byOutlet':
@@ -212,26 +209,26 @@ export const CustomizedDot = props => {
  * Structure a dataset for multiple chart display
  *
  * @param {Object} dataset Dataset to alter
- * @param {Object[Object]} Mappings of mediaoutlet abbrivations to fullnames
+ * @param {Object[]} mediaOutets Mapping of outlet abbreviation to fullname
  * @returns {Object[]}
  */
-export function multipleDatasets(dataset, allMediaOutlets) {
+export function multipleDatasets(dataset, mediaOutlets) {
   let result = [];
   dataset.forEach(wordDataset => {
-    for (let mediaOutlet in wordDataset.data) {
+    for (let outlet in wordDataset.data) {
       let mediaOutletData = [];
-      wordDataset.data[mediaOutlet].forEach(wordData => {
+      wordDataset.data[outlet].forEach(wordData => {
         // Creating keys for the year data using using the media outlet and word.
         let yearObject = { year: wordData.year };
-        yearObject[mediaOutlet + wordDataset.word + 'rank'] = wordData.rank;
-        yearObject[mediaOutlet + wordDataset.word + 'count'] = wordData.count;
-        yearObject[mediaOutlet + wordDataset.word + 'freq'] = wordData.freq;
-        yearObject[mediaOutlet + wordDataset.word + 'word'] = wordDataset.word;
-        yearObject[mediaOutlet + wordDataset.word + 'mediaOutlet'] = mediaOutlet;
+        yearObject[outlet + wordDataset.word + 'rank'] = wordData.rank;
+        yearObject[outlet + wordDataset.word + 'count'] = wordData.count;
+        yearObject[outlet + wordDataset.word + 'freq'] = wordData.freq;
+        yearObject[outlet + wordDataset.word + 'word'] = wordDataset.word;
+        yearObject[outlet + wordDataset.word + 'mediaOutlet'] = outlet;
         mediaOutletData.push(yearObject);
       });
       // Add the new result
-      let fullName = allMediaOutlets.find(obj => obj.value === mediaOutlet).name;
+      let fullName = mediaOutlets.find(obj => obj.value === outlet).title;
       result.push({
         title: wordDataset.word + ' - ' + fullName,
         data: mediaOutletData,
@@ -257,8 +254,8 @@ export function singleDataset(dataset) {
     data: [],
   };
   dataset.forEach(wordDataset => {
-    for (let mediaOutlet in wordDataset.data) {
-      wordDataset.data[mediaOutlet].forEach(wordData => {
+    for (let outlet in wordDataset.data) {
+      wordDataset.data[outlet].forEach(wordData => {
         // Check if the year already exists in the summary object
         let yearObject = summaryObject.data.find(
           obj => obj.year === wordData.year,
@@ -269,11 +266,11 @@ export function singleDataset(dataset) {
           summaryObject.data.push(yearObject);
         }
         // Add to year object using, media source and word in the keys.
-        yearObject[mediaOutlet + wordDataset.word + 'rank'] = wordData.rank;
-        yearObject[mediaOutlet + wordDataset.word + 'count'] = wordData.count;
-        yearObject[mediaOutlet + wordDataset.word + 'freq'] = wordData.freq;
-        yearObject[mediaOutlet + wordDataset.word + 'word'] = wordDataset.word;
-        yearObject[mediaOutlet + wordDataset.word + 'mediaOutlet'] = mediaOutlet;
+        yearObject[outlet + wordDataset.word + 'rank'] = wordData.rank;
+        yearObject[outlet + wordDataset.word + 'count'] = wordData.count;
+        yearObject[outlet + wordDataset.word + 'freq'] = wordData.freq;
+        yearObject[outlet + wordDataset.word + 'word'] = wordDataset.word;
+        yearObject[outlet + wordDataset.word + 'mediaOutlet'] = outlet;
       });
     }
   });
@@ -286,22 +283,22 @@ export function singleDataset(dataset) {
  * Structure a dataset for by outlet charts
  *
  * @param {Object} dataset Dataset to alter
- * @param {Object[Object]} Mappings of mediaoutlet abbrivations to fullnames
+ * @param {Object[]} mediaOutets Mapping of outlet abbreviation to fullname
  * @returns {Object[]}
  */
-export function byOutletDataset(dataset, allMediaOutlets) {
+export function byOutletDataset(dataset, mediaOutlets) {
   let result = [];
   dataset.forEach(wordDataset => {
     // Title and data to be appended to result
-    for (let mediaOutlet in wordDataset.data) {
+    for (let outlet in wordDataset.data) {
       let yearObject;
       let mediaOutletData = [];
-      wordDataset.data[mediaOutlet].forEach(wordData => {
+      wordDataset.data[outlet].forEach(wordData => {
         // Get a reference to the current media outlet data if it already exists.
         let mediaOutletInResult = result.find(
           obj =>
             obj.title ===
-            allMediaOutlets.find(obj => obj.value === mediaOutlet).name,
+            mediaOutlets.find(obj => obj.value === outlet).title,
         );
         if (mediaOutletInResult) {
           mediaOutletData = mediaOutletInResult.data;
@@ -313,11 +310,11 @@ export function byOutletDataset(dataset, allMediaOutlets) {
           mediaOutletData.push(yearObject);
         }
         // Creating keys for the data using using the media outlet and word.
-        yearObject[mediaOutlet + wordDataset.word + 'rank'] = wordData.rank;
-        yearObject[mediaOutlet + wordDataset.word + 'count'] = wordData.count;
-        yearObject[mediaOutlet + wordDataset.word + 'freq'] = wordData.freq;
-        yearObject[mediaOutlet + wordDataset.word + 'word'] = wordDataset.word;
-        yearObject[mediaOutlet + wordDataset.word + 'mediaOutlet'] = mediaOutlet;
+        yearObject[outlet + wordDataset.word + 'rank'] = wordData.rank;
+        yearObject[outlet + wordDataset.word + 'count'] = wordData.count;
+        yearObject[outlet + wordDataset.word + 'freq'] = wordData.freq;
+        yearObject[outlet + wordDataset.word + 'word'] = wordDataset.word;
+        yearObject[outlet + wordDataset.word + 'mediaOutlet'] = outlet;
       });
 
       // Check there is aready data for the particular year in the current media data.
@@ -334,13 +331,13 @@ export function byOutletDataset(dataset, allMediaOutlets) {
       let resultMediaOutlet = result.find(
         obj =>
           obj.title ===
-          allMediaOutlets.find(obj => obj.value === mediaOutlet).name,
+          mediaOutlets.find(obj => obj.value === outlet).name,
       );
       // Similar to above. Only add to result if not already there, a reference has
       // been edited and doesn't need added again.
       if (!resultMediaOutlet) {
-        let fullName = allMediaOutlets.find(obj => obj.value === mediaOutlet)
-          .name;
+        let fullName = mediaOutlets.find(obj => obj.value === outlet)
+          .title;
         let newResultMediaOutlet = {
           title: fullName,
           data: mediaOutletData,
@@ -361,18 +358,18 @@ export function byOutletDataset(dataset, allMediaOutlets) {
 export function byWordDataset(dataset) {
   let result = [];
   dataset.forEach(wordDataset => {
-    for (let mediaOutlet in wordDataset.data) {
-      wordDataset.data[mediaOutlet].forEach(wordData => {
+    for (let outlet in wordDataset.data) {
+      wordDataset.data[outlet].forEach(wordData => {
         // Creating keys for the year data using using the media outlet and word.
         let yearObject = { year: wordData.year };
-        yearObject[mediaOutlet + wordDataset.word + 'rank'] = wordData.rank;
-        yearObject[mediaOutlet + wordDataset.word + 'count'] = wordData.count;
-        yearObject[mediaOutlet + wordDataset.word + 'freq'] = wordData.freq;
-        yearObject[mediaOutlet + wordDataset.word + 'word'] = wordDataset.word;
-        yearObject[mediaOutlet + wordDataset.word + 'mediaOutlet'] = mediaOutlet;
+        yearObject[outlet + wordDataset.word + 'rank'] = wordData.rank;
+        yearObject[outlet + wordDataset.word + 'count'] = wordData.count;
+        yearObject[outlet + wordDataset.word + 'freq'] = wordData.freq;
+        yearObject[outlet + wordDataset.word + 'word'] = wordDataset.word;
+        yearObject[outlet + wordDataset.word + 'mediaOutlet'] = outlet;
         // Check if there is already a chart for the current word
         let wordObject = result.find(obj => obj.title === wordDataset.word);
-        // If there is not a chart
+        // If there is not already a chart
         if (!wordObject) {
           wordObject = { title: wordDataset.word, data: [] };
           result.push(wordObject);
@@ -431,12 +428,12 @@ export const createLatentAssociationLegendPayload = (
   data,
   concept1,
   concept2,
-  mediaOutlet,
+  outlet,
 ) => {
   const legendItems = [];
   for (let yearData of data.data) {
     if (Object.keys(yearData).includes('association')) {
-      if (legendItems.findIndex(item => item.id === mediaOutlet) === -1) {
+      if (legendItems.findIndex(item => item.id === outlet) === -1) {
         let concept1Formatted = concept1
           .map(item => item.charAt(0).toUpperCase() + item.substr(1))
           .join(', ');
@@ -444,9 +441,9 @@ export const createLatentAssociationLegendPayload = (
           .map(item => item.charAt(0).toUpperCase() + item.substr(1))
           .join(', ');
         legendItems.push({
-          id: mediaOutlet,
+          id: outlet,
           value: `[${concept1Formatted}] & [${concept2Formatted}]`,
-          color: stringToColour(mediaOutlet),
+          color: stringToColour(outlet),
         });
       }
     }

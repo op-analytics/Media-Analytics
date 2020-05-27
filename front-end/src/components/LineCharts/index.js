@@ -75,8 +75,8 @@ function LineCharts({
   yAxisKey,
   displayNormalised,
   words,
+  outlets,
   mediaOutlets,
-  allMediaOutlets,
   yearFrom,
   yearTo,
   displayOption,
@@ -112,13 +112,13 @@ function LineCharts({
 
   switch (displayOption) {
     case 'multiple':
-      processedData = multipleDatasets(datasets, allMediaOutlets);
+      processedData = multipleDatasets(datasets, mediaOutlets);
       break;
     case 'single':
       processedData = singleDataset(datasets);
       break;
     case 'byOutlet':
-      processedData = byOutletDataset(datasets, allMediaOutlets);
+      processedData = byOutletDataset(datasets, mediaOutlets);
       break;
     case 'byWord':
       processedData = byWordDataset(datasets);
@@ -127,15 +127,17 @@ function LineCharts({
       processedData = datasets;
   }
 
+  console.log('processedData :>> ', processedData);
+
   return (
     <Grid container spacing={1} justify="center">
       {words.map(word => (
         <Grid key={word} item container xs={12} spacing={2} justify="center">
-          {mediaOutlets.map(mediaOutlet => {
+          {outlets.map(outlet => {
             const data = processedData.find(obj =>
               obj.data.find(objData =>
                 Object.keys(objData).find(key =>
-                  key.includes(mediaOutlet + word),
+                  key.includes(outlet + word),
                 ),
               ),
             );
@@ -144,13 +146,13 @@ function LineCharts({
               displayed.push(data.title);
               return (
                 <Grid
-                  key={word + mediaOutlet}
+                  key={word + outlet}
                   item
                   lg={
-                    displayOption === 'multiple' ? 12 / mediaOutlets.length : 12
+                    displayOption === 'multiple' ? 12 / outlets.length : 12
                   }
                   xs={12}
-                  className={classes.ChartGrid}
+                  className={classes.gridItemChart}
                 >
                   <div className={classes.chartContainer} key={data.title}>
                     <h3 className={classes.chartTitle}>{data.title}</h3>
@@ -179,11 +181,11 @@ function LineCharts({
                         />
                         <Legend
                           payload={createLegendPayload(
-                            data,
+                            data.data,
                             words,
-                            mediaOutlets,
+                            outlets,
                             yAxisKey,
-                            allMediaOutlets,
+                            mediaOutlets,
                             displayOption,
                           )}
                         />
@@ -192,23 +194,23 @@ function LineCharts({
                           content={createTooltip(
                             classes,
                             words,
-                            mediaOutlets,
+                            outlets,
                             displayOption,
                             yAxisKey,
-                            allMediaOutlets,
+                            mediaOutlets,
                           )}
                         />
 
                         {words.map(lineWord =>
-                          mediaOutlets.map((lineMediaOutlet, index) => {
+                          outlets.map((lineMediaOutlet, index) => {
                             return (
                               <Line
                                 key={lineMediaOutlet + lineWord}
                                 type="monotone"
                                 name={`${
-                                  allMediaOutlets.find(
+                                  mediaOutlets.find(
                                     obj => obj.value === lineMediaOutlet,
-                                  ).name
+                                  ).title
                                 } - ${lineWord}`}
                                 dataKey={lineMediaOutlet + lineWord + yAxisKey}
                                 stroke={
@@ -282,10 +284,10 @@ LineCharts.propTypes = {
   yAxisKey: PropTypes.string.isRequired,
   displayNormalised: PropTypes.bool.isRequired,
   words: PropTypes.arrayOf(PropTypes.string).isRequired,
-  mediaOutlets: PropTypes.arrayOf(PropTypes.string).isRequired,
-  allMediaOutlets: PropTypes.arrayOf(
+  outlets: PropTypes.arrayOf(PropTypes.string).isRequired,
+  mediaOutlets: PropTypes.arrayOf(
     PropTypes.shape({
-      name: PropTypes.string.isRequired,
+      title: PropTypes.string.isRequired,
       value: PropTypes.string.isRequired,
     }),
   ).isRequired,
