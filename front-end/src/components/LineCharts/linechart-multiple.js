@@ -1,9 +1,5 @@
-import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
-import { makeStyles } from '@material-ui/core/styles';
-import PropTypes from 'prop-types';
 import React from 'react';
-import { CSVLink } from 'react-csv';
 import {
   CartesianGrid,
   Legend,
@@ -15,20 +11,13 @@ import {
   YAxis,
 } from 'recharts';
 import {
-  byOutletDataset,
-  byWordDataset,
   createLegendPayload,
   createTooltip,
   CustomizedDot,
-  multipleDatasets,
-  singleDataset,
   stringToColour,
-  normaliseDatasets,
 } from './utils';
 
 function LinechartMultiple({ datasets, formParameters, mediaOutlets, classes }) {
-  const displayed = [];
-
   const words = formParameters.words;
   const outlets = formParameters.outlets;
   const yearFrom = formParameters.yearFrom;
@@ -43,18 +32,17 @@ function LinechartMultiple({ datasets, formParameters, mediaOutlets, classes }) 
         <Grid key={word} item container xs={12} spacing={2} justify="center">
           {outlets.map(outlet => {
             const data = datasets.find(obj =>
-              obj.data.find(objData =>
-                Object.keys(objData).find(key => key.includes(outlet + word)),
+              obj.data.find(
+                objData => objData.word === word && objData.outlet === outlet,
               ),
             );
 
-            if (data && !displayed.includes(data.title)) {
-              displayed.push(data.title);
+            if (data) {
               return (
                 <Grid
                   key={word + outlet}
                   item
-                  lg={displayOption === 'multiple' ? 12 / outlets.length : 12}
+                  lg={12 / outlets.length}
                   xs={12}
                   className={classes.gridItemChart}
                 >
@@ -105,60 +93,23 @@ function LinechartMultiple({ datasets, formParameters, mediaOutlets, classes }) 
                           )}
                         />
 
-                        {words.map(lineWord =>
-                          outlets.map((lineMediaOutlet, index) => {
-                            return (
-                              <Line
-                                key={lineMediaOutlet + lineWord}
-                                type="monotone"
-                                name={`${
-                                  mediaOutlets.find(
-                                    obj => obj.value === lineMediaOutlet,
-                                  ).title
-                                } - ${lineWord}`}
-                                dataKey={lineMediaOutlet + lineWord + yAxisKey}
-                                stroke={
-                                  displayOption === 'byWord'
-                                    ? stringToColour(lineMediaOutlet)
-                                    : stringToColour(lineWord)
-                                }
-                                fill={
-                                  displayOption === 'byWord'
-                                    ? stringToColour(lineMediaOutlet)
-                                    : stringToColour(lineWord)
-                                }
-                                connectNulls
-                                strokeWidth={3}
-                                dot={
-                                  <CustomizedDot
-                                    number={
-                                      displayOption === 'byWord' ? 0 : index
-                                    }
-                                  />
-                                }
-                                activeDot={{
-                                  stroke:
-                                    displayOption === 'byWord'
-                                      ? stringToColour(lineMediaOutlet)
-                                      : stringToColour(lineWord),
-                                  strokeWidth: 7,
-                                  border: 'white',
-                                }}
-                              />
-                            );
-                          }),
-                        )}
+                        <Line
+                          type="monotone"
+                          dataKey={yAxisKey}
+                          stroke={stringToColour(word)}
+                          fill={stringToColour(word)}
+                          connectNulls
+                          strokeWidth={3}
+                          dot={<CustomizedDot number={0} />}
+                          activeDot={{
+                            stroke: stringToColour(word),
+                            strokeWidth: 7,
+                            border: 'white',
+                          }}
+                        />
                       </LineChart>
                     </ResponsiveContainer>
                   </div>
-                  <Box display="flex" justifyContent="center">
-                    <CSVLink
-                      data={data.data}
-                      filename={`${data.title}-word-freq.csv`}
-                    >
-                      Download as CSV
-                    </CSVLink>
-                  </Box>
                 </Grid>
               );
             }
@@ -166,7 +117,8 @@ function LinechartMultiple({ datasets, formParameters, mediaOutlets, classes }) 
           })}
         </Grid>
       ))}
-    </Grid>)
+    </Grid>
+  );
 }
 
 export default LinechartMultiple;

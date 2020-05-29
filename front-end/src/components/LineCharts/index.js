@@ -53,7 +53,6 @@ const useStyles = makeStyles(() => ({
  */
 function LineCharts({ datasets, formParameters, mediaOutlets }) {
   const classes = useStyles();
-  let processedData = {};
 
   const yearFrom = formParameters.yearFrom;
   const yearTo = formParameters.yearTo;
@@ -61,34 +60,37 @@ function LineCharts({ datasets, formParameters, mediaOutlets }) {
   const displayNormalised = formParameters.displayNormalised;
   const displayOption = formParameters.displayOption;
 
-  //TODO try merging this into the if below.
-  let normalisedDatasets = JSON.parse(JSON.stringify(datasets));
-  Object.values(normalisedDatasets).forEach(wordData => {
-    Object.values(wordData.data).forEach(outletData => {
-      let firstYearData = outletData.find(obj => obj.year === String(yearFrom));
-      if (!firstYearData) {
-        firstYearData = Object.values(outletData)[0];
-      }
-      let min = firstYearData[yAxisKey];
-      let max = firstYearData[yAxisKey];
-      // Find the actual maximum and minimum
-      Object.values(outletData).forEach(yearData => {
-        if (yearData.year >= yearFrom && yearData.year <= yearTo) {
-          if (yearData[yAxisKey] > max) max = yearData[yAxisKey];
-          if (yearData[yAxisKey] < min) min = yearData[yAxisKey];
-        }
-      });
-      // Normalise using the maximum and minimum
-      Object.values(outletData).forEach(yearData => {
-        yearData[yAxisKey] = (yearData[yAxisKey] - min) / (max - min);
-      });
-    });
-  });
+  // //TODO try merging this into the if below.
+  // let normalisedDatasets = JSON.parse(JSON.stringify(datasets));
+  // Object.values(normalisedDatasets).forEach(wordData => {
+  //   Object.values(wordData.data).forEach(outletData => {
+  //     let firstYearData = outletData.find(obj => obj.year === String(yearFrom));
+  //     if (!firstYearData) {
+  //       firstYearData = Object.values(outletData)[0];
+  //     }
+  //     let min = firstYearData[yAxisKey];
+  //     let max = firstYearData[yAxisKey];
+  //     // Find the actual maximum and minimum
+  //     Object.values(outletData).forEach(yearData => {
+  //       if (yearData.year >= yearFrom && yearData.year <= yearTo) {
+  //         if (yearData[yAxisKey] > max) max = yearData[yAxisKey];
+  //         if (yearData[yAxisKey] < min) min = yearData[yAxisKey];
+  //       }
+  //     });
+  //     // Normalise using the maximum and minimum
+  //     Object.values(outletData).forEach(yearData => {
+  //       yearData[yAxisKey] = (yearData[yAxisKey] - min) / (max - min);
+  //     });
+  //   });
+  // });
 
-  if (displayNormalised) {
-    datasets = normalisedDatasets;
-  }
+  // if (displayNormalised) {
+  //   datasets = normalisedDatasets;
+  // }
 
+
+  //TODO Do legend and tooltip here aswell.
+  let processedData = {};
   switch (displayOption) {
     case 'multiple':
       processedData = multipleDatasets(datasets, mediaOutlets);
@@ -104,7 +106,7 @@ function LineCharts({ datasets, formParameters, mediaOutlets }) {
       processedData = singleDataset(datasets);
       return (
         <LinechartSingle
-          datasets={processedData}
+          dataset={processedData}
           formParameters={formParameters}
           mediaOutlets={mediaOutlets}
           classes={classes}

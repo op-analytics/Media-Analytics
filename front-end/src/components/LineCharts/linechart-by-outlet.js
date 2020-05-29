@@ -88,13 +88,13 @@ function LinechartByOutlet({ datasets, formParameters, mediaOutlets, classes }) 
                     <Line
                       key={word}
                       type="monotone"
-                      name={word}
+                      name={word} //TODO I don't think this is required
                       dataKey={word + yAxisKey}
                       stroke={stringToColour(word)}
                       fill={stringToColour(word)}
                       connectNulls
                       strokeWidth={3}
-                      dot={<CustomizedDot />}
+                      dot={<CustomizedDot number={0}/>}
                       activeDot={{
                         stroke: stringToColour(word),
                         strokeWidth: 7,

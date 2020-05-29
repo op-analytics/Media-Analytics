@@ -18,7 +18,13 @@ import Triangle from '@material-ui/icons/ChangeHistory';
  * @param {String}  yAxisKey Key to normalise for
  * @returns {Object[]}
  */
-export const normaliseDatasets = (normalisedDatasets, datasets, yearFrom, yearTo, yAxisKey) => {
+export const normaliseDatasets = (
+  normalisedDatasets,
+  datasets,
+  yearFrom,
+  yearTo,
+  yAxisKey,
+) => {
   normalisedDatasets = JSON.parse(JSON.stringify(datasets));
   Object.values(datasets).forEach(wordData => {
     Object.values(wordData.data).forEach(outletData => {
@@ -250,68 +256,61 @@ export const CustomizedDot = props => {
  */
 export function multipleDatasets(dataset, mediaOutlets) {
   let result = [];
-  dataset.forEach(wordDataset => {
-    for (let outlet in wordDataset.data) {
-      let mediaOutletData = [];
-      wordDataset.data[outlet].forEach(wordData => {
-        // Creating keys for the year data using using the media outlet and word.
-        let yearObject = { year: wordData.year };
-        yearObject[outlet + wordDataset.word + 'rank'] = wordData.rank;
-        yearObject[outlet + wordDataset.word + 'count'] = wordData.count;
-        yearObject[outlet + wordDataset.word + 'freq'] = wordData.freq;
-        yearObject[outlet + wordDataset.word + 'word'] = wordDataset.word;
-        yearObject[outlet + wordDataset.word + 'mediaOutlet'] = outlet;
-        mediaOutletData.push(yearObject);
-      });
-      // Add the new result
-      let fullName = mediaOutlets.find(obj => obj.value === outlet).title;
+
+  dataset.forEach(wordData => {
+    const title = `${
+      mediaOutlets.find(obj => obj.value === wordData.outlet).title
+    } -
+      ${wordData.word}`;
+
+    const data = {
+      ['word']: wordData.word,
+      ['outlet']: wordData.outlet,
+      ['year']: wordData.year,
+      ['rank']: wordData.rank,
+      ['count']: wordData.count,
+      ['freq']: wordData.freq,
+    };
+
+    const outlet = result.find(obj => obj.title === title);
+
+    if (outlet) {
+      outlet.data.push(data);
+    } else {
       result.push({
-        title: wordDataset.word + ' - ' + fullName,
-        data: mediaOutletData,
+        title: title,
+        data: [data],
       });
     }
   });
+
   return result;
 }
 
 /**
  * Structure a dataset for a single chart display
  *
- * @param {Object} dataset Dataset to alter
- * @returns {Object[]}
+ * @param {Object[]} dataset Dataset to alter
+ * @returns {Object}
  */
 export function singleDataset(dataset) {
-  // The object that will contain all the data. This could be wrapped in brackets at
-  // the final return and result could be removed but I think it is clearer and
-  // consistant with the other functions when kept separate.
-  let result = [];
-  let summaryObject = {
+  let result = {
     title: 'Summary',
     data: [],
   };
-  dataset.forEach(wordDataset => {
-    for (let outlet in wordDataset.data) {
-      wordDataset.data[outlet].forEach(wordData => {
-        // Check if the year already exists in the summary object
-        let yearObject = summaryObject.data.find(
-          obj => obj.year === wordData.year,
-        );
-        // The year doesn't exist, set the year object to a new object for the year.
-        if (!yearObject) {
-          yearObject = { year: wordData.year };
-          summaryObject.data.push(yearObject);
-        }
-        // Add to year object using, media source and word in the keys.
-        yearObject[outlet + wordDataset.word + 'rank'] = wordData.rank;
-        yearObject[outlet + wordDataset.word + 'count'] = wordData.count;
-        yearObject[outlet + wordDataset.word + 'freq'] = wordData.freq;
-        yearObject[outlet + wordDataset.word + 'word'] = wordDataset.word;
-        yearObject[outlet + wordDataset.word + 'mediaOutlet'] = outlet;
-      });
-    }
+
+  dataset.forEach(wordData => {
+    const data = {
+      ['word']: wordData.word,
+      ['outlet']: wordData.outlet,
+      ['year']: wordData.year,
+      [wordData.outlet + wordData.word + 'rank']: wordData.rank,
+      [wordData.outlet + wordData.word + 'count']: wordData.count,
+      [wordData.outlet + wordData.word + 'freq']: wordData.freq,
+    };
+    result.data.push(data);
   });
-  summaryObject.data.sort((x, y) => x.year - y.year);
-  result.push(summaryObject);
+
   return result;
 }
 
@@ -324,60 +323,31 @@ export function singleDataset(dataset) {
  */
 export function byOutletDataset(dataset, mediaOutlets) {
   let result = [];
-  dataset.forEach(wordDataset => {
-    // Title and data to be appended to result
-    for (let outlet in wordDataset.data) {
-      let yearObject;
-      let mediaOutletData = [];
-      wordDataset.data[outlet].forEach(wordData => {
-        // Get a reference to the current media outlet data if it already exists.
-        let mediaOutletInResult = result.find(
-          obj =>
-            obj.title === mediaOutlets.find(obj => obj.value === outlet).title,
-        );
-        if (mediaOutletInResult) {
-          mediaOutletData = mediaOutletInResult.data;
-        }
-        // Get a reference to the year data in media outlet data if it already exists.
-        yearObject = mediaOutletData.find(obj => obj.year === wordData.year);
-        if (!yearObject) {
-          yearObject = { year: wordData.year };
-          mediaOutletData.push(yearObject);
-        }
-        // Creating keys for the data using using the media outlet and word.
-        yearObject[wordDataset.word + 'rank'] = wordData.rank;
-        yearObject[wordDataset.word + 'count'] = wordData.count;
-        yearObject[wordDataset.word + 'freq'] = wordData.freq;
-        yearObject[wordDataset.word + 'word'] = wordDataset.word;
-        yearObject[wordDataset.word + 'mediaOutlet'] = outlet;
-      });
 
-      // Check there is aready data for the particular year in the current media data.
-      let yearDataObjectInMediaOutlet = mediaOutletData.find(
-        obj => obj.year === yearObject.year,
-      );
-      // If there is no data already for the year, add the year object. If there was
-      // already data, the year object would be a reference to an object within the
-      // media outlet data array and wouldn't need to be appended.
-      if (!yearDataObjectInMediaOutlet) {
-        mediaOutletData.push(yearObject);
-      }
-      // Check if there is already data for the media outlet in result.
-      let resultMediaOutlet = result.find(
-        obj => obj.title === mediaOutlets.find(obj => obj.value === outlet).name,
-      );
-      // Similar to above. Only add to result if not already there, a reference has
-      // been edited and doesn't need added again.
-      if (!resultMediaOutlet) {
-        let fullName = mediaOutlets.find(obj => obj.value === outlet).title;
-        let newResultMediaOutlet = {
-          title: fullName,
-          data: mediaOutletData,
-        };
-        result.push(newResultMediaOutlet);
-      }
+  dataset.forEach(wordData => {
+    const title = mediaOutlets.find(obj => obj.value === wordData.outlet).title;
+
+    const data = {
+      ['word']: wordData.word,
+      ['outlet']: wordData.outlet,
+      ['year']: wordData.year,
+      [wordData.word + 'rank']: wordData.rank,
+      [wordData.word + 'count']: wordData.count,
+      [wordData.word + 'freq']: wordData.freq,
+    };
+
+    const outlet = result.find(obj => obj.title === title);
+
+    if (outlet) {
+      outlet.data.push(data);
+    } else {
+      result.push({
+        title: title,
+        data: [data],
+      });
     }
   });
+
   return result;
 }
 
@@ -389,28 +359,31 @@ export function byOutletDataset(dataset, mediaOutlets) {
  */
 export function byWordDataset(dataset) {
   let result = [];
-  dataset.forEach(wordDataset => {
-    for (let outlet in wordDataset.data) {
-      wordDataset.data[outlet].forEach(wordData => {
-        // Creating keys for the year data using using the media outlet and word.
-        let yearObject = { year: wordData.year };
-        yearObject[outlet + wordDataset.word + 'rank'] = wordData.rank;
-        yearObject[outlet + wordDataset.word + 'count'] = wordData.count;
-        yearObject[outlet + wordDataset.word + 'freq'] = wordData.freq;
-        yearObject[outlet + wordDataset.word + 'word'] = wordDataset.word;
-        yearObject[outlet + wordDataset.word + 'mediaOutlet'] = outlet;
-        // Check if there is already a chart for the current word
-        let wordObject = result.find(obj => obj.title === wordDataset.word);
-        // If there is not already a chart
-        if (!wordObject) {
-          wordObject = { title: wordDataset.word, data: [] };
-          result.push(wordObject);
-        }
-        // Add to the result for the currant word
-        wordObject.data.push(yearObject);
+
+  dataset.forEach(wordData => {
+    const title = wordData.word;
+
+    const data = {
+      ['word']: wordData.word,
+      ['outlet']: wordData.outlet,
+      ['year']: wordData.year,
+      [wordData.outlet + 'rank']: wordData.rank,
+      [wordData.outlet + 'count']: wordData.count,
+      [wordData.outlet + 'freq']: wordData.freq,
+    };
+
+    const word = result.find(obj => obj.title === title);
+
+    if (word) {
+      word.data.push(data);
+    } else {
+      result.push({
+        title: title,
+        data: [data],
       });
     }
   });
+  console.log('result :>> ', result);
   return result;
 }
 

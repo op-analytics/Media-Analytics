@@ -92,7 +92,7 @@ function Timeline() {
   const [yAxisMetric, setYAxisMetric] = useState('freq');
   const [normalised, setNormalised] = useState(false);
   const [outlets, setOutlets] = useState([]);
-  const [displayOption, setDisplayOption] = useState('multiple');
+  const [displayOption, setDisplayOption] = useState('byOutlet');
   const [words, setWords] = useState([]);
   const [formSubmitted, setFormSubmitted] = useState(true);
   const loading = useSelector(state => state.timeline.loading);
