@@ -2,10 +2,10 @@ import React from 'react';
 import Fab from '@material-ui/core/Fab';
 import TooltipUI from '@material-ui/core/Tooltip';
 import GetAppIcon from '@material-ui/icons/GetApp';
-import { makeStyles } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
 import { CSVLink } from 'react-csv';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = theme => ({
   fab: {
     position: 'fixed',
     bottom: 20,
@@ -15,19 +15,22 @@ const useStyles = makeStyles(theme => ({
     display: 'block',
     margin: 'auto',
   },
-}));
+});
 
-export default function CsvDownloadButton({ data, filename, headers }) {
-  const classes = useStyles();
-  return (
-    <TooltipUI title="Download as csv" placement="right" arrow>
-      <Fab color="secondary" aria-label="download" className={classes.fab}>
-        <CSVLink data={data} headers={headers} filename={filename}>
-          <GetAppIcon fontSize="large" className={classes.icon}/>
-        </CSVLink>
-      </Fab>
-    </TooltipUI>
-  );
+
+class CsvDownloadButton extends React.Component {
+  render() {
+    const { classes } = this.props
+    return (
+      <TooltipUI title="Download as csv" placement="right" arrow>
+        <Fab color="secondary" aria-label="download" className={classes.fab}>
+          <CSVLink data={this.props.data} headers={this.props.headers} filename={this.props.filename}>
+            <GetAppIcon fontSize="large" className={classes.icon}/>
+          </CSVLink>
+        </Fab>
+      </TooltipUI>
+    );
+  }
 }
 
-// TODO: Proptypes
+export default withStyles(useStyles)(CsvDownloadButton)
