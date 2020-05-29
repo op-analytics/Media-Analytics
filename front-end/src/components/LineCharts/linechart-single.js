@@ -57,9 +57,7 @@ function LinechartSingle({ dataset, formParameters, mediaOutlets, classes }) {
               <Legend
                 payload={createLegendPayload(
                   dataset.data,
-                  words,
                   outlets,
-                  yAxisKey,
                   mediaOutlets,
                   displayOption,
                 )}

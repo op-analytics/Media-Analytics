@@ -2,7 +2,6 @@ import Grid from '@material-ui/core/Grid';
 import React from 'react';
 import {
   CartesianGrid,
-  Legend,
   Line,
   LineChart,
   ResponsiveContainer,
@@ -11,7 +10,6 @@ import {
   YAxis,
 } from 'recharts';
 import {
-  createLegendPayload,
   createTooltip,
   CustomizedDot,
   stringToColour,
@@ -70,16 +68,6 @@ function LinechartMultiple({ datasets, formParameters, mediaOutlets, classes }) 
                           domain={displayNormalised ? [0, 1] : ['auto', 'auto']}
                           width={75}
                           allowDataOverflow={true} // Forces displayed data to match domain.
-                        />
-                        <Legend
-                          payload={createLegendPayload(
-                            data.data,
-                            words,
-                            outlets,
-                            yAxisKey,
-                            mediaOutlets,
-                            displayOption,
-                          )}
                         />
                         <Tooltip
                           itemSorter={item1 => item1.value * -1}

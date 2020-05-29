@@ -68,14 +68,20 @@ function LineCharts({ datasets, formParameters, mediaOutlets }) {
   const displayNormalised = formParameters.displayNormalised;
   const displayOption = formParameters.displayOption;
 
-  // //TODO try merging this into the if below.
-  let normalisedDatasets = normaliseDatasets(datasets, words, outlets, yearFrom, yearTo, yAxisKey)
-  console.log('normalisedDatasets :>> ', normalisedDatasets);
+  let normalisedDatasets = normaliseDatasets(
+    datasets,
+    words,
+    outlets,
+    yearFrom,
+    yearTo,
+    yAxisKey,
+  );
+
   if (displayNormalised) {
     datasets = normalisedDatasets;
   }
 
-  //TODO Do legend and tooltip here aswell.
+  //TODO Do legend and tooltip here as well.
   let processedData = {};
   switch (displayOption) {
     case 'multiple':

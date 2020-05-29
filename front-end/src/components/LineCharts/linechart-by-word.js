@@ -64,9 +64,7 @@ function LinechartByWord({ datasets, formParameters, mediaOutlets, classes }) {
                 <Legend
                   payload={createLegendPayload(
                     dataset.data,
-                    words,
                     outlets,
-                    yAxisKey,
                     mediaOutlets,
                     displayOption,
                   )}
@@ -83,7 +81,7 @@ function LinechartByWord({ datasets, formParameters, mediaOutlets, classes }) {
                   )}
                 />
 
-                {outlets.map(outlet => {
+                {outlets.map((outlet) => {
                   return (
                     <Line
                       key={outlet}

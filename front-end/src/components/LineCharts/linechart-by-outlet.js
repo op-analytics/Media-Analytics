@@ -64,9 +64,7 @@ function LinechartByOutlet({ datasets, formParameters, mediaOutlets, classes }) 
                 <Legend
                   payload={createLegendPayload(
                     dataset.data,
-                    words,
                     outlets,
-                    yAxisKey,
                     mediaOutlets,
                     displayOption,
                   )}
@@ -88,7 +86,6 @@ function LinechartByOutlet({ datasets, formParameters, mediaOutlets, classes }) 
                     <Line
                       key={word}
                       type="monotone"
-                      name={word} //TODO I don't think this is required
                       dataKey={word + yAxisKey}
                       stroke={stringToColour(word)}
                       fill={stringToColour(word)}
