@@ -81,14 +81,14 @@ const yAxisMetrics = [
  * @component
  */
 function Timeline() {
-  const minYear = 1970;
-  const maxYear = 2020;
-  const parameterLimit = 4;
+  const MIN_YEAR = 1970;
+  const MAX_YEAR = 2020;
+  const PARAMETER_LIMIT = 4;
 
   const classes = useStyles();
   const dispatch = useDispatch();
-  const [yearFrom, setYearFrom] = useState(minYear);
-  const [yearTo, setYearTo] = useState(maxYear);
+  const [yearFrom, setYearFrom] = useState(MIN_YEAR);
+  const [yearTo, setYearTo] = useState(MAX_YEAR);
   const [yAxisMetric, setYAxisMetric] = useState('freq');
   const [normalised, setNormalised] = useState(false);
   const [outlets, setOutlets] = useState([]);
@@ -101,7 +101,7 @@ function Timeline() {
   const onSubmitHandler = e => {
     e.preventDefault();
     setFormSubmitted(true);
-    dispatch(getFrequencies(words, minYear, maxYear, outlets));
+    dispatch(getFrequencies(words, MIN_YEAR, MAX_YEAR, outlets));
   };
 
   const handleDelete = (chip, state, setState) => {
@@ -109,7 +109,7 @@ function Timeline() {
   };
 
   const handleAddChip = (chip, state, setState) => {
-    if (state.length < parameterLimit) {
+    if (state.length < PARAMETER_LIMIT) {
       setState([...state, chip]);
       outlets.length ? setFormSubmitted(false) : setFormSubmitted(true);
     }
@@ -158,7 +158,7 @@ function Timeline() {
                     getOptionLabel={option => option.title}
                     filterSelectedOptions
                     filterOptions={(options, _) =>
-                      outlets.length < parameterLimit ? options : []
+                      outlets.length < PARAMETER_LIMIT ? options : []
                     }
                     onChange={(_, value) => {
                       const newOutlets = value.map(({ value: code }) => code);
@@ -178,8 +178,8 @@ function Timeline() {
                         placeholder="Add a media outlet"
                         required={!outlets.length}
                         helperText={
-                          outlets.length === parameterLimit
-                            ? `There is a ${parameterLimit} outlet limit per request`
+                          outlets.length === PARAMETER_LIMIT
+                            ? `There is a ${PARAMETER_LIMIT} outlet limit per request`
                             : ''
                         }
                       />
@@ -194,10 +194,10 @@ function Timeline() {
                     type="number"
                     label="Year from:"
                     name="year_from"
-                    InputProps={{ inputProps: { min: minYear, max: maxYear } }}
+                    InputProps={{ inputProps: { min: MIN_YEAR, max: MAX_YEAR } }}
                     onChange={e => {
                       const newYear = Number(e.target.value);
-                      if (newYear >= minYear && newYear <= maxYear) {
+                      if (newYear >= MIN_YEAR && newYear <= MAX_YEAR) {
                         setYearFrom(newYear);
                       }
                     }}
@@ -212,10 +212,10 @@ function Timeline() {
                     type="number"
                     label="Year to:"
                     name="year_to"
-                    InputProps={{ inputProps: { min: minYear, max: maxYear } }}
+                    InputProps={{ inputProps: { min: MIN_YEAR, max: MAX_YEAR } }}
                     onChange={e => {
                       const newYear = Number(e.target.value);
-                      if (newYear >= minYear && newYear <= maxYear) {
+                      if (newYear >= MIN_YEAR && newYear <= MAX_YEAR) {
                         setYearTo(newYear);
                       }
                     }}
