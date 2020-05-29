@@ -7,6 +7,43 @@ import Cross from '@material-ui/icons/Add';
 import Triangle from '@material-ui/icons/ChangeHistory';
 
 /**
+ * Normalise a frequency dataset using min-max normalisation.
+ *
+ * Data is normaised between years of an outlet starting at the given year or
+ * first year in dataset if the given year does not exist.
+ *
+ * @param {Object[]} datasets
+ * @param {Number}  yearFrom Year to normalise the data from.
+ * @param {Number}  yearTo
+ * @param {String}  yAxisKey Key to normalise for
+ * @returns {Object[]}
+ */
+export const normaliseDatasets = (normalisedDatasets, datasets, yearFrom, yearTo, yAxisKey) => {
+  normalisedDatasets = JSON.parse(JSON.stringify(datasets));
+  Object.values(datasets).forEach(wordData => {
+    Object.values(wordData.data).forEach(outletData => {
+      let firstYearData = outletData.find(obj => obj.year === String(yearFrom));
+      if (!firstYearData) {
+        firstYearData = Object.values(outletData)[0];
+      }
+      let min = firstYearData[yAxisKey];
+      let max = firstYearData[yAxisKey];
+      // Find the actual maximum and minimum
+      Object.values(outletData).forEach(yearData => {
+        if (yearData.year >= yearFrom && yearData.year <= yearTo) {
+          if (yearData[yAxisKey] > max) max = yearData[yAxisKey];
+          if (yearData[yAxisKey] < min) min = yearData[yAxisKey];
+        }
+      });
+      // Normalise using the maximum and minimum
+      Object.values(outletData).forEach(yearData => {
+        yearData[yAxisKey] = (yearData[yAxisKey] - min) / (max - min);
+      });
+    });
+  });
+};
+
+/**
  * A tooltip factory for creating tooltips dynamicaly
  *
  * @param {Object} classes Classes to apply to the tooltip
@@ -38,8 +75,7 @@ export const createTooltip = (
                 .map(word => word.charAt(0).toUpperCase() + word.slice(1))
                 .join(' ');
 
-              let payloadItem =
-                payload[0].payload[outlet + word + yAxisKey];
+              let payloadItem = payload[0].payload[outlet + word + yAxisKey];
 
               let tooltipLabel = '';
               switch (displayOption) {
@@ -297,8 +333,7 @@ export function byOutletDataset(dataset, mediaOutlets) {
         // Get a reference to the current media outlet data if it already exists.
         let mediaOutletInResult = result.find(
           obj =>
-            obj.title ===
-            mediaOutlets.find(obj => obj.value === outlet).title,
+            obj.title === mediaOutlets.find(obj => obj.value === outlet).title,
         );
         if (mediaOutletInResult) {
           mediaOutletData = mediaOutletInResult.data;
@@ -310,11 +345,11 @@ export function byOutletDataset(dataset, mediaOutlets) {
           mediaOutletData.push(yearObject);
         }
         // Creating keys for the data using using the media outlet and word.
-        yearObject[outlet + wordDataset.word + 'rank'] = wordData.rank;
-        yearObject[outlet + wordDataset.word + 'count'] = wordData.count;
-        yearObject[outlet + wordDataset.word + 'freq'] = wordData.freq;
-        yearObject[outlet + wordDataset.word + 'word'] = wordDataset.word;
-        yearObject[outlet + wordDataset.word + 'mediaOutlet'] = outlet;
+        yearObject[wordDataset.word + 'rank'] = wordData.rank;
+        yearObject[wordDataset.word + 'count'] = wordData.count;
+        yearObject[wordDataset.word + 'freq'] = wordData.freq;
+        yearObject[wordDataset.word + 'word'] = wordDataset.word;
+        yearObject[wordDataset.word + 'mediaOutlet'] = outlet;
       });
 
       // Check there is aready data for the particular year in the current media data.
@@ -329,15 +364,12 @@ export function byOutletDataset(dataset, mediaOutlets) {
       }
       // Check if there is already data for the media outlet in result.
       let resultMediaOutlet = result.find(
-        obj =>
-          obj.title ===
-          mediaOutlets.find(obj => obj.value === outlet).name,
+        obj => obj.title === mediaOutlets.find(obj => obj.value === outlet).name,
       );
       // Similar to above. Only add to result if not already there, a reference has
       // been edited and doesn't need added again.
       if (!resultMediaOutlet) {
-        let fullName = mediaOutlets.find(obj => obj.value === outlet)
-          .title;
+        let fullName = mediaOutlets.find(obj => obj.value === outlet).title;
         let newResultMediaOutlet = {
           title: fullName,
           data: mediaOutletData,

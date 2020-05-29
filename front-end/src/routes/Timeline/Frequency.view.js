@@ -71,20 +71,24 @@ const displayOptions = [
 ];
 
 const yAxisMetrics = [
-  {name: "Frequency", value: 'freq'},
-  {name: "Count", value: 'count'},
-  {name: "Rank", value: 'rank'},
-]
+  { name: 'Frequency', value: 'freq' },
+  { name: 'Count', value: 'count' },
+  { name: 'Rank', value: 'rank' },
+];
 
 /**
  * The frequency timeline page component
  * @component
  */
 function Timeline() {
+  const minYear = 1970;
+  const maxYear = 2020;
+  const parameterLimit = 4;
+
   const classes = useStyles();
   const dispatch = useDispatch();
-  const [yearFrom, setYearFrom] = useState('');
-  const [yearTo, setYearTo] = useState('');
+  const [yearFrom, setYearFrom] = useState(minYear);
+  const [yearTo, setYearTo] = useState(maxYear);
   const [yAxisMetric, setYAxisMetric] = useState('freq');
   const [normalised, setNormalised] = useState(false);
   const [outlets, setOutlets] = useState([]);
@@ -93,10 +97,6 @@ function Timeline() {
   const [formSubmitted, setFormSubmitted] = useState(true);
   const loading = useSelector(state => state.timeline.loading);
   const frequencies = useSelector(state => state.timeline.frequencies);
-
-  const minYear = 1970;
-  const maxYear = 2020;
-  const parameterLimit = 4;
 
   const onSubmitHandler = e => {
     e.preventDefault();
@@ -258,7 +258,7 @@ function Timeline() {
                     }}
                     className={classes.ToggleButton}
                   >
-                    {normalised ? 'Display Absolute': 'Display Normalised'}
+                    {normalised ? 'Display Absolute' : 'Display Normalised'}
                   </ToggleButton>
                 </FormControl>
               </Grid>
@@ -311,16 +311,16 @@ function Timeline() {
           formSubmitted && (
             <LineCharts
               datasets={frequencies}
-              xAxisKey="year"
-              yAxisKey={yAxisMetric}
-              displayNormalised={normalised}
-              tooltipItems={[{ key: 'rank', title: 'rank' }]}
-              words={words}
-              outlets={outlets}
+              formParameters={{
+                outlets: outlets,
+                words: words,
+                yearFrom: Number(yearFrom),
+                yearTo: Number(yearTo),
+                yAxisKey: yAxisMetric,
+                displayNormalised: normalised,
+                displayOption: displayOption,
+              }}
               mediaOutlets={mediaOutlets}
-              yearFrom={Number(yearFrom)}
-              yearTo={Number(yearTo)}
-              displayOption={displayOption}
             />
           )
         )}
