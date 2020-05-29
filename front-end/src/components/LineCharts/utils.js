@@ -19,34 +19,40 @@ import Triangle from '@material-ui/icons/ChangeHistory';
  * @returns {Object[]}
  */
 export const normaliseDatasets = (
-  normalisedDatasets,
   datasets,
+  words,
+  outlets,
   yearFrom,
   yearTo,
   yAxisKey,
 ) => {
-  normalisedDatasets = JSON.parse(JSON.stringify(datasets));
-  Object.values(datasets).forEach(wordData => {
-    Object.values(wordData.data).forEach(outletData => {
-      let firstYearData = outletData.find(obj => obj.year === String(yearFrom));
+  let normalisedDatasets = JSON.parse(JSON.stringify(datasets));
+  outlets.forEach(outlet => {
+    words.forEach(word => {
+      let wordData = normalisedDatasets.filter(
+        wordDatum => wordDatum.outlet === outlet && wordDatum.word === word,
+      );
+      let firstYearData = wordData.find(obj => obj.year === String(yearFrom));
       if (!firstYearData) {
-        firstYearData = Object.values(outletData)[0];
+        firstYearData = Object.values(wordData)[0];
       }
       let min = firstYearData[yAxisKey];
       let max = firstYearData[yAxisKey];
       // Find the actual maximum and minimum
-      Object.values(outletData).forEach(yearData => {
+      Object.values(wordData).forEach(yearData => {
         if (yearData.year >= yearFrom && yearData.year <= yearTo) {
           if (yearData[yAxisKey] > max) max = yearData[yAxisKey];
           if (yearData[yAxisKey] < min) min = yearData[yAxisKey];
         }
       });
       // Normalise using the maximum and minimum
-      Object.values(outletData).forEach(yearData => {
+      Object.values(wordData).forEach(yearData => {
         yearData[yAxisKey] = (yearData[yAxisKey] - min) / (max - min);
       });
+      //result.push(wordData);
     });
   });
+  return normalisedDatasets
 };
 
 /**

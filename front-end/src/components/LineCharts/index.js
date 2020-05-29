@@ -5,7 +5,13 @@ import LinechartByOutlet from './linechart-by-outlet';
 import LinechartByWord from './linechart-by-word';
 import LinechartMultiple from './linechart-multiple';
 import LinechartSingle from './linechart-single';
-import { byOutletDataset, byWordDataset, multipleDatasets, singleDataset } from './utils';
+import {
+  byOutletDataset,
+  byWordDataset,
+  multipleDatasets,
+  singleDataset,
+  normaliseDatasets,
+} from './utils';
 
 const useStyles = makeStyles(() => ({
   chartContainer: {
@@ -54,6 +60,8 @@ const useStyles = makeStyles(() => ({
 function LineCharts({ datasets, formParameters, mediaOutlets }) {
   const classes = useStyles();
 
+  const words = formParameters.words;
+  const outlets = formParameters.outlets;
   const yearFrom = formParameters.yearFrom;
   const yearTo = formParameters.yearTo;
   const yAxisKey = formParameters.yAxisKey;
@@ -61,33 +69,11 @@ function LineCharts({ datasets, formParameters, mediaOutlets }) {
   const displayOption = formParameters.displayOption;
 
   // //TODO try merging this into the if below.
-  // let normalisedDatasets = JSON.parse(JSON.stringify(datasets));
-  // Object.values(normalisedDatasets).forEach(wordData => {
-  //   Object.values(wordData.data).forEach(outletData => {
-  //     let firstYearData = outletData.find(obj => obj.year === String(yearFrom));
-  //     if (!firstYearData) {
-  //       firstYearData = Object.values(outletData)[0];
-  //     }
-  //     let min = firstYearData[yAxisKey];
-  //     let max = firstYearData[yAxisKey];
-  //     // Find the actual maximum and minimum
-  //     Object.values(outletData).forEach(yearData => {
-  //       if (yearData.year >= yearFrom && yearData.year <= yearTo) {
-  //         if (yearData[yAxisKey] > max) max = yearData[yAxisKey];
-  //         if (yearData[yAxisKey] < min) min = yearData[yAxisKey];
-  //       }
-  //     });
-  //     // Normalise using the maximum and minimum
-  //     Object.values(outletData).forEach(yearData => {
-  //       yearData[yAxisKey] = (yearData[yAxisKey] - min) / (max - min);
-  //     });
-  //   });
-  // });
-
-  // if (displayNormalised) {
-  //   datasets = normalisedDatasets;
-  // }
-
+  let normalisedDatasets = normaliseDatasets(datasets, words, outlets, yearFrom, yearTo, yAxisKey)
+  console.log('normalisedDatasets :>> ', normalisedDatasets);
+  if (displayNormalised) {
+    datasets = normalisedDatasets;
+  }
 
   //TODO Do legend and tooltip here aswell.
   let processedData = {};
