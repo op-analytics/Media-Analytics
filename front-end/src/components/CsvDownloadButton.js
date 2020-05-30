@@ -1,8 +1,8 @@
-import React from 'react';
 import Fab from '@material-ui/core/Fab';
-import TooltipUI from '@material-ui/core/Tooltip';
 import GetAppIcon from '@material-ui/icons/GetApp';
+import TooltipUI from '@material-ui/core/Tooltip';
 import { withStyles } from '@material-ui/core/styles';
+import React from 'react';
 import { CSVLink } from 'react-csv';
 
 const useStyles = theme => ({
@@ -17,15 +17,18 @@ const useStyles = theme => ({
   },
 });
 
-
 class CsvDownloadButton extends React.Component {
   render() {
-    const { classes } = this.props
+    const { classes } = this.props;
     return (
       <TooltipUI title="Download as csv" placement="right" arrow>
         <Fab color="secondary" aria-label="download" className={classes.fab}>
-          <CSVLink data={this.props.data} headers={this.props.headers} filename={this.props.filename}>
-            <GetAppIcon fontSize="large" className={classes.icon}/>
+          <CSVLink
+            data={this.props.data}
+            headers={this.props.headers}
+            filename={this.props.filename}
+          >
+            <GetAppIcon fontSize="large" className={classes.icon} />
           </CSVLink>
         </Fab>
       </TooltipUI>
@@ -33,4 +36,4 @@ class CsvDownloadButton extends React.Component {
   }
 }
 
-export default withStyles(useStyles)(CsvDownloadButton)
+export default withStyles(useStyles)(CsvDownloadButton);
