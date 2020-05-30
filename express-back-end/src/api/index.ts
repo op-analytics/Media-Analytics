@@ -1,5 +1,5 @@
 import Router from './api.router';
-import Middlewares from './middlewares';
+import * as Middlewares from './middlewares';
 
 export default {
   Router,
