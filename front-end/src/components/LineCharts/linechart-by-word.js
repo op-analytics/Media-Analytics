@@ -73,11 +73,10 @@ function LinechartByWord({ datasets, formParameters, mediaOutlets, classes }) {
                   itemSorter={item1 => item1.value * -1}
                   content={createTooltip(
                     classes,
-                    words,
-                    outlets,
                     displayOption,
                     yAxisKey,
                     mediaOutlets,
+                    datasets
                   )}
                 />
 

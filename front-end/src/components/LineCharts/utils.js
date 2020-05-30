@@ -36,20 +36,21 @@ export const normaliseDatasets = (
       if (!firstYearData) {
         firstYearData = Object.values(wordData)[0];
       }
-      let min = firstYearData[yAxisKey];
-      let max = firstYearData[yAxisKey];
-      // Find the actual maximum and minimum
-      Object.values(wordData).forEach(yearData => {
-        if (yearData.year >= yearFrom && yearData.year <= yearTo) {
-          if (yearData[yAxisKey] > max) max = yearData[yAxisKey];
-          if (yearData[yAxisKey] < min) min = yearData[yAxisKey];
-        }
-      });
-      // Normalise using the maximum and minimum
-      Object.values(wordData).forEach(yearData => {
-        yearData[yAxisKey] = (yearData[yAxisKey] - min) / (max - min);
-      });
-      //result.push(wordData);
+      if (firstYearData) {
+        let min = firstYearData[yAxisKey];
+        let max = firstYearData[yAxisKey];
+        // Find the actual maximum and minimum
+        Object.values(wordData).forEach(yearData => {
+          if (yearData.year >= yearFrom && yearData.year <= yearTo) {
+            if (yearData[yAxisKey] > max) max = yearData[yAxisKey];
+            if (yearData[yAxisKey] < min) min = yearData[yAxisKey];
+          }
+        });
+        // Normalise using the maximum and minimum
+        Object.values(wordData).forEach(yearData => {
+          yearData[yAxisKey] = (yearData[yAxisKey] - min) / (max - min);
+        });
+      }
     });
   });
   return normalisedDatasets;
@@ -64,76 +65,111 @@ export const normaliseDatasets = (
  */
 export const createTooltip = (
   classes,
-  words,
-  outlets,
   displayOption,
   yAxisKey,
   mediaOutlets,
+  datasets,
 ) => {
   const ToolTip = ({ active, payload, label }) => {
     if (active) {
+      const tooltipLineData = [];
+      datasets.forEach(dataset => {
+        dataset.data.forEach(wordData => {
+          if (wordData.year === label) {
+
+            const word = wordData.word;
+            const outlet = wordData.outlet;
+
+            if (displayOption === 'byWord' && word !== payload[0].payload.word) {
+              return null;
+            }
+
+            if (
+              displayOption === 'byOutlet' &&
+              outlet !== payload[0].payload.outlet
+            ) {
+              return null;
+            }
+
+            if (
+              displayOption === 'multiple' &&
+              (word !== payload[0].payload.word ||
+                outlet !== payload[0].payload.outlet)
+            ) {
+              return null;
+            }
+
+            const tooltipData =
+              wordData[
+                Object.keys(wordData).find(key => key.includes(yAxisKey))
+              ];
+
+            const formattedOutlet = mediaOutlets.find(
+              obj => obj.value === outlet,
+            ).title;
+
+            const formattedWord = word
+              .toLowerCase()
+              .split(' ')
+              .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+              .join(' ');
+
+            let tooltipLabel = '';
+            switch (displayOption) {
+              case 'multiple':
+                tooltipLabel = '';
+                break;
+              case 'byWord':
+                tooltipLabel = formattedOutlet + ': ';
+                break;
+              case 'byOutlet':
+                tooltipLabel = formattedWord + ': ';
+                break;
+              default:
+                tooltipLabel = `${formattedOutlet} - ${formattedWord}: `;
+            }
+
+            tooltipLineData.push({
+              word: word,
+              outlet: outlet,
+              data: tooltipData,
+              label: tooltipLabel,
+            });
+          }
+        });
+      });
+
+      tooltipLineData.sort((item1, item2) => item2.data - item1.data);
+
       return (
         <div className={classes.tooltip}>
           <h3>{label}</h3>
-          {outlets.map(outlet => {
-            return words.map(word => {
-              const formattedOutlet = mediaOutlets.find(
-                obj => obj.value === outlet,
-              ).title;
-
-              const formattedWord = word
-                .toLowerCase()
-                .split(' ')
-                .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-                .join(' ');
-
-              let payloadItem = payload[0].payload[outlet + word + yAxisKey];
-
-              let tooltipLabel = '';
-              switch (displayOption) {
-                case 'multiple':
-                  tooltipLabel = '';
-                  break;
-                case 'byWord':
-                  tooltipLabel = formattedOutlet + ': ';
-                  break;
-                case 'byOutlet':
-                  tooltipLabel = formattedWord + ': ';
-                  break;
-                default:
-                  tooltipLabel = `${formattedOutlet} - ${formattedWord}: `;
-              }
-
-              if (payloadItem !== null) {
-                return (
-                  <p
-                    style={{
-                      color:
-                        displayOption === 'byWord'
-                          ? stringToColour(outlet)
-                          : stringToColour(word),
-                    }}
-                    className={classes.tooltipLabel}
-                    key={word + outlets + yAxisKey}
-                  >
-                    <span
-                      style={{
-                        color:
-                          displayOption === 'byWord'
-                            ? stringToColour(outlet)
-                            : stringToColour(word),
-                      }}
-                      className={classes.tooltipLabelFirstWord}
-                    >
-                      {tooltipLabel}
-                    </span>
-                    {payloadItem}
-                  </p>
-                );
-              } else {
-                return null;
-              }
-            });
+          {tooltipLineData.map(line => {
+            return (
+              <p
+                style={{
+                  color:
+                    displayOption === 'byWord'
+                      ? stringToColour(line.outlet)
+                      : stringToColour(line.word),
+                }}
+                className={classes.tooltipLabel}
+                key={line.word + line.outlet}
+              >
+                <span
+                  style={{
+                    color:
+                      displayOption === 'byWord'
+                        ? stringToColour(line.outlet)
+                        : stringToColour(line.word),
+                  }}
+                  className={classes.tooltipLabelFirstWord}
+                >
+                  {line.label}
+                </span>
+                {line.data}
+              </p>
+            );
           })}
         </div>
       );
@@ -189,13 +225,13 @@ export const createLegendPayload = (
       case 'single':
         legendItem.value = formattedOutlet + ' - ' + formattedWord;
         legendItem.type = icons[outlets.indexOf(outlet)].legend;
-        break
+        break;
       case 'byOutlet':
         legendItem.value = formattedWord;
         break;
       case 'byWord':
         legendItem.value = formattedOutlet;
-        legendItem.color = stringToColour(outlet)
+        legendItem.color = stringToColour(outlet);
         break;
       default:
         legendItem.value = formattedOutlet + ' - ' + formattedWord;
@@ -293,7 +329,7 @@ export function multipleDatasets(dataset, mediaOutlets) {
  * @returns {Object}
  */
 export function singleDataset(dataset) {
-  let result = {
+  const result = {
     title: 'Summary',
     data: [],
   };
@@ -309,7 +345,6 @@ export function singleDataset(dataset) {
     };
     result.data.push(data);
   });
-
   return result;
 }
 

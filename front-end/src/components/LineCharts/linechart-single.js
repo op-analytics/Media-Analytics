@@ -64,13 +64,13 @@ function LinechartSingle({ dataset, formParameters, mediaOutlets, classes }) {
               />
               <Tooltip
                 itemSorter={item1 => item1.value * -1}
+                allowDuplicatedCategory={false}
                 content={createTooltip(
                   classes,
-                  words,
-                  outlets,
                   displayOption,
                   yAxisKey,
                   mediaOutlets,
+                  [dataset]
                 )}
               />
 
@@ -78,7 +78,6 @@ function LinechartSingle({ dataset, formParameters, mediaOutlets, classes }) {
                 outlets.map((outlet, index) => {
                   return (
                     <Line
-                      key={outlet + word}
                       type="monotone"
                       dataKey={outlet + word + yAxisKey}
                       stroke={stringToColour(word)}
