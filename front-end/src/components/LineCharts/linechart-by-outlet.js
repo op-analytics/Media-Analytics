@@ -64,6 +64,7 @@ function LinechartByOutlet({ datasets, formParameters, mediaOutlets, classes }) 
                 <Legend
                   payload={createLegendPayload(
                     dataset.data,
+                    words,
                     outlets,
                     mediaOutlets,
                     displayOption,
@@ -73,6 +74,8 @@ function LinechartByOutlet({ datasets, formParameters, mediaOutlets, classes }) 
                   itemSorter={item1 => item1.value * -1}
                   content={createTooltip(
                     classes,
+                    words,
+                    outlets,
                     displayOption,
                     yAxisKey,
                     mediaOutlets,

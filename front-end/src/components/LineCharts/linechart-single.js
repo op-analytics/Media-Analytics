@@ -57,6 +57,7 @@ function LinechartSingle({ dataset, formParameters, mediaOutlets, classes }) {
               <Legend
                 payload={createLegendPayload(
                   dataset.data,
+                  words,
                   outlets,
                   mediaOutlets,
                   displayOption,
@@ -67,6 +68,8 @@ function LinechartSingle({ dataset, formParameters, mediaOutlets, classes }) {
                 allowDuplicatedCategory={false}
                 content={createTooltip(
                   classes,
+                  words,
+                  outlets,
                   displayOption,
                   yAxisKey,
                   mediaOutlets,

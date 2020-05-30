@@ -18,6 +18,7 @@ import {
 } from './utils';
 
 function LinechartByWord({ datasets, formParameters, mediaOutlets, classes }) {
+  const words = formParameters.words;
   const outlets = formParameters.outlets;
   const yearFrom = formParameters.yearFrom;
   const yearTo = formParameters.yearTo;
@@ -63,6 +64,7 @@ function LinechartByWord({ datasets, formParameters, mediaOutlets, classes }) {
                 <Legend
                   payload={createLegendPayload(
                     dataset.data,
+                    words,
                     outlets,
                     mediaOutlets,
                     displayOption,
@@ -72,6 +74,8 @@ function LinechartByWord({ datasets, formParameters, mediaOutlets, classes }) {
                   itemSorter={item1 => item1.value * -1}
                   content={createTooltip(
                     classes,
+                    words,
+                    outlets,
                     displayOption,
                     yAxisKey,
                     mediaOutlets,

@@ -65,6 +65,8 @@ export const normaliseDatasets = (
  */
 export const createTooltip = (
   classes,
+  words,
+  outlets,
   displayOption,
   yAxisKey,
   mediaOutlets,
@@ -76,65 +78,68 @@ export const createTooltip = (
       datasets.forEach(dataset => {
         dataset.data.forEach(wordData => {
           if (wordData.year === label) {
-
             const word = wordData.word;
             const outlet = wordData.outlet;
+            if (outlets.includes(outlet) && words.includes(word)) {
+              if (
+                displayOption === 'byWord' &&
+                word !== payload[0].payload.word
+              ) {
+                return null;
+              }
 
-            if (displayOption === 'byWord' && word !== payload[0].payload.word) {
-              return null;
+              if (
+                displayOption === 'byOutlet' &&
+                outlet !== payload[0].payload.outlet
+              ) {
+                return null;
+              }
+
+              if (
+                displayOption === 'multiple' &&
+                (word !== payload[0].payload.word ||
+                  outlet !== payload[0].payload.outlet)
+              ) {
+                return null;
+              }
+
+              const tooltipData =
+                wordData[
+                  Object.keys(wordData).find(key => key.includes(yAxisKey))
+                ];
+
+              const formattedOutlet = mediaOutlets.find(
+                obj => obj.value === outlet,
+              ).title;
+
+              const formattedWord = word
+                .toLowerCase()
+                .split(' ')
+                .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+                .join(' ');
+
+              let tooltipLabel = '';
+              switch (displayOption) {
+                case 'multiple':
+                  tooltipLabel = '';
+                  break;
+                case 'byWord':
+                  tooltipLabel = formattedOutlet + ': ';
+                  break;
+                case 'byOutlet':
+                  tooltipLabel = formattedWord + ': ';
+                  break;
+                default:
+                  tooltipLabel = `${formattedOutlet} - ${formattedWord}: `;
+              }
+
+              tooltipLineData.push({
+                word: word,
+                outlet: outlet,
+                data: tooltipData,
+                label: tooltipLabel,
+              });
             }
-
-            if (
-              displayOption === 'byOutlet' &&
-              outlet !== payload[0].payload.outlet
-            ) {
-              return null;
-            }
-
-            if (
-              displayOption === 'multiple' &&
-              (word !== payload[0].payload.word ||
-                outlet !== payload[0].payload.outlet)
-            ) {
-              return null;
-            }
-
-            const tooltipData =
-              wordData[
-                Object.keys(wordData).find(key => key.includes(yAxisKey))
-              ];
-
-            const formattedOutlet = mediaOutlets.find(
-              obj => obj.value === outlet,
-            ).title;
-
-            const formattedWord = word
-              .toLowerCase()
-              .split(' ')
-              .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-              .join(' ');
-
-            let tooltipLabel = '';
-            switch (displayOption) {
-              case 'multiple':
-                tooltipLabel = '';
-                break;
-              case 'byWord':
-                tooltipLabel = formattedOutlet + ': ';
-                break;
-              case 'byOutlet':
-                tooltipLabel = formattedWord + ': ';
-                break;
-              default:
-                tooltipLabel = `${formattedOutlet} - ${formattedWord}: `;
-            }
-
-            tooltipLineData.push({
-              word: word,
-              outlet: outlet,
-              data: tooltipData,
-              label: tooltipLabel,
-            });
           }
         });
       });
@@ -198,6 +203,7 @@ const icons = {
  */
 export const createLegendPayload = (
   data,
+  words,
   outlets,
   mediaOutlets,
   displayOption,
@@ -206,40 +212,43 @@ export const createLegendPayload = (
   data.forEach(wordData => {
     const word = wordData.word;
     const outlet = wordData.outlet;
-    const formattedOutlet = mediaOutlets.find(obj => obj.value === outlet).title;
+    if (words.includes(word) && outlets.includes(outlet)) {
+      const formattedOutlet = mediaOutlets.find(obj => obj.value === outlet)
+        .title;
 
-    const formattedWord = word
-      .toLowerCase()
-      .split(' ')
-      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-      .join(' ');
+      const formattedWord = word
+        .toLowerCase()
+        .split(' ')
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(' ');
 
-    const legendItem = {
-      id: outlet + word,
-      color: stringToColour(word),
-      type: icons[0].legend,
-      value: '',
-    };
+      const legendItem = {
+        id: outlet + word,
+        color: stringToColour(word),
+        type: icons[0].legend,
+        value: '',
+      };
 
-    switch (displayOption) {
-      case 'single':
-        legendItem.value = formattedOutlet + ' - ' + formattedWord;
-        legendItem.type = icons[outlets.indexOf(outlet)].legend;
-        break;
-      case 'byOutlet':
-        legendItem.value = formattedWord;
-        break;
-      case 'byWord':
-        legendItem.value = formattedOutlet;
-        legendItem.color = stringToColour(outlet);
-        break;
-      default:
-        legendItem.value = formattedOutlet + ' - ' + formattedWord;
-        legendItem.type = icons[outlets.indexOf(outlet)].legend;
-    }
+      switch (displayOption) {
+        case 'single':
+          legendItem.value = formattedOutlet + ' - ' + formattedWord;
+          legendItem.type = icons[outlets.indexOf(outlet)].legend;
+          break;
+        case 'byOutlet':
+          legendItem.value = formattedWord;
+          break;
+        case 'byWord':
+          legendItem.value = formattedOutlet;
+          legendItem.color = stringToColour(outlet);
+          break;
+        default:
+          legendItem.value = formattedOutlet + ' - ' + formattedWord;
+          legendItem.type = icons[outlets.indexOf(outlet)].legend;
+      }
 
-    if (!legendItems.some(item => item.value === legendItem.value)) {
-      legendItems.push(legendItem);
+      if (!legendItems.some(item => item.value === legendItem.value)) {
+        legendItems.push(legendItem);
+      }
     }
   });
   return legendItems;

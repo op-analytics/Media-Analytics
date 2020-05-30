@@ -96,7 +96,7 @@ function Timeline() {
   const [words, setWords] = useState([]);
   const [formSubmitted, setFormSubmitted] = useState(true);
   const loading = useSelector(state => state.timeline.loading);
-  const frequencies = useSelector(state => state.timeline.frequencies);
+  let frequencies = useSelector(state => state.timeline.frequencies);
 
   const onSubmitHandler = e => {
     e.preventDefault();
