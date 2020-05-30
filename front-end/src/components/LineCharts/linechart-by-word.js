@@ -18,7 +18,6 @@ import {
 } from './utils';
 
 function LinechartByWord({ datasets, formParameters, mediaOutlets, classes }) {
-  const words = formParameters.words;
   const outlets = formParameters.outlets;
   const yearFrom = formParameters.yearFrom;
   const yearTo = formParameters.yearTo;

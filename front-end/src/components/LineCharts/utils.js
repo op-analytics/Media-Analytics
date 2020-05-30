@@ -299,12 +299,12 @@ export function multipleDatasets(dataset, mediaOutlets) {
       ${wordData.word}`;
 
     const data = {
-      ['word']: wordData.word,
-      ['outlet']: wordData.outlet,
-      ['year']: wordData.year,
-      ['rank']: wordData.rank,
-      ['count']: wordData.count,
-      ['freq']: wordData.freq,
+      word: wordData.word,
+      outlet: wordData.outlet,
+      year: wordData.year,
+      rank: wordData.rank,
+      count: wordData.count,
+      freq: wordData.freq,
     };
 
     const outlet = result.find(obj => obj.title === title);
@@ -336,9 +336,9 @@ export function singleDataset(dataset) {
 
   dataset.forEach(wordData => {
     const data = {
-      ['word']: wordData.word,
-      ['outlet']: wordData.outlet,
-      ['year']: wordData.year,
+      word: wordData.word,
+      outlet: wordData.outlet,
+      year: wordData.year,
       [wordData.outlet + wordData.word + 'rank']: wordData.rank,
       [wordData.outlet + wordData.word + 'count']: wordData.count,
       [wordData.outlet + wordData.word + 'freq']: wordData.freq,
@@ -362,9 +362,9 @@ export function byOutletDataset(dataset, mediaOutlets) {
     const title = mediaOutlets.find(obj => obj.value === wordData.outlet).title;
 
     const data = {
-      ['word']: wordData.word,
-      ['outlet']: wordData.outlet,
-      ['year']: wordData.year,
+      word: wordData.word,
+      outlet: wordData.outlet,
+      year: wordData.year,
       [wordData.word + 'rank']: wordData.rank,
       [wordData.word + 'count']: wordData.count,
       [wordData.word + 'freq']: wordData.freq,
@@ -398,9 +398,9 @@ export function byWordDataset(dataset) {
     const title = wordData.word;
 
     const data = {
-      ['word']: wordData.word,
-      ['outlet']: wordData.outlet,
-      ['year']: wordData.year,
+      word: wordData.word,
+      outlet: wordData.outlet,
+      year: wordData.year,
       [wordData.outlet + 'rank']: wordData.rank,
       [wordData.outlet + 'count']: wordData.count,
       [wordData.outlet + 'freq']: wordData.freq,
