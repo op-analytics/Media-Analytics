@@ -171,53 +171,57 @@ export const createLegendPayload = (
   data,
   words,
   outlets,
+  YAxisKey,
   mediaOutlets,
   displayOption,
 ) => {
   const legendItems = [];
-  data.forEach(wordData => {
-    console.log('wordData :>> ', wordData);
-    const word = wordData.word;
-    const outlet = wordData.outlet;
-    if (words.includes(word) && outlets.includes(outlet)) {
-      const formattedOutlet = mediaOutlets.find(obj => obj.value === outlet)
-        .title;
+  if (displayOption !== 'multiple') {
+    data.forEach(yearData => {
+      for (let [index, outlet] of outlets.entries()) {
+        words.forEach(word => {
+          if (Object.keys(yearData).includes(outlet + word + YAxisKey)) {
+            if (!legendItems.some(item => item.id === outlet + word)) {
+              const formattedOutlet = mediaOutlets.find(
+                obj => obj.value === outlet,
+              ).title;
 
-      const formattedWord = word
-        .toLowerCase()
-        .split(' ')
-        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-        .join(' ');
+              const formattedWord = word
+                .toLowerCase()
+                .split(' ')
+                .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+                .join(' ');
 
-      const legendItem = {
-        id: outlet + word,
-        color: stringToColour(word),
-        type: icons[0].legend,
-        value: '',
-      };
+              const legendItem = {
+                id: outlet + word,
+                color: stringToColour(word),
+                type: 'circle',
+                value: '',
+              };
 
-      switch (displayOption) {
-        case 'single':
-          legendItem.value = formattedOutlet + ' - ' + formattedWord;
-          legendItem.type = icons[outlets.indexOf(outlet)].legend;
-          break;
-        case 'byOutlet':
-          legendItem.value = formattedWord;
-          break;
-        case 'byWord':
-          legendItem.value = formattedOutlet;
-          legendItem.color = stringToColour(outlet);
-          break;
-        default:
-          legendItem.value = formattedOutlet + ' - ' + formattedWord;
-          legendItem.type = icons[outlets.indexOf(outlet)].legend;
+              switch (displayOption) {
+                case 'single':
+                  legendItem.value = formattedOutlet + ' - ' + formattedWord;
+                  legendItem.type = icons[index].legend;
+                  break;
+                case 'byOutlet':
+                  legendItem.value = formattedWord;
+                  break;
+                case 'byWord':
+                  legendItem.value = formattedOutlet;
+                  legendItem.color = stringToColour(outlet)
+                  break;
+                default:
+                  legendItem.value = formattedOutlet + ' - ' + formattedWord;
+              }
+
+              legendItems.push(legendItem);
+            }
+          }
+        });
       }
-
-      if (!legendItems.some(item => item.value === legendItem.value)) {
-        legendItems.push(legendItem);
-      }
-    }
-  });
+    });
+  }
   return legendItems;
 };
 
@@ -282,14 +286,13 @@ export function multipleDatasets(dataset, mediaOutlets) {
       [wordData.outlet + wordData.word + 'freq']: wordData.freq,
     };
 
-
     let outlet = result.find(obj => obj.title === title);
 
     if (!outlet) {
       outlet = {
         title: title,
         data: [],
-      }
+      };
       result.push(outlet);
     }
 
@@ -371,7 +374,7 @@ export function byOutletDataset(dataset, mediaOutlets) {
       outlet = {
         title: title,
         data: [],
-      }
+      };
       result.push(outlet);
     }
 
@@ -412,7 +415,7 @@ export function byWordDataset(dataset) {
       word = {
         title: title,
         data: [],
-      }
+      };
       result.push(word);
     }
 

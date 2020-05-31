@@ -66,6 +66,7 @@ function LinechartByOutlet({ datasets, formParameters, mediaOutlets, classes }) 
                     dataset.data,
                     words,
                     outlets,
+                    yAxisKey,
                     mediaOutlets,
                     displayOption,
                   )}

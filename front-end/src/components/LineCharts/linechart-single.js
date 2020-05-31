@@ -59,6 +59,7 @@ function LinechartSingle({ dataset, formParameters, mediaOutlets, classes }) {
                   dataset.data,
                   words,
                   outlets,
+                  yAxisKey,
                   mediaOutlets,
                   displayOption,
                 )}
