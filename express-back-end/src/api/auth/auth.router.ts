@@ -1,4 +1,5 @@
 import { Router } from 'express';
+
 import { validateBody } from '../middlewares';
 import { AuthController } from './controllers';
 import { ensureLoggedIn } from './middlewares';

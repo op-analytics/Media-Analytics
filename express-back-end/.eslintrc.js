@@ -1,10 +1,11 @@
 module.exports = {
   parser: '@typescript-eslint/parser', // Specifies the ESLint parser
   plugins: [
-    "@typescript-eslint"
+    '@typescript-eslint',
+    'simple-import-sort',
   ],
   settings:{
-   "import/resolver": {
+   'import/resolver': {
       typescript: {} // this loads <rootdir>/tsconfig.json to eslint
     },
   },
@@ -19,10 +20,14 @@ module.exports = {
     "plugin:import/typescript",
   ],
   rules: {
+    'simple-import-sort/sort': 'error',
+    "sort-imports": "off",
+    "import/order": "off",
     'no-underscore-dangle': 0,
     'arrow-parens': 0,
     'no-tabs': 'error',
     'import/extensions': 0,
     'import/prefer-default-export': 0,
+    'prettier/prettier': 'error'
   },
 };

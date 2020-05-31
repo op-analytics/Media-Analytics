@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+
 import { CleanConcept, GetLatentAssociation } from '../lib/latentAssociation';
 
 export async function getData(req: Request, res: Response): Promise<void> {

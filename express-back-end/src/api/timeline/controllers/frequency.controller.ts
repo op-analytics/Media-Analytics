@@ -1,4 +1,5 @@
-import { Response, Request } from 'express';
+import { Request, Response } from 'express';
+
 import { GetFrequency } from '../lib/frequency';
 
 export async function getData(req: Request, res: Response): Promise<void> {

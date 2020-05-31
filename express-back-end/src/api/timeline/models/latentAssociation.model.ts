@@ -1,4 +1,5 @@
-import { Schema, model } from 'mongoose';
+import { model, Schema } from 'mongoose';
+
 import LatentAssociationDocument from '../interfaces/LatentAssociationDocument';
 
 const LatentAssociation = new Schema({

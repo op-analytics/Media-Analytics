@@ -1,5 +1,5 @@
 import { Schema } from '@hapi/joi';
-import { Request, Response, NextFunction } from 'express';
+import { NextFunction, Request, Response } from 'express';
 
 interface ValidationErrorMessage {
   message: string;

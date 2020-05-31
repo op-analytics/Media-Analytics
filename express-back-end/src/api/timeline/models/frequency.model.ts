@@ -1,4 +1,5 @@
-import { Schema, model } from 'mongoose';
+import { model, Schema } from 'mongoose';
+
 import FrequencyDocument from '../interfaces/FrequencyDocument';
 
 const Frequency = new Schema({

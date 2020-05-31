@@ -1,4 +1,4 @@
-import { object, string, number, boolean } from '@hapi/joi';
+import { boolean, number, object, string } from '@hapi/joi';
 
 // require and configure dotenv, will load vars in .env in PROCESS.ENV
 require('dotenv').config();

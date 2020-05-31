@@ -1,16 +1,13 @@
-import express from 'express';
-
 import bodyParser from 'body-parser';
-import morgan from 'morgan';
-import helmet from 'helmet';
 import cors from 'cors';
-
-import db from './db';
-import config from './config';
-
-import { checkTokenSetUser } from './api/auth/middlewares';
+import express from 'express';
+import helmet from 'helmet';
+import morgan from 'morgan';
 
 import api from './api/api.router';
+import { checkTokenSetUser } from './api/auth/middlewares';
+import config from './config';
+import db from './db';
 
 const app = express();
 

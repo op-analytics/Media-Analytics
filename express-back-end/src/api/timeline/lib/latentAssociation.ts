@@ -1,4 +1,5 @@
 import math from 'mathjs';
+
 import LatentAssociationData from '../interfaces/LatentAssociationData';
 import LatentAssociationDocument from '../interfaces/LatentAssociationDocument';
 import LatentAssociation from '../models/latentAssociation.model';

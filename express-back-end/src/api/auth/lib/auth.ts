@@ -1,9 +1,11 @@
-import config from '@/config';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import User from '../models/user.model';
+
+import config from '@/config';
+
 import UserType from '../interfaces/User';
 import UserDocument from '../interfaces/UserDocument';
+import User from '../models/user.model';
 
 function TokenizeUser(user: UserType): string {
   return jwt.sign(

@@ -1,4 +1,4 @@
-import ensureLoggedIn from './ensureLoggedIn';
 import checkTokenSetUser from './checkTokenSetUser';
+import ensureLoggedIn from './ensureLoggedIn';
 
 export { ensureLoggedIn, checkTokenSetUser };

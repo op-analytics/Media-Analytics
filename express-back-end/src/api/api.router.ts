@@ -1,8 +1,8 @@
 import express from 'express';
 
-import timeline from './timeline/timeline.router';
 import auth from './auth/auth.router';
 import { ensureLoggedIn } from './auth/middlewares';
+import timeline from './timeline/timeline.router';
 
 const router = express.Router();
 

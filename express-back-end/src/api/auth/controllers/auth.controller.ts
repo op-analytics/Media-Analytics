@@ -1,11 +1,12 @@
 import { Request, Response } from 'express';
+
 import UserRequest from '../interfaces/UserRequest';
 import {
   EmailTaken,
-  Signup,
-  TokenizeUser,
   GetUser,
   PasswordsMatch,
+  Signup,
+  TokenizeUser,
 } from '../lib/auth';
 
 interface ValidationErrorMessage {

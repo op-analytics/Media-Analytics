@@ -1,4 +1,4 @@
-import { object, string, valid, ref } from '@hapi/joi';
+import { object, ref, string, valid } from '@hapi/joi';
 
 export default object({
   name: string().required(),
