@@ -20,13 +20,10 @@ function checkTokenSetUser(req, res, next) {
       const user = jwt.verify(token, process.env.TOKEN_SECRET);
       req.user = user;
       // Ignore errors as we are just trying to set the user on the request
-    } catch {}
+      // eslint-disable-next-line no-empty
+    } catch (_) {}
   }
   next();
 }
 
-module.exports = {
-  checkTokenSetUser,
-  getTokenFromRequest,
-  getTokenFromBearer,
-};
+module.exports = checkTokenSetUser;

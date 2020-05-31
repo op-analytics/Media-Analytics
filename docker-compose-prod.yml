@@ -11,6 +11,7 @@ services:
     ports:
       - 27017:27017
     environment:
+      # The username and passwords that will be user for the database service
       - MONGO_INITDB_ROOT_USERNAME=yourUsername
       - MONGO_INITDB_ROOT_PASSWORD=yourPassword
     networks:

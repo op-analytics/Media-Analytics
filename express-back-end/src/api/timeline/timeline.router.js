@@ -1,19 +1,27 @@
 const express = require('express');
-const router = express.Router();
-const LatentAssociationController = require('./controllers/latentAssociation.controller');
-const FrequencyController = require('./controllers/frequency.controller');
-const { ensureLoggedIn } = require('../auth/middlewares');
 
-router.get('/', (_, res) => {
-  res.json({ message: 'You reached timeline' });
-});
+const router = express.Router();
+const {
+  LatentAssociationController,
+  FrequencyController,
+  MainController,
+} = require('./controllers/');
+const { ensureLoggedIn } = require('../auth/middlewares');
+const { validateBody } = require('../middlewares/');
+const { FrequencySchema, LatentAssociationSchema } = require('./schemas');
+
+router.get('/', MainController.home);
 
 router.post(
   '/latent-association',
-  ensureLoggedIn,
-  LatentAssociationController.GetLatentAssociation,
+  [ensureLoggedIn, validateBody(LatentAssociationSchema)],
+  LatentAssociationController.getData,
 );
 
-router.post('/frequency', ensureLoggedIn, FrequencyController.GetFrequency);
+router.post(
+  '/frequency',
+  [ensureLoggedIn, validateBody(FrequencySchema)],
+  FrequencyController.getData,
+);
 
 module.exports = router;

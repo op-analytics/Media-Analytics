@@ -1,7 +1,9 @@
-const frequencyController = require('./frequency.controller');
-const latentAssociationController = require('./latentAssociation.controller');
+const FrequencyController = require('./frequency.controller');
+const LatentAssociationController = require('./latentAssociation.controller');
+const MainController = require('./main.controller');
 
 module.exports = {
-  latentAssociationController,
-  frequencyController,
+  LatentAssociationController,
+  FrequencyController,
+  MainController,
 };

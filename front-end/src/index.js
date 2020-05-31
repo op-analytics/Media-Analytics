@@ -1,4 +1,6 @@
 import { Router } from 'react-router-dom';
+import { createMuiTheme, ThemeProvider } from '@material-ui/core';
+import blue from '@material-ui/core/colors/blue';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { StoreProvider } from 'easy-peasy';
@@ -7,10 +9,18 @@ import './index.css';
 import * as serviceWorker from './serviceWorker';
 import store, { history } from './modules/store';
 
+const muiTheme = createMuiTheme({
+  palette: {
+    primary: blue,
+  },
+});
+
 ReactDOM.render(
   <StoreProvider store={store}>
     <Router history={history}>
-      <App />
+      <ThemeProvider theme={muiTheme}>
+        <App />
+      </ThemeProvider>
     </Router>
   </StoreProvider>,
   document.getElementById('root'),

@@ -1,14 +1,17 @@
 const express = require('express');
+const { SignupSchema, LoginSchema } = require('./schemas');
+
 const router = express.Router();
-const UserController = require('./controllers/users.controller');
+const { AuthController } = require('./controllers/');
 const { ensureLoggedIn } = require('./middlewares');
+const { validateBody } = require('../middlewares');
 
-router.get('/', (_, res) => {
-  res.json({ message: 'You reached auth' });
-});
+router.get('/', AuthController.home);
 
-router.post('/signup', UserController.Signup);
-router.post('/login', UserController.Login);
-router.get('/user', ensureLoggedIn, UserController.GetUserData);
+router.post('/signup', validateBody(SignupSchema), AuthController.signup);
+
+router.post('/login', validateBody(LoginSchema), AuthController.login);
+
+router.get('/user', ensureLoggedIn, AuthController.getUser);
 
 module.exports = router;
