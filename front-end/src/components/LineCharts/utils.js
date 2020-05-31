@@ -385,7 +385,6 @@ export function byOutletDataset(dataset, mediaOutlets) {
     }
     Object.assign(yearData, data);
   });
-  console.log('result :>> ', result);
   return result;
 }
 
@@ -426,7 +425,6 @@ export function byWordDataset(dataset) {
     }
     Object.assign(yearData, data);
   });
-  console.log('result :>> ', result);
   return result;
 }
 

@@ -1,4 +1,5 @@
 import Grid from '@material-ui/core/Grid';
+import PropTypes, { shape, arrayOf, string, number } from 'prop-types';
 import React from 'react';
 import {
   CartesianGrid,
@@ -108,5 +109,38 @@ function LinechartMultiple({ datasets, formParameters, mediaOutlets, classes }) 
     </Grid>
   );
 }
+
+LinechartMultiple.propTypes = {
+  datasets: arrayOf(
+    shape({
+      title: string.isRequired,
+      data: arrayOf(
+        shape({
+          word: string.isRequired,
+          outlet: string.isRequired,
+          year: string.isRequired,
+          outletWordRank: number,
+          outletWordCount: number,
+          outletWordFreq: number,
+        }).isRequired,
+      ).isRequired,
+    }).isRequired,
+  ).isRequired,
+  formParameters: shape({
+    words: arrayOf(string).isRequired,
+    outlets: arrayOf(string).isRequired,
+    yearFrom: number.isRequired,
+    yearTo: number.isRequired,
+    yAxisKey: string.isRequired,
+    displayNormalised: PropTypes.bool.isRequired,
+    displayOption: string.isRequired,
+  }).isRequired,
+  mediaOutlets: arrayOf(
+    shape({
+      title: string.isRequired,
+      value: string.isRequired,
+    }),
+  ).isRequired,
+};
 
 export default LinechartMultiple;

@@ -81,7 +81,6 @@ function LineCharts({ datasets, formParameters, mediaOutlets }) {
     datasets = normalisedDatasets;
   }
 
-  //TODO Do legend and tooltip here as well.
   let processedData = {};
   switch (displayOption) {
     case 'multiple':
@@ -138,11 +137,14 @@ function LineCharts({ datasets, formParameters, mediaOutlets }) {
 }
 
 LineCharts.propTypes = {
-  /** The datasets to render line charts for */
   datasets: PropTypes.arrayOf(
     PropTypes.shape({
       word: PropTypes.string.isRequired,
-      data: PropTypes.shape({}.isRequired).isRequired,
+      outlet: PropTypes.string.isRequired,
+      year: PropTypes.string.isRequired,
+      rank: PropTypes.number.isRequired,
+      count: PropTypes.number.isRequired,
+      freq: PropTypes.number.isRequired,
     }),
   ).isRequired,
   formParameters: PropTypes.shape({
