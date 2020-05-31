@@ -63,6 +63,7 @@ const useStyles = makeStyles(theme => ({
   },
   chartContainer: {
     width: '100%',
+    maxWidth: "70vw",
     height: '50vh',
     flex: '0 1 auto',
     paddingBottom: '6vh',
@@ -147,7 +148,7 @@ function Timeline() {
   const wordLimit = 5;
 
   const handleDelete = (chip, state, setState) => {
-    setState(state.filter(word => word != chip));
+    setState(state.filter(word => word !== chip));
   };
 
   const handleAddChip = (chip, state, setState) => {
@@ -199,7 +200,7 @@ function Timeline() {
                   <ChipInput
                     label="Concept One:"
                     name="concept_1"
-                    newChipKeyCodes={[13, 32]} // Make new chip on enter and space key codes
+                    newChipKeyCodes={[13, 32, 188]} // Make new chip on enter, space or comma key codes
                     blurBehavior="add" // Fix android chrome bug
                     required={!concept1.length}
                     value={concept1}
@@ -224,7 +225,7 @@ function Timeline() {
                   <ChipInput
                     label="Concept Two:"
                     name="concept_2"
-                    newChipKeyCodes={[13, 32]} // Make new chip on enter and space key codes
+                    newChipKeyCodes={[13, 32, 188]} // Make new chip on enter, space or comma key codes
                     blurBehavior="add" // Fix android chrome bug
                     required={!concept2.length}
                     value={concept2}
@@ -253,9 +254,8 @@ function Timeline() {
                     filterSelectedOptions
                     required={!outlets.length}
                     onChange={(_, value) => {
-                      setOutlets([value.value])
-                    }
-                    }
+                      setOutlets([value.value]);
+                    }}
                     renderInput={params => (
                       <TextField
                         {...params}
@@ -341,8 +341,9 @@ function Timeline() {
                       <Legend
                         payload={createLatentAssociationLegendPayload(
                           data,
-                          outlets,
-                          mediaOutlets,
+                          concept1,
+                          concept2,
+                          outlets[0]
                         )}
                       />
                       <Tooltip />
@@ -363,6 +364,8 @@ function Timeline() {
                   </ResponsiveContainer>
                 </div>
               );
+            } else {
+              return null;
             }
           })
         )}

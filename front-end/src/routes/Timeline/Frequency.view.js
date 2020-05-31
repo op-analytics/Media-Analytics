@@ -1,5 +1,6 @@
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
+import Chip from '@material-ui/core/Chip';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import FormControl from '@material-ui/core/FormControl';
 import Grid from '@material-ui/core/Grid';
@@ -57,10 +58,10 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const mediaOutlets = [
-  { title: 'New York Times', name: 'New York Times', value: 'nyt' },
-  { title: 'Wall Street Journal', name: 'Wall Street Journal', value: 'wsj' },
-  { title: 'The Guardian', name: 'The Guardian', value: 'guardian' },
-  { title: 'HuffPost', name: 'HuffPost', value: 'hp' },
+  { title: 'New York Times', value: 'nyt' },
+  { title: 'Wall Street Journal', value: 'wsj' },
+  { title: 'The Guardian', value: 'guardian' },
+  { title: 'HuffPost', value: 'hp' },
 ];
 
 const displayOptions = [
@@ -89,20 +90,29 @@ const getDownloadData = (currentData, key, yearFrom, yearTo) => {
   });
   return dataToDownload;
 };
+const yAxisMetrics = [
+  { name: 'Frequency', value: 'freq' },
+  { name: 'Count', value: 'count' },
+  { name: 'Rank', value: 'rank' },
+];
 
 /**
  * The frequency timeline page component
  * @component
  */
 function Timeline() {
+  const MIN_YEAR = 1970;
+  const MAX_YEAR = 2020;
+  const PARAMETER_LIMIT = 4;
+
   const classes = useStyles();
   const dispatch = useDispatch();
-  const [yearFrom, setYearFrom] = useState('');
-  const [yearTo, setYearTo] = useState('');
-  const [yAxisKey, setYAxisKey] = useState('freq');
-  const [absolute, setAbsolute] = useState(false);
+  const [yearFrom, setYearFrom] = useState(MIN_YEAR);
+  const [yearTo, setYearTo] = useState(MAX_YEAR);
+  const [yAxisMetric, setYAxisMetric] = useState('freq');
+  const [normalised, setNormalised] = useState(false);
   const [outlets, setOutlets] = useState([]);
-  const [displayOption, setDisplayOption] = useState('multiple');
+  const [displayOption, setDisplayOption] = useState('byOutlet');
   const [words, setWords] = useState([]);
   const [formSubmitted, setFormSubmitted] = useState(true);
   const loading = useSelector(state => state.timeline.loading);
@@ -129,7 +139,18 @@ function Timeline() {
   const onSubmitHandler = e => {
     e.preventDefault();
     setFormSubmitted(true);
-    dispatch(getFrequencies(words, minYear, maxYear, outlets));
+    dispatch(getFrequencies(words, MIN_YEAR, MAX_YEAR, outlets));
+  };
+
+  const handleDelete = (chip, state, setState) => {
+    setState(state.filter(word => word !== chip));
+  };
+
+  const handleAddChip = (chip, state, setState) => {
+    if (state.length < PARAMETER_LIMIT) {
+      setState([...state, chip]);
+      outlets.length ? setFormSubmitted(false) : setFormSubmitted(true);
+    }
   };
 
   return (
@@ -153,18 +174,25 @@ function Timeline() {
                   <ChipInput
                     label="Words:"
                     name="words"
-                    newChipKeyCodes={[13, 32]} // Make new chip on enter and space key codes
+                    newChipKeyCodes={[13, 32, 188]} // Make new chip on enter, space or comma key codes
                     blurBehavior="add" // Fix android chrome bug
-                    onChange={newWords => {
-                      const newWordExists = !newWords.every(item =>
-                        words.includes(item),
-                      );
-                      if (newWordExists && outlets.length) {
-                        setFormSubmitted(false);
-                      }
-                      setWords(newWords);
-                    }}
                     required={!words.length}
+                    value={words}
+                    onAdd={chip => {
+                      handleAddChip(chip, words, setWords);
+                    }}
+                    onDelete={chip => handleDelete(chip, words, setWords)}
+                    chipRenderer={({ value }, key) => (
+                      <Chip
+                        key={key}
+                        style={{
+                          margin: '0px 8px 8px 0px',
+                          float: 'left',
+                        }}
+                        label={value}
+                        onDelete={_ => handleDelete(value, words, setWords)}
+                      />
+                    )}
                   />
                 </FormControl>
               </Grid>
@@ -176,6 +204,9 @@ function Timeline() {
                     options={mediaOutlets}
                     getOptionLabel={option => option.title}
                     filterSelectedOptions
+                    filterOptions={(options, _) =>
+                      outlets.length < PARAMETER_LIMIT ? options : []
+                    }
                     onChange={(_, value) => {
                       const newOutlets = value.map(({ value: code }) => code);
                       const newOutletExists = !newOutlets.every(item =>
@@ -193,6 +224,11 @@ function Timeline() {
                         label="Media Outlets"
                         placeholder="Add a media outlet"
                         required={!outlets.length}
+                        helperText={
+                          outlets.length === PARAMETER_LIMIT
+                            ? `There is a ${PARAMETER_LIMIT} outlet limit per request`
+                            : ''
+                        }
                       />
                     )}
                   />
@@ -205,10 +241,10 @@ function Timeline() {
                     type="number"
                     label="Year from:"
                     name="year_from"
-                    InputProps={{ inputProps: { min: minYear, max: maxYear } }}
+                    InputProps={{ inputProps: { min: MIN_YEAR, max: MAX_YEAR } }}
                     onChange={e => {
                       const newYear = Number(e.target.value);
-                      if (newYear >= minYear && newYear <= maxYear) {
+                      if (newYear >= MIN_YEAR && newYear <= MAX_YEAR) {
                         setYearFrom(newYear);
                       }
                     }}
@@ -223,10 +259,10 @@ function Timeline() {
                     type="number"
                     label="Year to:"
                     name="year_to"
-                    InputProps={{ inputProps: { min: minYear, max: maxYear } }}
+                    InputProps={{ inputProps: { min: MIN_YEAR, max: MAX_YEAR } }}
                     onChange={e => {
                       const newYear = Number(e.target.value);
-                      if (newYear >= minYear && newYear <= maxYear) {
+                      if (newYear >= MIN_YEAR && newYear <= MAX_YEAR) {
                         setYearTo(newYear);
                       }
                     }}
@@ -241,33 +277,35 @@ function Timeline() {
                 <FormControl className={classes.formControl}>
                   <InputLabel
                     className={classes.label}
-                    id="y-axis-key-select-label"
+                    id="y-axis-metric-select-label"
                   >
-                    Y-Axis Key
+                    Y-Axis Metric
                   </InputLabel>
                   <Select
-                    labelId="y-axis-key-select-label"
-                    id="y-axis-key-select"
-                    value={yAxisKey}
-                    onChange={e => setYAxisKey(e.target.value)}
+                    labelId="y-axis-metric-select-label"
+                    id="y-axis-metric-select"
+                    value={yAxisMetric}
+                    onChange={e => setYAxisMetric(e.target.value)}
                   >
-                    <MenuItem value="freq">Frequency</MenuItem>
-                    <MenuItem value="count">Count</MenuItem>
-                    <MenuItem value="rank">Rank</MenuItem>
+                    {yAxisMetrics.map(metric => (
+                      <MenuItem key={metric.value} value={metric.value}>
+                        {metric.name}
+                      </MenuItem>
+                    ))}
                   </Select>
                 </FormControl>
               </Grid>
               <Grid item md={3} sm={6} xs={12}>
                 <FormControl className={classes.formControl}>
                   <ToggleButton
-                    selected={absolute}
-                    value={absolute}
+                    selected={normalised}
+                    value={normalised}
                     onChange={() => {
-                      setAbsolute(!absolute);
+                      setNormalised(!normalised);
                     }}
                     className={classes.ToggleButton}
                   >
-                    Display Absolute
+                    {normalised ? 'Display Absolute' : 'Display Normalised'}
                   </ToggleButton>
                 </FormControl>
               </Grid>
@@ -320,16 +358,16 @@ function Timeline() {
           formSubmitted && (
             <LineCharts
               datasets={frequencies}
-              xAxisKey="year"
-              yAxisKey={yAxisKey}
-              displayAbsolute={absolute}
-              tooltipItems={[{ key: 'rank', title: 'rank' }]}
-              words={words}
-              mediaOutlets={outlets}
-              allMediaOutlets={mediaOutlets}
-              yearFrom={yearFrom}
-              yearTo={yearTo}
-              displayOption={displayOption}
+              formParameters={{
+                outlets: outlets,
+                words: words,
+                yearFrom: Number(yearFrom),
+                yearTo: Number(yearTo),
+                yAxisKey: yAxisMetric,
+                displayNormalised: normalised,
+                displayOption: displayOption,
+              }}
+              mediaOutlets={mediaOutlets}
             />
           )
         )}

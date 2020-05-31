@@ -180,11 +180,8 @@ module.exports = (function() {
       });
       return;
     }
-<<<<<<< HEAD
-    // Retrieve the data from the database.
-=======
     const cleanedWords = value.words.map((word)=>word.trim().toLowerCase());
->>>>>>> origin/227-request-data-preprocessing
+    // Retrieve the data from the database.
     const frequencyDataDB = await Frequency.find({
       word: cleanedWords,
       year: { $gte: value.year_from, $lte: value.year_to },
