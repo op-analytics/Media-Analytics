@@ -25,11 +25,7 @@ export function home(_: Request, res: Response): void {
   res.json({ message: 'You reached auth' });
 }
 
-export async function signup(
-  req: Request,
-  res: Response,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-): Promise<void> {
+export async function signup(req: Request, res: Response): Promise<void> {
   const { email: emailDirty, name, password } = req.body;
   const email = emailDirty.toLowerCase();
 
@@ -53,11 +49,7 @@ export async function signup(
   }
 }
 
-export async function login(
-  req: Request,
-  res: Response,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-): Promise<void> {
+export async function login(req: Request, res: Response): Promise<void> {
   const { email: emailDirty, password } = req.body;
   const email = emailDirty.toLowerCase();
 

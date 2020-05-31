@@ -54,4 +54,4 @@ async function Signup(
   return user.save();
 }
 
-export {TokenizeUser, Signup, GetUser, PasswordsMatch, EmailTaken};
+export { TokenizeUser, Signup, GetUser, PasswordsMatch, EmailTaken };

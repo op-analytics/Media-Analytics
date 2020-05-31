@@ -1,15 +1,4 @@
 import Joi from '@hapi/joi';
-import { Request } from 'express';
-
-export interface FrequencyRequest extends Request {
-  body: {
-    words: string[];
-    // eslint-disable-next-line
-    year_from: number;
-    // eslint-disable-next-line
-    year_to: number;
-  };
-}
 
 export default Joi.object({
   words: Joi.array()

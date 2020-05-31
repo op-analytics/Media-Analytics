@@ -1,11 +1,7 @@
-import { Response } from 'express';
+import { Response, Request } from 'express';
 import { GetFrequency } from '../lib/frequency';
-import { FrequencyRequest } from '../schemas/frequency.schema';
 
-export async function getData(
-  req: FrequencyRequest,
-  res: Response,
-): Promise<void> {
+export async function getData(req: Request, res: Response): Promise<void> {
   const { words: dirtyWords, year_from: yearFrom, year_to: yearTo } = req.body;
   const words = dirtyWords.map((word: string) => word.trim().toLowerCase());
 
