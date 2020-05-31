@@ -79,28 +79,28 @@ function LinechartByOutlet({ datasets, formParameters, mediaOutlets, classes }) 
                     displayOption,
                     yAxisKey,
                     mediaOutlets,
-                    datasets
+                    datasets,
                   )}
                 />
 
                 {words.map(word => {
-                  return (
+                  return outlets.map(outlet => (
                     <Line
-                      key={word}
+                      key={word + outlet}
                       type="monotone"
-                      dataKey={word + yAxisKey}
+                      dataKey={outlet + word + yAxisKey}
                       stroke={stringToColour(word)}
                       fill={stringToColour(word)}
                       connectNulls
                       strokeWidth={3}
-                      dot={<CustomizedDot number={0}/>}
+                      dot={<CustomizedDot number={0} />}
                       activeDot={{
                         stroke: stringToColour(word),
                         strokeWidth: 7,
                         border: 'white',
                       }}
                     />
-                  );
+                  ));
                 })}
               </LineChart>
             </ResponsiveContainer>

@@ -70,112 +70,82 @@ export const createTooltip = (
   displayOption,
   yAxisKey,
   mediaOutlets,
-  datasets,
 ) => {
   const ToolTip = ({ active, payload, label }) => {
     if (active) {
-      const tooltipLineData = [];
-      datasets.forEach(dataset => {
-        dataset.data.forEach(wordData => {
-          if (wordData.year === label) {
-            const word = wordData.word;
-            const outlet = wordData.outlet;
-            if (outlets.includes(outlet) && words.includes(word)) {
-              if (
-                displayOption === 'byWord' &&
-                word !== payload[0].payload.word
-              ) {
-                return null;
-              }
+      let tooltipLines = [];
+      outlets.forEach(outlet => {
+        words.forEach(word => {
+          const formattedOutlet = mediaOutlets.find(obj => obj.value === outlet)
+            .title;
 
-              if (
-                displayOption === 'byOutlet' &&
-                outlet !== payload[0].payload.outlet
-              ) {
-                return null;
-              }
+          const formattedWord = word
+            .toLowerCase()
+            .split(' ')
+            .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+            .join(' ');
 
-              if (
-                displayOption === 'multiple' &&
-                (word !== payload[0].payload.word ||
-                  outlet !== payload[0].payload.outlet)
-              ) {
-                return null;
-              }
+          let tooltipLabel = '';
+          let tooltipData = '';
+          let color = stringToColour(word);
 
-              const tooltipData =
-                wordData[
-                  Object.keys(wordData).find(key => key.includes(yAxisKey))
-                ];
+          switch (displayOption) {
+            case 'single':
+              tooltipLabel = `${formattedOutlet} - ${formattedWord}: `;
+              tooltipData = payload[0]?.payload[outlet + word + yAxisKey];
+              break;
+            case 'byWord':
+              tooltipLabel = formattedOutlet + ': ';
+              tooltipData = payload[0]?.payload[outlet + yAxisKey];
+              color = stringToColour(outlet);
+              break;
+            case 'byOutlet':
+              tooltipLabel = formattedWord + ': ';
+              tooltipData = payload[0]?.payload[word + yAxisKey];
+              break;
+            case 'multiple':
+              tooltipLabel = '';
+              tooltipData = payload[0]?.payload[yAxisKey];
+              break;
+            default:
+              tooltipLabel = `${formattedOutlet} - ${formattedWord}: `;
+              tooltipData = payload[0]?.payload[outlet + word + yAxisKey];
+          }
 
-              const formattedOutlet = mediaOutlets.find(
-                obj => obj.value === outlet,
-              ).title;
+          tooltipData = payload[0]?.payload[outlet + word + yAxisKey];
 
-              const formattedWord = word
-                .toLowerCase()
-                .split(' ')
-                .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-                .join(' ');
-
-              let tooltipLabel = '';
-              switch (displayOption) {
-                case 'multiple':
-                  tooltipLabel = '';
-                  break;
-                case 'byWord':
-                  tooltipLabel = formattedOutlet + ': ';
-                  break;
-                case 'byOutlet':
-                  tooltipLabel = formattedWord + ': ';
-                  break;
-                default:
-                  tooltipLabel = `${formattedOutlet} - ${formattedWord}: `;
-              }
-
-              tooltipLineData.push({
-                word: word,
-                outlet: outlet,
-                data: tooltipData,
-                label: tooltipLabel,
-              });
-            }
+          if (tooltipData) {
+            tooltipLines.push({
+              label: tooltipLabel,
+              data: tooltipData,
+              word: word,
+              outlet: outlet,
+              color: color,
+            });
           }
         });
       });
 
-      tooltipLineData.sort((item1, item2) => item2.data - item1.data);
+      tooltipLines.sort((line1, line2) => line2.data - line1.data);
 
       return (
         <div className={classes.tooltip}>
           <h3>{label}</h3>
-          {tooltipLineData.map(line => {
-            return (
-              <p
-                style={{
-                  color:
-                    displayOption === 'byWord'
-                      ? stringToColour(line.outlet)
-                      : stringToColour(line.word),
-                }}
-                className={classes.tooltipLabel}
-                key={line.word + line.outlet}
+          {tooltipLines.map(line => (
+            <p
+              style={{ color: line.color }}
+              className={classes.tooltipLabel}
+              key={line.word + line.outlet}
+            >
+              <span
+                style={{ color: line.color }}
+                className={classes.tooltipLabelFirstWord}
               >
-                <span
-                  style={{
-                    color:
-                      displayOption === 'byWord'
-                        ? stringToColour(line.outlet)
-                        : stringToColour(line.word),
-                  }}
-                  className={classes.tooltipLabelFirstWord}
-                >
-                  {line.label}
-                </span>
-                {line.data}
-              </p>
-            );
-          })}
+                {line.label}
+              </span>
+              {line.data}
+            </p>
+          ))}
         </div>
       );
     }
@@ -310,22 +280,39 @@ export function multipleDatasets(dataset, mediaOutlets) {
     const data = {
       word: wordData.word,
       outlet: wordData.outlet,
-      year: wordData.year,
-      rank: wordData.rank,
-      count: wordData.count,
-      freq: wordData.freq,
+      [wordData.outlet + wordData.word + 'rank']: wordData.rank,
+      [wordData.outlet + wordData.word + 'count']: wordData.count,
+      [wordData.outlet + wordData.word + 'freq']: wordData.freq,
     };
 
-    const outlet = result.find(obj => obj.title === title);
 
-    if (outlet) {
-      outlet.data.push(data);
-    } else {
-      result.push({
+    let outlet = result.find(obj => obj.title === title);
+
+    if (!outlet) {
+      outlet = {
         title: title,
-        data: [data],
-      });
+        data: [],
+      }
+      result.push(outlet);
     }
+
+    let yearData = outlet.data.find(obj => obj.year === wordData.year);
+    if (yearData === undefined) {
+      yearData = { year: wordData.year };
+      outlet.data.push(yearData);
+    }
+    Object.assign(yearData, data);
+
+    // const outlet = result.find(obj => obj.title === title);
+
+    // if (outlet) {
+    //   outlet.data.push(data);
+    // } else {
+    //   result.push({
+    //     title: title,
+    //     data: [data],
+    //   });
+    // }
   });
 
   return result;
@@ -342,17 +329,20 @@ export function singleDataset(dataset) {
     title: 'Summary',
     data: [],
   };
-
   dataset.forEach(wordData => {
+    let yearData = result.data.find(obj => obj.year === wordData.year);
+    if (yearData === undefined) {
+      yearData = { year: wordData.year };
+      result.data.push(yearData);
+    }
     const data = {
       word: wordData.word,
       outlet: wordData.outlet,
-      year: wordData.year,
       [wordData.outlet + wordData.word + 'rank']: wordData.rank,
       [wordData.outlet + wordData.word + 'count']: wordData.count,
       [wordData.outlet + wordData.word + 'freq']: wordData.freq,
     };
-    result.data.push(data);
+    Object.assign(yearData, data);
   });
   return result;
 }
@@ -373,24 +363,29 @@ export function byOutletDataset(dataset, mediaOutlets) {
     const data = {
       word: wordData.word,
       outlet: wordData.outlet,
-      year: wordData.year,
-      [wordData.word + 'rank']: wordData.rank,
-      [wordData.word + 'count']: wordData.count,
-      [wordData.word + 'freq']: wordData.freq,
+      [wordData.outlet + wordData.word + 'rank']: wordData.rank,
+      [wordData.outlet + wordData.word + 'count']: wordData.count,
+      [wordData.outlet + wordData.word + 'freq']: wordData.freq,
     };
 
-    const outlet = result.find(obj => obj.title === title);
+    let outlet = result.find(obj => obj.title === title);
 
-    if (outlet) {
-      outlet.data.push(data);
-    } else {
-      result.push({
+    if (!outlet) {
+      outlet = {
         title: title,
-        data: [data],
-      });
+        data: [],
+      }
+      result.push(outlet);
     }
-  });
 
+    let yearData = outlet.data.find(obj => obj.year === wordData.year);
+    if (yearData === undefined) {
+      yearData = { year: wordData.year };
+      outlet.data.push(yearData);
+    }
+    Object.assign(yearData, data);
+  });
+  console.log('result :>> ', result);
   return result;
 }
 
@@ -409,22 +404,27 @@ export function byWordDataset(dataset) {
     const data = {
       word: wordData.word,
       outlet: wordData.outlet,
-      year: wordData.year,
-      [wordData.outlet + 'rank']: wordData.rank,
-      [wordData.outlet + 'count']: wordData.count,
-      [wordData.outlet + 'freq']: wordData.freq,
+      [wordData.outlet + wordData.word + 'rank']: wordData.rank,
+      [wordData.outlet + wordData.word + 'count']: wordData.count,
+      [wordData.outlet + wordData.word + 'freq']: wordData.freq,
     };
 
-    const word = result.find(obj => obj.title === title);
+    let word = result.find(obj => obj.title === title);
 
-    if (word) {
-      word.data.push(data);
-    } else {
-      result.push({
+    if (!word) {
+      word = {
         title: title,
-        data: [data],
-      });
+        data: [],
+      }
+      result.push(word);
     }
+
+    let yearData = word.data.find(obj => obj.year === wordData.year);
+    if (yearData === undefined) {
+      yearData = { year: wordData.year };
+      word.data.push(yearData);
+    }
+    Object.assign(yearData, data);
   });
   console.log('result :>> ', result);
   return result;

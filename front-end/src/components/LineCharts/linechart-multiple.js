@@ -9,11 +9,7 @@ import {
   XAxis,
   YAxis,
 } from 'recharts';
-import {
-  createTooltip,
-  CustomizedDot,
-  stringToColour,
-} from './utils';
+import { createTooltip, CustomizedDot, stringToColour } from './utils';
 
 function LinechartMultiple({ datasets, formParameters, mediaOutlets, classes }) {
   const words = formParameters.words;
@@ -78,24 +74,27 @@ function LinechartMultiple({ datasets, formParameters, mediaOutlets, classes }) 
                             displayOption,
                             yAxisKey,
                             mediaOutlets,
-                            datasets
+                            datasets,
                           )}
                         />
-
-                        <Line
-                          type="monotone"
-                          dataKey={yAxisKey}
-                          stroke={stringToColour(word)}
-                          fill={stringToColour(word)}
-                          connectNulls
-                          strokeWidth={3}
-                          dot={<CustomizedDot number={0} />}
-                          activeDot={{
-                            stroke: stringToColour(word),
-                            strokeWidth: 7,
-                            border: 'white',
-                          }}
-                        />
+                        {words.map(word => {
+                          return outlets.map(outlet => (
+                            <Line
+                              type="monotone"
+                              dataKey={outlet + word + yAxisKey}
+                              stroke={stringToColour(word)}
+                              fill={stringToColour(word)}
+                              connectNulls
+                              strokeWidth={3}
+                              dot={<CustomizedDot number={0} />}
+                              activeDot={{
+                                stroke: stringToColour(word),
+                                strokeWidth: 7,
+                                border: 'white',
+                              }}
+                            />
+                          ));
+                        })}
                       </LineChart>
                     </ResponsiveContainer>
                   </div>

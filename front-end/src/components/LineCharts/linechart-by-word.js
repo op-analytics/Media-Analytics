@@ -79,16 +79,16 @@ function LinechartByWord({ datasets, formParameters, mediaOutlets, classes }) {
                     displayOption,
                     yAxisKey,
                     mediaOutlets,
-                    datasets
+                    datasets,
                   )}
                 />
 
-                {outlets.map((outlet) => {
-                  return (
+                {words.map(word => {
+                  return outlets.map(outlet => (
                     <Line
-                      key={outlet}
+                      key={word + outlet}
                       type="monotone"
-                      dataKey={outlet + yAxisKey}
+                      dataKey={outlet + word + yAxisKey}
                       stroke={stringToColour(outlet)}
                       fill={stringToColour(outlet)}
                       connectNulls
@@ -100,7 +100,7 @@ function LinechartByWord({ datasets, formParameters, mediaOutlets, classes }) {
                         border: 'white',
                       }}
                     />
-                  );
+                  ));
                 })}
               </LineChart>
             </ResponsiveContainer>
