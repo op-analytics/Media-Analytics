@@ -26,16 +26,15 @@ export const normaliseDatasets = (
   yearTo,
   yAxisKey,
 ) => {
-  let normalisedDatasets = JSON.parse(JSON.stringify(datasets));
+  const normalisedDatasets = JSON.parse(JSON.stringify(datasets));
   outlets.forEach(outlet => {
     words.forEach(word => {
-      let wordData = normalisedDatasets.filter(
+      const wordData = normalisedDatasets.filter(
         wordDatum => wordDatum.outlet === outlet && wordDatum.word === word,
       );
-      let firstYearData = wordData.find(obj => obj.year === String(yearFrom));
-      if (!firstYearData) {
-        firstYearData = Object.values(wordData)[0];
-      }
+      const firstYearData =
+        wordData.find(obj => obj.year === String(yearFrom)) ||
+        Object.values(wordData)[0];
       if (firstYearData) {
         let min = firstYearData[yAxisKey];
         let max = firstYearData[yAxisKey];
@@ -48,12 +47,34 @@ export const normaliseDatasets = (
         });
         // Normalise using the maximum and minimum
         Object.values(wordData).forEach(yearData => {
+          // eslint-disable-next-line no-param-reassign
           yearData[yAxisKey] = (yearData[yAxisKey] - min) / (max - min);
         });
       }
     });
   });
   return normalisedDatasets;
+};
+
+/**
+ * A deterministic converter of a string to a hexidecimal colour
+ * @param {String} str
+ * @returns {String}
+ */
+export const stringToColour = str => {
+  let hash = 0;
+  [...str].forEach((_, i) => {
+    // eslint-disable-next-line no-bitwise
+    hash = str.charCodeAt(i) + ((hash << 5) - hash);
+  });
+  let colour = '#';
+  // eslint-disable-next-line no-plusplus
+  for (let i = 0; i < 3; i++) {
+    // eslint-disable-next-line no-bitwise
+    const value = (hash >> (i * 8)) & 0xff;
+    colour += `00${value.toString(16)}`.substr(-2);
+  }
+  return colour;
 };
 
 /**
@@ -73,17 +94,15 @@ export const createTooltip = (
 ) => {
   const ToolTip = ({ active, payload, label }) => {
     if (active) {
-      let tooltipLines = [];
+      const tooltipLines = [];
       outlets.forEach(outlet => {
         words.forEach(word => {
           const formattedOutlet = mediaOutlets.find(obj => obj.value === outlet)
             .title;
 
-          const formattedWord = word
-            .toLowerCase()
-            .split(' ')
-            .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-            .join(' ');
+          // Change first letter of the word to uppercase
+          const formattedWord =
+            word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
 
           let tooltipLabel = '';
           let tooltipData = '';
@@ -94,11 +113,11 @@ export const createTooltip = (
               tooltipLabel = `${formattedOutlet} - ${formattedWord}: `;
               break;
             case 'byWord':
-              tooltipLabel = formattedOutlet + ': ';
+              tooltipLabel = `${formattedOutlet}: `;
               color = stringToColour(outlet);
               break;
             case 'byOutlet':
-              tooltipLabel = formattedWord + ': ';
+              tooltipLabel = `${formattedWord}: `;
               break;
             case 'multiple':
               tooltipLabel = '';
@@ -114,9 +133,9 @@ export const createTooltip = (
             tooltipLines.push({
               label: tooltipLabel,
               data: tooltipData,
-              word: word,
-              outlet: outlet,
-              color: color,
+              word,
+              outlet,
+              color,
             });
           }
         });
@@ -178,7 +197,7 @@ export const createLegendPayload = (
   const legendItems = [];
   if (displayOption !== 'multiple') {
     data.forEach(yearData => {
-      for (let [index, outlet] of outlets.entries()) {
+      outlets.forEach((outlet, index) => {
         words.forEach(word => {
           if (Object.keys(yearData).includes(outlet + word + YAxisKey)) {
             if (!legendItems.some(item => item.id === outlet + word)) {
@@ -186,11 +205,9 @@ export const createLegendPayload = (
                 obj => obj.value === outlet,
               ).title;
 
-              const formattedWord = word
-                .toLowerCase()
-                .split(' ')
-                .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-                .join(' ');
+              // Change first letter of the word to uppercase
+              const formattedWord =
+                word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
 
               const legendItem = {
                 id: outlet + word,
@@ -201,7 +218,7 @@ export const createLegendPayload = (
 
               switch (displayOption) {
                 case 'single':
-                  legendItem.value = formattedOutlet + ' - ' + formattedWord;
+                  legendItem.value = `${formattedOutlet} - ${formattedWord}`;
                   legendItem.type = icons[index].legend;
                   break;
                 case 'byOutlet':
@@ -209,39 +226,20 @@ export const createLegendPayload = (
                   break;
                 case 'byWord':
                   legendItem.value = formattedOutlet;
-                  legendItem.color = stringToColour(outlet)
+                  legendItem.color = stringToColour(outlet);
                   break;
                 default:
-                  legendItem.value = formattedOutlet + ' - ' + formattedWord;
+                  legendItem.value = `${formattedOutlet} - ${formattedWord}`;
               }
 
               legendItems.push(legendItem);
             }
           }
         });
-      }
+      });
     });
   }
   return legendItems;
-};
-
-/**
- * A deterministic converter of a string to a hexidecimal colour
- *
- * @param {String} str
- * @returns {String}
- */
-export const stringToColour = str => {
-  let hash = 0;
-  for (let i = 0; i < str.length; i++) {
-    hash = str.charCodeAt(i) + ((hash << 5) - hash);
-  }
-  let colour = '#';
-  for (let i = 0; i < 3; i++) {
-    let value = (hash >> (i * 8)) & 0xff;
-    colour += ('00' + value.toString(16)).substr(-2);
-  }
-  return colour;
 };
 
 /**
@@ -270,7 +268,7 @@ export const CustomizedDot = props => {
  * @returns {Object[]}
  */
 export function multipleDatasets(dataset, mediaOutlets) {
-  let result = [];
+  const result = [];
 
   dataset.forEach(wordData => {
     const title = `${
@@ -281,16 +279,16 @@ export function multipleDatasets(dataset, mediaOutlets) {
     const data = {
       word: wordData.word,
       outlet: wordData.outlet,
-      [wordData.outlet + wordData.word + 'rank']: wordData.rank,
-      [wordData.outlet + wordData.word + 'count']: wordData.count,
-      [wordData.outlet + wordData.word + 'freq']: wordData.freq,
+      [`${wordData.outlet + wordData.word}rank`]: wordData.rank,
+      [`${wordData.outlet + wordData.word}count`]: wordData.count,
+      [`${wordData.outlet + wordData.word}freq`]: wordData.freq,
     };
 
     let outlet = result.find(obj => obj.title === title);
 
     if (!outlet) {
       outlet = {
-        title: title,
+        title,
         data: [],
       };
       result.push(outlet);
@@ -338,9 +336,9 @@ export function singleDataset(dataset) {
     const data = {
       word: wordData.word,
       outlet: wordData.outlet,
-      [wordData.outlet + wordData.word + 'rank']: wordData.rank,
-      [wordData.outlet + wordData.word + 'count']: wordData.count,
-      [wordData.outlet + wordData.word + 'freq']: wordData.freq,
+      [`${wordData.outlet + wordData.word}rank`]: wordData.rank,
+      [`${wordData.outlet + wordData.word}count`]: wordData.count,
+      [`${wordData.outlet + wordData.word}freq`]: wordData.freq,
     };
     Object.assign(yearData, data);
   });
@@ -355,24 +353,24 @@ export function singleDataset(dataset) {
  * @returns {Object[]}
  */
 export function byOutletDataset(dataset, mediaOutlets) {
-  let result = [];
+  const result = [];
 
   dataset.forEach(wordData => {
-    const title = mediaOutlets.find(obj => obj.value === wordData.outlet).title;
+    const { title } = mediaOutlets.find(obj => obj.value === wordData.outlet);
 
     const data = {
       word: wordData.word,
       outlet: wordData.outlet,
-      [wordData.outlet + wordData.word + 'rank']: wordData.rank,
-      [wordData.outlet + wordData.word + 'count']: wordData.count,
-      [wordData.outlet + wordData.word + 'freq']: wordData.freq,
+      [`${wordData.outlet + wordData.word}rank`]: wordData.rank,
+      [`${wordData.outlet + wordData.word}count`]: wordData.count,
+      [`${wordData.outlet + wordData.word}freq`]: wordData.freq,
     };
 
     let outlet = result.find(obj => obj.title === title);
 
     if (!outlet) {
       outlet = {
-        title: title,
+        title,
         data: [],
       };
       result.push(outlet);
@@ -395,7 +393,7 @@ export function byOutletDataset(dataset, mediaOutlets) {
  * @returns {Object[]}
  */
 export function byWordDataset(dataset) {
-  let result = [];
+  const result = [];
 
   dataset.forEach(wordData => {
     const title = wordData.word;
@@ -403,16 +401,16 @@ export function byWordDataset(dataset) {
     const data = {
       word: wordData.word,
       outlet: wordData.outlet,
-      [wordData.outlet + wordData.word + 'rank']: wordData.rank,
-      [wordData.outlet + wordData.word + 'count']: wordData.count,
-      [wordData.outlet + wordData.word + 'freq']: wordData.freq,
+      [`${wordData.outlet + wordData.word}rank`]: wordData.rank,
+      [`${wordData.outlet + wordData.word}count`]: wordData.count,
+      [`${wordData.outlet + wordData.word}freq`]: wordData.freq,
     };
 
     let word = result.find(obj => obj.title === title);
 
     if (!word) {
       word = {
-        title: title,
+        title,
         data: [],
       };
       result.push(word);
@@ -439,12 +437,12 @@ export function singleLatentAssociationDataset(dataset) {
     return null;
   }
 
-  let summaryObject = {
+  const summaryObject = {
     title: dataset[0].media_outlet,
     data: [],
   };
 
-  for (let association of dataset) {
+  dataset.forEach ( association => {
     let yearRangeObject = summaryObject.data.find(
       obj => obj.yearRange === association.yearRange,
     );
@@ -453,9 +451,10 @@ export function singleLatentAssociationDataset(dataset) {
       yearRangeObject = { yearRange: association.yearRange };
       summaryObject.data.push(yearRangeObject);
     }
-    yearRangeObject['association'] = association.association;
-    yearRangeObject['mediaOutlet'] = association.media_outlet;
-  }
+    yearRangeObject.association = association.association;
+    yearRangeObject.mediaOutlet = association.media_outlet;
+  })
+
   summaryObject.data.sort(
     (x, y) =>
       Number(x.yearRange.split('-')[0]) - Number(y.yearRange.split('-')[0]),
@@ -477,13 +476,13 @@ export const createLatentAssociationLegendPayload = (
   outlet,
 ) => {
   const legendItems = [];
-  for (let yearData of data.data) {
+  data.data.forEach(yearData => {
     if (Object.keys(yearData).includes('association')) {
       if (legendItems.findIndex(item => item.id === outlet) === -1) {
-        let concept1Formatted = concept1
+        const concept1Formatted = concept1
           .map(item => item.charAt(0).toUpperCase() + item.substr(1))
           .join(', ');
-        let concept2Formatted = concept2
+        const concept2Formatted = concept2
           .map(item => item.charAt(0).toUpperCase() + item.substr(1))
           .join(', ');
         legendItems.push({
@@ -493,6 +492,6 @@ export const createLatentAssociationLegendPayload = (
         });
       }
     }
-  }
+  })
   return legendItems;
 };

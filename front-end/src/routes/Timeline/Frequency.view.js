@@ -73,20 +73,15 @@ const displayOptions = [
 
 const getDownloadData = (currentData, key, yearFrom, yearTo) => {
   const dataToDownload = [];
-  currentData.forEach(({ data, word }) => {
-    Object.entries(data).forEach(([mediaOutlet, values]) =>
-      values.forEach(item => {
-        const year = item['year'];
-        if (year <= yearTo && year >= yearFrom)
-          dataToDownload.push({
-            year,
-            value: item[key],
-            mediaOutlet: mediaOutlets.find(obj => obj.value === mediaOutlet)
-              .name,
-            word,
-          });
-      }),
-    );
+  currentData.forEach(wordData => {
+    const { word, year, outlet, [key]: value } = wordData;
+    if (year <= yearTo && year >= yearFrom)
+      dataToDownload.push({
+        year,
+        value,
+        mediaOutlet: mediaOutlets.find(obj => obj.value === outlet).title,
+        word,
+      });
   });
   return dataToDownload;
 };
@@ -119,22 +114,20 @@ function Timeline() {
   const frequencies = useSelector(state => state.timeline.frequencies);
 
   // TODO: Pass this the CsvDownloadButton
-  const dataToDownload = useMemo(() => getDownloadData(frequencies, yAxisKey,yearFrom,yearTo), [
-    frequencies,
-    yAxisKey,
-    yearFrom,
-    yearTo,
-  ]);
+  const dataToDownload = useMemo(
+    () => getDownloadData(frequencies, yAxisMetric, yearFrom, yearTo),
+    [frequencies, yAxisMetric, yearFrom, yearTo],
+  );
 
-  const csvHeaders = useMemo(()=>[
-    { label: 'media outlet', key: 'mediaOutlet' },
-    { label: 'word', key: 'word' },
-    { label: 'year', key: 'year' },
-    { label: yAxisKey, key: 'value' },
-  ],[yAxisKey]);
-
-  const minYear = 1970;
-  const maxYear = 2020;
+  const csvHeaders = useMemo(
+    () => [
+      { label: 'media outlet', key: 'mediaOutlet' },
+      { label: 'word', key: 'word' },
+      { label: 'year', key: 'year' },
+      { label: yAxisMetric, key: 'value' },
+    ],
+    [yAxisMetric],
+  );
 
   const onSubmitHandler = e => {
     e.preventDefault();
@@ -149,7 +142,10 @@ function Timeline() {
   const handleAddChip = (chip, state, setState) => {
     if (state.length < PARAMETER_LIMIT) {
       setState([...state, chip]);
-      outlets.length ? setFormSubmitted(false) : setFormSubmitted(true);
+      setFormSubmitted(true);
+      if (outlets.length) {
+        setFormSubmitted(false);
+      }
     }
   };
 
@@ -161,9 +157,7 @@ function Timeline() {
           headers={csvHeaders}
           filename="ma-word-frequency.csv"
         />
-      ) : (
-        null
-      )}
+      ) : null}
       <h3>Word Frequency Timeline</h3>
       <div className={classes.container}>
         <Card className={classes.Card}>
@@ -190,6 +184,7 @@ function Timeline() {
                           float: 'left',
                         }}
                         label={value}
+                        // eslint-disable-next-line no-unused-vars
                         onDelete={_ => handleDelete(value, words, setWords)}
                       />
                     )}
@@ -204,6 +199,7 @@ function Timeline() {
                     options={mediaOutlets}
                     getOptionLabel={option => option.title}
                     filterSelectedOptions
+                    // eslint-disable-next-line no-unused-vars
                     filterOptions={(options, _) =>
                       outlets.length < PARAMETER_LIMIT ? options : []
                     }
@@ -359,13 +355,13 @@ function Timeline() {
             <LineCharts
               datasets={frequencies}
               formParameters={{
-                outlets: outlets,
-                words: words,
+                outlets,
+                words,
                 yearFrom: Number(yearFrom),
                 yearTo: Number(yearTo),
                 yAxisKey: yAxisMetric,
                 displayNormalised: normalised,
-                displayOption: displayOption,
+                displayOption,
               }}
               mediaOutlets={mediaOutlets}
             />

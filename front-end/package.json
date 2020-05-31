@@ -36,6 +36,7 @@
     "eject": "react-scripts eject",
     "docs": "./node_modules/jsdoc/jsdoc.js -c ./jsdocs.json",
     "storybook": "start-storybook -p 9009 -s public",
+    "lint": "eslint src/",
     "build-storybook": "build-storybook -s public"
   },
   "eslintConfig": {

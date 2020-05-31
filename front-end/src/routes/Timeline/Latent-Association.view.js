@@ -63,7 +63,7 @@ const useStyles = makeStyles(theme => ({
   },
   chartContainer: {
     width: '100%',
-    maxWidth: "70vw",
+    maxWidth: '70vw',
     height: '50vh',
     flex: '0 1 auto',
     paddingBottom: '6vh',
@@ -212,6 +212,7 @@ function Timeline() {
                         style={{ margin: '0px 8px 8px 0px', float: 'left' }}
                         color="secondary"
                         label={value}
+                        // eslint-disable-next-line no-unused-vars
                         onDelete={_ =>
                           handleDelete(value, concept1, setConcept1)
                         }
@@ -237,6 +238,7 @@ function Timeline() {
                         style={{ margin: '0px 8px 8px 0px', float: 'left' }}
                         color="default"
                         label={value}
+                        // eslint-disable-next-line no-unused-vars
                         onDelete={_ =>
                           handleDelete(value, concept2, setConcept2)
                         }
@@ -318,7 +320,7 @@ function Timeline() {
         ) : (
           formSubmitted &&
           outlets.map(outlet => {
-            let data = singleLatentAssociationDataset(associations);
+            const data = singleLatentAssociationDataset(associations);
             if (data) {
               return (
                 <div className={classes.chartContainer}>
@@ -343,13 +345,13 @@ function Timeline() {
                           data,
                           concept1,
                           concept2,
-                          outlets[0]
+                          outlets[0],
                         )}
                       />
                       <Tooltip />
                       <Line
                         type="linear"
-                        dataKey={'association'}
+                        dataKey="association"
                         stroke={stringToColour(outlet)}
                         fill={stringToColour(outlet)}
                         strokeWidth={3}
@@ -364,9 +366,8 @@ function Timeline() {
                   </ResponsiveContainer>
                 </div>
               );
-            } else {
-              return null;
             }
+            return null;
           })
         )}
       </div>
