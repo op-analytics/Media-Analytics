@@ -1,6 +1,6 @@
+import config from '@/config';
 import { NextFunction, Request, Response } from 'express';
 import { verify } from 'jsonwebtoken';
-import config from '../../../config';
 import { User, UserRequest } from '../types';
 
 function getTokenFromBearer(header: string): string {
