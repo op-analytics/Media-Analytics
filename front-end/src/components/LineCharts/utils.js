@@ -92,16 +92,13 @@ export const createTooltip = (
           switch (displayOption) {
             case 'single':
               tooltipLabel = `${formattedOutlet} - ${formattedWord}: `;
-              tooltipData = payload[0]?.payload[outlet + word + yAxisKey];
               break;
             case 'byWord':
               tooltipLabel = formattedOutlet + ': ';
-              tooltipData = payload[0]?.payload[outlet + yAxisKey];
               color = stringToColour(outlet);
               break;
             case 'byOutlet':
               tooltipLabel = formattedWord + ': ';
-              tooltipData = payload[0]?.payload[word + yAxisKey];
               break;
             case 'multiple':
               tooltipLabel = '';
@@ -109,7 +106,6 @@ export const createTooltip = (
               break;
             default:
               tooltipLabel = `${formattedOutlet} - ${formattedWord}: `;
-              tooltipData = payload[0]?.payload[outlet + word + yAxisKey];
           }
 
           tooltipData = payload[0]?.payload[outlet + word + yAxisKey];
@@ -180,6 +176,7 @@ export const createLegendPayload = (
 ) => {
   const legendItems = [];
   data.forEach(wordData => {
+    console.log('wordData :>> ', wordData);
     const word = wordData.word;
     const outlet = wordData.outlet;
     if (words.includes(word) && outlets.includes(outlet)) {
