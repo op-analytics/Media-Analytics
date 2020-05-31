@@ -3,7 +3,6 @@ import LatentAssociation, {
   LatentAssociationDocument,
 } from '../models/latentAssociation.model';
 
-// NOTE: this may not be correct
 type Vectors = Record<string, number[][]>;
 
 interface LatentAssociationData {
@@ -11,7 +10,6 @@ interface LatentAssociationData {
   association: number;
 }
 
-// TODO: Fix these types
 function extractVectors(concept: LatentAssociationDocument[]): Vectors {
   const vectorData: Vectors = {};
   concept.forEach((data: LatentAssociationDocument) => {
@@ -29,7 +27,6 @@ async function getConceptData(
   concept: string[],
   yearFrom: number,
   yearTo: number,
-  // NOTE: This might be wrong ask Liam for confirmation on typing
 ): Promise<LatentAssociationDocument[]> {
   return LatentAssociation.find({
     word: { $in: concept },
