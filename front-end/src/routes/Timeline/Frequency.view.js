@@ -96,7 +96,7 @@ function Timeline() {
   const [words, setWords] = useState([]);
   const [formSubmitted, setFormSubmitted] = useState(true);
   const loading = useSelector(state => state.timeline.loading);
-  let frequencies = useSelector(state => state.timeline.frequencies);
+  const frequencies = useSelector(state => state.timeline.frequencies);
 
   const onSubmitHandler = e => {
     e.preventDefault();
@@ -312,13 +312,13 @@ function Timeline() {
             <LineCharts
               datasets={frequencies}
               formParameters={{
-                outlets: outlets,
-                words: words,
+                outlets,
+                words,
                 yearFrom: Number(yearFrom),
                 yearTo: Number(yearTo),
                 yAxisKey: yAxisMetric,
                 displayNormalised: normalised,
-                displayOption: displayOption,
+                displayOption,
               }}
               mediaOutlets={mediaOutlets}
             />

@@ -11,15 +11,17 @@ import {
   YAxis,
 } from 'recharts';
 import { createTooltip, CustomizedDot, stringToColour } from './utils';
+import { useStyles } from './hooks/useStyles';
 
-function LinechartMultiple({ datasets, formParameters, mediaOutlets, classes }) {
-  const words = formParameters.words;
-  const outlets = formParameters.outlets;
-  const yearFrom = formParameters.yearFrom;
-  const yearTo = formParameters.yearTo;
-  const yAxisKey = formParameters.yAxisKey;
-  const displayNormalised = formParameters.displayNormalised;
-  const displayOption = formParameters.displayOption;
+function LinechartMultiple({ datasets, formParameters, mediaOutlets }) {
+  const classes = useStyles();
+  const { words } = formParameters;
+  const { outlets } = formParameters;
+  const { yearFrom } = formParameters;
+  const { yearTo } = formParameters;
+  const { yAxisKey } = formParameters;
+  const { displayNormalised } = formParameters;
+  const { displayOption } = formParameters;
 
   return (
     <Grid container spacing={1} justify="center">
@@ -57,14 +59,14 @@ function LinechartMultiple({ datasets, formParameters, mediaOutlets, classes }) 
                         <XAxis
                           type="number"
                           domain={[yearFrom, yearTo]}
-                          dataKey={'year'}
+                          dataKey="year"
                           tickCount={Math.abs(yearTo - yearFrom)}
-                          allowDataOverflow={true} // Forces displayed data to match domain.
+                          allowDataOverflow // Forces displayed data to match domain.
                         />
                         <YAxis
                           domain={displayNormalised ? [0, 1] : ['auto', 'auto']}
                           width={75}
-                          allowDataOverflow={true} // Forces displayed data to match domain.
+                          allowDataOverflow // Forces displayed data to match domain.
                         />
                         <Tooltip
                           itemSorter={item1 => item1.value * -1}
@@ -78,18 +80,19 @@ function LinechartMultiple({ datasets, formParameters, mediaOutlets, classes }) 
                             datasets,
                           )}
                         />
-                        {words.map(word => {
-                          return outlets.map(outlet => (
+                        {words.map(lineWord => {
+                          return outlets.map(lineOutlet => (
                             <Line
+                              key={lineWord + lineOutlet}
                               type="monotone"
-                              dataKey={outlet + word + yAxisKey}
-                              stroke={stringToColour(word)}
-                              fill={stringToColour(word)}
+                              dataKey={lineOutlet + lineWord + yAxisKey}
+                              stroke={stringToColour(lineWord)}
+                              fill={stringToColour(lineWord)}
                               connectNulls
                               strokeWidth={3}
                               dot={<CustomizedDot number={0} />}
                               activeDot={{
-                                stroke: stringToColour(word),
+                                stroke: stringToColour(lineWord),
                                 strokeWidth: 7,
                                 border: 'white',
                               }}

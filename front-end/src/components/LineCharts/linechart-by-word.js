@@ -17,18 +17,20 @@ import {
   CustomizedDot,
   stringToColour,
 } from './utils';
+import { useStyles } from './hooks/useStyles';
 
-function LinechartByWord({ datasets, formParameters, mediaOutlets, classes }) {
-  const words = formParameters.words;
-  const outlets = formParameters.outlets;
-  const yearFrom = formParameters.yearFrom;
-  const yearTo = formParameters.yearTo;
-  const yAxisKey = formParameters.yAxisKey;
-  const displayNormalised = formParameters.displayNormalised;
-  const displayOption = formParameters.displayOption;
+function LinechartByWord({ datasets, formParameters, mediaOutlets }) {
+  const classes = useStyles();
+  const { words } = formParameters;
+  const { outlets } = formParameters;
+  const { yearFrom } = formParameters;
+  const { yearTo } = formParameters;
+  const { yAxisKey } = formParameters;
+  const { displayNormalised } = formParameters;
+  const { displayOption } = formParameters;
 
   return (
-    <Grid key={'container'} item container xs={12} spacing={2} justify="center">
+    <Grid key="container" item container xs={12} spacing={2} justify="center">
       {datasets.map(dataset => (
         <Grid
           key={dataset.title}
@@ -53,14 +55,14 @@ function LinechartByWord({ datasets, formParameters, mediaOutlets, classes }) {
                 <XAxis
                   type="number"
                   domain={[yearFrom, yearTo]}
-                  dataKey={'year'}
+                  dataKey="year"
                   tickCount={Math.abs(yearTo - yearFrom)}
-                  allowDataOverflow={true} // Forces displayed data to match domain.
+                  allowDataOverflow // Forces displayed data to match domain.
                 />
                 <YAxis
                   domain={displayNormalised ? [0, 1] : ['auto', 'auto']}
                   width={75}
-                  allowDataOverflow={true} // Forces displayed data to match domain.
+                  allowDataOverflow // Forces displayed data to match domain.
                 />
                 <Legend
                   payload={createLegendPayload(

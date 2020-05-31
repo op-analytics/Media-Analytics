@@ -1,4 +1,3 @@
-import { makeStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 import React from 'react';
 import LinechartByOutlet from './linechart-by-outlet';
@@ -13,44 +12,7 @@ import {
   normaliseDatasets,
 } from './utils';
 
-const useStyles = makeStyles(() => ({
-  chartContainer: {
-    width: '100%',
-    maxWidth: '60vw',
-    height: '50vh',
-    flex: '0 1 auto',
-    paddingBottom: '6vh',
-    paddingTop: '2rem',
-  },
-  chartTitle: {
-    textAlign: 'center',
-    '&:first-letter': {
-      textTransform: 'uppercase',
-    },
-  },
-  tooltip: {
-    margin: 0,
-    lineHeight: '24px',
-    border: '1px solid #f5f5f5',
-    backgroundColor: 'hsla(0,0%,100%,.8)',
-    padding: '10px',
-  },
-  tooltipLabel: {
-    color: '#333',
-  },
-  tooltipLabelFirstWord: {
-    color: '#777',
-    '&:first-letter': {
-      textTransform: 'uppercase',
-    },
-  },
-  gridItemChart: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-}));
+
 
 /**
  * LineCharts A helper component for rendering multiple linecharts
@@ -58,17 +20,15 @@ const useStyles = makeStyles(() => ({
  * @component
  */
 function LineCharts({ datasets, formParameters, mediaOutlets }) {
-  const classes = useStyles();
+  const {words} = formParameters;
+  const {outlets} = formParameters;
+  const {yearFrom} = formParameters;
+  const {yearTo} = formParameters;
+  const {yAxisKey} = formParameters;
+  const {displayNormalised} = formParameters;
+  const {displayOption} = formParameters;
 
-  const words = formParameters.words;
-  const outlets = formParameters.outlets;
-  const yearFrom = formParameters.yearFrom;
-  const yearTo = formParameters.yearTo;
-  const yAxisKey = formParameters.yAxisKey;
-  const displayNormalised = formParameters.displayNormalised;
-  const displayOption = formParameters.displayOption;
-
-  let normalisedDatasets = normaliseDatasets(
+  const normalisedDatasets = normaliseDatasets(
     datasets,
     words,
     outlets,
@@ -77,60 +37,57 @@ function LineCharts({ datasets, formParameters, mediaOutlets }) {
     yAxisKey,
   );
 
+  let dataSource = datasets
+
   if (displayNormalised) {
-    datasets = normalisedDatasets;
+    dataSource = normalisedDatasets;
   }
 
   let processedData = {};
   switch (displayOption) {
     case 'multiple':
-      processedData = multipleDatasets(datasets, mediaOutlets);
+      processedData = multipleDatasets(dataSource, mediaOutlets);
       return (
         <LinechartMultiple
           datasets={processedData}
           formParameters={formParameters}
           mediaOutlets={mediaOutlets}
-          classes={classes}
         />
       );
     case 'single':
-      processedData = singleDataset(datasets);
+      processedData = singleDataset(dataSource);
       return (
         <LinechartSingle
           dataset={processedData}
           formParameters={formParameters}
           mediaOutlets={mediaOutlets}
-          classes={classes}
         />
       );
     case 'byOutlet':
-      processedData = byOutletDataset(datasets, mediaOutlets);
+      processedData = byOutletDataset(dataSource, mediaOutlets);
       return (
         <LinechartByOutlet
           datasets={processedData}
           formParameters={formParameters}
           mediaOutlets={mediaOutlets}
-          classes={classes}
         />
       );
     case 'byWord':
-      processedData = byWordDataset(datasets);
+      processedData = byWordDataset(dataSource);
       return (
         <LinechartByWord
           datasets={processedData}
           formParameters={formParameters}
           mediaOutlets={mediaOutlets}
-          classes={classes}
         />
       );
     default:
-      processedData = multipleDatasets(datasets, mediaOutlets);
+      processedData = multipleDatasets(dataSource, mediaOutlets);
       return (
         <LinechartMultiple
           datasets={processedData}
           formParameters={formParameters}
           mediaOutlets={mediaOutlets}
-          classes={classes}
         />
       );
   }

@@ -271,7 +271,7 @@ function Timeline() {
         ) : (
           formSubmitted &&
           outlets.map(outlet => {
-            let data = singleLatentAssociationDataset(associations);
+            const data = singleLatentAssociationDataset(associations);
             if (data) {
               return (
                 <div className={classes.chartContainer}>
@@ -302,7 +302,7 @@ function Timeline() {
                       <Tooltip />
                       <Line
                         type="linear"
-                        dataKey={'association'}
+                        dataKey="association"
                         stroke={stringToColour(outlet)}
                         fill={stringToColour(outlet)}
                         strokeWidth={3}
@@ -317,9 +317,9 @@ function Timeline() {
                   </ResponsiveContainer>
                 </div>
               );
-            } else {
+            } 
               return null;
-            }
+            
           })
         )}
       </div>
