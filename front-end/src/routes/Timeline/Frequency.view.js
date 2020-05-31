@@ -111,7 +111,10 @@ function Timeline() {
   const handleAddChip = (chip, state, setState) => {
     if (state.length < PARAMETER_LIMIT) {
       setState([...state, chip]);
-      outlets.length ? setFormSubmitted(false) : setFormSubmitted(true);
+      setFormSubmitted(true);
+      if (outlets.length) {
+        setFormSubmitted(false);
+      }
     }
   };
 
@@ -143,6 +146,7 @@ function Timeline() {
                           float: 'left',
                         }}
                         label={value}
+                        // eslint-disable-next-line no-unused-vars
                         onDelete={_ => handleDelete(value, words, setWords)}
                       />
                     )}
@@ -157,6 +161,7 @@ function Timeline() {
                     options={mediaOutlets}
                     getOptionLabel={option => option.title}
                     filterSelectedOptions
+                    // eslint-disable-next-line no-unused-vars
                     filterOptions={(options, _) =>
                       outlets.length < PARAMETER_LIMIT ? options : []
                     }

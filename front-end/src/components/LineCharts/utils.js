@@ -58,17 +58,19 @@ export const normaliseDatasets = (
 
 /**
  * A deterministic converter of a string to a hexidecimal colour
- *
  * @param {String} str
  * @returns {String}
  */
 export const stringToColour = str => {
   let hash = 0;
-  str.forEach((_, i) => {
+  [...str].forEach((_, i) => {
+    // eslint-disable-next-line no-bitwise
     hash = str.charCodeAt(i) + ((hash << 5) - hash);
   });
   let colour = '#';
+  // eslint-disable-next-line no-plusplus
   for (let i = 0; i < 3; i++) {
+    // eslint-disable-next-line no-bitwise
     const value = (hash >> (i * 8)) & 0xff;
     colour += `00${value.toString(16)}`.substr(-2);
   }
@@ -195,7 +197,7 @@ export const createLegendPayload = (
   const legendItems = [];
   if (displayOption !== 'multiple') {
     data.forEach(yearData => {
-      for (const [index, outlet] of outlets.entries()) {
+      outlets.forEach((outlet, index) => {
         words.forEach(word => {
           if (Object.keys(yearData).includes(outlet + word + YAxisKey)) {
             if (!legendItems.some(item => item.id === outlet + word)) {
@@ -203,11 +205,9 @@ export const createLegendPayload = (
                 obj => obj.value === outlet,
               ).title;
 
-              const formattedWord = word
-                .toLowerCase()
-                .split(' ')
-                .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-                .join(' ');
+              // Change first letter of the word to uppercase
+              const formattedWord =
+                word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
 
               const legendItem = {
                 id: outlet + word,
@@ -236,7 +236,7 @@ export const createLegendPayload = (
             }
           }
         });
-      }
+      });
     });
   }
   return legendItems;
@@ -442,7 +442,7 @@ export function singleLatentAssociationDataset(dataset) {
     data: [],
   };
 
-  for (const association of dataset) {
+  dataset.forEach ( association => {
     let yearRangeObject = summaryObject.data.find(
       obj => obj.yearRange === association.yearRange,
     );
@@ -453,7 +453,8 @@ export function singleLatentAssociationDataset(dataset) {
     }
     yearRangeObject.association = association.association;
     yearRangeObject.mediaOutlet = association.media_outlet;
-  }
+  })
+
   summaryObject.data.sort(
     (x, y) =>
       Number(x.yearRange.split('-')[0]) - Number(y.yearRange.split('-')[0]),
@@ -475,7 +476,7 @@ export const createLatentAssociationLegendPayload = (
   outlet,
 ) => {
   const legendItems = [];
-  for (const yearData of data.data) {
+  data.data.forEach(yearData => {
     if (Object.keys(yearData).includes('association')) {
       if (legendItems.findIndex(item => item.id === outlet) === -1) {
         const concept1Formatted = concept1
@@ -491,6 +492,6 @@ export const createLatentAssociationLegendPayload = (
         });
       }
     }
-  }
+  })
   return legendItems;
 };

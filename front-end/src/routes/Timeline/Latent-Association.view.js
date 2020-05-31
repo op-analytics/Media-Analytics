@@ -62,7 +62,7 @@ const useStyles = makeStyles(theme => ({
   },
   chartContainer: {
     width: '100%',
-    maxWidth: "70vw",
+    maxWidth: '70vw',
     height: '50vh',
     flex: '0 1 auto',
     paddingBottom: '6vh',
@@ -165,6 +165,7 @@ function Timeline() {
                         style={{ margin: '0px 8px 8px 0px', float: 'left' }}
                         color="secondary"
                         label={value}
+                        // eslint-disable-next-line no-unused-vars
                         onDelete={_ =>
                           handleDelete(value, concept1, setConcept1)
                         }
@@ -190,6 +191,7 @@ function Timeline() {
                         style={{ margin: '0px 8px 8px 0px', float: 'left' }}
                         color="default"
                         label={value}
+                        // eslint-disable-next-line no-unused-vars
                         onDelete={_ =>
                           handleDelete(value, concept2, setConcept2)
                         }
@@ -296,7 +298,7 @@ function Timeline() {
                           data,
                           concept1,
                           concept2,
-                          outlets[0]
+                          outlets[0],
                         )}
                       />
                       <Tooltip />
@@ -317,9 +319,8 @@ function Timeline() {
                   </ResponsiveContainer>
                 </div>
               );
-            } 
-              return null;
-            
+            }
+            return null;
           })
         )}
       </div>
