@@ -1,4 +1,5 @@
-import { Document, Schema, model } from 'mongoose';
+import { Schema, model } from 'mongoose';
+import LatentAssociationDocument from '../interfaces/LatentAssociationDocument';
 
 const LatentAssociation = new Schema({
   word: {
@@ -22,15 +23,6 @@ const LatentAssociation = new Schema({
 });
 
 LatentAssociation.set('collection', 'latent_association');
-
-export interface LatentAssociationDocument extends Document {
-  word: string;
-  vectors: number[];
-  // eslint-disable-next-line camelcase
-  year_from: number;
-  // eslint-disable-next-line camelcase
-  year_to: number;
-}
 
 export default model<LatentAssociationDocument>(
   'latent_association',

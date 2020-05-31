@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { UserRequest } from '../types';
+import UserRequest from '../interfaces/UserRequest';
 import {
   EmailTaken,
   Signup,

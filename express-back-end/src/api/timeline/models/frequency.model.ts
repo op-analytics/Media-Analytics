@@ -1,4 +1,5 @@
-import { Document, Schema, model } from 'mongoose';
+import { Schema, model } from 'mongoose';
+import FrequencyDocument from '../interfaces/FrequencyDocument';
 
 const Frequency = new Schema({
   word: {
@@ -24,13 +25,5 @@ const Frequency = new Schema({
 });
 
 Frequency.set('collection', 'frequency');
-
-export interface FrequencyDocument extends Document {
-  word: string;
-  year: number;
-  rank: number;
-  count: number;
-  freq: number;
-}
 
 export default model<FrequencyDocument>('frequency', Frequency);

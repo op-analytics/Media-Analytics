@@ -1,7 +1,8 @@
 import config from '@/config';
 import { NextFunction, Request, Response } from 'express';
 import { verify } from 'jsonwebtoken';
-import { User, UserRequest } from '../types';
+import User from '../interfaces/User';
+import UserRequest from '../interfaces/UserRequest';
 
 function getTokenFromBearer(header: string): string {
   const tokenSplit = header.split(' ');

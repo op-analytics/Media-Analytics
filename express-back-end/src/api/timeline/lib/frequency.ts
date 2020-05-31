@@ -1,14 +1,6 @@
-import Frequency, { FrequencyDocument } from '../models/frequency.model';
-
-interface FrequencyData {
-  word: string;
-  data: {
-    year: number;
-    rank: number;
-    count: number;
-    freq: number;
-  }[];
-}
+import FrequencyData from '../interfaces/FrequencyData';
+import FrequencyDocument from '../interfaces/FrequencyDocument';
+import Frequency from '../models/frequency.model';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function sortOnKey(objects: { data: Record<string, any> }[], key: string): void {

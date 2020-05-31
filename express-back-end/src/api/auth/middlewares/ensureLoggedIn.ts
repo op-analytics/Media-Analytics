@@ -1,5 +1,5 @@
 import { Response, NextFunction } from 'express';
-import { UserRequest } from '../types';
+import UserRequest from '../interfaces/UserRequest';
 
 function ensureLoggedIn(
   req: UserRequest,

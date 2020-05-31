@@ -1,4 +1,5 @@
-import { Document, Schema, model } from 'mongoose';
+import { Schema, model } from 'mongoose';
+import UserDocument from '../interfaces/UserDocument';
 
 const User = new Schema({
   name: {
@@ -23,11 +24,5 @@ User.path('email').validate((value: string) => {
   const emailRegex = /^([\w-.]+@([\w-]+\.)+[\w-]{2,4})?$/;
   return emailRegex.test(value);
 }, 'Invalid email');
-
-export interface UserDocument extends Document {
-  name: string;
-  email: string;
-  password: string;
-}
 
 export default model<UserDocument>('user', User);

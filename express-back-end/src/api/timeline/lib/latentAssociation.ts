@@ -1,17 +1,12 @@
 import math from 'mathjs';
-import LatentAssociation, {
-  LatentAssociationDocument,
-} from '../models/latentAssociation.model';
+import LatentAssociationData from '../interfaces/LatentAssociationData';
+import LatentAssociationDocument from '../interfaces/LatentAssociationDocument';
+import LatentAssociation from '../models/latentAssociation.model';
 
-type Vectors = Record<string, number[][]>;
-
-interface LatentAssociationData {
-  yearRange: string;
-  association: number;
-}
-
-function extractVectors(concept: LatentAssociationDocument[]): Vectors {
-  const vectorData: Vectors = {};
+function extractVectors(
+  concept: LatentAssociationDocument[],
+): Record<string, number[][]> {
+  const vectorData: Record<string, number[][]> = {};
   concept.forEach((data: LatentAssociationDocument) => {
     const vectorDataKey = `${data.year_from}-${data.year_to}`;
     if (!vectorData[vectorDataKey]) {

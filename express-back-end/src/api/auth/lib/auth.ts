@@ -1,8 +1,9 @@
 import config from '@/config';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import User, { UserDocument } from '../models/user.model';
-import { User as UserType } from '../types';
+import User from '../models/user.model';
+import UserType from '../interfaces/User';
+import UserDocument from '../interfaces/UserDocument';
 
 function TokenizeUser(user: UserType): string {
   return jwt.sign(
