@@ -2,8 +2,10 @@ import Fab from '@material-ui/core/Fab';
 import GetAppIcon from '@material-ui/icons/GetApp';
 import TooltipUI from '@material-ui/core/Tooltip';
 import { withStyles } from '@material-ui/core/styles';
+import PropTypes from 'prop-types';
 import React from 'react';
 import { CSVLink } from 'react-csv';
+
 
 const useStyles = theme => ({
   fab: {
@@ -34,6 +36,12 @@ class CsvDownloadButton extends React.Component {
       </TooltipUI>
     );
   }
+}
+
+CsvDownloadButton.propTypes = {
+  data: PropTypes.arrayOf(PropTypes.object),
+  headers: PropTypes.array,
+  filename: PropTypes.string
 }
 
 export default withStyles(useStyles)(CsvDownloadButton);

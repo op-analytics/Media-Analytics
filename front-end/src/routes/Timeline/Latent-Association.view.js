@@ -112,11 +112,8 @@ const displayOptions = [
 
 const getDownloadData = (currentData, concept1, concept2) => {
   const dataToDownload = [];
-  console.log(currentData)
   if(currentData) {
     currentData.forEach(item => {
-      console.log(item)
-      console.log(item["yearRange"])
       dataToDownload.push({
         mediaOutlet: mediaOutlets.find(obj => obj.value === item["media_outlet"]).name,
         concept1: concept1,
