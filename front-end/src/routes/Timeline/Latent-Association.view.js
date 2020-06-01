@@ -8,7 +8,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import ChipInput from 'material-ui-chip-input';
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   CartesianGrid,
@@ -25,6 +25,7 @@ import {
   singleLatentAssociationDataset,
   stringToColour,
 } from '../../components/LineCharts/utils';
+import CsvDownloadButton from '../../components/CsvDownloadButton';
 import { getAssociations } from '../../state/ducks/timeline';
 
 const useStyles = makeStyles(theme => ({
@@ -105,6 +106,22 @@ const mediaOutlets = [
   { title: 'The Guardian', name: 'The Guardian', value: 'guardian' },
 ];
 
+const getDownloadData = (currentData, concept1, concept2) => {
+  const dataToDownload = [];
+  if(currentData) {
+    currentData.forEach(item => {
+      dataToDownload.push({
+        mediaOutlet: mediaOutlets.find(obj => obj.value === item.media_outlet).name,
+        concept1,
+        concept2,
+        yearRange: item.yearRange,
+        association: item.association,
+      });
+    });
+  }
+  return dataToDownload;
+};
+
 /**
  * The latent association page component
  * @component
@@ -135,6 +152,22 @@ function Timeline() {
     }
   };
 
+  // TODO: Pass this the CsvDownloadButton
+  const dataToDownload = useMemo(() => getDownloadData(associations,concept1,concept2), [
+    associations,
+    concept1,
+    concept2,
+  ]);
+
+  const csvHeaders = [
+    { label: 'media outlet', key: 'mediaOutlet' },
+    { label: 'concept1', key: 'concept1' },
+    { label: 'concept2', key: 'concept2' },
+    { label: 'year range', key: 'yearRange' },
+    { label: 'association', key: 'association' },
+
+  ];
+
   const onSubmitHandler = e => {
     e.preventDefault();
     setFormSubmitted(true);
@@ -143,6 +176,15 @@ function Timeline() {
 
   return (
     <>
+      {formSubmitted && associations && !loading ? (
+        <CsvDownloadButton
+          data={dataToDownload}
+          headers={csvHeaders}
+          filename="ma-latent-association.csv"
+        />
+      ) : (
+        null
+      )}
       <h3>Latent association over time</h3>
       <div className={classes.container}>
         <Card className={classes.Card}>

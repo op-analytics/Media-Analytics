@@ -1,5 +1,4 @@
 import _pickle as pickle
-import os
 
 import click
 

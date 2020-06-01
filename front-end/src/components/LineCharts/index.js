@@ -8,8 +8,8 @@ import {
   byOutletDataset,
   byWordDataset,
   multipleDatasets,
-  singleDataset,
   normaliseDatasets,
+  singleDataset
 } from './utils';
 
 
@@ -20,22 +20,9 @@ import {
  * @component
  */
 function LineCharts({ datasets, formParameters, mediaOutlets }) {
-  const {words} = formParameters;
-  const {outlets} = formParameters;
-  const {yearFrom} = formParameters;
-  const {yearTo} = formParameters;
-  const {yAxisKey} = formParameters;
-  const {displayNormalised} = formParameters;
-  const {displayOption} = formParameters;
+  const {words, outlets, yearFrom, yearTo, yAxisKey, displayNormalised, displayOption} = formParameters;
 
-  const normalisedDatasets = normaliseDatasets(
-    datasets,
-    words,
-    outlets,
-    yearFrom,
-    yearTo,
-    yAxisKey,
-  );
+  const normalisedDatasets = normaliseDatasets(datasets, words, outlets, yearFrom, yearTo, yAxisKey);
 
   let dataSource = datasets
 
@@ -91,7 +78,7 @@ function LineCharts({ datasets, formParameters, mediaOutlets }) {
         />
       );
   }
-}
+};
 
 LineCharts.propTypes = {
   datasets: PropTypes.arrayOf(
