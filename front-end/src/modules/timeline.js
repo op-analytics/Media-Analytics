@@ -28,7 +28,11 @@ const timelineModel = {
     actions.setLoading(true);
     try {
       const frequencies = await timelineService.getFrequencies(payload);
-      actions.setFrequencies(frequencies);
+      const cleanedFrequencies = frequencies.map(dataset => ({
+        title: dataset.word,
+        data: dataset.data,
+      }));
+      actions.setFrequencies(cleanedFrequencies);
     } catch ({ response }) {
       const errors = getErrorsFromResponse(response);
       actions.setErrors(errors);
@@ -40,14 +44,17 @@ const timelineModel = {
     actions.setLoading(true);
     try {
       const sentiments = await timelineService.getSentiments(payload);
-      actions.setSentiments(sentiments);
+      const cleanedSentiments = sentiments.map(dataset => ({
+        title: dataset.word,
+        data: dataset.data,
+      }));
+      actions.setSentiments(cleanedSentiments);
     } catch ({ response }) {
       const errors = getErrorsFromResponse(response);
       actions.setErrors(errors);
     }
     actions.setLoading(false);
   }),
-
 
   setLoading: action((state, payload) => {
     state.loading = payload;

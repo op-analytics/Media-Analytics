@@ -19,12 +19,7 @@ export default {
       requestData,
     );
     const { data: sentiments } = data;
-
-    //TODO: Move this to the thunk
-    return sentiments.map(dataset => ({
-      title: dataset.word,
-      data: dataset.data,
-    }));
+    return sentiments;
   },
 
   async getFrequencies(requestData) {
@@ -32,13 +27,7 @@ export default {
       `${API_URL}/timeline/frequency`,
       requestData,
     );
-
     const { data: frequencyData } = data;
-
-    //TODO: Move this to the thunk
-    return frequencyData.map(dataset => ({
-      title: dataset.word,
-      data: dataset.data,
-    }));
+    return frequencyData
   },
 };
