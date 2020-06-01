@@ -1,19 +1,18 @@
-import CircularProgress from '@material-ui/core/CircularProgress';
-import ChipInput from 'material-ui-chip-input';
-import FormControl from '@material-ui/core/FormControl';
 import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import FormControl from '@material-ui/core/FormControl';
+import Grid from '@material-ui/core/Grid';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
-import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
+import TextField from '@material-ui/core/TextField';
 import ToggleButton from '@material-ui/lab/ToggleButton';
+import { useStoreActions, useStoreState } from 'easy-peasy';
+import ChipInput from 'material-ui-chip-input';
 // import Autocomplete from '@material-ui/lab/Autocomplete';
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import LineCharts from '../../components/LineCharts';
-import { getFrequencies } from '../../state/ducks/timeline';
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -58,20 +57,21 @@ const useStyles = makeStyles(theme => ({
  */
 function Timeline() {
   const classes = useStyles();
-  const dispatch = useDispatch();
-  const [yearFrom, setYearFrom] = useState();
-  const [yearTo, setYearTo] = useState();
+  const [yearFrom, setYearFrom] = useState('');
+  const [yearTo, setYearTo] = useState('');
   const [yAxisKey, setYAxisKey] = useState('freq');
   const [absolute, setAbsolute] = useState(false);
   const [words, setWords] = useState([]);
   // const [outlets, setOutlets] = useState([]);
 
-  const loading = useSelector(state => state.timeline.loading);
-  const frequencies = useSelector(state => state.timeline.frequencies);
+  const loading = useStoreState(state => state.timeline.loading);
+  const frequencies = useStoreState(state => state.timeline.frequencies);
+
+  const getFrequencies = useStoreActions(state => state.timeline.getFrequencies);
 
   const onSubmitHandler = e => {
     e.preventDefault();
-    dispatch(getFrequencies(words, yearFrom, yearTo));
+    getFrequencies({ words, year_from: yearFrom, year_to: yearTo });
   };
 
   return (
@@ -89,7 +89,6 @@ function Timeline() {
                   blurBehavior="add" // Fix android chrome bug
                   onChange={newWords => setWords(newWords)}
                   required={!words.length}
-                  h
                 />
               </FormControl>
             </Grid>
@@ -124,7 +123,7 @@ function Timeline() {
                   label="Year from:"
                   name="year_from"
                   value={yearFrom}
-                  onChange={e => setYearFrom(e.target.value)}
+                  onChange={e => setYearFrom(Number(e.target.value))}
                   required
                 />
               </FormControl>
@@ -137,7 +136,7 @@ function Timeline() {
                   label="Year to:"
                   name="year_to"
                   value={yearTo}
-                  onChange={e => setYearTo(e.target.value)}
+                  onChange={e => setYearTo(Number(e.target.value))}
                   required
                 />
               </FormControl>
@@ -169,6 +168,7 @@ function Timeline() {
               <FormControl className={classes.formControl}>
                 <ToggleButton
                   selected={absolute}
+                  value={absolute}
                   onChange={() => {
                     setAbsolute(!absolute);
                   }}

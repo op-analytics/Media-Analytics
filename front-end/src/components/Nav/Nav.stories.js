@@ -1,7 +1,6 @@
 import React from 'react';
-import { Provider } from 'react-redux';
+import { StoreProvider, createStore, action } from 'easy-peasy';
 import { BrowserRouter as Router } from 'react-router-dom';
-import configureStore from 'redux-mock-store';
 import Nav from '.';
 
 export default {
@@ -9,16 +8,15 @@ export default {
   component: Nav,
 };
 
-const mockStore = configureStore();
-
 const getWrapper = authenticated => {
-  const initialState = { user: { authenticated } };
-  const store = mockStore(initialState);
+  const initialState = { user: { authenticated, logout: action(() => ({})) } };
+  const store = createStore(initialState);
+
   // eslint-disable-next-line react/display-name
   return storyFn => (
-    <Provider store={store}>
+    <StoreProvider store={store}>
       <Router>{storyFn()}</Router>
-    </Provider>
+    </StoreProvider>
   );
 };
 

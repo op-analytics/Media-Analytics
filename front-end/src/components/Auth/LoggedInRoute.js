@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Redirect, Route } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useStoreState } from 'easy-peasy';
 
 const LoggedInRoute = ({ component: Component, ...routeProps }) => {
-  const isAuthenticated = useSelector(state => state.user.authenticated);
+  const isAuthenticated = useStoreState(state => state.user.authenticated);
   return (
     <Route
       {...routeProps}
@@ -13,7 +13,8 @@ const LoggedInRoute = ({ component: Component, ...routeProps }) => {
           <Component {...props} />
         ) : (
           <Redirect to="/login" />
-        )}
+        )
+      }
     />
   );
 };

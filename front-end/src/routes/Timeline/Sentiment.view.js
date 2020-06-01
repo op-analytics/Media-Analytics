@@ -9,7 +9,7 @@ import TextField from '@material-ui/core/TextField';
 import Alert from '@material-ui/lab/Alert';
 import ChipInput from 'material-ui-chip-input';
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useStoreState, useStoreActions } from 'easy-peasy';
 import {
   CartesianGrid,
   Legend,
@@ -20,7 +20,6 @@ import {
   XAxis,
   YAxis,
 } from 'recharts';
-import { getSentiments } from '../../state/ducks/timeline';
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -97,8 +96,9 @@ const useStyles = makeStyles(theme => ({
  * @component
  */
 function Timeline() {
-  const sentiments = useSelector(state => state.timeline.sentiments);
-  const loading = useSelector(state => state.timeline.loading);
+  const sentiments = useStoreState(state => state.timeline.sentiments);
+  const loading = useStoreState(state => state.timeline.loading);
+  const getSentiments = useStoreActions(state => state.timeline.getSentiments);
 
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [words, setWords] = useState([]);
@@ -106,7 +106,6 @@ function Timeline() {
   const [yearTo, setYearTo] = useState();
 
   const classes = useStyles();
-  const dispatch = useDispatch();
 
   const wordLimit = 1;
 
@@ -123,7 +122,7 @@ function Timeline() {
   const onSubmitHandler = e => {
     e.preventDefault();
     setFormSubmitted(true);
-    dispatch(getSentiments(words[0], yearFrom, yearTo));
+    getSentiments({ word: words[0], year_from: yearFrom, year_to: yearTo });
   };
 
   return (

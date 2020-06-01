@@ -33,10 +33,9 @@ exports[`Storyshots Components/Navbar Navbar Authenticated 1`] = `
           className="MuiIconButton-label"
         >
           <svg
-            aria-hidden="true"
+            aria-hidden={true}
             className="MuiSvgIcon-root"
             focusable="false"
-            role="presentation"
             viewBox="0 0 24 24"
           >
             <path
@@ -129,10 +128,9 @@ exports[`Storyshots Components/Navbar Navbar No Divider 1`] = `
           className="MuiIconButton-label"
         >
           <svg
-            aria-hidden="true"
+            aria-hidden={true}
             className="MuiSvgIcon-root"
             focusable="false"
-            role="presentation"
             viewBox="0 0 24 24"
           >
             <path
@@ -229,10 +227,9 @@ exports[`Storyshots Components/Navbar Navbar With Divider 1`] = `
           className="MuiIconButton-label"
         >
           <svg
-            aria-hidden="true"
+            aria-hidden={true}
             className="MuiSvgIcon-root"
             focusable="false"
-            role="presentation"
             viewBox="0 0 24 24"
           >
             <path
@@ -414,23 +411,11 @@ exports[`Storyshots Routes/Auth Login Form 1`] = `
       className="MuiAvatar-root MuiAvatar-circle makeStyles-avatar-438 MuiAvatar-colorDefault"
     >
       <svg
-        aria-hidden="true"
+        aria-hidden={true}
         className="MuiSvgIcon-root"
         focusable="false"
-        role="presentation"
         viewBox="0 0 24 24"
       >
-        <g
-          fill="none"
-        >
-          <path
-            d="M0 0h24v24H0V0z"
-          />
-          <path
-            d="M0 0h24v24H0V0z"
-            opacity=".87"
-          />
-        </g>
         <path
           d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM9 6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9V6zm9 14H6V10h12v10zm-6-3c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2z"
         />
@@ -457,6 +442,7 @@ exports[`Storyshots Routes/Auth Login Form 1`] = `
         >
           Email Address
           <span
+            aria-hidden={true}
             className="MuiFormLabel-asterisk MuiInputLabel-asterisk"
           >
              
@@ -496,6 +482,7 @@ exports[`Storyshots Routes/Auth Login Form 1`] = `
             </legend>
           </fieldset>
         </div>
+        
       </div>
       <div
         className="MuiFormControl-root MuiTextField-root MuiFormControl-marginNormal MuiFormControl-fullWidth"
@@ -508,6 +495,7 @@ exports[`Storyshots Routes/Auth Login Form 1`] = `
         >
           Password
           <span
+            aria-hidden={true}
             className="MuiFormLabel-asterisk MuiInputLabel-asterisk"
           >
              
@@ -547,6 +535,7 @@ exports[`Storyshots Routes/Auth Login Form 1`] = `
             </legend>
           </fieldset>
         </div>
+        
       </div>
       <button
         className="MuiButtonBase-root MuiButton-root MuiButton-contained makeStyles-submit-440 MuiButton-containedPrimary MuiButton-fullWidth"
@@ -582,6 +571,7 @@ exports[`Storyshots Routes/Auth Login Form 1`] = `
             className="MuiTypography-root MuiLink-root MuiLink-underlineHover MuiTypography-body2 MuiTypography-colorPrimary"
             href="/forgot-password"
             onBlur={[Function]}
+            onClick={[Function]}
             onFocus={[Function]}
           >
             Forgot password?
@@ -594,6 +584,7 @@ exports[`Storyshots Routes/Auth Login Form 1`] = `
             className="MuiTypography-root MuiLink-root MuiLink-underlineHover MuiTypography-body2 MuiTypography-colorPrimary"
             href="/signup"
             onBlur={[Function]}
+            onClick={[Function]}
             onFocus={[Function]}
           >
             Don't have an account? Sign Up
@@ -616,23 +607,11 @@ exports[`Storyshots Routes/Auth Signup Form 1`] = `
       className="MuiAvatar-root MuiAvatar-circle makeStyles-avatar-699 MuiAvatar-colorDefault"
     >
       <svg
-        aria-hidden="true"
+        aria-hidden={true}
         className="MuiSvgIcon-root"
         focusable="false"
-        role="presentation"
         viewBox="0 0 24 24"
       >
-        <g
-          fill="none"
-        >
-          <path
-            d="M0 0h24v24H0V0z"
-          />
-          <path
-            d="M0 0h24v24H0V0z"
-            opacity=".87"
-          />
-        </g>
         <path
           d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM9 6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9V6zm9 14H6V10h12v10zm-6-3c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2z"
         />
@@ -665,6 +644,7 @@ exports[`Storyshots Routes/Auth Signup Form 1`] = `
             >
               Name
               <span
+                aria-hidden={true}
                 className="MuiFormLabel-asterisk MuiInputLabel-asterisk"
               >
                  
@@ -704,6 +684,7 @@ exports[`Storyshots Routes/Auth Signup Form 1`] = `
                 </legend>
               </fieldset>
             </div>
+            
           </div>
         </div>
         <div
@@ -720,6 +701,7 @@ exports[`Storyshots Routes/Auth Signup Form 1`] = `
             >
               Email Address
               <span
+                aria-hidden={true}
                 className="MuiFormLabel-asterisk MuiInputLabel-asterisk"
               >
                  
@@ -759,6 +741,7 @@ exports[`Storyshots Routes/Auth Signup Form 1`] = `
                 </legend>
               </fieldset>
             </div>
+            
           </div>
         </div>
         <div
@@ -775,6 +758,7 @@ exports[`Storyshots Routes/Auth Signup Form 1`] = `
             >
               Password
               <span
+                aria-hidden={true}
                 className="MuiFormLabel-asterisk MuiInputLabel-asterisk"
               >
                  
@@ -814,6 +798,7 @@ exports[`Storyshots Routes/Auth Signup Form 1`] = `
                 </legend>
               </fieldset>
             </div>
+            
           </div>
         </div>
         <div
@@ -830,6 +815,7 @@ exports[`Storyshots Routes/Auth Signup Form 1`] = `
             >
               Confirm Password
               <span
+                aria-hidden={true}
                 className="MuiFormLabel-asterisk MuiInputLabel-asterisk"
               >
                  
@@ -869,6 +855,7 @@ exports[`Storyshots Routes/Auth Signup Form 1`] = `
                 </legend>
               </fieldset>
             </div>
+            
           </div>
         </div>
       </div>
@@ -905,6 +892,7 @@ exports[`Storyshots Routes/Auth Signup Form 1`] = `
             className="MuiTypography-root MuiLink-root MuiLink-underlineHover MuiTypography-body2 MuiTypography-colorPrimary"
             href="/login"
             onBlur={[Function]}
+            onClick={[Function]}
             onFocus={[Function]}
           >
             Already have an account? Sign in
@@ -923,257 +911,288 @@ exports[`Storyshots Routes/Auth Signup Form 1`] = `
 exports[`Storyshots Timeline/Frequency Frequency Timeline 1`] = `
 Array [
   <h3>
-    Word Frequency Timeline
+    Word Frequncy Timeline
   </h3>,
   <div
     className="makeStyles-container-967"
   >
     <form
-      className="makeStyles-form-970"
+      className="makeStyles-form-969"
       onSubmit={[Function]}
     >
       <div
-        className="MuiFormControl-root makeStyles-formControl-972"
+        className="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2"
       >
         <div
-          className="MuiFormControl-root MuiTextField-root MuiFormControl-marginNormal"
+          className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
         >
-          <label
-            className="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated Mui-required Mui-required"
-            data-shrink={false}
-          >
-            Words:
-            <span
-              className="MuiFormLabel-asterisk MuiInputLabel-asterisk"
-            >
-               
-              *
-            </span>
-          </label>
           <div
-            className="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-formControl MuiInput-formControl"
-            onClick={[Function]}
+            className="MuiFormControl-root makeStyles-formControl-971"
           >
-            <input
-              aria-invalid={false}
-              autoFocus={false}
-              className="MuiInputBase-input MuiInput-input"
-              disabled={false}
+            <div
+              className="MuiFormControl-root WAMuiChipInput-root-1081"
               name="words"
-              onAnimationStart={[Function]}
-              onBlur={[Function]}
-              onChange={[Function]}
-              onFocus={[Function]}
-              required={true}
-              type="text"
-            />
-          </div>
-        </div>
-      </div>
-      <div
-        className="MuiFormControl-root makeStyles-formControl-972"
-      >
-        <div
-          className="MuiFormControl-root MuiTextField-root MuiFormControl-marginNormal"
-        >
-          <label
-            className="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated Mui-required Mui-required"
-            data-shrink={false}
-          >
-            Year from:
-            <span
-              className="MuiFormLabel-asterisk MuiInputLabel-asterisk"
+              onClick={[Function]}
             >
-               
-              *
-            </span>
-          </label>
-          <div
-            className="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-formControl MuiInput-formControl"
-            onClick={[Function]}
-          >
-            <input
-              aria-invalid={false}
-              autoFocus={false}
-              className="MuiInputBase-input MuiInput-input"
-              disabled={false}
-              name="year_from"
-              onAnimationStart={[Function]}
-              onBlur={[Function]}
-              onChange={[Function]}
-              onFocus={[Function]}
-              required={true}
-              type="text"
-            />
+              <label
+                className="MuiFormLabel-root MuiInputLabel-root WAMuiChipInput-standard-1086 WAMuiChipInput-label-1089 MuiInputLabel-formControl MuiInputLabel-animated Mui-required Mui-required"
+                data-shrink={false}
+              >
+                Words:
+                <span
+                  aria-hidden={true}
+                  className="MuiFormLabel-asterisk MuiInputLabel-asterisk"
+                >
+                   
+                  *
+                </span>
+              </label>
+              <div
+                className="WAMuiChipInput-standard-1086 WAMuiChipInput-chipContainer-1084 WAMuiChipInput-underline-1094 WAMuiChipInput-labeled-1088"
+              >
+                <div
+                  className="MuiInputBase-root MuiInput-root WAMuiChipInput-inputRoot-1082 WAMuiChipInput-standard-1086 MuiInputBase-formControl MuiInput-formControl"
+                  onClick={[Function]}
+                  onKeyPress={[Function]}
+                >
+                  <input
+                    aria-invalid={false}
+                    className="MuiInputBase-input MuiInput-input WAMuiChipInput-input-1083 WAMuiChipInput-standard-1086"
+                    disabled={false}
+                    onAnimationStart={[Function]}
+                    onBlur={[Function]}
+                    onChange={[Function]}
+                    onFocus={[Function]}
+                    onKeyDown={[Function]}
+                    onKeyUp={[Function]}
+                    placeholder={null}
+                    required={true}
+                    type="text"
+                    value=""
+                  />
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-      <div
-        className="MuiFormControl-root makeStyles-formControl-972"
-      >
         <div
-          className="MuiFormControl-root MuiTextField-root MuiFormControl-marginNormal"
+          className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 MuiGrid-grid-md-3"
         >
-          <label
-            className="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated Mui-required Mui-required"
-            data-shrink={false}
-          >
-            Year to:
-            <span
-              className="MuiFormLabel-asterisk MuiInputLabel-asterisk"
-            >
-               
-              *
-            </span>
-          </label>
           <div
-            className="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-formControl MuiInput-formControl"
-            onClick={[Function]}
+            className="MuiFormControl-root makeStyles-formControl-971"
           >
-            <input
-              aria-invalid={false}
-              autoFocus={false}
-              className="MuiInputBase-input MuiInput-input"
+            <div
+              className="MuiFormControl-root MuiTextField-root"
+            >
+              <label
+                className="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated Mui-required Mui-required"
+                data-shrink={false}
+              >
+                Year from:
+                <span
+                  aria-hidden={true}
+                  className="MuiFormLabel-asterisk MuiInputLabel-asterisk"
+                >
+                   
+                  *
+                </span>
+              </label>
+              <div
+                className="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-formControl MuiInput-formControl"
+                onClick={[Function]}
+              >
+                <input
+                  aria-invalid={false}
+                  autoFocus={false}
+                  className="MuiInputBase-input MuiInput-input"
+                  disabled={false}
+                  name="year_from"
+                  onAnimationStart={[Function]}
+                  onBlur={[Function]}
+                  onChange={[Function]}
+                  onFocus={[Function]}
+                  required={true}
+                  type="number"
+                  value=""
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 MuiGrid-grid-md-3"
+        >
+          <div
+            className="MuiFormControl-root makeStyles-formControl-971"
+          >
+            <div
+              className="MuiFormControl-root MuiTextField-root"
+            >
+              <label
+                className="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated Mui-required Mui-required"
+                data-shrink={false}
+              >
+                Year to:
+                <span
+                  aria-hidden={true}
+                  className="MuiFormLabel-asterisk MuiInputLabel-asterisk"
+                >
+                   
+                  *
+                </span>
+              </label>
+              <div
+                className="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-formControl MuiInput-formControl"
+                onClick={[Function]}
+              >
+                <input
+                  aria-invalid={false}
+                  autoFocus={false}
+                  className="MuiInputBase-input MuiInput-input"
+                  disabled={false}
+                  name="year_to"
+                  onAnimationStart={[Function]}
+                  onBlur={[Function]}
+                  onChange={[Function]}
+                  onFocus={[Function]}
+                  required={true}
+                  type="number"
+                  value=""
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 MuiGrid-grid-md-3"
+        >
+          <div
+            className="MuiFormControl-root makeStyles-formControl-971"
+          >
+            <label
+              className="MuiFormLabel-root MuiInputLabel-root makeStyles-label-968 MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiFormLabel-filled"
+              data-shrink={true}
+              id="y-axis-key-select-label"
+            >
+              Y-Axis Key
+            </label>
+            <div
+              className="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-formControl MuiInput-formControl"
+              onClick={[Function]}
+            >
+              <div
+                aria-haspopup="listbox"
+                aria-labelledby="y-axis-key-select-label y-axis-key-select"
+                className="MuiSelect-root MuiSelect-select MuiSelect-selectMenu MuiInputBase-input MuiInput-input"
+                id="y-axis-key-select"
+                onBlur={[Function]}
+                onFocus={[Function]}
+                onKeyDown={[Function]}
+                onMouseDown={[Function]}
+                role="button"
+                tabIndex={0}
+              >
+                Frequency
+              </div>
+              <input
+                onAnimationStart={[Function]}
+                type="hidden"
+                value="freq"
+              />
+              <svg
+                aria-hidden={true}
+                className="MuiSvgIcon-root MuiSelect-icon"
+                focusable="false"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M7 10l5 5 5-5z"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div
+          className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 MuiGrid-grid-md-3"
+        >
+          <div
+            className="MuiFormControl-root makeStyles-formControl-971"
+          >
+            <button
+              aria-pressed={false}
+              className="MuiButtonBase-root MuiToggleButton-root"
               disabled={false}
-              name="year_to"
-              onAnimationStart={[Function]}
               onBlur={[Function]}
               onChange={[Function]}
+              onClick={[Function]}
+              onDragLeave={[Function]}
               onFocus={[Function]}
-              required={true}
-              type="text"
-            />
+              onKeyDown={[Function]}
+              onKeyUp={[Function]}
+              onMouseDown={[Function]}
+              onMouseLeave={[Function]}
+              onMouseUp={[Function]}
+              onTouchEnd={[Function]}
+              onTouchMove={[Function]}
+              onTouchStart={[Function]}
+              tabIndex={0}
+              type="button"
+              value={false}
+            >
+              <span
+                className="MuiToggleButton-label"
+              >
+                Display Absolute
+              </span>
+              <span
+                className="MuiTouchRipple-root"
+              />
+            </button>
+          </div>
+        </div>
+        <div
+          className="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-xs-center MuiGrid-grid-sm-12"
+        >
+          <div
+            align="center"
+            className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-3"
+          >
+            <button
+              className="MuiButtonBase-root MuiButton-root MuiButton-outlined makeStyles-submitButton-972 MuiButton-outlinedPrimary"
+              disabled={false}
+              margin="0 auto"
+              onBlur={[Function]}
+              onDragLeave={[Function]}
+              onFocus={[Function]}
+              onKeyDown={[Function]}
+              onKeyUp={[Function]}
+              onMouseDown={[Function]}
+              onMouseLeave={[Function]}
+              onMouseUp={[Function]}
+              onTouchEnd={[Function]}
+              onTouchMove={[Function]}
+              onTouchStart={[Function]}
+              tabIndex={0}
+              type="submit"
+            >
+              <span
+                className="MuiButton-label"
+              >
+                Submit
+              </span>
+              <span
+                className="MuiTouchRipple-root"
+              />
+            </button>
           </div>
         </div>
       </div>
-      <button
-        className="MuiButtonBase-root MuiButton-root MuiButton-outlined makeStyles-button-973 MuiButton-outlinedPrimary"
-        disabled={false}
-        onBlur={[Function]}
-        onDragLeave={[Function]}
-        onFocus={[Function]}
-        onKeyDown={[Function]}
-        onKeyUp={[Function]}
-        onMouseDown={[Function]}
-        onMouseLeave={[Function]}
-        onMouseUp={[Function]}
-        onTouchEnd={[Function]}
-        onTouchMove={[Function]}
-        onTouchStart={[Function]}
-        tabIndex={0}
-        type="submit"
-      >
-        <span
-          className="MuiButton-label"
-        >
-          Submit
-        </span>
-        <span
-          className="MuiTouchRipple-root"
-        />
-      </button>
     </form>
     <div
-      className="MuiFormControl-root makeStyles-formControl-969"
-    >
-      <label
-        className="MuiFormLabel-root MuiInputLabel-root makeStyles-label-968 MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiFormLabel-filled"
-        data-shrink={true}
-        id="y-axis-key-select-label"
-      >
-        Y-Axis Key
-      </label>
-      <div
-        className="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-formControl MuiInput-formControl"
-        onClick={[Function]}
-      >
-        <div
-          aria-haspopup="listbox"
-          aria-labelledby="y-axis-key-select-label y-axis-key-select"
-          className="MuiSelect-root MuiSelect-select MuiSelect-selectMenu MuiInputBase-input MuiInput-input"
-          id="y-axis-key-select"
-          onBlur={[Function]}
-          onFocus={[Function]}
-          onKeyDown={[Function]}
-          onMouseDown={[Function]}
-          role="button"
-          tabIndex={0}
-        >
-          Frequency
-        </div>
-        <input
-          onAnimationStart={[Function]}
-          type="hidden"
-          value="freq"
-        />
-        <svg
-          aria-hidden="true"
-          className="MuiSvgIcon-root MuiSelect-icon"
-          focusable="false"
-          role="presentation"
-          viewBox="0 0 24 24"
-        >
-          <path
-            d="M7 10l5 5 5-5z"
-          />
-        </svg>
-      </div>
-    </div>
-    <label
-      className="MuiFormControlLabel-root"
-    >
-      <span
-        className="MuiSwitch-root"
-      >
-        <span
-          aria-disabled={false}
-          className="MuiButtonBase-root MuiIconButton-root PrivateSwitchBase-root-1104 MuiSwitch-switchBase MuiSwitch-colorPrimary"
-          onBlur={[Function]}
-          onDragLeave={[Function]}
-          onFocus={[Function]}
-          onKeyDown={[Function]}
-          onKeyUp={[Function]}
-          onMouseDown={[Function]}
-          onMouseLeave={[Function]}
-          onMouseUp={[Function]}
-          onTouchEnd={[Function]}
-          onTouchMove={[Function]}
-          onTouchStart={[Function]}
-          tabIndex={null}
-        >
-          <span
-            className="MuiIconButton-label"
-          >
-            <input
-              checked={false}
-              className="PrivateSwitchBase-input-1107 MuiSwitch-input"
-              onChange={[Function]}
-              type="checkbox"
-              value="absolute"
-            />
-            <span
-              className="MuiSwitch-thumb"
-            />
-          </span>
-          <span
-            className="MuiTouchRipple-root"
-          />
-        </span>
-        <span
-          className="MuiSwitch-track"
-        />
-      </span>
-      <span
-        className="MuiTypography-root MuiFormControlLabel-label MuiTypography-body1"
-      >
-        Display absolute
-      </span>
-    </label>
-    <div
-      className="makeStyles-chartContainer-1147"
+      className="makeStyles-chartContainer-1212"
     >
       <h1
-        className="makeStyles-chartTitle-1148"
+        className="makeStyles-chartTitle-1213"
       >
         cat
       </h1>
@@ -1212,14 +1231,14 @@ Array [
     Latent association over time
   </h3>,
   <div
-    className="makeStyles-container-1167"
+    className="makeStyles-container-1232"
   >
     <form
-      className="makeStyles-form-1168"
+      className="makeStyles-form-1233"
       onSubmit={[Function]}
     >
       <div
-        className="MuiFormControl-root makeStyles-formControl-1170"
+        className="MuiFormControl-root makeStyles-formControl-1235"
       >
         <div
           className="MuiFormControl-root MuiTextField-root MuiFormControl-marginNormal"
@@ -1230,6 +1249,7 @@ Array [
           >
             Concept 1:
             <span
+              aria-hidden={true}
               className="MuiFormLabel-asterisk MuiInputLabel-asterisk"
             >
                
@@ -1257,7 +1277,7 @@ Array [
         </div>
       </div>
       <div
-        className="MuiFormControl-root makeStyles-formControl-1170"
+        className="MuiFormControl-root makeStyles-formControl-1235"
       >
         <div
           className="MuiFormControl-root MuiTextField-root MuiFormControl-marginNormal"
@@ -1268,6 +1288,7 @@ Array [
           >
             Concept 2:
             <span
+              aria-hidden={true}
               className="MuiFormLabel-asterisk MuiInputLabel-asterisk"
             >
                
@@ -1295,7 +1316,7 @@ Array [
         </div>
       </div>
       <div
-        className="MuiFormControl-root makeStyles-formControl-1170"
+        className="MuiFormControl-root makeStyles-formControl-1235"
       >
         <div
           className="MuiFormControl-root MuiTextField-root MuiFormControl-marginNormal"
@@ -1306,6 +1327,7 @@ Array [
           >
             Year from:
             <span
+              aria-hidden={true}
               className="MuiFormLabel-asterisk MuiInputLabel-asterisk"
             >
                
@@ -1333,7 +1355,7 @@ Array [
         </div>
       </div>
       <div
-        className="MuiFormControl-root makeStyles-formControl-1170"
+        className="MuiFormControl-root makeStyles-formControl-1235"
       >
         <div
           className="MuiFormControl-root MuiTextField-root MuiFormControl-marginNormal"
@@ -1344,6 +1366,7 @@ Array [
           >
             Year to:
             <span
+              aria-hidden={true}
               className="MuiFormLabel-asterisk MuiInputLabel-asterisk"
             >
                
@@ -1371,7 +1394,7 @@ Array [
         </div>
       </div>
       <button
-        className="MuiButtonBase-root MuiButton-root MuiButton-outlined makeStyles-button-1171 MuiButton-outlinedPrimary"
+        className="MuiButtonBase-root MuiButton-root MuiButton-outlined makeStyles-button-1236 MuiButton-outlinedPrimary"
         disabled={false}
         onBlur={[Function]}
         onDragLeave={[Function]}
@@ -1398,7 +1421,7 @@ Array [
       </button>
     </form>
     <div
-      className="makeStyles-chartContainer-1162"
+      className="makeStyles-chartContainer-1227"
     >
       <div
         className="recharts-responsive-container"
