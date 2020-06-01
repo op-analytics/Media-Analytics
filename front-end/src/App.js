@@ -49,7 +49,7 @@ function App() {
         logout();
         redirect('/login');
       } else authenticate(token);
-    }
+    } else redirect('/login');
   }, [logout, authenticate, redirect]);
 
   return (
