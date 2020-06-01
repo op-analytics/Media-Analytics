@@ -155,6 +155,7 @@ function Timeline() {
                         style={{ margin: '0px 8px 8px 0px', float: 'left' }}
                         color="secondary"
                         label={value}
+                        // eslint-disable-next-line no-unused-vars
                         onDelete={_ => handleDelete(value, words, setWords)}
                       />
                     )}
@@ -232,7 +233,7 @@ function Timeline() {
                   <Tooltip />
                   <Line
                     type="linear"
-                    dataKey={'sentiment'}
+                    dataKey="sentiment"
                     name={words[0]}
                     // stroke={stringToColour(sentiments.data.word)}
                     // fill={stringToColour(sentiments.data.word)}
