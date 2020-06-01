@@ -9,6 +9,7 @@ const timelineModel = {
   loading: false,
   frequencies: [],
   associations: [],
+  sentiments: [],
 
   // Actions and thunks
   getAssociations: thunk(async (actions, payload) => {
@@ -35,6 +36,19 @@ const timelineModel = {
     actions.setLoading(false);
   }),
 
+  getSentiment: thunk(async (actions, payload) => {
+    actions.setLoading(true);
+    try {
+      const sentiments = await timelineService.getSentiments(payload);
+      actions.setSentiments(sentiments);
+    } catch ({ response }) {
+      const errors = getErrorsFromResponse(response);
+      actions.setErrors(errors);
+    }
+    actions.setLoading(false);
+  }),
+
+
   setLoading: action((state, payload) => {
     state.loading = payload;
   }),
@@ -45,6 +59,10 @@ const timelineModel = {
 
   setAssociations: action((state, payload) => {
     state.associations = payload;
+  }),
+
+  setSentiments: action((state, payload) => {
+    state.sentiments = payload;
   }),
 
   setErrors: action((state, payload) => {

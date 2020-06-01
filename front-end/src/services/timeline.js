@@ -13,6 +13,15 @@ export default {
     return associationData;
   },
 
+  async getSentiments(requestData) {
+    const { data } = await axios.post(
+      `${API_URL}/timeline/sentiment`,
+      requestData,
+    );
+    const { data: sentiments } = data;
+    return sentiments;
+  },
+
   async getFrequencies(requestData) {
     const { data } = await axios.post(
       `${API_URL}/timeline/frequency`,
