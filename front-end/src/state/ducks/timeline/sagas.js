@@ -5,8 +5,11 @@ import {
   getAssociationSuccess,
   getFrequencyFailure,
   getFrequencySuccess,
+  getSentimentFailure,
+  getSentimentSuccess,
   GET_ASSOCIATION,
   GET_FREQUENCY,
+  GET_SENTIMENT,
 } from '.';
 
 const API_URL =
@@ -42,6 +45,19 @@ function* fetchAssociations(action) {
   }
 }
 
+function* fetchSentiments(action) {
+  try {
+    const response = yield call(
+      axios.post,
+      `${API_URL}/timeline/sentiment`,
+      action.payload,
+    );
+    yield put(getSentimentSuccess(response.data.data));
+  } catch (err) {
+    yield put(getSentimentFailure(err));
+  }
+}
+
 function* watchGetFrequencies() {
   yield takeEvery(GET_FREQUENCY, fetchFrequencies);
 }
@@ -50,4 +66,12 @@ function* watchGetAssociations() {
   yield takeEvery(GET_ASSOCIATION, fetchAssociations);
 }
 
-export default [fork(watchGetFrequencies), fork(watchGetAssociations)];
+function* watchGetSentiments() {
+  yield takeEvery(GET_SENTIMENT, fetchSentiments);
+}
+
+export default [
+  fork(watchGetFrequencies),
+  fork(watchGetAssociations),
+  fork(watchGetSentiments),
+];

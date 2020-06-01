@@ -7,6 +7,7 @@ import Login from './routes/Auth/Login';
 import Signup from './routes/Auth/Signup';
 import FrequencyTimeline from './routes/Timeline/Frequency.view';
 import LatentAssociationTimeline from './routes/Timeline/Latent-Association.view';
+import SentimentTimeline from './routes/Timeline/Sentiment.view';
 import NotFound from './routes/NotFound.view';
 import LoggedInRoute from './components/Auth/LoggedInRoute';
 import LoggedOutRoute from './components/Auth/LoggedOutRoute';
@@ -17,6 +18,7 @@ const links = [
   [
     { href: '/frequency', text: 'Frequency Over Time' },
     { href: '/latent-association', text: 'Latent Association Over Time' },
+    { href: '/sentiment', text: 'Sentiment Over Time' },
   ],
   [
     { href: '/about', text: 'About' },
@@ -41,6 +43,7 @@ function App() {
           path="/latent-association"
           component={LatentAssociationTimeline}
         />
+        <LoggedInRoute path="/sentiment" component={SentimentTimeline} />
         <Route component={NotFound} />
       </Switch>
     </Nav>
