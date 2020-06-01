@@ -13,6 +13,7 @@
     "material-ui-chip-input": "^2.0.0-beta.2",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
+    "react-csv": "^2.0.3",
     "react-dom": "^16.13.1",
     "react-google-recaptcha": "^2.0.1",
     "react-hook-form": "^4.10.1",
