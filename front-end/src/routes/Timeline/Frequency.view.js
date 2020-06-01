@@ -113,7 +113,6 @@ function Timeline() {
   const loading = useSelector(state => state.timeline.loading);
   const frequencies = useSelector(state => state.timeline.frequencies);
 
-  // TODO: Pass this the CsvDownloadButton
   const dataToDownload = useMemo(
     () => getDownloadData(frequencies, yAxisMetric, yearFrom, yearTo),
     [frequencies, yAxisMetric, yearFrom, yearTo],
