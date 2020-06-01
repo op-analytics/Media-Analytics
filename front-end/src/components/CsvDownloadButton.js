@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { CSVLink } from 'react-csv';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles({
   fab: {
     position: 'fixed',
     bottom: 20,
@@ -16,7 +16,7 @@ const useStyles = makeStyles(theme => ({
     display: 'block',
     margin: 'auto',
   },
-}));
+});
 
 function CsvDownloadButton({ data, headers, filename }) {
   const classes = useStyles();
@@ -31,9 +31,9 @@ function CsvDownloadButton({ data, headers, filename }) {
   );
 }
 
-CsvDownloadButton.propTypes = {
+CsvDownloadButton.defaultProps = {
   data: PropTypes.arrayOf(PropTypes.object),
-  headers: PropTypes.array,
+  headers: PropTypes.arrayOf((PropTypes.object)),
   filename: PropTypes.string,
 };
 

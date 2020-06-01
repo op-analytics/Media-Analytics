@@ -105,21 +105,16 @@ const mediaOutlets = [
   { title: 'The Guardian', name: 'The Guardian', value: 'guardian' },
 ];
 
-const displayOptions = [
-  { name: 'On a single chart', value: 'single' },
-  { name: 'Seperated by media outlet', value: 'byOutlet' },
-];
-
 const getDownloadData = (currentData, concept1, concept2) => {
   const dataToDownload = [];
   if(currentData) {
     currentData.forEach(item => {
       dataToDownload.push({
-        mediaOutlet: mediaOutlets.find(obj => obj.value === item["media_outlet"]).name,
-        concept1: concept1,
-        concept2: concept2,
-        yearRange: item["yearRange"],
-        association: item["association"],
+        mediaOutlet: mediaOutlets.find(obj => obj.value === item.media_outlet).name,
+        concept1,
+        concept2,
+        yearRange: item.yearRange,
+        association: item.association,
       });
     });
   }
