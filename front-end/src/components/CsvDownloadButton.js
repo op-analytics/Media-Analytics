@@ -32,9 +32,9 @@ function CsvDownloadButton({ data, headers, filename }) {
 }
 
 CsvDownloadButton.defaultProps = {
-  data: PropTypes.arrayOf(PropTypes.object),
-  headers: PropTypes.arrayOf((PropTypes.object)),
-  filename: PropTypes.string,
+  data: PropTypes.arrayOf(PropTypes.object).isRequired,
+  headers: PropTypes.arrayOf((PropTypes.object)).isRequired,
+  filename: PropTypes.string.isRequired,
 };
 
 export default CsvDownloadButton;
