@@ -77,8 +77,7 @@ async function GetLatentAssociation(
   concept2: string[],
   yearFrom: number,
   yearTo: number,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-): Promise<any> {
+): Promise<LatentAssociationData[]> {
   const concept1Data = await getConceptData(concept1, yearFrom, yearTo);
   const concept2Data = await getConceptData(concept2, yearFrom, yearTo);
 
