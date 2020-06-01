@@ -36,7 +36,7 @@ const timelineModel = {
     actions.setLoading(false);
   }),
 
-  getSentiment: thunk(async (actions, payload) => {
+  getSentiments: thunk(async (actions, payload) => {
     actions.setLoading(true);
     try {
       const sentiments = await timelineService.getSentiments(payload);
