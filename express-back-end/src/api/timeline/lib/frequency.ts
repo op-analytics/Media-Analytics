@@ -2,16 +2,6 @@ import FrequencyData from '../interfaces/FrequencyData';
 import FrequencyDocument from '../interfaces/FrequencyDocument';
 import Frequency from '../models/frequency.model';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function sortOnKey(objects: { data: Record<string, any> }[], key: string): void {
-  objects.forEach(object => {
-    object.data.sort(
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      (x: Record<string, any>, y: Record<string, any>) => x[key] - y[key],
-    );
-  });
-}
-
 function shapeData(dbData: FrequencyDocument[]): FrequencyData[] {
   const frequencyData: FrequencyData[] = [];
   dbData.forEach((frequencyDataObj: FrequencyDocument) => {
@@ -45,8 +35,7 @@ async function GetFrequency(
   }).exec();
 
   const frequencyData = shapeData(frequencyDataDB);
-
-  sortOnKey(frequencyData, 'year');
+  frequencyData.map(fd => fd.data.sort((x, y) => x.year - y.year));
   return frequencyData;
 }
 

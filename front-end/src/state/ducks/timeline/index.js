@@ -7,9 +7,14 @@ export const GET_ASSOCIATION = 'timeline/GET_ASSOCIATION';
 const GET_ASSOCIATION_FAILURE = 'timeline/GET_ASSOCIATION_FAILURE';
 const GET_ASSOCIATION_SUCCESS = 'timeline/GET_ASSOCIATION_SUCCESS';
 
+export const GET_SENTIMENT = 'timeline/GET_SENTIMENT';
+const GET_SENTIMENT_FAILURE = 'timeline/GET_SENTIMENT_FAILURE';
+const GET_SENTIMENT_SUCCESS = 'timeline/GET_SENTIMENT_SUCCESS';
+
 const initialState = {
   frequencies: [],
   associations: null,
+  sentiments: null,
   loading: false,
   error: null,
 };
@@ -45,6 +50,23 @@ export default function reducer(state = initialState, action = {}) {
         loading: false,
       };
     case GET_ASSOCIATION_FAILURE:
+      return {
+        ...state,
+        error: action.payload,
+        loading: false,
+      };
+    case GET_SENTIMENT:
+      return {
+        ...state,
+        loading: true,
+      };
+    case GET_SENTIMENT_SUCCESS:
+      return {
+        ...state,
+        sentiments: action.payload,
+        loading: false,
+      };
+    case GET_SENTIMENT_FAILURE:
       return {
         ...state,
         error: action.payload,
@@ -88,5 +110,24 @@ export const getAssociationSuccess = associations => ({
 
 export const getAssociationFailure = error => ({
   type: GET_ASSOCIATION_FAILURE,
+  payload: error,
+});
+
+export const getSentiments = (word, yearFrom, yearTo) => ({
+  type: GET_SENTIMENT,
+  payload: {
+    word,
+    year_from: yearFrom,
+    year_to: yearTo,
+  },
+});
+
+export const getSentimentSuccess = sentiments => ({
+  type: GET_SENTIMENT_SUCCESS,
+  payload: sentiments,
+});
+
+export const getSentimentFailure = error => ({
+  type: GET_SENTIMENT_FAILURE,
   payload: error,
 });

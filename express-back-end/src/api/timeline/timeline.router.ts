@@ -6,8 +6,13 @@ import {
   FrequencyController,
   LatentAssociationController,
   MainController,
+  SentimentController,
 } from './controllers';
-import { FrequencySchema, LatentAssociationSchema } from './schemas';
+import {
+  FrequencySchema,
+  LatentAssociationSchema,
+  SentimentSchema,
+} from './schemas';
 
 const router = express.Router();
 
@@ -23,6 +28,12 @@ router.post(
   '/frequency',
   [ensureLoggedIn, validateBody(FrequencySchema)],
   FrequencyController.getData,
+);
+
+router.post(
+  '/sentiment',
+  [ensureLoggedIn, validateBody(SentimentSchema)],
+  SentimentController.getData,
 );
 
 export default router;
