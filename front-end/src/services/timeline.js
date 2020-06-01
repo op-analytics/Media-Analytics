@@ -19,7 +19,12 @@ export default {
       requestData,
     );
     const { data: sentiments } = data;
-    return sentiments;
+
+    //TODO: Move this to the thunk
+    return sentiments.map(dataset => ({
+      title: dataset.word,
+      data: dataset.data,
+    }));
   },
 
   async getFrequencies(requestData) {
@@ -30,7 +35,7 @@ export default {
 
     const { data: frequencyData } = data;
 
-    // This seems wrong I'm just repeating the old code
+    //TODO: Move this to the thunk
     return frequencyData.map(dataset => ({
       title: dataset.word,
       data: dataset.data,
