@@ -1,19 +1,28 @@
 import React from 'react';
-import { Provider } from 'react-redux';
-import configureStore from 'redux-mock-store';
+import { StoreProvider, createStore, action } from 'easy-peasy';
+import { BrowserRouter as Router } from 'react-router-dom';
 import Signup from './Signup';
 
-const mockStore = configureStore();
+const initialState = {
+  user: {
+    signup: action(() => ({})),
+    errors: [],
+  },
+};
 
-const initialState = {};
-
-const store = mockStore(initialState);
+const store = createStore(initialState);
 
 export default {
   title: 'Routes/Auth',
   component: Signup,
   // eslint-disable-next-line react/display-name
-  decorators: [storyFn => <Provider store={store}>{storyFn()}</Provider>],
+  decorators: [
+    storyFn => (
+      <StoreProvider store={store}>
+        <Router>{storyFn()}</Router>
+      </StoreProvider>
+    ),
+  ],
 };
 
 export const SignupForm = () => <Signup />;

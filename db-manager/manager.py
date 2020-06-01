@@ -73,6 +73,7 @@ mongo_documents = {
     "frequency": Frequency,
 }
 
+
 @click.group()
 def cli():
     pass
@@ -111,16 +112,27 @@ def add(data_type, media_outlet, drop_collection, file):
                 data_year = year
                 if data_type == "latent_association":
                     data_year = year.split("-")[0]
-                if int(data_year) in year_range:
+                try:
+                    data_year = int(data_year)
+                except:
+                    print("!!invalid year!!")
+
+                if data_year in year_range:
                     with click.progressbar(
                         data.items(),
                         label="Adding words from " + year,
                         length=len(data.items()),
                     ) as year_data:
                         for word, word_data in year_data:
-                            new_word = mongo_documents[data_type](
-                                word, year, media_outlet, **word_data
-                            )
+                            if data_type == "frequency":
+                                new_word = mongo_documents[data_type](
+                                    word, year, media_outlet, **word_data
+                                )
+                            if data_type == "sentiment":
+                                new_word = mongo_documents[data_type](
+                                    word, year, media_outlet, word_data
+                                )
+
                             if data_type == "latent_association":
                                 year_from, year_to = year.split("-")
                                 new_word = mongo_documents[data_type](

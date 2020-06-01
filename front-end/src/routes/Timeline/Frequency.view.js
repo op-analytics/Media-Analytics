@@ -13,9 +13,8 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import ToggleButton from '@material-ui/lab/ToggleButton';
 import ChipInput from 'material-ui-chip-input';
 import React, { useState, useMemo } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useStoreActions, useStoreState } from 'easy-peasy';
 import LineCharts from '../../components/LineCharts';
-import { getFrequencies } from '../../state/ducks/timeline';
 import CsvDownloadButton from '../../components/CsvDownloadButton';
 
 const useStyles = makeStyles(theme => ({
@@ -101,7 +100,6 @@ function Timeline() {
   const PARAMETER_LIMIT = 4;
 
   const classes = useStyles();
-  const dispatch = useDispatch();
   const [yearFrom, setYearFrom] = useState(MIN_YEAR);
   const [yearTo, setYearTo] = useState(MAX_YEAR);
   const [yAxisMetric, setYAxisMetric] = useState('freq');
@@ -110,8 +108,9 @@ function Timeline() {
   const [displayOption, setDisplayOption] = useState('byOutlet');
   const [words, setWords] = useState([]);
   const [formSubmitted, setFormSubmitted] = useState(true);
-  const loading = useSelector(state => state.timeline.loading);
-  const frequencies = useSelector(state => state.timeline.frequencies);
+  const loading = useStoreState(state => state.timeline.loading);
+  const frequencies = useStoreState(state => state.timeline.frequencies);
+  const getFrequencies = useStoreActions(state => state.timeline.getFrequencies);
 
   const dataToDownload = useMemo(
     () => getDownloadData(frequencies, yAxisMetric, yearFrom, yearTo),
@@ -131,7 +130,7 @@ function Timeline() {
   const onSubmitHandler = e => {
     e.preventDefault();
     setFormSubmitted(true);
-    dispatch(getFrequencies(words, MIN_YEAR, MAX_YEAR, outlets));
+    getFrequencies({ words, year_from: MIN_YEAR, year_to: MAX_YEAR, outlets });
   };
 
   const handleDelete = (chip, state, setState) => {

@@ -1,32 +1,13 @@
+import { Router } from 'react-router-dom';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core';
 import blue from '@material-ui/core/colors/blue';
-import axios from 'axios';
-import { ConnectedRouter } from 'connected-react-router';
-import jwtDecode from 'jwt-decode';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
+import { StoreProvider } from 'easy-peasy';
 import App from './App';
 import './index.css';
 import * as serviceWorker from './serviceWorker';
-import { authenticate, getUser, unauthenticate } from './state/ducks/user';
-import store, { history } from './state/store';
-
-// NOTE: This has to be done here to prevent user being unauthenticated on
-// render
-// Check if token is still valid
-const token = localStorage.XAuthToken;
-if (token) {
-  const decodedToken = jwtDecode(token);
-  if (decodedToken.exp * 1000 < Date.now()) {
-    store.dispatch(unauthenticate());
-    window.location.href = '/login';
-  } else {
-    store.dispatch(authenticate());
-    axios.defaults.headers.common.Authorization = token;
-    store.dispatch(getUser());
-  }
-}
+import store, { history } from './modules/store';
 
 const muiTheme = createMuiTheme({
   palette: {
@@ -35,13 +16,13 @@ const muiTheme = createMuiTheme({
 });
 
 ReactDOM.render(
-  <Provider store={store}>
-    <ConnectedRouter history={history}>
+  <StoreProvider store={store}>
+    <Router history={history}>
       <ThemeProvider theme={muiTheme}>
         <App />
       </ThemeProvider>
-    </ConnectedRouter>
-  </Provider>,
+    </Router>
+  </StoreProvider>,
   document.getElementById('root'),
 );
 

@@ -4,6 +4,7 @@ import Container from '@material-ui/core/Container';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
 import Link from '@material-ui/core/Link';
+import { Link as RouterLink } from 'react-router-dom';
 import Snackbar from '@material-ui/core/Snackbar';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
@@ -13,12 +14,11 @@ import MuiAlert from '@material-ui/lab/Alert';
 import React, { useState } from 'react';
 import ReCAPTCHA from 'react-google-recaptcha';
 import { useForm } from 'react-hook-form';
-import { useDispatch, useSelector } from 'react-redux';
-import { signup } from '../../../state/ducks/user';
+import { useStoreActions, useStoreState } from 'easy-peasy';
 
 const CAPTCHA_KEY = process.env.REACT_APP_CAPTCHA_KEY;
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   paper: {
     marginTop: theme.spacing(8),
     display: 'flex',
@@ -46,11 +46,11 @@ const useStyles = makeStyles((theme) => ({
 export default function SignUp() {
   const classes = useStyles();
   const { register, handleSubmit } = useForm();
-  const dispatch = useDispatch();
   const [isHuman, setIsHuman] = useState(false);
   const [snackBarOpen, setSnackBarOpen] = useState(false);
 
-  const errors = useSelector((state) => state.user.errors) || [];
+  const errors = useStoreState(state => state.user.errors);
+  const signup = useStoreActions(state => state.user.signup);
 
   let nameHasError = false;
   let nameHelperText = '';
@@ -95,14 +95,13 @@ export default function SignUp() {
   // eslint-disable-next-line no-console
   const submit = ({ name, email, password, confirmPassword }) => {
     if (isHuman) {
-      dispatch(signup(name, email, password, confirmPassword));
+      signup({ name, email, password, confirmPassword });
     } else {
       setSnackBarOpen(true);
     }
   };
 
-  const handleClose = (reason) =>
-    reason !== 'clickaway' && setSnackBarOpen(false);
+  const handleClose = reason => reason !== 'clickaway' && setSnackBarOpen(false);
 
   const Alert = props => {
     return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -196,7 +195,7 @@ export default function SignUp() {
             </Button>
             <Grid container justify="flex-end">
               <Grid item>
-                <Link href="/login" variant="body2">
+                <Link component={RouterLink} to="/login" variant="body2">
                   Already have an account? Sign in
                 </Link>
               </Grid>

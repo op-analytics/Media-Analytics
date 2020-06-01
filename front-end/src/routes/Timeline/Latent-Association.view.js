@@ -9,7 +9,7 @@ import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import ChipInput from 'material-ui-chip-input';
 import React, { useState, useMemo } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useStoreActions, useStoreState } from 'easy-peasy';
 import {
   CartesianGrid,
   Legend,
@@ -26,7 +26,6 @@ import {
   stringToColour,
 } from '../../components/LineCharts/utils';
 import CsvDownloadButton from '../../components/CsvDownloadButton';
-import { getAssociations } from '../../state/ducks/timeline';
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -127,10 +126,9 @@ const getDownloadData = (currentData, concept1, concept2) => {
  * @component
  */
 function Timeline() {
-  const associations = useSelector(state => state.timeline.associations);
-  const loading = useSelector(state => state.timeline.loading);
+  const associations = useStoreState(state => state.timeline.associations);
+  const loading = useStoreState(state => state.timeline.loading);
 
-  const [formSubmitted, setFormSubmitted] = useState(false);
   const [concept1, setConcept1] = useState([]);
   const [concept2, setConcept2] = useState([]);
   const [yearFrom, setYearFrom] = useState();
@@ -138,7 +136,9 @@ function Timeline() {
   const [outlets, setOutlets] = useState([]);
 
   const classes = useStyles();
-  const dispatch = useDispatch();
+  const getAssociations = useStoreActions(
+    state => state.timeline.getAssociations,
+  );
 
   const wordLimit = 5;
 
@@ -152,7 +152,6 @@ function Timeline() {
     }
   };
 
-  // TODO: Pass this the CsvDownloadButton
   const dataToDownload = useMemo(() => getDownloadData(associations,concept1,concept2), [
     associations,
     concept1,
@@ -171,7 +170,7 @@ function Timeline() {
   const onSubmitHandler = e => {
     e.preventDefault();
     setFormSubmitted(true);
-    dispatch(getAssociations(concept1, concept2, yearFrom, yearTo, outlets));
+    getAssociations({concept1, concept2, yearFrom, yearTo, outlet:outlets[0]});
   };
 
   return (

@@ -1,8 +1,7 @@
 import { mount } from 'enzyme';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
-import configureStore from 'redux-mock-store';
-import { Provider } from 'react-redux';
+import { StoreProvider, createStore, action } from 'easy-peasy';
 import Nav from '.';
 
 const linksNoDivider = [
@@ -15,17 +14,15 @@ const linksNoDivider = [
   ],
 ];
 
-const mockStore = configureStore();
-
 const getWrapper = authenticated => {
-  const initialState = { user: { authenticated } };
-  const store = mockStore(initialState);
+  const initialState = { user: { authenticated, logout: action(() => ({})) } };
+  const store = createStore(initialState);
   // eslint-disable-next-line react/display-name
   return storyFn =>
     mount(
-      <Provider store={store}>
+      <StoreProvider store={store}>
         <Router>{storyFn()}</Router>
-      </Provider>,
+      </StoreProvider>,
     );
 };
 

@@ -15,8 +15,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
-import { unauthenticate } from '../../state/ducks/user';
+import { useStoreActions, useStoreState } from 'easy-peasy';
 
 const drawerWidth = 240;
 
@@ -70,8 +69,8 @@ const useStyles = makeStyles(theme => ({
  */
 function Nav({ children, title, links }) {
   const classes = useStyles();
-  const dispatch = useDispatch();
-  const isAuthenticated = useSelector(state => state.user.authenticated);
+  const isAuthenticated = useStoreState(state => state.user.authenticated);
+  const logout = useStoreActions(state => state.user.logout);
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const drawer = (
@@ -115,11 +114,7 @@ function Nav({ children, title, links }) {
             {title}
           </Typography>
           {isAuthenticated ? (
-            <Button
-              data-test="logout"
-              color="inherit"
-              onClick={() => dispatch(unauthenticate())}
-            >
+            <Button data-test="logout" color="inherit" onClick={() => logout()}>
               Logout
             </Button>
           ) : (

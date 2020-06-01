@@ -1,25 +1,27 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
-import configureStore from 'redux-mock-store';
+import { StoreProvider, createStore, action } from 'easy-peasy';
 import App from './App';
 
-const mockStore = configureStore();
-
 const initialState = {
-  user: { authenticated: true },
-  timeline: { loading: false, frequencies: [], associations: [] },
+  user: { authenticated: true, logout: action(() => ({})) },
+  timeline: {
+    loading: false,
+    frequencies: [],
+    associations: [],
+    getFrequencies: action(() => ({})),
+  },
 };
 
-const store = mockStore(initialState);
+const store = createStore(initialState);
 
 const getWrapped = () => (
-  <Provider store={store}>
+  <StoreProvider store={store}>
     <Router>
       <App />
     </Router>
-  </Provider>
+  </StoreProvider>
 );
 
 it('renders without crashing', () => {
