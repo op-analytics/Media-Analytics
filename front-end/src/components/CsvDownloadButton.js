@@ -31,7 +31,7 @@ function CsvDownloadButton({ data, headers, filename }) {
   );
 }
 
-CsvDownloadButton.defaultProps = {
+CsvDownloadButton.propTypes = {
   data: PropTypes.arrayOf(PropTypes.object).isRequired,
   headers: PropTypes.arrayOf((PropTypes.object)).isRequired,
   filename: PropTypes.string.isRequired,
