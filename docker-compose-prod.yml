@@ -42,10 +42,10 @@ services:
     depends_on:
       - express-back-end
 
-  nginx:
-    image: nichtj3/nyta-nginx:prod
+  verynginx:
+    image: nichtj3/nyta-very-nginx:prod
     build:
-      context: ./nginx
+      context: ./very-nginx
       dockerfile: Dockerfile
     restart: always
     ports:
