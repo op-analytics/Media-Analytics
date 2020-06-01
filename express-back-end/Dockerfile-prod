@@ -3,9 +3,11 @@ FROM node as builder
 
 WORKDIR /usr/src/app
 
-COPY . .
+COPY package*.json ./
 
 RUN npm ci
+
+COPY . .
 
 ## compile typescript
 RUN npm run build
