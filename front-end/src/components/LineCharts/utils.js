@@ -7,6 +7,77 @@ import Cross from '@material-ui/icons/Add';
 import Triangle from '@material-ui/icons/ChangeHistory';
 
 /**
+ * Normalise a frequency dataset using min-max normalisation.
+ *
+ * Data is normaised between years of an outlet starting at the given year or
+ * first year in dataset if the given year does not exist.
+ *
+ * @param {Object[]} datasets
+ * @param {Number}  yearFrom Year to normalise the data from.
+ * @param {Number}  yearTo
+ * @param {String}  yAxisKey Key to normalise for
+ * @returns {Object[]}
+ */
+export const normaliseDatasets = (
+  datasets,
+  words,
+  outlets,
+  yearFrom,
+  yearTo,
+  yAxisKey,
+) => {
+  const normalisedDatasets = JSON.parse(JSON.stringify(datasets));
+  outlets.forEach(outlet => {
+    words.forEach(word => {
+      const wordData = normalisedDatasets.filter(
+        wordDatum => wordDatum.outlet === outlet && wordDatum.word === word,
+      );
+      const firstYearData =
+        wordData.find(obj => obj.year === String(yearFrom)) ||
+        Object.values(wordData)[0];
+      if (firstYearData) {
+        let min = firstYearData[yAxisKey];
+        let max = firstYearData[yAxisKey];
+        // Find the actual maximum and minimum
+        Object.values(wordData).forEach(yearData => {
+          if (yearData.year >= yearFrom && yearData.year <= yearTo) {
+            if (yearData[yAxisKey] > max) max = yearData[yAxisKey];
+            if (yearData[yAxisKey] < min) min = yearData[yAxisKey];
+          }
+        });
+        // Normalise using the maximum and minimum
+        Object.values(wordData).forEach(yearData => {
+          // eslint-disable-next-line no-param-reassign
+          yearData[yAxisKey] = (yearData[yAxisKey] - min) / (max - min);
+        });
+      }
+    });
+  });
+  return normalisedDatasets;
+};
+
+/**
+ * A deterministic converter of a string to a hexidecimal colour
+ * @param {String} str
+ * @returns {String}
+ */
+export const stringToColour = str => {
+  let hash = 0;
+  [...str].forEach((_, i) => {
+    // eslint-disable-next-line no-bitwise
+    hash = str.charCodeAt(i) + ((hash << 5) - hash);
+  });
+  let colour = '#';
+  // eslint-disable-next-line no-plusplus
+  for (let i = 0; i < 3; i++) {
+    // eslint-disable-next-line no-bitwise
+    const value = (hash >> (i * 8)) & 0xff;
+    colour += `00${value.toString(16)}`.substr(-2);
+  }
+  return colour;
+};
+
+/**
  * A tooltip factory for creating tooltips dynamicaly
  *
  * @param {Object} classes Classes to apply to the tooltip
@@ -16,75 +87,80 @@ import Triangle from '@material-ui/icons/ChangeHistory';
 export const createTooltip = (
   classes,
   words,
-  mediaOutlets,
+  outlets,
   displayOption,
   yAxisKey,
-  allMediaOutlets,
+  mediaOutlets,
 ) => {
   const ToolTip = ({ active, payload, label }) => {
     if (active) {
+      const tooltipLines = [];
+      outlets.forEach(outlet => {
+        words.forEach(word => {
+          const formattedOutlet = mediaOutlets.find(obj => obj.value === outlet)
+            .title;
+
+          // Change first letter of the word to uppercase
+          const formattedWord =
+            word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+
+          let tooltipLabel = '';
+          let tooltipData = '';
+          let color = stringToColour(word);
+
+          switch (displayOption) {
+            case 'single':
+              tooltipLabel = `${formattedOutlet} - ${formattedWord}: `;
+              break;
+            case 'byWord':
+              tooltipLabel = `${formattedOutlet}: `;
+              color = stringToColour(outlet);
+              break;
+            case 'byOutlet':
+              tooltipLabel = `${formattedWord}: `;
+              break;
+            case 'multiple':
+              tooltipLabel = '';
+              tooltipData = payload[0]?.payload[yAxisKey];
+              break;
+            default:
+              tooltipLabel = `${formattedOutlet} - ${formattedWord}: `;
+          }
+
+          tooltipData = payload[0]?.payload[outlet + word + yAxisKey];
+
+          if (tooltipData) {
+            tooltipLines.push({
+              label: tooltipLabel,
+              data: tooltipData,
+              word,
+              outlet,
+              color,
+            });
+          }
+        });
+      });
+
+      tooltipLines.sort((line1, line2) => line2.data - line1.data);
+
       return (
         <div className={classes.tooltip}>
           <h3>{label}</h3>
-          {mediaOutlets.map(mediaOutlet => {
-            return words.map(word => {
-              let payloadItem =
-                payload[0].payload[mediaOutlet + word + yAxisKey];
-
-              const formattedWord = word
-                .toLowerCase()
-                .split(' ')
-                .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-                .join(' ');
-
-              const formattedOutlet = allMediaOutlets.find(
-                obj => obj.value === mediaOutlet,
-              ).name;
-
-              let tooltipLabel = '';
-              switch (displayOption) {
-                case 'multiple':
-                  tooltipLabel = '';
-                  break;
-                case 'byWord':
-                  tooltipLabel = formattedOutlet + ': ';
-                  break;
-                case 'byOutlet':
-                  tooltipLabel = formattedWord + ': ';
-                  break;
-                default:
-                  tooltipLabel = `${formattedOutlet} - ${formattedWord}: `;
-              }
-
-              if (payloadItem) {
-                return (
-                  <p
-                    style={{
-                      color:
-                        displayOption === 'byWord'
-                          ? stringToColour(mediaOutlet)
-                          : stringToColour(word),
-                    }}
-                    className={classes.tooltipLabel}
-                    key={word + mediaOutlets + yAxisKey}
-                  >
-                    <span
-                      style={{
-                        color:
-                          displayOption === 'byWord'
-                            ? stringToColour(mediaOutlet)
-                            : stringToColour(word),
-                      }}
-                      className={classes.tooltipLabelFirstWord}
-                    >
-                      {tooltipLabel}
-                    </span>
-                    {payloadItem}
-                  </p>
-                );
-              }
-            });
-          })}
+          {tooltipLines.map(line => (
+            <p
+              style={{ color: line.color }}
+              className={classes.tooltipLabel}
+              key={line.word + line.outlet}
+            >
+              <span
+                style={{ color: line.color }}
+                className={classes.tooltipLabelFirstWord}
+              >
+                {line.label}
+              </span>
+              {line.data}
+            </p>
+          ))}
         </div>
       );
     }
@@ -106,86 +182,64 @@ const icons = {
  *
  * @param {Object} data Data being used for the chart
  * @param {Object[]} words
- * @param {Object[]} mediaOutlets
+ * @param {Object[]} outlets
  * @param {String} YAxisKey
  * @returns {Element}
  */
 export const createLegendPayload = (
   data,
   words,
-  mediaOutlets,
+  outlets,
   YAxisKey,
-  allMediaOutlets,
+  mediaOutlets,
   displayOption,
 ) => {
   const legendItems = [];
   if (displayOption !== 'multiple') {
-    for (let yearData of data.data) {
-      for (let [index, mediaOutlet] of mediaOutlets.entries()) {
-        for (let word of words) {
-          if (Object.keys(yearData).includes(mediaOutlet + word + YAxisKey)) {
-            if (
-              legendItems.findIndex(item => item.id === mediaOutlet + word) ===
-              -1
-            ) {
+    data.forEach(yearData => {
+      outlets.forEach((outlet, index) => {
+        words.forEach(word => {
+          if (Object.keys(yearData).includes(outlet + word + YAxisKey)) {
+            if (!legendItems.some(item => item.id === outlet + word)) {
+              const formattedOutlet = mediaOutlets.find(
+                obj => obj.value === outlet,
+              ).title;
+
+              // Change first letter of the word to uppercase
+              const formattedWord =
+                word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+
               const legendItem = {
-                id: mediaOutlet + word,
-                color:
-                  displayOption === 'byWord'
-                    ? stringToColour(mediaOutlet)
-                    : stringToColour(word),
-                type: icons[displayOption === 'byWord' ? 0 : index].legend,
+                id: outlet + word,
+                color: stringToColour(word),
+                type: 'circle',
                 value: '',
               };
 
-              const formattedWord = word
-                .toLowerCase()
-                .split(' ')
-                .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-                .join(' ');
-
-              const formattedOutlet = allMediaOutlets.find(
-                obj => obj.value === mediaOutlet,
-              ).name;
-
               switch (displayOption) {
+                case 'single':
+                  legendItem.value = `${formattedOutlet} - ${formattedWord}`;
+                  legendItem.type = icons[index].legend;
+                  break;
                 case 'byOutlet':
                   legendItem.value = formattedWord;
                   break;
                 case 'byWord':
                   legendItem.value = formattedOutlet;
+                  legendItem.color = stringToColour(outlet);
                   break;
                 default:
-                  legendItem.value = formattedOutlet + ' - ' + formattedWord;
+                  legendItem.value = `${formattedOutlet} - ${formattedWord}`;
               }
 
               legendItems.push(legendItem);
             }
           }
-        }
-      }
-    }
+        });
+      });
+    });
   }
   return legendItems;
-};
-
-/**
- * A deterministic converter of a string to a hexidecimal colour
- *
- * @param {String} str
- * @returns {String}
- */
-export const stringToColour = str => {
-  let hash = 0;
-  for (let i = 0; i < str.length; i++) {
-    hash = str.charCodeAt(i) + ((hash << 5) - hash);
-  }
-  let colour = '#';
-  for (let i = 0; i < 3; i++) {
-    let value = (hash >> (i * 8)) & 0xff;
-    colour += ('00' + value.toString(16)).substr(-2);
-  }
-  return colour;
 };
 
 /**
@@ -210,73 +264,84 @@ export const CustomizedDot = props => {
  * Structure a dataset for multiple chart display
  *
  * @param {Object} dataset Dataset to alter
- * @param {Object[Object]} Mappings of mediaoutlet abbrivations to fullnames
+ * @param {Object[]} mediaOutets Mapping of outlet abbreviation to fullname
  * @returns {Object[]}
  */
-export function multipleDatasets(dataset, allMediaOutlets) {
-  let result = [];
-  dataset.map(wordDataset => {
-    for (const mediaOutlet in wordDataset.data) {
-      let mediaOutletData = [];
-      wordDataset.data[mediaOutlet].map(wordData => {
-        // Creating keys for the year data using using the media outlet and word.
-        let yearObject = { year: wordData.year };
-        yearObject[mediaOutlet + wordDataset.word + 'rank'] = wordData.rank;
-        yearObject[mediaOutlet + wordDataset.word + 'count'] = wordData.count;
-        yearObject[mediaOutlet + wordDataset.word + 'freq'] = wordData.freq;
-        yearObject[mediaOutlet + wordDataset.word + 'word'] = wordDataset.word;
-        yearObject[mediaOutlet + wordDataset.word + 'mediaOutlet'] = mediaOutlet;
-        mediaOutletData.push(yearObject);
-      });
-      // Add the new result
-      let fullName = allMediaOutlets.find(obj => obj.value === mediaOutlet).name;
-      result.push({
-        title: wordDataset.word + ' - ' + fullName,
-        data: mediaOutletData,
-      });
+export function multipleDatasets(dataset, mediaOutlets) {
+  const result = [];
+
+  dataset.forEach(wordData => {
+    const title = `${
+      mediaOutlets.find(obj => obj.value === wordData.outlet).title
+    } -
+      ${wordData.word}`;
+
+    const data = {
+      word: wordData.word,
+      outlet: wordData.outlet,
+      [`${wordData.outlet + wordData.word}rank`]: wordData.rank,
+      [`${wordData.outlet + wordData.word}count`]: wordData.count,
+      [`${wordData.outlet + wordData.word}freq`]: wordData.freq,
+    };
+
+    let outlet = result.find(obj => obj.title === title);
+
+    if (!outlet) {
+      outlet = {
+        title,
+        data: [],
+      };
+      result.push(outlet);
     }
+
+    let yearData = outlet.data.find(obj => obj.year === wordData.year);
+    if (yearData === undefined) {
+      yearData = { year: wordData.year };
+      outlet.data.push(yearData);
+    }
+    Object.assign(yearData, data);
+
+    // const outlet = result.find(obj => obj.title === title);
+
+    // if (outlet) {
+    //   outlet.data.push(data);
+    // } else {
+    //   result.push({
+    //     title: title,
+    //     data: [data],
+    //   });
+    // }
   });
+
   return result;
 }
 
 /**
  * Structure a dataset for a single chart display
  *
- * @param {Object} dataset Dataset to alter
- * @returns {Object[]}
+ * @param {Object[]} dataset Dataset to alter
+ * @returns {Object}
  */
 export function singleDataset(dataset) {
-  // The object that will contain all the data. This could be wrapped in brackets at
-  // the final return and result could be removed but I think it is clearer and
-  // consistant with the other functions when kept separate.
-  let result = [];
-  let summaryObject = {
+  const result = {
     title: 'Summary',
     data: [],
   };
-  dataset.map(wordDataset => {
-    for (const mediaOutlet in wordDataset.data) {
-      wordDataset.data[mediaOutlet].map(wordData => {
-        // Check if the year already exists in the summary object
-        let yearObject = summaryObject.data.find(
-          obj => obj.year === wordData.year,
-        );
-        // The year doesn't exist, set the year object to a new object for the year.
-        if (!yearObject) {
-          yearObject = { year: wordData.year };
-          summaryObject.data.push(yearObject);
-        }
-        // Add to year object using, media source and word in the keys.
-        yearObject[mediaOutlet + wordDataset.word + 'rank'] = wordData.rank;
-        yearObject[mediaOutlet + wordDataset.word + 'count'] = wordData.count;
-        yearObject[mediaOutlet + wordDataset.word + 'freq'] = wordData.freq;
-        yearObject[mediaOutlet + wordDataset.word + 'word'] = wordDataset.word;
-        yearObject[mediaOutlet + wordDataset.word + 'mediaOutlet'] = mediaOutlet;
-      });
+  dataset.forEach(wordData => {
+    let yearData = result.data.find(obj => obj.year === wordData.year);
+    if (yearData === undefined) {
+      yearData = { year: wordData.year };
+      result.data.push(yearData);
     }
+    const data = {
+      word: wordData.word,
+      outlet: wordData.outlet,
+      [`${wordData.outlet + wordData.word}rank`]: wordData.rank,
+      [`${wordData.outlet + wordData.word}count`]: wordData.count,
+      [`${wordData.outlet + wordData.word}freq`]: wordData.freq,
+    };
+    Object.assign(yearData, data);
   });
-  summaryObject.data.sort((x, y) => x.year - y.year);
-  result.push(summaryObject);
   return result;
 }
 
@@ -284,72 +349,39 @@ export function singleDataset(dataset) {
  * Structure a dataset for by outlet charts
  *
  * @param {Object} dataset Dataset to alter
- * @param {Object[Object]} Mappings of mediaoutlet abbrivations to fullnames
+ * @param {Object[]} mediaOutets Mapping of outlet abbreviation to fullname
  * @returns {Object[]}
  */
-export function byOutletDataset(dataset, allMediaOutlets) {
-  let result = [];
-  dataset.map(wordDataset => {
-    // Title and data to be appended to result
-    let currentMediaOutlet = '';
-    let mediaOutletData = [];
-    for (const mediaOutlet in wordDataset.data) {
-      let yearObject;
-      mediaOutletData = [];
-      currentMediaOutlet = mediaOutlet;
+export function byOutletDataset(dataset, mediaOutlets) {
+  const result = [];
 
-      wordDataset.data[mediaOutlet].map(wordData => {
-        // Get a reference to the current media outlet data if it already exists.
-        let mediaOutletInResult = result.find(
-          obj =>
-            obj.title ===
-            allMediaOutlets.find(obj => obj.value === currentMediaOutlet).name,
-        );
-        if (mediaOutletInResult) {
-          mediaOutletData = mediaOutletInResult.data;
-        }
-        // Get a reference to the year data in media outlet data if it already exists.
-        yearObject = mediaOutletData.find(obj => obj.year === wordData.year);
-        if (!yearObject) {
-          yearObject = { year: wordData.year };
-          mediaOutletData.push(yearObject);
-        }
-        // Creating keys for the data using using the media outlet and word.
-        yearObject[mediaOutlet + wordDataset.word + 'rank'] = wordData.rank;
-        yearObject[mediaOutlet + wordDataset.word + 'count'] = wordData.count;
-        yearObject[mediaOutlet + wordDataset.word + 'freq'] = wordData.freq;
-        yearObject[mediaOutlet + wordDataset.word + 'word'] = wordDataset.word;
-        yearObject[mediaOutlet + wordDataset.word + 'mediaOutlet'] = mediaOutlet;
-      });
+  dataset.forEach(wordData => {
+    const { title } = mediaOutlets.find(obj => obj.value === wordData.outlet);
 
-      // Check there is aready data for the particular year in the current media data.
-      let yearDataObjectInMediaOutlet = mediaOutletData.find(
-        obj => obj.year === yearObject.year,
-      );
-      // If there is no data already for the year, add the year object. If there was
-      // already data, the year object would be a reference to an object within the
-      // media outlet data array and wouldn't need to be appended.
-      if (!yearDataObjectInMediaOutlet) {
-        mediaOutletData.push(yearObject);
-      }
-      // Check if there is already data for the media outlet in result.
-      let resultMediaOutlet = result.find(
-        obj =>
-          obj.title ===
-          allMediaOutlets.find(obj => obj.value === currentMediaOutlet).name,
-      );
-      // Similar to above. Only add to result if not already there, a reference has
-      // been edited and doesn't need added again.
-      if (!resultMediaOutlet) {
-        let fullName = allMediaOutlets.find(obj => obj.value === mediaOutlet)
-          .name;
-        let newResultMediaOutlet = {
-          title: fullName,
-          data: mediaOutletData,
-        };
-        result.push(newResultMediaOutlet);
-      }
+    const data = {
+      word: wordData.word,
+      outlet: wordData.outlet,
+      [`${wordData.outlet + wordData.word}rank`]: wordData.rank,
+      [`${wordData.outlet + wordData.word}count`]: wordData.count,
+      [`${wordData.outlet + wordData.word}freq`]: wordData.freq,
+    };
+
+    let outlet = result.find(obj => obj.title === title);
+
+    if (!outlet) {
+      outlet = {
+        title,
+        data: [],
+      };
+      result.push(outlet);
     }
+
+    let yearData = outlet.data.find(obj => obj.year === wordData.year);
+    if (yearData === undefined) {
+      yearData = { year: wordData.year };
+      outlet.data.push(yearData);
+    }
+    Object.assign(yearData, data);
   });
   return result;
 }
@@ -361,28 +393,35 @@ export function byOutletDataset(dataset, allMediaOutlets) {
  * @returns {Object[]}
  */
 export function byWordDataset(dataset) {
-  let result = [];
-  dataset.map(wordDataset => {
-    for (const mediaOutlet in wordDataset.data) {
-      wordDataset.data[mediaOutlet].map(wordData => {
-        // Creating keys for the year data using using the media outlet and word.
-        let yearObject = { year: wordData.year };
-        yearObject[mediaOutlet + wordDataset.word + 'rank'] = wordData.rank;
-        yearObject[mediaOutlet + wordDataset.word + 'count'] = wordData.count;
-        yearObject[mediaOutlet + wordDataset.word + 'freq'] = wordData.freq;
-        yearObject[mediaOutlet + wordDataset.word + 'word'] = wordDataset.word;
-        yearObject[mediaOutlet + wordDataset.word + 'mediaOutlet'] = mediaOutlet;
-        // Check if there is already a chart for the current word
-        let wordObject = result.find(obj => obj.title === wordDataset.word);
-        // If there is not a chart
-        if (!wordObject) {
-          wordObject = { title: wordDataset.word, data: [] };
-          result.push(wordObject);
-        }
-        // Add to the result for the currant word
-        wordObject.data.push(yearObject);
-      });
+  const result = [];
+
+  dataset.forEach(wordData => {
+    const title = wordData.word;
+
+    const data = {
+      word: wordData.word,
+      outlet: wordData.outlet,
+      [`${wordData.outlet + wordData.word}rank`]: wordData.rank,
+      [`${wordData.outlet + wordData.word}count`]: wordData.count,
+      [`${wordData.outlet + wordData.word}freq`]: wordData.freq,
+    };
+
+    let word = result.find(obj => obj.title === title);
+
+    if (!word) {
+      word = {
+        title,
+        data: [],
+      };
+      result.push(word);
     }
+
+    let yearData = word.data.find(obj => obj.year === wordData.year);
+    if (yearData === undefined) {
+      yearData = { year: wordData.year };
+      word.data.push(yearData);
+    }
+    Object.assign(yearData, data);
   });
   return result;
 }
@@ -397,12 +436,13 @@ export function singleLatentAssociationDataset(dataset) {
   if (!dataset) {
     return null;
   }
-  console.log('dataset', dataset);
-  let summaryObject = {
+
+  const summaryObject = {
     title: dataset[0].media_outlet,
     data: [],
   };
-  for (let association of dataset) {
+
+  dataset.forEach ( association => {
     let yearRangeObject = summaryObject.data.find(
       obj => obj.yearRange === association.yearRange,
     );
@@ -411,9 +451,10 @@ export function singleLatentAssociationDataset(dataset) {
       yearRangeObject = { yearRange: association.yearRange };
       summaryObject.data.push(yearRangeObject);
     }
-    yearRangeObject['association'] = association.association;
-    yearRangeObject['mediaOutlet'] = association.media_outlet;
-  }
+    yearRangeObject.association = association.association;
+    yearRangeObject.mediaOutlet = association.media_outlet;
+  })
+
   summaryObject.data.sort(
     (x, y) =>
       Number(x.yearRange.split('-')[0]) - Number(y.yearRange.split('-')[0]),
@@ -430,22 +471,27 @@ export function singleLatentAssociationDataset(dataset) {
  */
 export const createLatentAssociationLegendPayload = (
   data,
-  mediaOutlets,
-  allMediaOutlets,
+  concept1,
+  concept2,
+  outlet,
 ) => {
   const legendItems = [];
-  for (let yearData of data.data) {
-    for (let mediaOutlet of mediaOutlets) {
-      if (Object.keys(yearData).includes('association' + mediaOutlet)) {
-        if (legendItems.findIndex(item => item.id === mediaOutlet) === -1) {
-          legendItems.push({
-            id: mediaOutlet,
-            value: allMediaOutlets.find(obj => obj.value === mediaOutlet).name,
-            color: stringToColour(mediaOutlet),
-          });
-        }
+  data.data.forEach(yearData => {
+    if (Object.keys(yearData).includes('association')) {
+      if (legendItems.findIndex(item => item.id === outlet) === -1) {
+        const concept1Formatted = concept1
+          .map(item => item.charAt(0).toUpperCase() + item.substr(1))
+          .join(', ');
+        const concept2Formatted = concept2
+          .map(item => item.charAt(0).toUpperCase() + item.substr(1))
+          .join(', ');
+        legendItems.push({
+          id: outlet,
+          value: `[${concept1Formatted}] & [${concept2Formatted}]`,
+          color: stringToColour(outlet),
+        });
       }
     }
-  }
+  })
   return legendItems;
 };

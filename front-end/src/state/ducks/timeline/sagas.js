@@ -19,7 +19,7 @@ function* fetchFrequencies(action) {
       `${API_URL}/timeline/frequency`,
       action.payload,
     );
-    yield put(getFrequencySuccess(response.data.data));
+    yield put(getFrequencySuccess(response.data));
   } catch (err) {
     yield put(getFrequencyFailure(err));
   }

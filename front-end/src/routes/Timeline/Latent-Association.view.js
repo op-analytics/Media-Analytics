@@ -63,6 +63,7 @@ const useStyles = makeStyles(theme => ({
   },
   chartContainer: {
     width: '100%',
+    maxWidth: '70vw',
     height: '50vh',
     flex: '0 1 auto',
     paddingBottom: '6vh',
@@ -142,7 +143,7 @@ function Timeline() {
   const wordLimit = 5;
 
   const handleDelete = (chip, state, setState) => {
-    setState(state.filter(word => word != chip));
+    setState(state.filter(word => word !== chip));
   };
 
   const handleAddChip = (chip, state, setState) => {
@@ -194,7 +195,7 @@ function Timeline() {
                   <ChipInput
                     label="Concept One:"
                     name="concept_1"
-                    newChipKeyCodes={[13, 32]} // Make new chip on enter and space key codes
+                    newChipKeyCodes={[13, 32, 188]} // Make new chip on enter, space or comma key codes
                     blurBehavior="add" // Fix android chrome bug
                     required={!concept1.length}
                     value={concept1}
@@ -206,6 +207,7 @@ function Timeline() {
                         style={{ margin: '0px 8px 8px 0px', float: 'left' }}
                         color="secondary"
                         label={value}
+                        // eslint-disable-next-line no-unused-vars
                         onDelete={_ =>
                           handleDelete(value, concept1, setConcept1)
                         }
@@ -219,7 +221,7 @@ function Timeline() {
                   <ChipInput
                     label="Concept Two:"
                     name="concept_2"
-                    newChipKeyCodes={[13, 32]} // Make new chip on enter and space key codes
+                    newChipKeyCodes={[13, 32, 188]} // Make new chip on enter, space or comma key codes
                     blurBehavior="add" // Fix android chrome bug
                     required={!concept2.length}
                     value={concept2}
@@ -231,6 +233,7 @@ function Timeline() {
                         style={{ margin: '0px 8px 8px 0px', float: 'left' }}
                         color="default"
                         label={value}
+                        // eslint-disable-next-line no-unused-vars
                         onDelete={_ =>
                           handleDelete(value, concept2, setConcept2)
                         }
@@ -248,9 +251,8 @@ function Timeline() {
                     filterSelectedOptions
                     required={!outlets.length}
                     onChange={(_, value) => {
-                      setOutlets([value.value])
-                    }
-                    }
+                      setOutlets([value.value]);
+                    }}
                     renderInput={params => (
                       <TextField
                         {...params}
@@ -313,7 +315,7 @@ function Timeline() {
         ) : (
           formSubmitted &&
           outlets.map(outlet => {
-            let data = singleLatentAssociationDataset(associations);
+            const data = singleLatentAssociationDataset(associations);
             if (data) {
               return (
                 <div className={classes.chartContainer}>
@@ -336,14 +338,15 @@ function Timeline() {
                       <Legend
                         payload={createLatentAssociationLegendPayload(
                           data,
-                          outlets,
-                          mediaOutlets,
+                          concept1,
+                          concept2,
+                          outlets[0],
                         )}
                       />
                       <Tooltip />
                       <Line
                         type="linear"
-                        dataKey={'association'}
+                        dataKey="association"
                         stroke={stringToColour(outlet)}
                         fill={stringToColour(outlet)}
                         strokeWidth={3}
@@ -359,6 +362,7 @@ function Timeline() {
                 </div>
               );
             }
+            return null;
           })
         )}
       </div>

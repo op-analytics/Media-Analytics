@@ -29,32 +29,18 @@ module.exports = (function() {
       let frequencyData = [];
       // Iterate over the data returned from the database in order to restructure it.
       for (frequencyDataObj of frequencyDataDB) {
-        let word = frequencyDataObj.word;
-        let media_outlet = frequencyDataObj.media_outlet;
         let wordData = {
+          word: frequencyDataObj.word,
+          outlet: frequencyDataObj.media_outlet,
           year: frequencyDataObj.year,
           rank: frequencyDataObj.rank,
           count: frequencyDataObj.count,
           freq: frequencyDataObj.freq,
         };
-        let wordDataIndex = frequencyData.findIndex(fd => fd.word == word);
-        // Check if the key for the word does not already exist.
-        if (wordDataIndex == -1) {
-          frequencyData.push({
-            word: word,
-            data: { [media_outlet]: [wordData] },
-          });
-        } else {
-          // Check if the key for the media outlet does not already exist.
-          if (!frequencyData[wordDataIndex].data[media_outlet]) {
-            frequencyData[wordDataIndex].data[media_outlet] = [wordData];
-          } else {
-            frequencyData[wordDataIndex].data[media_outlet].push(wordData);
-          }
-        }
+        frequencyData.push(wordData);
       }
       // Set data in response to frequencyData.
-      res.json({ data: frequencyData });
+      res.json(frequencyData);
       return;
     }
     // If there is not data for the parameters, return an error.
