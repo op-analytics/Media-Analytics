@@ -17,5 +17,5 @@ export default Joi.object({
   year_to: Joi.number()
     .min(Joi.ref('year_from'))
     .required(),
-  media_outlet: Joi.string().required(),
+  outlet: Joi.string().required(),
 });

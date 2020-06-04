@@ -1,4 +1,4 @@
-import math from 'mathjs';
+import * as math from 'mathjs';
 
 import LatentAssociationData from '../interfaces/LatentAssociationData';
 import LatentAssociationDocument from '../interfaces/LatentAssociationDocument';
@@ -85,7 +85,6 @@ async function GetLatentAssociation(
 ): Promise<LatentAssociationData[]> {
   const concept1Data = await getConceptData(concept1, outlet, yearFrom, yearTo);
   const concept2Data = await getConceptData(concept2, outlet, yearFrom, yearTo);
-
   return ShapeData(concept1Data, concept2Data, outlet);
 }
 

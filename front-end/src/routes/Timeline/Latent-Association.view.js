@@ -107,10 +107,11 @@ const mediaOutlets = [
 
 const getDownloadData = (currentData, concept1, concept2) => {
   const dataToDownload = [];
-  if(currentData) {
+  if (currentData) {
     currentData.forEach(item => {
       dataToDownload.push({
-        mediaOutlet: mediaOutlets.find(obj => obj.value === item.media_outlet).name,
+        mediaOutlet: mediaOutlets.find(obj => obj.value === item.media_outlet)
+          .name,
         concept1,
         concept2,
         yearRange: item.yearRange,
@@ -129,6 +130,7 @@ function Timeline() {
   const associations = useStoreState(state => state.timeline.associations);
   const loading = useStoreState(state => state.timeline.loading);
 
+  const [formSubmitted, setFormSubmitted] = useState(false);
   const [concept1, setConcept1] = useState([]);
   const [concept2, setConcept2] = useState([]);
   const [yearFrom, setYearFrom] = useState();
@@ -152,11 +154,10 @@ function Timeline() {
     }
   };
 
-  const dataToDownload = useMemo(() => getDownloadData(associations,concept1,concept2), [
-    associations,
-    concept1,
-    concept2,
-  ]);
+  const dataToDownload = useMemo(
+    () => getDownloadData(associations, concept1, concept2),
+    [associations, concept1, concept2],
+  );
 
   const csvHeaders = [
     { label: 'media outlet', key: 'mediaOutlet' },
@@ -164,13 +165,18 @@ function Timeline() {
     { label: 'concept2', key: 'concept2' },
     { label: 'year range', key: 'yearRange' },
     { label: 'association', key: 'association' },
-
   ];
 
   const onSubmitHandler = e => {
     e.preventDefault();
     setFormSubmitted(true);
-    getAssociations({concept1, concept2, yearFrom, yearTo, outlet:outlets[0]});
+    getAssociations({
+      concept_1: concept1,
+      concept_2: concept2,
+      year_from: yearFrom,
+      year_to: yearTo,
+      outlet: outlets[0],
+    });
   };
 
   return (
@@ -181,9 +187,7 @@ function Timeline() {
           headers={csvHeaders}
           filename="ma-latent-association.csv"
         />
-      ) : (
-        null
-      )}
+      ) : null}
       <h3>Latent association over time</h3>
       <div className={classes.container}>
         <Card className={classes.Card}>
@@ -314,6 +318,7 @@ function Timeline() {
         ) : (
           formSubmitted &&
           outlets.map(outlet => {
+            console.log('associations :>> ', associations);
             const data = singleLatentAssociationDataset(associations);
             if (data) {
               return (
