@@ -1,23 +1,23 @@
-import { boolean, number, object, string } from '@hapi/joi';
+import Joi from '@hapi/joi';
 
 // require and configure dotenv, will load vars in .env in PROCESS.ENV
 require('dotenv').config();
 
 // define validation for all the env vars
-const envVarsSchema = object({
-  NODE_ENV: string()
+const envVarsSchema = Joi.object({
+  NODE_ENV: Joi.string()
     .allow('development', 'production', 'test', 'provision')
     .default('development'),
-  PORT: number().default(7000),
-  MONGOOSE_DEBUG: boolean().when('NODE_ENV', {
-    is: string().equal('development'),
-    then: boolean().default(true),
-    otherwise: boolean().default(false),
+  PORT: Joi.number().default(7000),
+  MONGOOSE_DEBUG: Joi.boolean().when('NODE_ENV', {
+    is: Joi.string().equal('development'),
+    then: Joi.boolean().default(true),
+    otherwise: Joi.boolean().default(false),
   }),
-  MONGO_URI: string()
+  MONGO_URI: Joi.string()
     .required()
     .description('Mongo DB host url'),
-  TOKEN_SECRET: string()
+  TOKEN_SECRET: Joi.string()
     .required()
     .description('The secret used to encrypt user data'),
 })

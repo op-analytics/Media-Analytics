@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon src/index.ts",
+    "dev": "nodemon --watch 'src/**/*.ts' --ignore 'src/**/*.spec.ts' --exec 'ts-node -r tsconfig-paths/register' src/index.ts",
     "lint": "eslint src/ --ext .ts",
-    "build": "tsc -p .",
+    "build": "tsc && babel ./src --out-dir ./dist --extensions '.ts,.js'",
     "start": "node dist/index.js",
     "test": "mocha --recursive"
   },
@@ -27,6 +27,12 @@
     "morgan": "^1.10.0"
   },
   "devDependencies": {
+    "@babel/cli": "^7.10.1",
+    "@babel/core": "^7.10.2",
+    "@babel/plugin-proposal-class-properties": "^7.10.1",
+    "@babel/plugin-proposal-object-rest-spread": "^7.10.1",
+    "@babel/preset-env": "^7.10.2",
+    "@babel/preset-typescript": "^7.10.1",
     "@types/bcrypt": "^3.0.0",
     "@types/cors": "^2.8.6",
     "@types/express": "^4.17.6",
@@ -39,6 +45,7 @@
     "@types/node": "^14.0.6",
     "@typescript-eslint/eslint-plugin": "^2.21.0",
     "@typescript-eslint/parser": "^2.21.0",
+    "babel-plugin-module-resolver": "^4.0.0",
     "chai": "^4.2.0",
     "chai-sorted": "^0.2.0",
     "eslint": "^6.8.0",
@@ -56,7 +63,8 @@
     "sinon-chai": "^3.5.0",
     "sinon-express-mock": "^2.2.1",
     "supertest": "^4.0.2",
-    "ts-node": "^8.10.1",
+    "ts-node": "^8.10.2",
+    "tsconfig-paths": "^3.9.0",
     "typescript": "^3.9.3"
   }
 }
