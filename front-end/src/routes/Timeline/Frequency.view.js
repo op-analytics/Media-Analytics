@@ -202,6 +202,7 @@ function Timeline() {
                       outlets.length < PARAMETER_LIMIT ? options : []
                     }
                     onChange={(_, value) => {
+                      console.log('value :>> ', value);
                       const newOutlets = value.map(({ value: code }) => code);
                       const newOutletExists = !newOutlets.every(item =>
                         outlets.includes(item),
@@ -349,7 +350,8 @@ function Timeline() {
         {loading ? (
           <CircularProgress />
         ) : (
-          formSubmitted && (
+          formSubmitted &&
+          words.length !== 0 && (
             <LineCharts
               datasets={frequencies}
               formParameters={{

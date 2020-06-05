@@ -129,7 +129,7 @@ function Timeline() {
   const associations = useStoreState(state => state.timeline.associations);
   const loading = useStoreState(state => state.timeline.loading);
 
-  const [formSubmitted, setFormSubmitted] = useState(false);
+  const [formSubmitted, setFormSubmitted] = useState(true);
   const [concept1, setConcept1] = useState([]);
   const [concept2, setConcept2] = useState([]);
   const [yearFrom, setYearFrom] = useState();
@@ -150,6 +150,10 @@ function Timeline() {
   const handleAddChip = (chip, state, setState) => {
     if (state.length < wordLimit) {
       setState([...state, chip]);
+    }
+    setFormSubmitted(true);
+    if (outlets.length) {
+      setFormSubmitted(false);
     }
   };
 
@@ -252,8 +256,11 @@ function Timeline() {
                     getOptionLabel={option => option.title}
                     filterSelectedOptions
                     required={!outlets.length}
-                    onChange={(_, value) => {
-                      setOutlets([value.value]);
+                    onChange={(_, newOutlet) => {
+                      if (concept1.length && concept2.length) {
+                        setFormSubmitted(false);
+                      }
+                      setOutlets([newOutlet.value]);
                     }}
                     renderInput={params => (
                       <TextField
@@ -303,6 +310,7 @@ function Timeline() {
                     type="submit"
                     className={classes.submitButton}
                     margin="0 auto"
+                    disabled={formSubmitted}
                   >
                     Submit
                   </Button>
@@ -316,7 +324,9 @@ function Timeline() {
           <CircularProgress />
         ) : (
           formSubmitted &&
-          associations && (
+          associations.length !== 0 &&
+          concept1.length !== 0 &&
+          concept2.length !== 0 && (
             <div className={classes.chartContainer}>
               <h3 className={classes.chartTitle}>
                 {mediaOutlets.find(obj => obj.value === outlets[0]).title}
