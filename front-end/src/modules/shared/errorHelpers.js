@@ -3,9 +3,7 @@ function createGeneralError(errorMessage) {
 }
 
 export function getErrorsFromResponse(response) {
-  if(response){
-    return response.errors
-      ? response.errors
-      : [createGeneralError(response.statusText)];
-  }
+  return response.errors
+    ? response.errors
+    : [createGeneralError(response.statusText)];
 }

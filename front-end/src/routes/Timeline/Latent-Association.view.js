@@ -100,9 +100,9 @@ const useStyles = makeStyles(theme => ({
 // TODO Update other functions to use title instead of name, title is required for
 // autocomplete.
 const mediaOutlets = [
-  { title: 'New York Times', name: 'New York Times', value: 'nyt' },
-  { title: 'Wall Street Journal', name: 'Wall Street Journal', value: 'wsj' },
-  { title: 'The Guardian', name: 'The Guardian', value: 'guardian' },
+  { title: 'New York Times', value: 'nyt' },
+  { title: 'Wall Street Journal', value: 'wsj' },
+  { title: 'The Guardian', value: 'guardian' },
 ];
 
 const getDownloadData = (currentData, concept1, concept2) => {
@@ -110,8 +110,7 @@ const getDownloadData = (currentData, concept1, concept2) => {
   if (currentData) {
     currentData.forEach(item => {
       dataToDownload.push({
-        mediaOutlet: mediaOutlets.find(obj => obj.value === item.media_outlet)
-          .name,
+        mediaOutlet: mediaOutlets.find(obj => obj.value === item.outlet).title,
         concept1,
         concept2,
         yearRange: item.yearRange,
@@ -142,7 +141,7 @@ function Timeline() {
     state => state.timeline.getAssociations,
   );
 
-  const wordLimit = 5;
+  const wordLimit = 1;
 
   const handleDelete = (chip, state, setState) => {
     setState(state.filter(word => word !== chip));
@@ -317,57 +316,50 @@ function Timeline() {
           <CircularProgress />
         ) : (
           formSubmitted &&
-          outlets.map(outlet => {
-            console.log('associations :>> ', associations);
-            const data = singleLatentAssociationDataset(associations);
-            if (data) {
-              return (
-                <div className={classes.chartContainer}>
-                  <h3 className={classes.chartTitle}>
-                    {mediaOutlets.find(obj => obj.value === outlet).name}
-                  </h3>
-                  <ResponsiveContainer>
-                    <LineChart
-                      data={data.data}
-                      margin={{
-                        top: 10,
-                        right: 30,
-                        left: 10,
-                        bottom: 10,
-                      }}
-                    >
-                      <CartesianGrid strokeDasharray="3 3" />
-                      <XAxis dataKey="yearRange" tickMargin={15} />
-                      <YAxis />
-                      <Legend
-                        payload={createLatentAssociationLegendPayload(
-                          data,
-                          concept1,
-                          concept2,
-                          outlets[0],
-                        )}
-                      />
-                      <Tooltip />
-                      <Line
-                        type="linear"
-                        dataKey="association"
-                        stroke={stringToColour(outlet)}
-                        fill={stringToColour(outlet)}
-                        strokeWidth={3}
-                        dot={{ strokeWidth: 5 }}
-                        activeDot={{
-                          stroke: stringToColour(outlet),
-                          strokeWidth: 7,
-                          border: 'white',
-                        }}
-                      />
-                    </LineChart>
-                  </ResponsiveContainer>
-                </div>
-              );
-            }
-            return null;
-          })
+          associations && (
+            <div className={classes.chartContainer}>
+              <h3 className={classes.chartTitle}>
+                {mediaOutlets.find(obj => obj.value === outlets[0]).title}
+              </h3>
+              <ResponsiveContainer>
+                <LineChart
+                  data={singleLatentAssociationDataset(associations).data}
+                  margin={{
+                    top: 10,
+                    right: 30,
+                    left: 10,
+                    bottom: 10,
+                  }}
+                >
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="yearRange" tickMargin={15} />
+                  <YAxis />
+                  <Legend
+                    payload={createLatentAssociationLegendPayload(
+                      singleLatentAssociationDataset(associations).data,
+                      concept1,
+                      concept2,
+                      outlets[0],
+                    )}
+                  />
+                  <Tooltip />
+                  <Line
+                    type="linear"
+                    dataKey="association"
+                    stroke={stringToColour(outlets[0])}
+                    fill={stringToColour(outlets[0])}
+                    strokeWidth={3}
+                    dot={{ strokeWidth: 5 }}
+                    activeDot={{
+                      stroke: stringToColour(outlets[0]),
+                      strokeWidth: 7,
+                      border: 'white',
+                    }}
+                  />
+                </LineChart>
+              </ResponsiveContainer>
+            </div>
+          )
         )}
       </div>
     </>

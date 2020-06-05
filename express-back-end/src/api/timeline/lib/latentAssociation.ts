@@ -68,7 +68,7 @@ function ShapeData(
             math.mean(yearRangeVectors1, 0),
             math.mean(yearRangeVectors2, 0),
           ),
-          media_outlet: outlet,
+          outlet,
         });
       }
     });

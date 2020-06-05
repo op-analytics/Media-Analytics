@@ -433,12 +433,12 @@ export function byWordDataset(dataset) {
  * @returns {Object[]}
  */
 export function singleLatentAssociationDataset(dataset) {
-  if (!dataset) {
+  if (dataset.length === 0) {
     return null;
   }
 
   const summaryObject = {
-    title: dataset[0].media_outlet,
+    title: dataset[0].outlet,
     data: [],
   };
 
@@ -452,7 +452,7 @@ export function singleLatentAssociationDataset(dataset) {
       summaryObject.data.push(yearRangeObject);
     }
     yearRangeObject.association = association.association;
-    yearRangeObject.mediaOutlet = association.media_outlet;
+    yearRangeObject.outlet = association.outlet;
   })
 
   summaryObject.data.sort(
@@ -475,8 +475,9 @@ export const createLatentAssociationLegendPayload = (
   concept2,
   outlet,
 ) => {
+  console.log('data :>> ', data);
   const legendItems = [];
-  data.data.forEach(yearData => {
+  data.forEach(yearData => {
     if (Object.keys(yearData).includes('association')) {
       if (legendItems.findIndex(item => item.id === outlet) === -1) {
         const concept1Formatted = concept1

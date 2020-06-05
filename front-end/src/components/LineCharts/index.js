@@ -9,10 +9,8 @@ import {
   byWordDataset,
   multipleDatasets,
   normaliseDatasets,
-  singleDataset
+  singleDataset,
 } from './utils';
-
-
 
 /**
  * LineCharts A helper component for rendering multiple linecharts
@@ -20,11 +18,26 @@ import {
  * @component
  */
 function LineCharts({ datasets, formParameters, mediaOutlets }) {
-  const {words, outlets, yearFrom, yearTo, yAxisKey, displayNormalised, displayOption} = formParameters;
+  const {
+    words,
+    outlets,
+    yearFrom,
+    yearTo,
+    yAxisKey,
+    displayNormalised,
+    displayOption,
+  } = formParameters;
 
-  const normalisedDatasets = normaliseDatasets(datasets, words, outlets, yearFrom, yearTo, yAxisKey);
+  const normalisedDatasets = normaliseDatasets(
+    datasets,
+    words,
+    outlets,
+    yearFrom,
+    yearTo,
+    yAxisKey,
+  );
 
-  let dataSource = datasets
+  let dataSource = datasets;
 
   if (displayNormalised) {
     dataSource = normalisedDatasets;
@@ -78,7 +91,7 @@ function LineCharts({ datasets, formParameters, mediaOutlets }) {
         />
       );
   }
-};
+}
 
 LineCharts.propTypes = {
   datasets: PropTypes.arrayOf(

@@ -21,7 +21,6 @@ export async function getData(req: Request, res: Response): Promise<void> {
     yearTo,
   );
   if (latentAssociationData.length > 0) {
-    console.log('latentAssociationData :>> ', latentAssociationData);
     res.json({ data: latentAssociationData });
     return;
   }
