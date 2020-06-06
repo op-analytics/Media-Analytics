@@ -2,6 +2,7 @@ version: '3.3'
 
 volumes:
   nyta-db:
+  verynginx-config:
 
 services:
   db:
@@ -47,6 +48,8 @@ services:
     build:
       context: ./very-nginx
       dockerfile: Dockerfile
+    volumes:
+      - 'verynginx-config:/opt/verynginx/verynginx/configs/'
     restart: always
     ports:
       - 80:80
