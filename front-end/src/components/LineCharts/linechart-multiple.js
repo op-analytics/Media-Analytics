@@ -11,10 +11,10 @@ import {
   YAxis,
 } from 'recharts';
 import { createTooltip, CustomizedDot, stringToColour } from './utils';
-import { useStyles } from './hooks/useStyles';
+import { useSharedStyles } from './hooks/useStyles';
 
 function LinechartMultiple({ datasets, formParameters, mediaOutlets }) {
-  const classes = useStyles();
+  const sharedClasses = useSharedStyles();
   const { words } = formParameters;
   const { outlets } = formParameters;
   const { yearFrom } = formParameters;
@@ -41,10 +41,10 @@ function LinechartMultiple({ datasets, formParameters, mediaOutlets }) {
                   item
                   lg={12 / outlets.length}
                   xs={12}
-                  className={classes.gridItemChart}
+                  className={sharedClasses.gridItemChart}
                 >
-                  <div className={classes.chartContainer} key={data.title}>
-                    <h3 className={classes.chartTitle}>{data.title}</h3>
+                  <div className={sharedClasses.chartContainer} key={data.title}>
+                    <h3 className={sharedClasses.chartTitle}>{data.title}</h3>
                     <ResponsiveContainer>
                       <LineChart
                         data={data.data}
@@ -71,7 +71,7 @@ function LinechartMultiple({ datasets, formParameters, mediaOutlets }) {
                         <Tooltip
                           itemSorter={item1 => item1.value * -1}
                           content={createTooltip(
-                            classes,
+                            sharedClasses,
                             words,
                             outlets,
                             displayOption,

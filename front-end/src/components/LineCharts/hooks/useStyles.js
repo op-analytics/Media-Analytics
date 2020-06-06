@@ -1,6 +1,6 @@
 import { makeStyles } from '@material-ui/core/styles';
 
-export const useStyles = makeStyles(() => ({
+export const useSharedStyles = makeStyles(() => ({
     chartContainer: {
       width: '100%',
       maxWidth: '60vw',
