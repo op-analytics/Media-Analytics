@@ -101,7 +101,7 @@ function Timeline() {
         {loading ? (
           <CircularProgress />
         ) : (
-          associations && (
+          associations.length !== 0 && (
             <div className={classes.chartContainer}>
               <ResponsiveContainer>
                 <LineChart
