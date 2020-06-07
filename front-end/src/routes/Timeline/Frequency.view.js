@@ -16,6 +16,7 @@ import React, { useState, useMemo } from 'react';
 import { useStoreActions, useStoreState } from 'easy-peasy';
 import LineCharts from '../../components/LineCharts';
 import CsvDownloadButton from '../../components/CsvDownloadButton';
+import FeedbackBar from '../../components/FeedbackBar';
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -111,6 +112,8 @@ function Timeline() {
   const loading = useStoreState(state => state.timeline.loading);
   const frequencies = useStoreState(state => state.timeline.frequencies);
   const getFrequencies = useStoreActions(state => state.timeline.getFrequencies);
+
+  const errors = useStoreState(state => state.timeline.errors);
 
   const dataToDownload = useMemo(
     () => getDownloadData(frequencies, yAxisMetric, yearFrom, yearTo),
@@ -346,6 +349,12 @@ function Timeline() {
             </Grid>
           </form>
         </Card>
+
+        { errors.length > 0 ? (
+          <FeedbackBar
+            errors={errors}
+          />
+        ) : null }
 
         {loading ? (
           <CircularProgress />
