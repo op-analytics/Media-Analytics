@@ -226,7 +226,7 @@ function Timeline() {
                   }}
                 >
                   <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="yearRange" tickMargin={15} />
+                  <XAxis dataKey="year" tickMargin={15} />
                   <YAxis />
                   <Legend />
                   <Tooltip />
