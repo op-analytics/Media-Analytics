@@ -4,5 +4,6 @@ function createGeneralError(errorMessage) {
 
 export function getErrorsFromResponse(response) {
   errors = response.errors || response.data.errors
-  return errors ? errors : [createGeneralError(response.statusText)]
+  return errors ? errors : 
+    [createGeneralError(response.statusText)]
 }
