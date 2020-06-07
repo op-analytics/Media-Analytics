@@ -11,6 +11,7 @@ import Nav from './components/Nav';
 import Login from './routes/Auth/Login';
 import Signup from './routes/Auth/Signup';
 import NotFound from './routes/NotFound.view';
+import UserGuide from './routes/UserGuide'
 import FrequencyTimeline from './routes/Timeline/Frequency.view';
 import LatentAssociationTimeline from './routes/Timeline/Latent-Association.view';
 import SentimentTimeline from './routes/Timeline/Sentiment.view';
@@ -25,7 +26,7 @@ const links = [
   ],
   [
     { href: '/about', text: 'About' },
-    { href: '/docs', text: 'Docs' },
+    { href: '/user-guide', text: 'User guide' },
     { href: '/paper', text: 'Paper' },
   ],
 ];
@@ -60,6 +61,7 @@ function App() {
           <LoggedOutRoute path="/signup" component={Signup} />
           <LoggedOutRoute path="/login" component={Login} />
           <LoggedInRoute path="/frequency" component={FrequencyTimeline} />
+          <LoggedInRoute path="/user-guide" component={UserGuide} />
           <LoggedInRoute
             path="/latent-association"
             component={LatentAssociationTimeline}
