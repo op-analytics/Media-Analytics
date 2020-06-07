@@ -120,7 +120,6 @@ function Timeline() {
 
   const onSubmitHandler = e => {
     e.preventDefault();
-    setFormSubmitted(true);
     getSentiments({ word: words[0], year_from: yearFrom, year_to: yearTo });
   };
 
