@@ -210,7 +210,6 @@ function Timeline() {
         {loading ? (
           <CircularProgress />
         ) : (
-          formSubmitted &&
           words.length > 0 &&
           sentiments.length > 0 && (
             <div className={classes.chartContainer}>
