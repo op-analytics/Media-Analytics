@@ -14,6 +14,7 @@ import NotFound from './routes/NotFound.view';
 import FrequencyTimeline from './routes/Timeline/Frequency.view';
 import LatentAssociationTimeline from './routes/Timeline/Latent-Association.view';
 import SentimentTimeline from './routes/Timeline/Sentiment.view';
+import Admin from './routes/Admin/Admin.view';
 
 // Links to show on the side bar
 // Each sub array will have a divider separating them
@@ -27,6 +28,7 @@ const links = [
     { href: '/about', text: 'About' },
     { href: '/docs', text: 'Docs' },
     { href: '/paper', text: 'Paper' },
+    { href: '/admin', text: 'Admin'}
   ],
 ];
 
@@ -65,6 +67,7 @@ function App() {
             component={LatentAssociationTimeline}
           />
           <LoggedInRoute path="/sentiment" component={SentimentTimeline} />
+          <LoggedInRoute path="/admin" component={Admin} />
           <Route component={NotFound} />
         </Switch>
       </Nav>
