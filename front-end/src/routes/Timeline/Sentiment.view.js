@@ -92,16 +92,18 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const getDownloadData = (currentData, word) => {
+const getDownloadData = (currentData) => {
   const dataToDownload = [];
   if (currentData) {
-    currentData.forEach(item => {
-      dataToDownload.push({
-        mediaOutlet: 'New York Times',
-        word,
-        yearRange: item.yearRange,
-        sentiment: item.sentiment,
-      });
+    currentData.forEach( item => {
+      item.data.forEach(yearItem => {
+        dataToDownload.push({
+          mediaOutlet: 'New York Times',
+          word: item.title,
+          year: yearItem.year,
+          sentiment: yearItem.sentiment,
+        });
+      })
     });
   }
   return dataToDownload;
@@ -136,14 +138,14 @@ function Timeline() {
   };
 
   const dataToDownload = useMemo(
-    () => getDownloadData(sentiments, words),
-    [sentiments, words],
+    () => getDownloadData(sentiments, words[0]),
+    [sentiments],
   );
 
   const csvHeaders = [
     { label: 'media outlet', key: 'mediaOutlet' },
     { label: 'word', key: 'word' },
-    { label: 'year range', key: 'yearRange' },
+    { label: 'year', key: 'year' },
     { label: 'sentiment', key: 'sentiment' },
   ];
 
