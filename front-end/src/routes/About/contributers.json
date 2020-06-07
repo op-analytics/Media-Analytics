@@ -1,0 +1,32 @@
+[
+    {
+      "name": "David Rozado",
+      "description": "Lorem ipsum",
+      "image": "/contributers/david_rozado.jpg"
+    },
+    {
+      "name": "Trent Nicholson",
+      "description": "Lorem ipsum dolor ",
+      "image": "/contributers/male.jpg"
+    },
+    {
+      "name": "Liam Chistensen",
+      "description": "Lorem ipsum dolor ",
+      "image": "/contributers/male.jpg"
+    },
+    {
+      "name": "Dean Knudson",
+      "description": "Lorem ipsum dolor ",
+      "image": "/contributers/male.jpg"
+    },
+    {
+      "name": "Adam Valentine",
+      "description": "Lorem ipsum dolor ",
+      "image": "/contributers/male.jpg"
+    },
+    {
+        "name": "Jamie Horrell",
+        "description": "Lorem ipsum dolor ",
+        "image": "/contributers/male.jpg"
+    }
+  ]

@@ -6,10 +6,12 @@ import { push } from 'redux-first-history';
 import LoggedInRoute from './components/Auth/LoggedInRoute';
 import LoggedOutRoute from './components/Auth/LoggedOutRoute';
 import Nav from './components/Nav';
+
 //
 // Routes
 import Login from './routes/Auth/Login';
 import Signup from './routes/Auth/Signup';
+import About from './routes/About';
 import NotFound from './routes/NotFound.view';
 import FrequencyTimeline from './routes/Timeline/Frequency.view';
 import LatentAssociationTimeline from './routes/Timeline/Latent-Association.view';
@@ -59,6 +61,7 @@ function App() {
           <Route exact path="/" render={() => <Redirect to="/frequency" />} />
           <LoggedOutRoute path="/signup" component={Signup} />
           <LoggedOutRoute path="/login" component={Login} />
+          <LoggedInRoute path="/about" component={About} />
           <LoggedInRoute path="/frequency" component={FrequencyTimeline} />
           <LoggedInRoute
             path="/latent-association"
