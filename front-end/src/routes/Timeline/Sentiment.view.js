@@ -226,7 +226,12 @@ function Timeline() {
                   }}
                 >
                   <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="year" tickMargin={15} />
+                  <XAxis
+                    type="number"
+                    domain={[yearFrom, yearTo]}
+                    dataKey="year"
+                    tickCount={Math.abs(yearTo - yearFrom)}
+                  />
                   <YAxis />
                   <Legend />
                   <Tooltip />
@@ -237,6 +242,7 @@ function Timeline() {
                     // stroke={stringToColour(sentiments.data.word)}
                     // fill={stringToColour(sentiments.data.word)}
                     strokeWidth={3}
+                    connectNulls
                     dot={{ strokeWidth: 5 }}
                     activeDot={{
                       //   stroke: stringToColour(sentiments.data.word),
