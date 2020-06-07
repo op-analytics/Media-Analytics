@@ -212,7 +212,7 @@ function Timeline() {
         ) : (
           formSubmitted &&
           words.length > 0 &&
-          sentiments && (
+          sentiments.length > 0 && (
             <div className={classes.chartContainer}>
               <h3 className={classes.chartTitle}>Sentiment</h3>
               <ResponsiveContainer>
