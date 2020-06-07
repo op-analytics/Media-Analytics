@@ -100,7 +100,6 @@ function Timeline() {
   const loading = useStoreState(state => state.timeline.loading);
   const getSentiments = useStoreActions(state => state.timeline.getSentiments);
 
-  const [formSubmitted, setFormSubmitted] = useState(false);
   const [words, setWords] = useState([]);
   const [yearFrom, setYearFrom] = useState();
   const [yearTo, setYearTo] = useState();
