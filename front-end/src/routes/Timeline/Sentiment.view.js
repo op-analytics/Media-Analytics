@@ -8,7 +8,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Alert from '@material-ui/lab/Alert';
 import ChipInput from 'material-ui-chip-input';
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { useStoreState, useStoreActions } from 'easy-peasy';
 import {
   CartesianGrid,
@@ -21,6 +21,7 @@ import {
   YAxis,
 } from 'recharts';
 import CsvDownloadButton from '../../components/CsvDownloadButton';
+import FeedbackBar from '../../components/FeedbackBar';
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -124,6 +125,12 @@ function Timeline() {
   const [yearTo, setYearTo] = useState();
 
   const classes = useStyles();
+
+  const setErrors = useStoreActions(state => state.timeline.setErrors);
+  useEffect(() => {
+    setErrors([]);
+  }, [setErrors]);
+  const errors = useStoreState(state => state.timeline.errors);
 
   const wordLimit = 1;
 
@@ -243,6 +250,8 @@ function Timeline() {
             </Grid>
           </form>
         </Card>
+
+        {errors.length > 0 ? <FeedbackBar errors={errors} /> : null}
 
         {loading ? (
           <CircularProgress />
