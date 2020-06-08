@@ -8,7 +8,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Alert from '@material-ui/lab/Alert';
 import ChipInput from 'material-ui-chip-input';
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { useStoreState, useStoreActions } from 'easy-peasy';
 import {
   CartesianGrid,
@@ -20,6 +20,7 @@ import {
   XAxis,
   YAxis,
 } from 'recharts';
+import CsvDownloadButton from '../../components/CsvDownloadButton';
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -91,6 +92,23 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
+const getDownloadData = (currentData) => {
+  const dataToDownload = [];
+  if (currentData) {
+    currentData.forEach( item => {
+      item.data.forEach(yearItem => {
+        dataToDownload.push({
+          mediaOutlet: 'New York Times',
+          word: item.title,
+          year: yearItem.year,
+          sentiment: yearItem.sentiment,
+        });
+      })
+    });
+  }
+  return dataToDownload;
+};
+
 /**
  * The latent association page component
  * @component
@@ -118,6 +136,18 @@ function Timeline() {
     }
   };
 
+  const dataToDownload = useMemo(
+    () => getDownloadData(sentiments, words[0]),
+    [sentiments],
+  );
+
+  const csvHeaders = [
+    { label: 'media outlet', key: 'mediaOutlet' },
+    { label: 'word', key: 'word' },
+    { label: 'year', key: 'year' },
+    { label: 'sentiment', key: 'sentiment' },
+  ];
+
   const onSubmitHandler = e => {
     e.preventDefault();
     getSentiments({ word: words[0], year_from: yearFrom, year_to: yearTo });
@@ -125,6 +155,13 @@ function Timeline() {
 
   return (
     <>
+      {formSubmitted && sentiments && !loading ? (
+        <CsvDownloadButton
+          data={dataToDownload}
+          headers={csvHeaders}
+          filename="ma-sentiment-analysis.csv"
+        />
+      ) : null}
       <h3>Sentiment over time - New York Times</h3>
       <br />
       <Alert severity="warning">

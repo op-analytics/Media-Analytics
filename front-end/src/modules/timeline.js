@@ -32,11 +32,7 @@ const timelineModel = {
     actions.setErrors([])
     try {
       const frequencies = await timelineService.getFrequencies(payload);
-      const cleanedFrequencies = frequencies.map(dataset => ({
-        title: dataset.word,
-        data: dataset.data,
-      }));
-      actions.setFrequencies(cleanedFrequencies);
+      actions.setFrequencies(frequencies);
     } catch ({ response }) {
       const errors = getErrorsFromResponse(response);
       actions.setErrors(errors);
