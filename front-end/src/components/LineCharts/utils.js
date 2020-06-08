@@ -475,7 +475,6 @@ export const createLatentAssociationLegendPayload = (
   concept2,
   outlet,
 ) => {
-  console.log('data :>> ', data);
   const legendItems = [];
   data.forEach(yearData => {
     if (Object.keys(yearData).includes('association')) {

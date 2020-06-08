@@ -17,10 +17,10 @@ import {
   CustomizedDot,
   stringToColour,
 } from './utils';
-import { useStyles } from './hooks/useStyles';
+import { useSharedStyles } from './hooks/useStyles';
 
 function LinechartByOutlet({ datasets, formParameters, mediaOutlets }) {
-  const classes = useStyles();
+  const sharedClasses = useSharedStyles();
   const { words } = formParameters;
   const { outlets } = formParameters;
   const { yearFrom } = formParameters;
@@ -37,10 +37,10 @@ function LinechartByOutlet({ datasets, formParameters, mediaOutlets }) {
           item
           lg={12}
           xs={12}
-          className={classes.gridItemChart}
+          className={sharedClasses.gridItemChart}
         >
-          <div className={classes.chartContainer} key={dataset.title}>
-            <h3 className={classes.chartTitle}>{dataset.title}</h3>
+          <div className={sharedClasses.chartContainer} key={dataset.title}>
+            <h3 className={sharedClasses.chartTitle}>{dataset.title}</h3>
             <ResponsiveContainer>
               <LineChart
                 data={dataset.data}
@@ -77,7 +77,7 @@ function LinechartByOutlet({ datasets, formParameters, mediaOutlets }) {
                 <Tooltip
                   itemSorter={item1 => item1.value * -1}
                   content={createTooltip(
-                    classes,
+                    sharedClasses,
                     words,
                     outlets,
                     displayOption,

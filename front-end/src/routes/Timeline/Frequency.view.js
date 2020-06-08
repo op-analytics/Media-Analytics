@@ -210,7 +210,6 @@ function Timeline() {
                       outlets.length < PARAMETER_LIMIT ? options : []
                     }
                     onChange={(_, value) => {
-                      console.log('value :>> ', value);
                       const newOutlets = value.map(({ value: code }) => code);
                       const newOutletExists = !newOutlets.every(item =>
                         outlets.includes(item),

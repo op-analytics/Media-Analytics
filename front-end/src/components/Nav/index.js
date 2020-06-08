@@ -110,9 +110,11 @@ function Nav({ children, title, links }) {
           >
             <MenuIcon />
           </IconButton>
+
           <Typography variant="h6" noWrap className={classes.title}>
-            {title}
+            <Link to="/">{title}</Link>
           </Typography>
+
           {isAuthenticated ? (
             <Button data-test="logout" color="inherit" onClick={() => logout()}>
               Logout
