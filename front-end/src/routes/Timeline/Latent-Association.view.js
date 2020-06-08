@@ -26,6 +26,7 @@ import {
   stringToColour,
 } from '../../components/LineCharts/utils';
 import CsvDownloadButton from '../../components/CsvDownloadButton';
+import FeedbackBar from '../../components/FeedbackBar';
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -135,6 +136,8 @@ function Timeline() {
   const [yearFrom, setYearFrom] = useState();
   const [yearTo, setYearTo] = useState();
   const [outlets, setOutlets] = useState([]);
+
+  const errors = useStoreState(state => state.timeline.errors);
 
   const classes = useStyles();
   const getAssociations = useStoreActions(
@@ -319,6 +322,12 @@ function Timeline() {
             </Grid>
           </form>
         </Card>
+
+        { errors.length > 0 ? (
+          <FeedbackBar
+            errors={errors}
+          />
+        ) : null }
 
         {loading ? (
           <CircularProgress />

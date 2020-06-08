@@ -20,6 +20,7 @@ import {
   XAxis,
   YAxis,
 } from 'recharts';
+import FeedbackBar from '../../components/FeedbackBar';
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -106,6 +107,8 @@ function Timeline() {
   const [yearTo, setYearTo] = useState();
 
   const classes = useStyles();
+
+  const errors = useStoreState(state => state.timeline.errors);
 
   const wordLimit = 1;
 
@@ -206,6 +209,12 @@ function Timeline() {
             </Grid>
           </form>
         </Card>
+
+        { errors.length > 0 ? (
+          <FeedbackBar
+            errors={errors}
+          />
+        ) : null }
 
         {loading ? (
           <CircularProgress />
