@@ -8,7 +8,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import ChipInput from 'material-ui-chip-input';
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { useStoreActions, useStoreState } from 'easy-peasy';
 import {
   CartesianGrid,
@@ -137,6 +137,10 @@ function Timeline() {
   const [yearTo, setYearTo] = useState();
   const [outlets, setOutlets] = useState([]);
 
+  const setErrors = useStoreActions(state => state.timeline.setErrors);
+  useEffect(() => {
+    setErrors([])
+  }, [setErrors]);
   const errors = useStoreState(state => state.timeline.errors);
 
   const classes = useStyles();

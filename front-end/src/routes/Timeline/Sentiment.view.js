@@ -8,7 +8,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Alert from '@material-ui/lab/Alert';
 import ChipInput from 'material-ui-chip-input';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useStoreState, useStoreActions } from 'easy-peasy';
 import {
   CartesianGrid,
@@ -108,6 +108,10 @@ function Timeline() {
 
   const classes = useStyles();
 
+  const setErrors = useStoreActions(state => state.timeline.setErrors);
+  useEffect(() => {
+    setErrors([]);
+  }, [setErrors]);
   const errors = useStoreState(state => state.timeline.errors);
 
   const wordLimit = 1;
@@ -210,11 +214,7 @@ function Timeline() {
           </form>
         </Card>
 
-        { errors.length > 0 ? (
-          <FeedbackBar
-            errors={errors}
-          />
-        ) : null }
+        {errors.length > 0 ? <FeedbackBar errors={errors} /> : null}
 
         {loading ? (
           <CircularProgress />

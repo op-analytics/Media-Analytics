@@ -12,7 +12,7 @@ import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import ToggleButton from '@material-ui/lab/ToggleButton';
 import ChipInput from 'material-ui-chip-input';
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { useStoreActions, useStoreState } from 'easy-peasy';
 import LineCharts from '../../components/LineCharts';
 import CsvDownloadButton from '../../components/CsvDownloadButton';
@@ -113,7 +113,12 @@ function Timeline() {
   const frequencies = useStoreState(state => state.timeline.frequencies);
   const getFrequencies = useStoreActions(state => state.timeline.getFrequencies);
 
+  const setErrors = useStoreActions(state => state.timeline.setErrors);
+  useEffect(() => {
+    setErrors([])
+  }, [setErrors]);
   const errors = useStoreState(state => state.timeline.errors);
+
 
   const dataToDownload = useMemo(
     () => getDownloadData(frequencies, yAxisMetric, yearFrom, yearTo),
