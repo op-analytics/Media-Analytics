@@ -49,7 +49,7 @@ services:
       context: ./very-nginx
       dockerfile: Dockerfile
     volumes:
-      - 'verynginx-logs:/var/log/nginx'
+      - 'verynginx-logs:/usr/local/openresty/nginx/logs/'
     restart: always
     ports:
       - 80:80
