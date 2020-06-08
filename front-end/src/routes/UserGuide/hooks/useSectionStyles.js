@@ -17,4 +17,10 @@ export const useSectionStyles = makeStyles({
     width: '90%',
     padding: '1rem 0rem',
   },
+  sectionHeadings: {
+    padding: '1rem 0rem',
+  },
+  subSectionHeadings: {
+    padding: '0.5rem 0rem',
+  },
 });
