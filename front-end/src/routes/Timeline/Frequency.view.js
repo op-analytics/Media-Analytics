@@ -18,6 +18,7 @@ import LineCharts from '../../components/LineCharts';
 import CsvDownloadButton from '../../components/CsvDownloadButton';
 import FeedbackBar from '../../components/FeedbackBar';
 
+
 const useStyles = makeStyles(theme => ({
   container: {
     display: 'flex',
@@ -118,7 +119,6 @@ function Timeline() {
     setErrors([])
   }, [setErrors]);
   const errors = useStoreState(state => state.timeline.errors);
-
 
   const dataToDownload = useMemo(
     () => getDownloadData(frequencies, yAxisMetric, yearFrom, yearTo),
