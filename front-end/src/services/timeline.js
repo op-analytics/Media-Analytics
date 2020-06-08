@@ -27,7 +27,6 @@ export default {
       `${API_URL}/timeline/frequency`,
       requestData,
     );
-    const { data: frequencyData } = data;
-    return frequencyData
+    return data
   },
 };

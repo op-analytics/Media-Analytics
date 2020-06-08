@@ -1,4 +1,4 @@
-import math from 'mathjs';
+import * as math from 'mathjs';
 
 import LatentAssociationData from '../interfaces/LatentAssociationData';
 import LatentAssociationDocument from '../interfaces/LatentAssociationDocument';
@@ -21,6 +21,7 @@ function extractVectors(
 
 async function getConceptData(
   concept: string[],
+  outlet: string,
   yearFrom: number,
   yearTo: number,
 ): Promise<LatentAssociationDocument[]> {
@@ -30,6 +31,7 @@ async function getConceptData(
     year_from: { $gte: yearFrom - 5 },
     // eslint-disable-next-line @typescript-eslint/camelcase
     year_to: { $lte: yearTo },
+    media_outlet: outlet,
   }).exec();
 }
 
@@ -40,6 +42,7 @@ function CleanConcept(concept: string[]): string[] {
 function ShapeData(
   concept1Data: LatentAssociationDocument[],
   concept2Data: LatentAssociationDocument[],
+  outlet: string,
 ): LatentAssociationData[] {
   const latentAssociationData: LatentAssociationData[] = [];
   if (concept1Data.length > 0 && concept2Data.length > 0) {
@@ -65,6 +68,7 @@ function ShapeData(
             math.mean(yearRangeVectors1, 0),
             math.mean(yearRangeVectors2, 0),
           ),
+          outlet,
         });
       }
     });
@@ -75,13 +79,13 @@ function ShapeData(
 async function GetLatentAssociation(
   concept1: string[],
   concept2: string[],
+  outlet: string,
   yearFrom: number,
   yearTo: number,
 ): Promise<LatentAssociationData[]> {
-  const concept1Data = await getConceptData(concept1, yearFrom, yearTo);
-  const concept2Data = await getConceptData(concept2, yearFrom, yearTo);
-
-  return ShapeData(concept1Data, concept2Data);
+  const concept1Data = await getConceptData(concept1, outlet, yearFrom, yearTo);
+  const concept2Data = await getConceptData(concept2, outlet, yearFrom, yearTo);
+  return ShapeData(concept1Data, concept2Data, outlet);
 }
 
 export { GetLatentAssociation, CleanConcept };

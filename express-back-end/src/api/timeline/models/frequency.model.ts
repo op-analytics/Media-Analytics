@@ -11,6 +11,10 @@ const Frequency = new Schema({
     type: String,
     required: true,
   },
+  media_outlet: {
+    type: String,
+    required: true,
+  },
   rank: {
     type: Number,
     required: true,

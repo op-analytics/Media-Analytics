@@ -1,9 +1,8 @@
 export default interface FrequencyData {
-  word: string;
-  data: {
+    word: string;
+    outlet: string;
     year: number;
     rank: number;
     count: number;
     freq: number;
-  }[];
-}
+  }
