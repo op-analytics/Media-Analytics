@@ -5,17 +5,15 @@ export default function FrequencyCounts() {
   const classes = useSectionStyles();
   return (
     <div className={classes.div}>
-      <div className={classes.div}>
-        <h3>Sentment Analysis</h3>
-        <h4>Adding words</h4>
-        <h4>Outlets available</h4>
-        <p>
-          Currently sentiment analysis is only availanble for the New York times.
-          For reasons explained below the data is not considered accurate enough
-          yet.
-        </p>
-        <h4>Interpreting the data</h4>
-      </div>
+      <h2 className={classes.sectionHeadings}>Sentiment Analysis</h2>
+      <h3 className={classes.subSectionHeadings}>Adding a word</h3>
+      <h3 className={classes.subSectionHeadings}>Choosing an outlet</h3>
+      <p>
+        Currently sentiment analysis is only available for the New York Times.
+        For reasons explained below the data is not considered accurate enough
+        yet.
+      </p>
+      <h3 className={classes.subSectionHeadings}>Interpreting the data</h3>
     </div>
   );
 }

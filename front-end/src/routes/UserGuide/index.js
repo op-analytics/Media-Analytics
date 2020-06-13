@@ -12,14 +12,14 @@ const About = () => {
     <Container className={classes.container}>
       <Card>
         <div className={classes.div}>
-          <h2>User Guide</h2>
+          <h1>User Guide</h1>
         </div>
         <div className={classes.div}>
           <h2>Request limits</h2>
           <p>
             Every user has a maximum of 100 requests per month. A request is
             counted when you click the submit button on a form. Request tokens
-            automatically refresh every month.
+            automatically refresh every month after creating your account.
           </p>
         </div>
         <FrequencyCounts />
