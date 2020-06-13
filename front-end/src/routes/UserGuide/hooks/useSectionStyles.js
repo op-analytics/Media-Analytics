@@ -7,20 +7,23 @@ export const useSectionStyles = makeStyles({
     justifyContent: 'center',
     flexDirection: 'column',
     overflow: 'hidden',
-    width: '80%',
+    width: '60%',
   },
   div: {
-    width: '70%',
-    padding: '1rem',
+    padding: '1rem 2rem 0rem 2rem',
+  },
+  listDiv: {
+    paddingLeft: '1rem',
+    marginLeft: '1rem',
   },
   image: {
     width: '90%',
     padding: '1rem 0rem',
   },
   sectionHeadings: {
-    padding: '1rem 0rem',
+    padding: '1rem 0rem 0rem 0rem',
   },
   subSectionHeadings: {
-    padding: '0.5rem 0rem',
+    padding: '1rem 0rem 0rem 0rem',
   },
 });
