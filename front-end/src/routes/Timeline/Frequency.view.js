@@ -200,8 +200,8 @@ function Timeline() {
                     filterOptions={(options, state) => {
                       return outlets.length < PARAMETER_LIMIT
                         ? options.filter(option => {
-                            let optionTitle = option.title.toLowerCase();
-                            let input = state.inputValue.toLowerCase();
+                            const optionTitle = option.title.toLowerCase();
+                            const input = state.inputValue.toLowerCase();
                             return optionTitle.includes(input);
                           })
                         : [];
