@@ -110,6 +110,7 @@ export default function FrequencyCounts() {
         comparing datasets with large variations in scale easier but magnifies
         even small changes in numbers.
       </p>
+      <br />
     </div>
   );
 }
