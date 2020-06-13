@@ -13,7 +13,7 @@ export default function FrequencyCounts() {
         chip itself.
       </p>
       <img
-        src="/userguide/chipInput.png"
+        src="/userguide/frequency-word-remove.png"
         className={classes.image}
         alt="Input pane"
       />
@@ -24,7 +24,7 @@ export default function FrequencyCounts() {
         Outlets are a prepopulated list that are selected via a chip input with
         autocomplete.
       </p>
-      <img src="/userguide/chipInput.png" className={classes.image} />
+      <img src="/userguide/frequency-filter-outlets.png" className={classes.image} />
       <p>
         We have frequency data for 46 outlets from multiple countries. You may
         add up to four outlets in a single request.
