@@ -355,7 +355,7 @@ function Timeline() {
               datasets={frequencies}
               formParameters={{
                 outlets,
-                words,
+                words: words.map(word => word.toLowerCase()),
                 yearFrom: Number(yearFrom),
                 yearTo: Number(yearTo),
                 yAxisKey: yAxisMetric,
