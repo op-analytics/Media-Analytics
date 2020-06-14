@@ -11,15 +11,17 @@ const LatentAssociation = new Schema({
     type: Array,
     required: true,
   },
-  // eslint-disable-next-line @typescript-eslint/camelcase
   year_from: {
     type: Number,
     required: true,
   },
-  // eslint-disable-next-line @typescript-eslint/camelcase
   year_to: {
     type: Number,
     required: true,
+  },
+  media_outlet: {
+    type: String,
+    required: true
   },
 });
 
