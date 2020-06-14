@@ -11,4 +11,8 @@ export default Joi.object({
   year_to: Joi.number()
     .min(Joi.ref('year_from'))
     .required(),
+  outlets: Joi.array()
+    .items(Joi.string())
+    .required()
+    .min(1)
 });

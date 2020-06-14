@@ -11,7 +11,7 @@ import db from './db';
 
 const app = express();
 
-// Stay safe where a helmet
+// Stay safe, wear a helmet
 app.use(helmet());
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));

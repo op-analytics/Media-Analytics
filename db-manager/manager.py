@@ -1,5 +1,4 @@
 import _pickle as pickle
-import os
 
 import click
 
@@ -16,10 +15,11 @@ from mongoengine import (
 
 connect(
     db="nyta",
-    username="admin",
-    password="password",
-    host="mongodb://127.0.0.1:5555/nyta?authSource=admin",
+    username="yourUsername",
+    password="yourPassword",
+    host="mongodb://dbServer:port/nyta?authSource=admin",
 )
+
 
 media_outlets = [
     "bloomberg",
@@ -72,6 +72,7 @@ mongo_documents = {
     "latent_association": LatentAssociation,
     "frequency": Frequency,
 }
+
 
 @click.group()
 def cli():
@@ -129,8 +130,8 @@ def add(data_type, media_outlet, drop_collection, file):
                                 )
                             if data_type == "sentiment":
                                 new_word = mongo_documents[data_type](
-                                word, year, media_outlet, word_data
-                            )
+                                    word, year, media_outlet, word_data
+                                )
 
                             if data_type == "latent_association":
                                 year_from, year_to = year.split("-")
