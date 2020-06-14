@@ -7,14 +7,13 @@ import { push } from 'redux-first-history';
 import LoggedInRoute from './components/Auth/LoggedInRoute';
 import LoggedOutRoute from './components/Auth/LoggedOutRoute';
 import Nav from './components/Nav';
-
+import About from './routes/About';
+import Confirmation from './routes/Auth/Confirmation';
 //
 // Routes
 import Login from './routes/Auth/Login';
 import Resend from './routes/Auth/Resend';
-import Confirmation from './routes/Auth/Confirmation';
 import Signup from './routes/Auth/Signup';
-import About from './routes/About';
 import NotFound from './routes/NotFound.view';
 import FrequencyTimeline from './routes/Timeline/Frequency.view';
 import LatentAssociationTimeline from './routes/Timeline/Latent-Association.view';
