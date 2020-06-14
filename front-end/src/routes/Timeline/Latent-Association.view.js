@@ -345,6 +345,8 @@ function Timeline() {
                   <XAxis dataKey="yearRange" tickMargin={15} />
                   <YAxis />
                   <Legend
+                    layout="vertical"
+                    align="center"
                     payload={createLatentAssociationLegendPayload(
                       singleLatentAssociationDataset(associations).data,
                       concept1,
