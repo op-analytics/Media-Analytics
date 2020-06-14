@@ -194,9 +194,14 @@ export default function SignUp() {
               Sign Up
             </Button>
             <Grid container justify="flex-end">
-              <Grid item>
+              <Grid item xs>
+                <Link component={RouterLink} to="/resend-validation-email" variant="body2">
+                  Missing Confirmation Email?
+                </Link>
+              </Grid>
+              <Grid item xs>
                 <Link component={RouterLink} to="/login" variant="body2">
-                  Already have an account? Sign in
+                  Already have an account?
                 </Link>
               </Grid>
             </Grid>

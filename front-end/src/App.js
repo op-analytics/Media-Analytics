@@ -7,9 +7,11 @@ import { push } from 'redux-first-history';
 import LoggedInRoute from './components/Auth/LoggedInRoute';
 import LoggedOutRoute from './components/Auth/LoggedOutRoute';
 import Nav from './components/Nav';
+import Confirmation from './routes/Auth/Confirmation';
 //
 // Routes
 import Login from './routes/Auth/Login';
+import Resend from './routes/Auth/Resend';
 import Signup from './routes/Auth/Signup';
 import NotFound from './routes/NotFound.view';
 import FrequencyTimeline from './routes/Timeline/Frequency.view';
@@ -49,7 +51,7 @@ function App() {
         logout();
         redirect('/login');
       } else authenticate(token);
-    } else redirect('/login');
+    }
   }, [logout, authenticate, redirect]);
 
   return (
@@ -57,6 +59,8 @@ function App() {
       <Nav title="Media-Analytics.org" links={links}>
         <Switch>
           <Route exact path="/" render={() => <Redirect to="/frequency" />} />
+          <LoggedOutRoute path="/confirmation" component={Confirmation} />
+          <LoggedOutRoute path="/resend" component={Resend} />
           <LoggedOutRoute path="/signup" component={Signup} />
           <LoggedOutRoute path="/login" component={Login} />
           <LoggedInRoute path="/frequency" component={FrequencyTimeline} />

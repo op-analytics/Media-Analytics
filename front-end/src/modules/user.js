@@ -1,5 +1,6 @@
 /* eslint-disable no-param-reassign */
 import { action, computed,thunk } from 'easy-peasy';
+import { push } from 'redux-first-history';
 
 import userService from '../services/user';
 import { getErrorsFromResponse } from './shared/errorHelpers';
@@ -42,12 +43,20 @@ const userModel = {
     }
   }),
 
-  signup: thunk(async (actions, payload) => {
+  signup: thunk(async (actions, payload,{dispatch}) => {
     try {
-      const token = await userService.signup(payload);
-      await userService.authenticate(token);
-      const user = await userService.getLoggedInUser();
-      actions.setUser(user);
+      await userService.signup(payload);
+      dispatch(push('/confirmation'))
+    } catch ({ response }) {
+      const errors = getErrorsFromResponse(response);
+      actions.setErrors(errors);
+    }
+  }),
+
+  resendConfirmationEmail: thunk(async (actions, payload,{dispatch}) => {
+    try {
+      await userService.resendEmail(payload);
+      dispatch(push('/confirmation'))
     } catch ({ response }) {
       const errors = getErrorsFromResponse(response);
       actions.setErrors(errors);
