@@ -7,6 +7,7 @@ import { push } from 'redux-first-history';
 import LoggedInRoute from './components/Auth/LoggedInRoute';
 import LoggedOutRoute from './components/Auth/LoggedOutRoute';
 import Nav from './components/Nav';
+import About from './routes/About';
 import Confirmation from './routes/Auth/Confirmation';
 //
 // Routes
@@ -63,6 +64,7 @@ function App() {
           <LoggedOutRoute path="/resend" component={Resend} />
           <LoggedOutRoute path="/signup" component={Signup} />
           <LoggedOutRoute path="/login" component={Login} />
+          <LoggedInRoute path="/about" component={About} />
           <LoggedInRoute path="/frequency" component={FrequencyTimeline} />
           <LoggedInRoute
             path="/latent-association"
