@@ -18,6 +18,7 @@ import NotFound from './routes/NotFound.view';
 import FrequencyTimeline from './routes/Timeline/Frequency.view';
 import LatentAssociationTimeline from './routes/Timeline/Latent-Association.view';
 import SentimentTimeline from './routes/Timeline/Sentiment.view';
+import UserGuide from './routes/UserGuide'
 
 // Links to show on the side bar
 // Each sub array will have a divider separating them
@@ -30,6 +31,7 @@ const links = [
   [
     { href: '/about', text: 'About' },
     { href: '/user-guide', text: 'User Guide' },
+    { href: '/paper', text: 'Paper' },
   ],
 ];
 
@@ -66,6 +68,7 @@ function App() {
           <LoggedOutRoute path="/login" component={Login} />
           <LoggedInRoute path="/about" component={About} />
           <LoggedInRoute path="/frequency" component={FrequencyTimeline} />
+          <LoggedInRoute path="/user-guide" component={UserGuide} />
           <LoggedInRoute
             path="/latent-association"
             component={LatentAssociationTimeline}
