@@ -18,7 +18,7 @@ const useStyles = makeStyles({
     minHeight: 250,
     width: '98%',
     margin: 5,
-    backgroundColor: '#fff'
+    backgroundColor: '#fff',
   },
   image: {
     width: '50%',
@@ -55,17 +55,21 @@ function ContributorSection({ contributors }) {
           {contributors.map(({ name, description, image }) => (
             <Card className={`${classes.card} ${classes.column}`} key={name}>
               <Container>
-              <Container className={classes.imageContainer}>
-                <Avatar className={classes.image} src={image} />
-              </Container>
-              <CardContent>
-                <Typography variant="h5" component="h2">
-                  {name}
-                </Typography>
-                <Typography variant="body2" component="p" color="textSecondary">
-                  {description}
-                </Typography>
-              </CardContent>
+                <Container className={classes.imageContainer}>
+                  <Avatar className={classes.image} src={image} />
+                </Container>
+                <CardContent>
+                  <Typography variant="h5" component="h2">
+                    {name}
+                  </Typography>
+                  <Typography
+                    variant="body2"
+                    component="p"
+                    color="textSecondary"
+                  >
+                    {description}
+                  </Typography>
+                </CardContent>
               </Container>
             </Card>
           ))}

@@ -82,7 +82,10 @@ function AboutSection() {
         color="textPrimary"
         className={classes.aboutText}
       >
-        You can contact us at <a href="mailto:media.analytics.org@gmail.com">media.analytics.orgATgmailDOTcom</a>
+        You can contact us at
+        <a href="mailto:media.analytics.org@gmail.com">
+          media.analytics.orgATgmailDOTcom
+        </a>
       </Typography>
       <Typography variant="h6" className={classes.sectionHeader}>
         Raw textual data of news articles
@@ -215,11 +218,7 @@ function AboutSection() {
         have created.
       </Typography>
       <div className={classes.sectionDiv}>
-        <Typography
-          variant="body1"
-          className={classes.linkText}
-          color="primary"
-        >
+        <Typography variant="body1" className={classes.linkText} color="primary">
           <a href="https://accessibilitysoftwarehub.github.io/software.html">
             https://accessibilitysoftwarehub.github.io/software.html
           </a>
