@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { useSectionStyles } from '../hooks/useSectionStyles';
 
 export default function FrequencyCounts() {

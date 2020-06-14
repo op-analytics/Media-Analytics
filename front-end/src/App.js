@@ -15,10 +15,10 @@ import Login from './routes/Auth/Login';
 import Resend from './routes/Auth/Resend';
 import Signup from './routes/Auth/Signup';
 import NotFound from './routes/NotFound.view';
-import UserGuide from './routes/UserGuide'
 import FrequencyTimeline from './routes/Timeline/Frequency.view';
 import LatentAssociationTimeline from './routes/Timeline/Latent-Association.view';
 import SentimentTimeline from './routes/Timeline/Sentiment.view';
+import UserGuide from './routes/UserGuide'
 
 // Links to show on the side bar
 // Each sub array will have a divider separating them

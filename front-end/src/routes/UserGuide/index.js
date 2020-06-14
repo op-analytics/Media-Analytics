@@ -1,6 +1,7 @@
+import Card from '@material-ui/core/Card';
 import Container from '@material-ui/core/Container';
 import React from 'react';
-import Card from '@material-ui/core/Card';
+
 import { useSectionStyles } from './hooks/useSectionStyles';
 import FrequencyCounts from './sections/FrequencyCounts';
 
