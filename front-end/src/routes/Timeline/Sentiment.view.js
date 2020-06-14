@@ -155,7 +155,7 @@ function Timeline() {
 
   return (
     <>
-      {formSubmitted && sentiments && !loading ? (
+      { sentiments && !loading ? (
         <CsvDownloadButton
           data={dataToDownload}
           headers={csvHeaders}
