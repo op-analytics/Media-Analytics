@@ -82,7 +82,7 @@ function AboutSection() {
         color="textPrimary"
         className={classes.aboutText}
       >
-        You can contact us at
+        You can contact us at&nbsp;
         <a href="mailto:media.analytics.org@gmail.com">
           media.analytics.orgATgmailDOTcom
         </a>
