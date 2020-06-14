@@ -21,14 +21,13 @@ import SentimentTimeline from './routes/Timeline/Sentiment.view';
 // Each sub array will have a divider separating them
 const links = [
   [
-    { href: '/frequency', text: 'Frequency Over Time' },
-    { href: '/latent-association', text: 'Latent Association Over Time' },
-    { href: '/sentiment', text: 'Sentiment Over Time' },
+    { href: '/frequency', text: 'Frequency Counts' },
+    { href: '/latent-association', text: 'Latent Associations' },
+    { href: '/sentiment', text: 'Sentiment Analysis' },
   ],
   [
     { href: '/about', text: 'About' },
-    { href: '/docs', text: 'Docs' },
-    { href: '/paper', text: 'Paper' },
+    { href: '/user-guide', text: 'User Guide' },
   ],
 ];
 
