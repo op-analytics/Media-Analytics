@@ -487,7 +487,7 @@ export const createLatentAssociationLegendPayload = (
           .join(', ');
         legendItems.push({
           id: outlet,
-          value: `[${concept1Formatted}] & [${concept2Formatted}]`,
+          value: `${concept1Formatted} & ${concept2Formatted}`,
           color: stringToColour(outlet),
         });
       }
