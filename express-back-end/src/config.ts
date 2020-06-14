@@ -17,6 +17,9 @@ const envVarsSchema = Joi.object({
   MONGO_URI: Joi.string()
     .required()
     .description('Mongo DB host url'),
+  REDIS_URI: Joi.string()
+    .required()
+    .description('Redis DB host url'),
   TOKEN_SECRET: Joi.string()
     .required()
     .description('The secret used to encrypt user data'),
@@ -34,6 +37,7 @@ const config = {
   port: envVars.PORT,
   mongooseDebug: envVars.MONGOOSE_DEBUG,
   mongooseURI: envVars.MONGO_URI,
+  redisURI: envVars.REDIS_URI,
   secret: envVars.TOKEN_SECRET,
 };
 

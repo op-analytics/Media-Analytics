@@ -13,6 +13,8 @@ function TokenizeUser(user: UserType): string {
       _id: user._id,
       name: user.name,
       email: user.email,
+      limit: user.limit,
+      lastTokenResetDate: user.lastTokenResetDate,
     },
     config.secret,
     {

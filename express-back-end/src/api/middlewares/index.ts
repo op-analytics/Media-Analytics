@@ -1,3 +1,4 @@
+import needsTokens from './needsTokens';
 import validateBody from './validateBody';
 
-export { validateBody };
+export { validateBody, needsTokens };
