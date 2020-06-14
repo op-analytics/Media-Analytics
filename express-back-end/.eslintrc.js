@@ -24,6 +24,7 @@ module.exports = {
     "sort-imports": "off",
     "import/order": "off",
     'no-underscore-dangle': 0,
+    '@typescript-eslint/no-non-null-assertion':0,
     'arrow-parens': 0,
     'no-tabs': 'error',
     'import/extensions': 0,

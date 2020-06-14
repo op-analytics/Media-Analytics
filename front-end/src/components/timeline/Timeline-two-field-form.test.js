@@ -1,5 +1,6 @@
 import { shallow } from 'enzyme';
 import React from 'react';
+
 import Form from './Timeline-form';
 
 const props = {

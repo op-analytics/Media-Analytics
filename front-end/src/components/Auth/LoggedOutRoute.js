@@ -1,6 +1,6 @@
+import { useStoreState } from 'easy-peasy';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { useStoreState } from 'easy-peasy';
 import { Redirect, Route } from 'react-router-dom';
 
 const LoggedOutRoute = ({ component: Component, ...rest }) => {
