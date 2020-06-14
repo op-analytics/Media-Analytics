@@ -1,5 +1,6 @@
+import { action,createStore, StoreProvider } from 'easy-peasy';
 import React from 'react';
-import { StoreProvider, createStore, action } from 'easy-peasy';
+
 import Timeline from './Latent-Association.view';
 
 const initialState = {

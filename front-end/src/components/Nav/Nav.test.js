@@ -1,7 +1,8 @@
+import { action,createStore, StoreProvider } from 'easy-peasy';
 import { mount } from 'enzyme';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { StoreProvider, createStore, action } from 'easy-peasy';
+
 import Nav from '.';
 
 const linksNoDivider = [

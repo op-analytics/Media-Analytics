@@ -1,7 +1,7 @@
 import Fab from '@material-ui/core/Fab';
-import GetAppIcon from '@material-ui/icons/GetApp';
-import TooltipUI from '@material-ui/core/Tooltip';
 import { makeStyles } from '@material-ui/core/styles';
+import TooltipUI from '@material-ui/core/Tooltip';
+import GetAppIcon from '@material-ui/icons/GetApp';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { CSVLink } from 'react-csv';

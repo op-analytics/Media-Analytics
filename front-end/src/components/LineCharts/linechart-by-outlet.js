@@ -11,13 +11,14 @@ import {
   XAxis,
   YAxis,
 } from 'recharts';
+
+import { useSharedStyles } from './hooks/useStyles';
 import {
   createLegendPayload,
   createTooltip,
   CustomizedDot,
   stringToColour,
 } from './utils';
-import { useSharedStyles } from './hooks/useStyles';
 
 function LinechartByOutlet({ datasets, formParameters, mediaOutlets }) {
   const sharedClasses = useSharedStyles();

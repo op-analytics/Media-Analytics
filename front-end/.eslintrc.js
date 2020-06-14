@@ -23,8 +23,14 @@ module.exports = {
     ecmaVersion: 2018,
     sourceType: 'module',
   },
-  plugins: ['react'],
+  plugins: [
+  'react',
+  'simple-import-sort',
+ ],
   rules: {
+    'simple-import-sort/sort': 'error',
+    "sort-imports": "off",
+    "import/order": "off",
     'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx'] }],
     'no-underscore-dangle': 0,
     'arrow-parens': 0,
