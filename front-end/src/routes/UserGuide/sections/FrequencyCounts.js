@@ -24,7 +24,11 @@ export default function FrequencyCounts() {
         Outlets are a prepopulated list that are selected via a chip input with
         autocomplete.
       </p>
-      <img src="/userguide/frequency-filter-outlets.png" className={classes.image} />
+      <img
+        src="/userguide/frequency-filter-outlets.png"
+        className={classes.image}
+        alt="Input form filtering outlets"
+      />
       <p>
         We have frequency data for 46 outlets from multiple countries. You may
         add up to four outlets in a single request.
@@ -104,7 +108,7 @@ export default function FrequencyCounts() {
         absolute values between words or outlets maybe so large that comparing
         directly is impossible due to the small changes for one dataset being
         dwafed by large changes in another. Displaying normalised means each
-        dataset is normalised to it's own maximum and minimum values using
+        dataset is normalised to it&apos;s own maximum and minimum values using
         mean-max normalisation. This means that all data points for a particular
         word or outlet now have a value of between zero and one. This makes
         comparing datasets with large variations in scale easier but magnifies
