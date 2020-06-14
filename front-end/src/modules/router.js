@@ -1,6 +1,6 @@
+import { reducer } from 'easy-peasy';
 import { createBrowserHistory } from 'history';
 import { createReduxHistoryContext } from 'redux-first-history';
-import { reducer } from 'easy-peasy';
 
 const isDevelopment = process.env.NODE_ENV === 'development';
 

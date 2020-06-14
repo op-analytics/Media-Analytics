@@ -3,6 +3,7 @@ import jwtDecode from 'jwt-decode';
 import React, { useCallback, useEffect } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import { push } from 'redux-first-history';
+
 import LoggedInRoute from './components/Auth/LoggedInRoute';
 import LoggedOutRoute from './components/Auth/LoggedOutRoute';
 import Nav from './components/Nav';

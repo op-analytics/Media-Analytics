@@ -12,10 +12,10 @@ import { makeStyles } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import MenuIcon from '@material-ui/icons/Menu';
+import { useStoreActions, useStoreState } from 'easy-peasy';
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useStoreActions, useStoreState } from 'easy-peasy';
 
 const drawerWidth = 240;
 

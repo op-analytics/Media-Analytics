@@ -7,10 +7,9 @@ import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import ChipInput from 'material-ui-chip-input';
-import React, { useState, useMemo, useEffect } from 'react';
-
 import { useStoreActions, useStoreState } from 'easy-peasy';
+import ChipInput from 'material-ui-chip-input';
+import React, { useEffect,useMemo, useState } from 'react';
 import {
   CartesianGrid,
   Legend,
@@ -21,13 +20,14 @@ import {
   XAxis,
   YAxis,
 } from 'recharts';
+
+import CsvDownloadButton from '../../components/CsvDownloadButton';
+import FeedbackBar from '../../components/FeedbackBar';
 import {
   createLatentAssociationLegendPayload,
   singleLatentAssociationDataset,
   stringToColour,
 } from '../../components/LineCharts/utils';
-import CsvDownloadButton from '../../components/CsvDownloadButton';
-import FeedbackBar from '../../components/FeedbackBar';
 
 const useStyles = makeStyles(theme => ({
   container: {

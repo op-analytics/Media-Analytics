@@ -1,5 +1,6 @@
 /* eslint-disable no-param-reassign */
-import { thunk, action, computed } from 'easy-peasy';
+import { action, computed,thunk } from 'easy-peasy';
+
 import userService from '../services/user';
 import { getErrorsFromResponse } from './shared/errorHelpers';
 

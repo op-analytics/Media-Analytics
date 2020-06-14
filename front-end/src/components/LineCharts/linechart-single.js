@@ -1,5 +1,5 @@
 import Grid from '@material-ui/core/Grid';
-import PropTypes, { shape, arrayOf, string, number } from 'prop-types';
+import PropTypes, { arrayOf, number,shape, string } from 'prop-types';
 import React from 'react';
 import {
   CartesianGrid,
@@ -11,13 +11,14 @@ import {
   XAxis,
   YAxis,
 } from 'recharts';
+
+import { useSharedStyles } from './hooks/useStyles';
 import {
   createLegendPayload,
   createTooltip,
   CustomizedDot,
   stringToColour,
 } from './utils';
-import { useSharedStyles } from './hooks/useStyles';
 
 function LinechartSingle({ dataset, formParameters, mediaOutlets }) {
   const sharedClasses = useSharedStyles();

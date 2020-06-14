@@ -1,7 +1,7 @@
 import { makeStyles } from '@material-ui/core/styles';
+import Alert from '@material-ui/lab/Alert';
 import PropTypes from 'prop-types';
 import React from 'react';
-import Alert from '@material-ui/lab/Alert'
 
 const useStyles = makeStyles({
   alert: {
