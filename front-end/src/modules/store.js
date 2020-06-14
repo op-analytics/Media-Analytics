@@ -1,7 +1,8 @@
 import { createStore } from 'easy-peasy';
-import user from './user';
+
+import router, { createReduxHistory,routerMiddleware } from './router';
 import timeline from './timeline';
-import router, { routerMiddleware, createReduxHistory } from './router';
+import user from './user';
 
 const store = createStore(
   {

@@ -1,7 +1,8 @@
+import { action,createStore, StoreProvider } from 'easy-peasy';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { StoreProvider, createStore, action } from 'easy-peasy';
+
 import App from './App';
 
 const initialState = {

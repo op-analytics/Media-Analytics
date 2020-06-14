@@ -21,6 +21,10 @@ export default {
     return user;
   },
 
+  async resendEmail(email) {
+    await axios.post(`${API_URL}/auth/confirm/resend`,{email});
+  },
+
   logout() {
     localStorage.removeItem('XAuthToken');
     delete axios.defaults.headers.common.Authorization;
