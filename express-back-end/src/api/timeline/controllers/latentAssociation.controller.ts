@@ -6,14 +6,17 @@ export async function getData(req: Request, res: Response): Promise<void> {
   const {
     concept_1: dirtyConcept1,
     concept_2: dirtyConcept2,
+    outlet,
     year_from: yearFrom,
     year_to: yearTo,
   } = req.body;
   const concept1 = CleanConcept(dirtyConcept1);
   const concept2 = CleanConcept(dirtyConcept2);
+
   const latentAssociationData = await GetLatentAssociation(
     concept1,
     concept2,
+    outlet,
     yearFrom,
     yearTo,
   );

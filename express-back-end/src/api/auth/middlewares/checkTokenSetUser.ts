@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import { verify } from 'jsonwebtoken';
 
-import config from '@/config';
+import config from '../../../config';
 
 import User from '../interfaces/User';
 import UserRequest from '../interfaces/UserRequest';

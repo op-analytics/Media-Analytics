@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
-import config from '@/config';
+import config from '../../../config';
 
 import UserType from '../interfaces/User';
 import UserDocument from '../interfaces/UserDocument';
