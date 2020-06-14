@@ -12,16 +12,17 @@ const useStyles = makeStyles({
     display: 'flex',
     flexWrap: 'wrap',
     justifyContent: 'flex-start',
-    maxWidth: '80%',
+    maxWidth: '100%',
   },
   card: {
     minHeight: 250,
     width: '98%',
     margin: 5,
+    backgroundColor: '#fff'
   },
   image: {
-    width: '35%',
-    height: '35%',
+    width: '50%',
+    height: '50%',
     margin: 10,
     display: 'inline-block',
   },
@@ -46,13 +47,14 @@ function ContributorSection({ contributors }) {
   const classes = useStyles();
   return (
     <>
-      <Typography variant="h4" component="h2">
+      <Typography variant="h5" component="h2">
         Contributors
       </Typography>
       <div className={classes.contributors}>
         <div className={classes.container}>
           {contributors.map(({ name, description, image }) => (
             <Card className={`${classes.card} ${classes.column}`} key={name}>
+              <Container>
               <Container className={classes.imageContainer}>
                 <Avatar className={classes.image} src={image} />
               </Container>
@@ -64,6 +66,7 @@ function ContributorSection({ contributors }) {
                   {description}
                 </Typography>
               </CardContent>
+              </Container>
             </Card>
           ))}
         </div>
