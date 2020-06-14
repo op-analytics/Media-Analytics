@@ -7,9 +7,9 @@ import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import ChipInput from 'material-ui-chip-input';
-import React, { useState, useMemo } from 'react';
 import { useStoreActions, useStoreState } from 'easy-peasy';
+import ChipInput from 'material-ui-chip-input';
+import React, { useEffect,useMemo, useState } from 'react';
 import {
   CartesianGrid,
   Legend,
@@ -20,12 +20,14 @@ import {
   XAxis,
   YAxis,
 } from 'recharts';
+
+import CsvDownloadButton from '../../components/CsvDownloadButton';
+import FeedbackBar from '../../components/FeedbackBar';
 import {
   createLatentAssociationLegendPayload,
   singleLatentAssociationDataset,
   stringToColour,
 } from '../../components/LineCharts/utils';
-import CsvDownloadButton from '../../components/CsvDownloadButton';
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -136,6 +138,12 @@ function Timeline() {
   const [yearTo, setYearTo] = useState();
   const [outlets, setOutlets] = useState([]);
 
+  const setErrors = useStoreActions(state => state.timeline.setErrors);
+  useEffect(() => {
+    setErrors([])
+  }, [setErrors]);
+  const errors = useStoreState(state => state.timeline.errors);
+
   const classes = useStyles();
   const getAssociations = useStoreActions(
     state => state.timeline.getAssociations,
@@ -191,7 +199,6 @@ function Timeline() {
           filename="ma-latent-association.csv"
         />
       ) : null}
-      <h3>Latent association over time</h3>
       <div className={classes.container}>
         <Card className={classes.Card}>
           <form className={classes.form} onSubmit={onSubmitHandler}>
@@ -320,9 +327,15 @@ function Timeline() {
           </form>
         </Card>
 
+        { errors.length > 0 ? (
+          <FeedbackBar
+            errors={errors}
+          />
+        ) : null }
+
         {loading ? (
           <CircularProgress />
-        ) : (
+        ) : ( 
           formSubmitted &&
           associations.length !== 0 &&
           concept1.length !== 0 &&

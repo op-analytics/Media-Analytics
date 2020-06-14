@@ -1,8 +1,11 @@
-import { Request, Response } from 'express';
+import { Response } from 'express';
+
+import TokenHelper from '@/api/auth/helpers/TokenHelper';
+import UserRequest from '@/api/auth/interfaces/UserRequest';
 
 import { CleanConcept, GetLatentAssociation } from '../lib/latentAssociation';
 
-export async function getData(req: Request, res: Response): Promise<void> {
+export async function getData(req: UserRequest, res: Response): Promise<void> {
   const {
     concept_1: dirtyConcept1,
     concept_2: dirtyConcept2,
@@ -21,6 +24,7 @@ export async function getData(req: Request, res: Response): Promise<void> {
     yearTo,
   );
   if (latentAssociationData.length > 0) {
+    TokenHelper.useToken(req.user!!);
     res.json({ data: latentAssociationData });
     return;
   }

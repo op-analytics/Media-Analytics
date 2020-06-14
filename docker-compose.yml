@@ -2,6 +2,7 @@ version: '3.3'
 
 volumes:
   nyta-db:
+  nyta-redis:
 
 services:
   db:
@@ -14,6 +15,13 @@ services:
       # The username and passwords that will be user for the database service
       - MONGO_INITDB_ROOT_USERNAME=yourUsername
       - MONGO_INITDB_ROOT_PASSWORD=yourPassword
+    networks:
+      - default
+
+  redis:
+    image: redis
+    volumes:
+      - 'nyta-redis:/data/'
     networks:
       - default
 
