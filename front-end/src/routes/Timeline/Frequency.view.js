@@ -166,7 +166,6 @@ function Timeline() {
           filename="ma-word-frequency.csv"
         />
       ) : null}
-      <h3>Word Frequency Timeline</h3>
       <div className={classes.container}>
         <Card className={classes.Card}>
           <form className={classes.form} onSubmit={onSubmitHandler}>

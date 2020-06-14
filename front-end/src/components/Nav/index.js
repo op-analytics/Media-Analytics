@@ -15,7 +15,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import { useStoreActions, useStoreState } from 'easy-peasy';
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 
 const drawerWidth = 240;
 
@@ -60,6 +60,16 @@ const useStyles = makeStyles(theme => ({
       color: 'inherit',
     },
   },
+  isActive: {
+    backgroundColor: '#eee',
+  },
+  navItem: {
+    backgroundColor: 'inherit',
+  },
+  navSection: {
+    padding: 0,
+
+  }
 }));
 
 /**
@@ -82,13 +92,13 @@ function Nav({ children, title, links }) {
           key={section.reduce((key, { href, text }) => key + href + text, '')}
         >
           <Divider />
-          <List>
+          <List className={classes.navSection}>
             {section.map(({ href, text }) => (
-              <Link to={href} className={classes.link} key={href + text}>
-                <ListItem button key={text}>
+              <NavLink to={href} className={classes.link} key={href + text} activeClassName={classes.isActive}>
+                <ListItem button key={text} className={classes.navItem}>
                   <ListItemText primary={text} />
                 </ListItem>
-              </Link>
+              </NavLink>
             ))}
           </List>
         </div>

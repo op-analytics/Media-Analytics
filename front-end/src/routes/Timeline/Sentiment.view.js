@@ -170,7 +170,6 @@ function Timeline() {
           filename="ma-sentiment-analysis.csv"
         />
       ) : null}
-      <h3>Sentiment over time - New York Times</h3>
       <br />
       <Alert severity="warning">
         This is an experimental section of the site and data obtained is not

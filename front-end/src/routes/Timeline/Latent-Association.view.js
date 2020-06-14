@@ -199,7 +199,6 @@ function Timeline() {
           filename="ma-latent-association.csv"
         />
       ) : null}
-      <h3>Latent association over time</h3>
       <div className={classes.container}>
         <Card className={classes.Card}>
           <form className={classes.form} onSubmit={onSubmitHandler}>
