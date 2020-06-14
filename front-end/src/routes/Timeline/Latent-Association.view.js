@@ -336,7 +336,7 @@ function Timeline() {
 
         {loading ? (
           <CircularProgress />
-        ) : (
+        ) : ( 
           formSubmitted &&
           associations.length !== 0 &&
           concept1.length !== 0 &&
