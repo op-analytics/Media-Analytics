@@ -206,10 +206,15 @@ function Timeline() {
                     options={mediaOutlets}
                     getOptionLabel={option => option.title}
                     filterSelectedOptions
-                    // eslint-disable-next-line no-unused-vars
-                    filterOptions={(options, _) =>
-                      outlets.length < PARAMETER_LIMIT ? options : []
-                    }
+                    filterOptions={(options, state) => {
+                      return outlets.length < PARAMETER_LIMIT
+                        ? options.filter(option => {
+                            const optionTitle = option.title.toLowerCase();
+                            const input = state.inputValue.toLowerCase();
+                            return optionTitle.includes(input);
+                          })
+                        : [];
+                    }}
                     onChange={(_, value) => {
                       const newOutlets = value.map(({ value: code }) => code);
                       const newOutletExists = !newOutlets.every(item =>
