@@ -13,6 +13,7 @@ const timelineModel = {
 
   // Actions and thunks
   getAssociations: thunk(async (actions, payload) => {
+    actions.setErrors([]);
     actions.setLoading(true);
     actions.setAssociations([])
     actions.setErrors([])
@@ -27,6 +28,7 @@ const timelineModel = {
   }),
 
   getFrequencies: thunk(async (actions, payload) => {
+    actions.setErrors([]);
     actions.setLoading(true);
     actions.setFrequencies([])
     actions.setErrors([])
@@ -41,6 +43,7 @@ const timelineModel = {
   }),
 
   getSentiments: thunk(async (actions, payload) => {
+    actions.setErrors([]);
     actions.setLoading(true);
     actions.setSentiments([])
     actions.setErrors([])
