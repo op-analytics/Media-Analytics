@@ -1,5 +1,5 @@
 import Grid from '@material-ui/core/Grid';
-import PropTypes, { shape, arrayOf, string, number } from 'prop-types';
+import PropTypes, { arrayOf, number,shape, string } from 'prop-types';
 import React from 'react';
 import {
   CartesianGrid,
@@ -10,8 +10,9 @@ import {
   XAxis,
   YAxis,
 } from 'recharts';
-import { createTooltip, CustomizedDot, stringToColour } from './utils';
+
 import { useSharedStyles } from './hooks/useStyles';
+import { createTooltip, CustomizedDot, stringToColour } from './utils';
 
 function LinechartMultiple({ datasets, formParameters, mediaOutlets }) {
   const sharedClasses = useSharedStyles();

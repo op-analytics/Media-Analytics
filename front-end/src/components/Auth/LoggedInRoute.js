@@ -1,7 +1,7 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Redirect, Route } from 'react-router-dom';
 import { useStoreState } from 'easy-peasy';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { Redirect, Route } from 'react-router-dom';
 
 const LoggedInRoute = ({ component: Component, ...routeProps }) => {
   const isAuthenticated = useStoreState(state => state.user.authenticated);

@@ -3,6 +3,7 @@ import jwt from 'jsonwebtoken';
 
 import config from '../../../config';
 
+import EmailHelper from '../helpers/EmailHelper';
 import UserType from '../interfaces/User';
 import UserDocument from '../interfaces/UserDocument';
 import User from '../models/user.model';
@@ -43,6 +44,18 @@ async function PasswordsMatch(
   return bcrypt.compare(unhashed, hashed);
 }
 
+function SendValidationEmail(email: string): void {
+  EmailHelper.sendConfirmationEmail(email);
+}
+
+async function ConfirmEmail(email: string): Promise<void> {
+  const user = await GetUser(email);
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  user!!.confirmed = true;
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  await user!!.save();
+}
+
 async function Signup(
   name: string,
   email: string,
@@ -59,4 +72,12 @@ async function Signup(
   return user.save();
 }
 
-export { TokenizeUser, Signup, GetUser, PasswordsMatch, EmailTaken };
+export {
+  TokenizeUser,
+  Signup,
+  GetUser,
+  PasswordsMatch,
+  EmailTaken,
+  ConfirmEmail,
+  SendValidationEmail,
+};

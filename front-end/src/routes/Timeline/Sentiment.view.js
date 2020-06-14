@@ -7,10 +7,9 @@ import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Alert from '@material-ui/lab/Alert';
+import { useStoreActions,useStoreState } from 'easy-peasy';
 import ChipInput from 'material-ui-chip-input';
-import React, { useState, useMemo, useEffect } from 'react';
-
-import { useStoreState, useStoreActions } from 'easy-peasy';
+import React, { useEffect,useMemo, useState } from 'react';
 import {
   CartesianGrid,
   Legend,
@@ -21,6 +20,7 @@ import {
   XAxis,
   YAxis,
 } from 'recharts';
+
 import CsvDownloadButton from '../../components/CsvDownloadButton';
 import FeedbackBar from '../../components/FeedbackBar';
 
@@ -170,7 +170,6 @@ function Timeline() {
           filename="ma-sentiment-analysis.csv"
         />
       ) : null}
-      <h3>Sentiment over time - New York Times</h3>
       <br />
       <Alert severity="warning">
         This is an experimental section of the site and data obtained is not

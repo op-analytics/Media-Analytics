@@ -5,6 +5,7 @@ export default interface UserDocument extends Document {
   email: string;
   limit: number;
   password: string;
+  confirmed: boolean;
   lastTokenResetDate: string;
   createdAt: string;
   updatedAt: string;

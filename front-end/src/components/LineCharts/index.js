@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+
 import LinechartByOutlet from './linechart-by-outlet';
 import LinechartByWord from './linechart-by-word';
 import LinechartMultiple from './linechart-multiple';

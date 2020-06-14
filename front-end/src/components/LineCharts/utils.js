@@ -1,10 +1,10 @@
 /* eslint-disable react/prop-types */
-import React from 'react';
-import Square from '@material-ui/icons/Stop';
-import Circle from '@material-ui/icons/FiberManualRecord';
-import Star from '@material-ui/icons/Star';
 import Cross from '@material-ui/icons/Add';
 import Triangle from '@material-ui/icons/ChangeHistory';
+import Circle from '@material-ui/icons/FiberManualRecord';
+import Star from '@material-ui/icons/Star';
+import Square from '@material-ui/icons/Stop';
+import React from 'react';
 
 /**
  * Normalise a frequency dataset using min-max normalisation.

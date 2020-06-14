@@ -23,6 +23,30 @@ const envVarsSchema = Joi.object({
   TOKEN_SECRET: Joi.string()
     .required()
     .description('The secret used to encrypt user data'),
+  CONFIRMATION_REDIRECT: Joi.string()
+    .required()
+    .description('The url to redirect to after a users email is confirmed'),
+  BASE_URL: Joi.string()
+    .required()
+    .description('The url the app is running on'),
+  GMAIL_EMAIL: Joi.string()
+    .required()
+    .description('The email for the account used to send confirmation emails'),
+  GMAIL_CLIENT_ID: Joi.string()
+    .required()
+    .description(
+      'The client id for the google account used to send confirmation emails',
+    ),
+  GMAIL_CLIENT_SECRET: Joi.string()
+    .required()
+    .description(
+      'The client secret for the google account used to send confirmation emails',
+    ),
+  GMAIL_REFRESH_TOKEN: Joi.string()
+    .required()
+    .description(
+      'The refresh token for the google account used to send confirmation emails',
+    ),
 })
   .unknown()
   .required();
@@ -35,10 +59,18 @@ if (error) {
 const config = {
   env: envVars.NODE_ENV,
   port: envVars.PORT,
+  baseURL: envVars.BASE_URL,
   mongooseDebug: envVars.MONGOOSE_DEBUG,
   mongooseURI: envVars.MONGO_URI,
   redisURI: envVars.REDIS_URI,
   secret: envVars.TOKEN_SECRET,
+  confirmationRedirect: envVars.CONFIRMATION_REDIRECT,
+  gmail: {
+    email: envVars.GMAIL_EMAIL,
+    clientId: envVars.GMAIL_CLIENT_ID,
+    clientSecret: envVars.GMAIL_CLIENT_SECRET,
+    refreshToken: envVars.GMAIL_REFRESH_TOKEN,
+  },
 };
 
 export default config;

@@ -1,13 +1,15 @@
-import { Router } from 'react-router-dom';
+import './index.css';
+
 import { createMuiTheme, ThemeProvider } from '@material-ui/core';
 import blue from '@material-ui/core/colors/blue';
+import { StoreProvider } from 'easy-peasy';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { StoreProvider } from 'easy-peasy';
+import { Router } from 'react-router-dom';
+
 import App from './App';
-import './index.css';
-import * as serviceWorker from './serviceWorker';
 import store, { history } from './modules/store';
+import * as serviceWorker from './serviceWorker';
 
 const muiTheme = createMuiTheme({
   palette: {

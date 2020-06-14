@@ -11,12 +11,14 @@ import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import ToggleButton from '@material-ui/lab/ToggleButton';
-import ChipInput from 'material-ui-chip-input';
-import React, { useState, useMemo, useEffect } from 'react';
 import { useStoreActions, useStoreState } from 'easy-peasy';
-import LineCharts from '../../components/LineCharts';
+import ChipInput from 'material-ui-chip-input';
+import React, { useEffect,useMemo, useState } from 'react';
+
+// import Autocomplete from '@material-ui/lab/Autocompelte';
 import CsvDownloadButton from '../../components/CsvDownloadButton';
 import FeedbackBar from '../../components/FeedbackBar';
+import LineCharts from '../../components/LineCharts';
 
 
 const useStyles = makeStyles(theme => ({
@@ -164,7 +166,6 @@ function Timeline() {
           filename="ma-word-frequency.csv"
         />
       ) : null}
-      <h3>Word Frequency Timeline</h3>
       <div className={classes.container}>
         <Card className={classes.Card}>
           <form className={classes.form} onSubmit={onSubmitHandler}>
