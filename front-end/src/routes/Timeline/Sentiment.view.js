@@ -8,7 +8,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Alert from '@material-ui/lab/Alert';
 import ChipInput from 'material-ui-chip-input';
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
+
 import { useStoreState, useStoreActions } from 'easy-peasy';
 import {
   CartesianGrid,
@@ -21,6 +22,7 @@ import {
   YAxis,
 } from 'recharts';
 import CsvDownloadButton from '../../components/CsvDownloadButton';
+import FeedbackBar from '../../components/FeedbackBar';
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -118,12 +120,17 @@ function Timeline() {
   const loading = useStoreState(state => state.timeline.loading);
   const getSentiments = useStoreActions(state => state.timeline.getSentiments);
 
-  const [formSubmitted, setFormSubmitted] = useState(false);
   const [words, setWords] = useState([]);
   const [yearFrom, setYearFrom] = useState();
   const [yearTo, setYearTo] = useState();
 
   const classes = useStyles();
+
+  const setErrors = useStoreActions(state => state.timeline.setErrors);
+  useEffect(() => {
+    setErrors([]);
+  }, [setErrors]);
+  const errors = useStoreState(state => state.timeline.errors);
 
   const wordLimit = 1;
 
@@ -151,13 +158,12 @@ function Timeline() {
 
   const onSubmitHandler = e => {
     e.preventDefault();
-    setFormSubmitted(true);
     getSentiments({ word: words[0], year_from: yearFrom, year_to: yearTo });
   };
 
   return (
     <>
-      {formSubmitted && sentiments && !loading ? (
+      { sentiments && !loading ? (
         <CsvDownloadButton
           data={dataToDownload}
           headers={csvHeaders}
@@ -244,12 +250,13 @@ function Timeline() {
           </form>
         </Card>
 
+        {errors.length > 0 ? <FeedbackBar errors={errors} /> : null}
+
         {loading ? (
           <CircularProgress />
         ) : (
-          formSubmitted &&
           words.length > 0 &&
-          sentiments && (
+          sentiments.length > 0 && (
             <div className={classes.chartContainer}>
               <h3 className={classes.chartTitle}>Sentiment</h3>
               <ResponsiveContainer>

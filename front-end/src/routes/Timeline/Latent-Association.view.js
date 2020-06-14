@@ -8,7 +8,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import ChipInput from 'material-ui-chip-input';
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
+
 import { useStoreActions, useStoreState } from 'easy-peasy';
 import {
   CartesianGrid,
@@ -26,6 +27,7 @@ import {
   stringToColour,
 } from '../../components/LineCharts/utils';
 import CsvDownloadButton from '../../components/CsvDownloadButton';
+import FeedbackBar from '../../components/FeedbackBar';
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -135,6 +137,12 @@ function Timeline() {
   const [yearFrom, setYearFrom] = useState();
   const [yearTo, setYearTo] = useState();
   const [outlets, setOutlets] = useState([]);
+
+  const setErrors = useStoreActions(state => state.timeline.setErrors);
+  useEffect(() => {
+    setErrors([])
+  }, [setErrors]);
+  const errors = useStoreState(state => state.timeline.errors);
 
   const classes = useStyles();
   const getAssociations = useStoreActions(
@@ -320,9 +328,15 @@ function Timeline() {
           </form>
         </Card>
 
+        { errors.length > 0 ? (
+          <FeedbackBar
+            errors={errors}
+          />
+        ) : null }
+
         {loading ? (
           <CircularProgress />
-        ) : (
+        ) : ( 
           formSubmitted &&
           associations.length !== 0 &&
           concept1.length !== 0 &&

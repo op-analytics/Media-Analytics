@@ -13,7 +13,10 @@ const timelineModel = {
 
   // Actions and thunks
   getAssociations: thunk(async (actions, payload) => {
+    actions.setErrors([]);
     actions.setLoading(true);
+    actions.setAssociations([])
+    actions.setErrors([])
     try {
       const associations = await timelineService.getAssociations(payload);
       actions.setAssociations(associations);
@@ -25,7 +28,10 @@ const timelineModel = {
   }),
 
   getFrequencies: thunk(async (actions, payload) => {
+    actions.setErrors([]);
     actions.setLoading(true);
+    actions.setFrequencies([])
+    actions.setErrors([])
     try {
       const frequencies = await timelineService.getFrequencies(payload);
       actions.setFrequencies(frequencies);
@@ -37,7 +43,10 @@ const timelineModel = {
   }),
 
   getSentiments: thunk(async (actions, payload) => {
+    actions.setErrors([]);
     actions.setLoading(true);
+    actions.setSentiments([])
+    actions.setErrors([])
     try {
       const sentiments = await timelineService.getSentiments(payload);
       const cleanedSentiments = sentiments.map(dataset => ({
