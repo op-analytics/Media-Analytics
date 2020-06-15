@@ -146,7 +146,7 @@ function Timeline() {
 
   const dataToDownload = useMemo(
     () => getDownloadData(sentiments, words[0]),
-    [sentiments],
+    [sentiments, words],
   );
 
   const csvHeaders = [

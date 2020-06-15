@@ -17,7 +17,6 @@ import Signup from './routes/Auth/Signup';
 import NotFound from './routes/NotFound.view';
 import FrequencyTimeline from './routes/Timeline/Frequency.view';
 import LatentAssociationTimeline from './routes/Timeline/Latent-Association.view';
-import SentimentTimeline from './routes/Timeline/Sentiment.view';
 import UserGuide from './routes/UserGuide'
 
 // Links to show on the side bar
@@ -26,7 +25,6 @@ const links = [
   [
     { href: '/frequency', text: 'Frequency Counts' },
     { href: '/latent-association', text: 'Latent Associations' },
-    { href: '/sentiment', text: 'Sentiment Analysis' },
   ],
   [
     { href: '/about', text: 'About' },
@@ -77,7 +75,6 @@ function App() {
             path="/latent-association"
             component={LatentAssociationTimeline}
           />
-          <LoggedInRoute path="/sentiment" component={SentimentTimeline} />
           <Route component={NotFound} />
         </Switch>
       </Nav>
