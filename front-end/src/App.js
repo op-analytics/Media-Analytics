@@ -42,6 +42,7 @@ function App() {
   const authenticating = useStoreState(store => store.user.authenticating);
   const dispatch = useStoreDispatch();
   const redirect = useCallback(path => dispatch(push(path)), [dispatch]);
+  const location = useStoreState(store => store.router.location);
 
   useEffect(() => {
     const token = localStorage.XAuthToken;
@@ -53,6 +54,10 @@ function App() {
       } else authenticate(token);
     }
   }, [logout, authenticate, redirect]);
+
+  useEffect(() => {
+    window.scrollTo(0,0);
+  }, [location]);
 
   return (
     !authenticating && (
