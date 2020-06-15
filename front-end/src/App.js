@@ -42,6 +42,7 @@ function App() {
   const authenticating = useStoreState(store => store.user.authenticating);
   const dispatch = useStoreDispatch();
   const redirect = useCallback(path => dispatch(push(path)), [dispatch]);
+  const location = useStoreState(store => store.router.location);
 
   useEffect(() => {
     const token = localStorage.XAuthToken;
@@ -54,6 +55,10 @@ function App() {
     }
   }, [logout, authenticate, redirect]);
 
+  useEffect(() => {
+    window.scrollTo(0,0);
+  }, [location]);
+
   return (
     !authenticating && (
       <Nav title="Media-Analytics.org" links={links}>
@@ -63,9 +68,9 @@ function App() {
           <LoggedOutRoute path="/resend" component={Resend} />
           <LoggedOutRoute path="/signup" component={Signup} />
           <LoggedOutRoute path="/login" component={Login} />
-          <LoggedInRoute path="/about" component={About} />
+          <Route path="/about" component={About} />
+          <Route path="/user-guide" component={UserGuide} />
           <LoggedInRoute path="/frequency" component={FrequencyTimeline} />
-          <LoggedInRoute path="/user-guide" component={UserGuide} />
           <LoggedInRoute
             path="/latent-association"
             component={LatentAssociationTimeline}
