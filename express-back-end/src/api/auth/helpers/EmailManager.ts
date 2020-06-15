@@ -10,7 +10,7 @@ const transportOptions: SMTPTransport.Options = {
   secure: true,
   auth: {
     type: 'OAUTH2',
-    user: config.gmail.user,
+    user: config.gmail.email,
     clientId: config.gmail.clientId,
     clientSecret: config.gmail.clientSecret,
     refreshToken: config.gmail.refreshToken,

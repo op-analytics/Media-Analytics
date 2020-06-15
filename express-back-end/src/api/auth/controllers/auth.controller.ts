@@ -108,7 +108,7 @@ export async function resendConfirmationEmail(req: Request, res: Response): Prom
 
 export function confirmEmail(req: Request, res: Response): void {
   try {
-    const email = jwt.verify(req.params.token, config.secret) as string;
+    const {email} = jwt.verify(req.params.token, config.secret) as {email:string};
     ConfirmEmail(email);
   } catch (error) {
     res.status(400).json({

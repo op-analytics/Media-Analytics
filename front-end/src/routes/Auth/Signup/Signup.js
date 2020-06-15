@@ -195,7 +195,7 @@ export default function SignUp() {
             </Button>
             <Grid container justify="flex-end">
               <Grid item xs>
-                <Link component={RouterLink} to="/resend-validation-email" variant="body2">
+                <Link component={RouterLink} to="/resend" variant="body2">
                   Missing Confirmation Email?
                 </Link>
               </Grid>

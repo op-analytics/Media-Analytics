@@ -1,14 +1,14 @@
-import { object, ref, string, valid } from '@hapi/joi';
+import Joi from '@hapi/joi';
 
-export default object({
-  name: string().required(),
-  email: string()
+export default Joi.object({
+  name: Joi.string().required(),
+  email: Joi.string()
     .email()
     .required(),
-  password: string()
+  password: Joi.string()
     .required()
     .min(8),
-  confirmPassword: valid(ref('password'))
+  confirmPassword: Joi.valid(Joi.ref('password'))
     .required()
     .messages({
       'any.only': 'Confirm Password must match Password',

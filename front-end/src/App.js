@@ -31,7 +31,6 @@ const links = [
   [
     { href: '/about', text: 'About' },
     { href: '/user-guide', text: 'User Guide' },
-    { href: '/paper', text: 'Paper' },
   ],
 ];
 

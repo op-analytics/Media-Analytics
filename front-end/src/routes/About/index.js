@@ -12,12 +12,20 @@ const useStyles = makeStyles({
     width: '45vw',
     padding: '2rem',
   },
+  container: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'column',
+    overflow: 'hidden',
+    width: '60%',
+  },
 });
 
 const About = () => {
   const classes = useStyles();
   return (
-    <Container>
+    <Container className={classes.container}>
       <Card className={classes.containerCard}>
         <AboutSection />
         <br />

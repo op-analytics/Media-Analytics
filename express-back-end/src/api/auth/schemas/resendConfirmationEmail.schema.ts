@@ -1,7 +1,7 @@
-import { object, string } from '@hapi/joi';
+import Joi  from '@hapi/joi'; 
 
-export default object({
-  email: string()
+export default Joi.object({
+  email: Joi.string()
     .email()
     .required(),
 });

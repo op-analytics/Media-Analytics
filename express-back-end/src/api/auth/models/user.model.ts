@@ -28,21 +28,15 @@ const User = new Schema(
       min: 8,
       max: 1024,
     },
+    confirmed: {
+      type: Boolean,
+      default: false,
+    },
   },
   {
     timestamps: true,
   },
-  password: {
-    type: String,
-    required: true,
-    min: 8,
-    max: 1024,
-  },
-  confirmed: {
-    type: Boolean,
-    default: false,
-  },
-});
+);
 
 User.path('email').validate((value: string) => {
   const emailRegex = /^([\w-.]+@([\w-]+\.)+[\w-]{2,4})?$/;
