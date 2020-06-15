@@ -26,7 +26,6 @@ const links = [
   [
     { href: '/frequency', text: 'Frequency Counts' },
     { href: '/latent-association', text: 'Latent Associations' },
-    { href: '/sentiment', text: 'Sentiment Analysis' },
   ],
   [
     { href: '/about', text: 'About' },
@@ -72,7 +71,6 @@ function App() {
             path="/latent-association"
             component={LatentAssociationTimeline}
           />
-          <LoggedInRoute path="/sentiment" component={SentimentTimeline} />
           <Route component={NotFound} />
         </Switch>
       </Nav>
