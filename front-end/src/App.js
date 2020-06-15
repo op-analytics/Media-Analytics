@@ -70,9 +70,9 @@ function App() {
           <LoggedOutRoute path="/resend" component={Resend} />
           <LoggedOutRoute path="/signup" component={Signup} />
           <LoggedOutRoute path="/login" component={Login} />
-          <LoggedInRoute path="/about" component={About} />
+          <Route path="/about" component={About} />
+          <Route path="/user-guide" component={UserGuide} />
           <LoggedInRoute path="/frequency" component={FrequencyTimeline} />
-          <LoggedInRoute path="/user-guide" component={UserGuide} />
           <LoggedInRoute
             path="/latent-association"
             component={LatentAssociationTimeline}
