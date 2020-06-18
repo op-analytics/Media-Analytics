@@ -13,6 +13,7 @@ const useStyles = makeStyles({
   sectionDiv: {
     paddingLeft: '1rem',
     marginLeft: '1rem',
+    marginBottom: '1rem',
   },
   sectionImage: {
     padding: '1rem 1rem 1rem 1rem',
@@ -24,12 +25,8 @@ function AboutSection() {
   const classes = useStyles();
   return (
     <>
-      <Typography variant="h5" component="h2">
-        About
-      </Typography>
-      <Typography variant="h6" component="h2" className={classes.sectionHeader}>
-        Introduction
-      </Typography>
+      <h1>About</h1>
+      <h2 className={classes.sectionHeadings}>Introduction</h2>
       <Typography
         variant="body1"
         component="p"
@@ -41,9 +38,9 @@ function AboutSection() {
         usage in a comprehensive sample of news and opinion articles from popular
         news media outlets.
       </Typography>
-      <Typography variant="h6" component="h2" className={classes.sectionHeader}>
+      <h2 className={classes.sectionHeadings}>
         Disclaimer
-      </Typography>
+      </h2>
       <Typography
         variant="body1"
         component="p"
@@ -73,9 +70,9 @@ function AboutSection() {
         to find the funding to use cloud infrastructure and lift this restriction
         before long.
       </Typography>
-      <Typography variant="h6" className={classes.sectionHeader}>
+      <h2 className={classes.sectionHeadings}>
         Contact
-      </Typography>
+      </h2>
       <Typography
         variant="body1"
         component="p"
@@ -87,9 +84,9 @@ function AboutSection() {
           media.analytics.orgATgmailDOTcom
         </a>
       </Typography>
-      <Typography variant="h6" className={classes.sectionHeader}>
+      <h2 className={classes.sectionHeadings}>
         Raw textual data of news articles
-      </Typography>
+      </h2>
       <Typography
         variant="body1"
         component="p"
@@ -120,9 +117,9 @@ function AboutSection() {
           </li>
         </ul>
       </div>
-      <Typography variant="h6" className={classes.sectionHeader}>
+      <h2 className={classes.sectionHeadings}>
         Frequency metrics
-      </Typography>
+      </h2>
       <Typography
         variant="body1"
         component="p"
@@ -157,9 +154,9 @@ function AboutSection() {
         represents the frequency rank of a word in the entire vocabulary of that
         year.
       </Typography>
-      <Typography variant="h6" component="h2" className={classes.sectionHeader}>
+      <h2 className={classes.sectionHeadings}>
         Latent associations
-      </Typography>
+      </h2>
       <Typography
         variant="body1"
         component="p"
@@ -197,9 +194,9 @@ function AboutSection() {
         iterations (epochs) through the corpus=5. The exponent used to shape the
         negative sampling distribution was 0.75.
       </Typography>
-      <Typography variant="h6" component="h2" className={classes.sectionHeader}>
+      <h2 className={classes.sectionHeadings}>
         Aside
-      </Typography>
+      </h2>
       <Typography
         variant="body1"
         component="p"
