@@ -11,8 +11,8 @@ const useStyles = makeStyles({
     paddingTop: '1rem',
   },
   sectionDiv: {
-    paddingLeft: '2rem',
-    marginLeft: '2rem',
+    paddingLeft: '1rem',
+    marginLeft: '1rem',
   },
   sectionImage: {
     padding: '1rem 1rem 1rem 1rem',
@@ -84,7 +84,7 @@ function AboutSection() {
       >
         You can contact us at&nbsp;
         <a href="mailto:media.analytics.org@gmail.com">
-          media.analytics.orgATgmailDOTcom
+            media.analytics.orgATgmailDOTcom
         </a>
       </Typography>
       <Typography variant="h6" className={classes.sectionHeader}>
@@ -126,7 +126,7 @@ function AboutSection() {
       <Typography
         variant="body1"
         component="p"
-        color="textPrimary"
+        color="textPrimary"h
         className={classes.aboutText}
       >
         In a chronological data set, word frequency usage is illuminating for

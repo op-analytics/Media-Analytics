@@ -7,7 +7,7 @@ import AboutSection from './components/AboutSection';
 import ContributorSection from './components/ContributorSection';
 import contributers from './contributers.json';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
   containerCard: {
     width: '100%',
     padding: '2rem',
@@ -19,9 +19,13 @@ const useStyles = makeStyles({
     flexDirection: 'column',
     overflow: 'hidden',
     width: '55vw',
-    minWidth: '300px',
+    minWidth: '30em',
+    '& a': {
+      color: theme.palette.primary.main,
+      wordWrap: 'break-word',
+    },
   },
-});
+}));
 
 const About = () => {
   const classes = useStyles();
