@@ -28,14 +28,3 @@ jobs:
 
       - name: Push image
         run: docker-compose push
-
-  redeploy:
-    name: Redeploy webhook call
-    runs-on: ubuntu-18.04
-    needs: [push]
-    steps:
-      - name: Deploy docker container webhook
-        uses: joelwmale/webhook-action@master
-        env:
-          WEBHOOK_URL: ${{ secrets.DEPLOY_WEBHOOK_URL  }}
-          WEBHOOK_SECRET: ${{ secrets.DEPLOY_WEBHOOK_SECRET }}
