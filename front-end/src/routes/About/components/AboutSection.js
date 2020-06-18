@@ -84,7 +84,7 @@ function AboutSection() {
       >
         You can contact us at&nbsp;
         <a href="mailto:media.analytics.org@gmail.com">
-            media.analytics.orgATgmailDOTcom
+          media.analytics.orgATgmailDOTcom
         </a>
       </Typography>
       <Typography variant="h6" className={classes.sectionHeader}>
@@ -126,7 +126,7 @@ function AboutSection() {
       <Typography
         variant="body1"
         component="p"
-        color="textPrimary"h
+        color="textPrimary"
         className={classes.aboutText}
       >
         In a chronological data set, word frequency usage is illuminating for
