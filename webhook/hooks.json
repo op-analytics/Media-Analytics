@@ -31,7 +31,7 @@
           "match":
           {
             "type": "value",
-            "value": "refs/heads/master",
+            "value": "refs/heads/dev",
             "parameter":
             {
               "source": "payload",
