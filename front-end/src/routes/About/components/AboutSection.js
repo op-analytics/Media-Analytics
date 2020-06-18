@@ -107,18 +107,16 @@ function AboutSection() {
             </Typography>
           </li>
           <li>
-            <a href="https://archive.org/web/web.php">
-              <Typography variant="body1" component="p" color="primary">
+            <Typography variant="body1" component="p" color="primary">
+              <a href="https://archive.org/web/web.php">
                 https://archive.org/web/web.php
-              </Typography>
-            </a>
+              </a>
+            </Typography>
           </li>
           <li>
-            <a href="https://commoncrawl.org">
-              <Typography variant="body1" component="p" color="primary">
-                https://commoncrawl.org
-              </Typography>
-            </a>
+            <Typography variant="body1" component="p" color="primary">
+              <a href="https://commoncrawl.org">https://commoncrawl.org</a>
+            </Typography>
           </li>
         </ul>
       </div>
