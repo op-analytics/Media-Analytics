@@ -9,7 +9,7 @@ import contributers from './contributers.json';
 
 const useStyles = makeStyles({
   containerCard: {
-    width: '45vw',
+    width: '100%',
     padding: '2rem',
   },
   container: {
@@ -18,7 +18,8 @@ const useStyles = makeStyles({
     justifyContent: 'center',
     flexDirection: 'column',
     overflow: 'hidden',
-    width: '60%',
+    width: '55vw',
+    minWidth: '300px',
   },
 });
 
