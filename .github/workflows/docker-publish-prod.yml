@@ -1,0 +1,41 @@
+name: Docker
+
+on:
+  push:
+    # Publish `master` as Docker `latest` image.
+    branches:
+      - master
+
+jobs:
+  # Push image to GitHub Packages.
+  # See also https://docs.docker.com/docker-hub/builds/
+  push:
+    name: Build and publish master branch dockerfiles
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push'
+
+    env:
+      REPO: ${{ secrets.DOCKER_REPO }}
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Log into docker hub
+        run: docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASS }}
+
+      - name: Build images
+        run: docker-compose -f docker-publish-prod.yml build
+
+      - name: Push image
+        run: docker-compose -f docker-publish-prod.yml push
+
+  redeploy:
+    name: Redeploy webhook call
+    runs-on: ubuntu-18.04
+    needs: [push]
+    steps:
+      - name: Deploy docker container webhook
+        uses: joelwmale/webhook-action@master
+        env:
+          WEBHOOK_URL: ${{ secrets.DEPLOY_WEBHOOK_URL  }}
+          WEBHOOK_SECRET: ${{ secrets.DEPLOY_WEBHOOK_SECRET }}
