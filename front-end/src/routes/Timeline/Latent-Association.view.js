@@ -192,7 +192,7 @@ function Timeline() {
 
   return (
     <>
-      {formSubmitted && associations && !loading ? (
+      {formSubmitted && associations.length > 0 && !loading ? (
         <CsvDownloadButton
           data={dataToDownload}
           headers={csvHeaders}
