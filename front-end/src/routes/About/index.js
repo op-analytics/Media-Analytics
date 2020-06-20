@@ -7,9 +7,9 @@ import AboutSection from './components/AboutSection';
 import ContributorSection from './components/ContributorSection';
 import contributers from './contributers.json';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
   containerCard: {
-    width: '45vw',
+    width: '100%',
     padding: '2rem',
   },
   container: {
@@ -18,9 +18,14 @@ const useStyles = makeStyles({
     justifyContent: 'center',
     flexDirection: 'column',
     overflow: 'hidden',
-    width: '60%',
+    width: '55vw',
+    minWidth: '30em',
+    '& a': {
+      color: theme.palette.primary.main,
+      wordWrap: 'break-word',
+    },
   },
-});
+}));
 
 const About = () => {
   const classes = useStyles();
