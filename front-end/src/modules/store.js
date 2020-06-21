@@ -4,6 +4,8 @@ import router, { createReduxHistory,routerMiddleware } from './router';
 import timeline from './timeline';
 import user from './user';
 
+const isDevelopment = process.env.NODE_ENV === 'development';
+
 // Easy peasy store used for global state management
 const store = createStore(
   {
@@ -12,7 +14,7 @@ const store = createStore(
     router,
   },
   {
-    devTools: true,
+    devTools: isDevelopment,
     middleware: [routerMiddleware],
   },
 );
