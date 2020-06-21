@@ -20,8 +20,11 @@ import {
   stringToColour,
 } from './utils';
 
+// FIXME: This component should only receive a list of datasets to diplay, A
+// tooltip and a legend
 function LinechartByOutlet({ datasets, formParameters, mediaOutlets }) {
   const sharedClasses = useSharedStyles();
+  // FIXME: destructure all of this at once
   const { words } = formParameters;
   const { outlets } = formParameters;
   const { yearFrom } = formParameters;

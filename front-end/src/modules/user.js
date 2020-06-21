@@ -5,15 +5,23 @@ import { push } from 'redux-first-history';
 import userService from '../services/user';
 import { getErrorsFromResponse } from './shared/errorHelpers';
 
+/**
+ * The timeline model for the easy peasy store.
+ * If you don't understand this go take a look at some easy peasy tutorials
+ */
 const userModel = {
   // User state
   user: null,
   errors: [],
 
   // Computed properties
+  // Property to check if the current user is authenticated
   authenticated: computed(state => state.user != null),
 
+  // Property to check if the current user is being authenticated
   authenticating: computed(state => {
+    // FIXME: This needs to have a check if the token was invalid to stop the
+    // page not loading
     const userIsUnauthenticated = state.user === null;
     const weHaveAToken = localStorage.getItem('XAuthToken');
     return userIsUnauthenticated && weHaveAToken;

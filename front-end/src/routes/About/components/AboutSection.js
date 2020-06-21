@@ -21,6 +21,11 @@ const useStyles = makeStyles({
   },
 });
 
+/**
+ * The about page main text section
+ * @component
+ */
+// TODO: Break this component up into sections like the userguide has been
 function AboutSection() {
   const classes = useStyles();
   return (

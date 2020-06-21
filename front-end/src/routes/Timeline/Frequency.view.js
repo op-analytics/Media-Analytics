@@ -98,7 +98,7 @@ const yAxisMetrics = [
  * The frequency timeline page component
  * @component
  */
-function Timeline() {
+function Frequency() {
   const MIN_YEAR = 1970;
   const MAX_YEAR = 2020;
   const PARAMETER_LIMIT = 4;
@@ -391,4 +391,4 @@ function Timeline() {
   );
 }
 
-export default Timeline;
+export default Frequency;

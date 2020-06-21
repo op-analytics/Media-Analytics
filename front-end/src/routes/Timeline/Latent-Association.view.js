@@ -127,7 +127,7 @@ const getDownloadData = (currentData, concept1, concept2) => {
  * The latent association page component
  * @component
  */
-function Timeline() {
+function LatentAssociation() {
   const associations = useStoreState(state => state.timeline.associations);
   const loading = useStoreState(state => state.timeline.loading);
 
@@ -335,7 +335,7 @@ function Timeline() {
 
         {loading ? (
           <CircularProgress />
-        ) : ( 
+        ) : (
           formSubmitted &&
           associations.length !== 0 &&
           concept1.length !== 0 &&
@@ -391,4 +391,4 @@ function Timeline() {
   );
 }
 
-export default Timeline;
+export default LatentAssociation;

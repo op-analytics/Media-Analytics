@@ -112,10 +112,10 @@ const getDownloadData = (currentData) => {
 };
 
 /**
- * The latent association page component
+ * The Sentiment Analysis page component
  * @component
  */
-function Timeline() {
+function SentimentAnalysis() {
   const sentiments = useStoreState(state => state.timeline.sentiments);
   const loading = useStoreState(state => state.timeline.loading);
   const getSentiments = useStoreActions(state => state.timeline.getSentiments);
@@ -303,4 +303,4 @@ function Timeline() {
   );
 }
 
-export default Timeline;
+export default  SentimentAnalysis;

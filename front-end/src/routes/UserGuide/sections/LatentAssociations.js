@@ -2,7 +2,11 @@ import React from 'react';
 
 import { useSectionStyles } from '../hooks/useSectionStyles';
 
-export default function FrequencyCounts() {
+/**
+ * The LatentAssociations section for the userguide page
+ * @component
+ */
+export default function LatentAssociations() {
   const classes = useSectionStyles();
   return (
     <div className={classes.div}>

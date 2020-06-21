@@ -33,7 +33,11 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function SignIn() {
+/**
+ * The login page component
+ * @component
+ */
+export default function Login() {
   const classes = useStyles();
   const { register, handleSubmit } = useForm();
 

@@ -43,6 +43,10 @@ const useStyles = makeStyles({
   },
 });
 
+/**
+ * The about page contributors section
+ * @component
+ */
 function ContributorSection({ contributors }) {
   const classes = useStyles();
   return (

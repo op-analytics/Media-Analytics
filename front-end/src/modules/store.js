@@ -4,6 +4,7 @@ import router, { createReduxHistory,routerMiddleware } from './router';
 import timeline from './timeline';
 import user from './user';
 
+// Easy peasy store used for global state management
 const store = createStore(
   {
     timeline,
@@ -16,6 +17,7 @@ const store = createStore(
   },
 );
 
+// History managed and watched by the store for use with react-router-dom
 export const history = createReduxHistory(store);
 
 export default store;

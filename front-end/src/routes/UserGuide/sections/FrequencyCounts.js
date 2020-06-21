@@ -2,6 +2,10 @@ import React from 'react';
 
 import { useSectionStyles } from '../hooks/useSectionStyles';
 
+/**
+ * The frequency counts section for the userguide page
+ * @component
+ */
 export default function FrequencyCounts() {
   const classes = useSectionStyles();
   return (

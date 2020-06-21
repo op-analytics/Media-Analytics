@@ -4,6 +4,10 @@ import { action,thunk } from 'easy-peasy';
 import timelineService from '../services/timeline';
 import { getErrorsFromResponse } from './shared/errorHelpers';
 
+/**
+ * The timeline model for the easy peasy store
+ * If you don't understand this go take a look at some easy peasy tutorials
+ */
 const timelineModel = {
   // Timeline state
   errors: [],

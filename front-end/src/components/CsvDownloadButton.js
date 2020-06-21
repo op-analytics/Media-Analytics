@@ -18,6 +18,11 @@ const useStyles = makeStyles({
   },
 });
 
+/**
+ * A button to be shown that when clicked allows the
+ * user to download the json data passed to it as a csv
+ * @component
+ */
 function CsvDownloadButton({ data, headers, filename }) {
   const classes = useStyles();
   return (

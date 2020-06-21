@@ -33,6 +33,10 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
+/**
+ * The resend confirmation email page component
+ * @component
+ */
 export default function Resend() {
   const classes = useStyles();
   const { register, handleSubmit } = useForm();

@@ -43,6 +43,10 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
+/**
+ * The signup page component
+ * @component
+ */
 export default function SignUp() {
   const classes = useStyles();
   const { register, handleSubmit } = useForm();

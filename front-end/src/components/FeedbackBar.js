@@ -13,6 +13,12 @@ const useStyles = makeStyles({
 
 let message
 
+/**
+ * A feedback bar used to show errors on the timeline views
+ * @component
+ */
+// FIXME: This component should only recieve a
+// message to display not the errors
 function FeedbackBar({ errors }) {
   const classes = useStyles();
   switch (errors[0].message) {

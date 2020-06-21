@@ -44,10 +44,12 @@ function App() {
   const redirect = useCallback(path => dispatch(push(path)), [dispatch]);
   const location = useStoreState(store => store.router.location);
 
+  // Try re-authenticate user
   useEffect(() => {
     const token = localStorage.XAuthToken;
     if (token) {
       const decodedToken = jwtDecode(token);
+      // Logout the user if the token has expired
       if (decodedToken.exp * 1000 < Date.now()) {
         logout();
         redirect('/login');
@@ -55,11 +57,13 @@ function App() {
     }
   }, [logout, authenticate, redirect]);
 
+  // Scroll to the top of the page each time the page changes
   useEffect(() => {
     window.scrollTo(0,0);
   }, [location]);
 
   return (
+    // Wait until we have authenticated before showing the app
     !authenticating && (
       <Nav title="Media-Analytics.org" links={links}>
         <Switch>

@@ -38,6 +38,10 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
+/**
+ * The Confirmation email has been sent page component
+ * @component
+ */
 export default function Confirmation() {
   const classes = useStyles();
   return (
