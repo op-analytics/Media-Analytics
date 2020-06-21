@@ -16,9 +16,7 @@ export default {
    * @returns {String} The token for the user to be authenticated with
    */
   async signup(userData) {
-    const { data } = await axios.post(`${API_URL}/auth/signup`, userData);
-    const { token } = data;
-    return token;
+    await axios.post(`${API_URL}/auth/signup`, userData);
   },
 
   /**
