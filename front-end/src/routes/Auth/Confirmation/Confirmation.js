@@ -7,7 +7,7 @@ import MailOutlineIcon from '@material-ui/icons/MailOutline';
 import React from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
     display: 'flex',

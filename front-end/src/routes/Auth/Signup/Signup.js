@@ -18,7 +18,7 @@ import { Link as RouterLink } from 'react-router-dom';
 
 const CAPTCHA_KEY = process.env.REACT_APP_CAPTCHA_KEY;
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
     display: 'flex',
@@ -53,8 +53,8 @@ export default function SignUp() {
   const [isHuman, setIsHuman] = useState(false);
   const [snackBarOpen, setSnackBarOpen] = useState(false);
 
-  const errors = useStoreState(state => state.ui.errors);
-  const signup = useStoreActions(state => state.user.signup);
+  const errors = useStoreState((state) => state.ui.errors);
+  const signup = useStoreActions((state) => state.user.signup);
 
   let nameHasError = false;
   let nameHelperText = '';
@@ -105,9 +105,10 @@ export default function SignUp() {
     }
   };
 
-  const handleClose = reason => reason !== 'clickaway' && setSnackBarOpen(false);
+  const handleClose = (reason) =>
+    reason !== 'clickaway' && setSnackBarOpen(false);
 
-  const Alert = props => {
+  const Alert = (props) => {
     return <MuiAlert elevation={6} variant="filled" {...props} />;
   };
 

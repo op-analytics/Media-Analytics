@@ -7,7 +7,7 @@ import AboutSection from './components/AboutSection';
 import ContributorSection from './components/ContributorSection';
 import contributers from './contributers.json';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   containerCard: {
     width: '100%',
     padding: '2rem',

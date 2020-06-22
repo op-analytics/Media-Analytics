@@ -1,3 +1,4 @@
+import Card from '@material-ui/core/Card';
 import Grid from '@material-ui/core/Grid';
 import PropTypes, { arrayOf, number, shape, string } from 'prop-types';
 import React from 'react';
@@ -35,7 +36,7 @@ function LinechartSingle({ dataset, formParameters, mediaOutlets }) {
   return (
     <Grid item container xs={12} spacing={2} justify="center">
       <Grid item lg={12} xs={12} className={sharedClasses.gridItemChart}>
-        <div className={sharedClasses.chartContainer}>
+        <Card className={sharedClasses.chartContainer}>
           <h3 className={sharedClasses.chartTitle}>{dataset.title}</h3>
           <ResponsiveContainer>
             <LineChart
@@ -81,7 +82,7 @@ function LinechartSingle({ dataset, formParameters, mediaOutlets }) {
                 )}
               />
 
-              {words.map(word =>
+              {words.map((word) =>
                 outlets.map((outlet, index) => {
                   return (
                     <Line
@@ -104,7 +105,7 @@ function LinechartSingle({ dataset, formParameters, mediaOutlets }) {
               )}
             </LineChart>
           </ResponsiveContainer>
-        </div>
+        </Card>
       </Grid>
     </Grid>
   );

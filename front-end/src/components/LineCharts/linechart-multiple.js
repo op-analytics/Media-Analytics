@@ -1,3 +1,4 @@
+import Card from '@material-ui/core/Card';
 import Grid from '@material-ui/core/Grid';
 import PropTypes, { arrayOf, number, shape, string } from 'prop-types';
 import React from 'react';
@@ -29,12 +30,12 @@ function LinechartMultiple({ datasets, formParameters, mediaOutlets }) {
 
   return (
     <Grid container spacing={1} justify="center">
-      {words.map(word => (
+      {words.map((word) => (
         <Grid key={word} item container xs={12} spacing={2} justify="center">
-          {outlets.map(outlet => {
-            const data = datasets.find(obj =>
+          {outlets.map((outlet) => {
+            const data = datasets.find((obj) =>
               obj.data.find(
-                objData => objData.word === word && objData.outlet === outlet,
+                (objData) => objData.word === word && objData.outlet === outlet,
               ),
             );
 
@@ -47,7 +48,10 @@ function LinechartMultiple({ datasets, formParameters, mediaOutlets }) {
                   xs={12}
                   className={sharedClasses.gridItemChart}
                 >
-                  <div className={sharedClasses.chartContainer} key={data.title}>
+                  <Card
+                    className={sharedClasses.chartContainer}
+                    key={data.title}
+                  >
                     <h3 className={sharedClasses.chartTitle}>{data.title}</h3>
                     <ResponsiveContainer>
                       <LineChart
@@ -73,7 +77,7 @@ function LinechartMultiple({ datasets, formParameters, mediaOutlets }) {
                           allowDataOverflow // Forces displayed data to match domain.
                         />
                         <Tooltip
-                          itemSorter={item1 => item1.value * -1}
+                          itemSorter={(item1) => item1.value * -1}
                           content={createTooltip(
                             sharedClasses,
                             words,
@@ -84,8 +88,8 @@ function LinechartMultiple({ datasets, formParameters, mediaOutlets }) {
                             datasets,
                           )}
                         />
-                        {words.map(lineWord => {
-                          return outlets.map(lineOutlet => (
+                        {words.map((lineWord) => {
+                          return outlets.map((lineOutlet) => (
                             <Line
                               key={lineWord + lineOutlet}
                               type="monotone"
@@ -105,7 +109,7 @@ function LinechartMultiple({ datasets, formParameters, mediaOutlets }) {
                         })}
                       </LineChart>
                     </ResponsiveContainer>
-                  </div>
+                  </Card>
                 </Grid>
               );
             }

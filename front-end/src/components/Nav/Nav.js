@@ -19,7 +19,7 @@ import { Link, NavLink } from 'react-router-dom';
 
 const drawerWidth = 240;
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
     flexGrow: 1,
@@ -78,15 +78,15 @@ const useStyles = makeStyles(theme => ({
  */
 function Nav({ children, title, links }) {
   const classes = useStyles();
-  const isAuthenticated = useStoreState(state => state.user.authenticated);
-  const logout = useStoreActions(state => state.user.logout);
+  const isAuthenticated = useStoreState((state) => state.user.authenticated);
+  const logout = useStoreActions((state) => state.user.logout);
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const drawer = (
     <div>
       <div className={classes.toolbar} />
       <Divider />
-      {links.map(section => (
+      {links.map((section) => (
         <div
           key={section.reduce((key, { href, text }) => key + href + text, '')}
         >

@@ -21,14 +21,14 @@ import FeedbackBar from '../../components/FeedbackBar';
 import LineCharts from '../../components/LineCharts';
 import config from '../../config';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   container: {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'column',
     overflow: 'hidden',
-    width: '94%',
+    width: '100%',
     paddingTop: '2rem',
     paddingBottom: '1rem',
   },
@@ -70,13 +70,13 @@ const CSV_DOWNLOAD_NAME = config.csvDownloadNames.frequency;
 
 const getDownloadData = (currentData, key, yearFrom, yearTo) => {
   const dataToDownload = [];
-  currentData.forEach(wordData => {
+  currentData.forEach((wordData) => {
     const { word, year, outlet, [key]: value } = wordData;
     if (year <= yearTo && year >= yearFrom)
       dataToDownload.push({
         year,
         value,
-        mediaOutlet: MEDIA_OUTLETS.find(obj => obj.value === outlet).title,
+        mediaOutlet: MEDIA_OUTLETS.find((obj) => obj.value === outlet).title,
         word,
       });
   });
@@ -98,11 +98,13 @@ function Frequency() {
   const [displayOption, setDisplayOption] = useState('byOutlet');
   const [words, setWords] = useState([]);
   const [formSubmitted, setFormSubmitted] = useState(true);
-  const loading = useStoreState(state => state.ui.loading);
-  const frequencies = useStoreState(state => state.timeline.frequencies);
-  const getFrequencies = useStoreActions(state => state.timeline.getFrequencies);
+  const loading = useStoreState((state) => state.ui.loading);
+  const frequencies = useStoreState((state) => state.timeline.frequencies);
+  const getFrequencies = useStoreActions(
+    (state) => state.timeline.getFrequencies,
+  );
 
-  const errors = useStoreState(state => state.ui.errors);
+  const errors = useStoreState((state) => state.ui.errors);
 
   const dataToDownload = useMemo(
     () => getDownloadData(frequencies, yAxisMetric, yearFrom, yearTo),
@@ -119,14 +121,14 @@ function Frequency() {
     [yAxisMetric],
   );
 
-  const onSubmitHandler = e => {
+  const onSubmitHandler = (e) => {
     e.preventDefault();
     setFormSubmitted(true);
     getFrequencies({ words, year_from: MIN_YEAR, year_to: MAX_YEAR, outlets });
   };
 
   const handleDelete = (chip, state, setState) => {
-    setState(state.filter(word => word !== chip));
+    setState(state.filter((word) => word !== chip));
   };
 
   const handleAddChip = (chip, state, setState) => {
@@ -151,6 +153,7 @@ function Frequency() {
       <div className={classes.container}>
         <Card className={classes.Card}>
           <form className={classes.form} onSubmit={onSubmitHandler}>
+            <h2>Frequency Counts</h2>
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <FormControl className={classes.formControl}>
@@ -161,10 +164,10 @@ function Frequency() {
                     blurBehavior="add" // Fix android chrome bug
                     required={!words.length}
                     value={words}
-                    onAdd={chip => {
+                    onAdd={(chip) => {
                       handleAddChip(chip, words, setWords);
                     }}
-                    onDelete={chip => handleDelete(chip, words, setWords)}
+                    onDelete={(chip) => handleDelete(chip, words, setWords)}
                     chipRenderer={({ value }, key) => (
                       <Chip
                         key={key}
@@ -174,7 +177,7 @@ function Frequency() {
                         }}
                         label={value}
                         // eslint-disable-next-line no-unused-vars
-                        onDelete={_ => handleDelete(value, words, setWords)}
+                        onDelete={(_) => handleDelete(value, words, setWords)}
                       />
                     )}
                   />
@@ -186,11 +189,11 @@ function Frequency() {
                     multiple
                     id="tags-standard"
                     options={MEDIA_OUTLETS}
-                    getOptionLabel={option => option.title}
+                    getOptionLabel={(option) => option.title}
                     filterSelectedOptions
                     filterOptions={(options, state) => {
                       return outlets.length < PARAMETER_LIMIT
-                        ? options.filter(option => {
+                        ? options.filter((option) => {
                             const optionTitle = option.title.toLowerCase();
                             const input = state.inputValue.toLowerCase();
                             return optionTitle.includes(input);
@@ -199,7 +202,7 @@ function Frequency() {
                     }}
                     onChange={(_, value) => {
                       const newOutlets = value.map(({ value: code }) => code);
-                      const newOutletExists = !newOutlets.every(item =>
+                      const newOutletExists = !newOutlets.every((item) =>
                         outlets.includes(item),
                       );
                       if (newOutletExists && words.length) {
@@ -207,7 +210,7 @@ function Frequency() {
                       }
                       setOutlets(newOutlets);
                     }}
-                    renderInput={params => (
+                    renderInput={(params) => (
                       <TextField
                         {...params}
                         variant="standard"
@@ -231,8 +234,8 @@ function Frequency() {
                     type="number"
                     label="Year from:"
                     name="year_from"
-                    InputProps={{ inputProps: { min: MIN_YEAR, max: MAX_YEAR } }}
-                    onChange={e => {
+                    InputProps={{ inputProps: { min: MIN_YEAR, max: yearTo } }}
+                    onChange={(e) => {
                       const newYear = Number(e.target.value);
                       if (newYear >= MIN_YEAR && newYear <= MAX_YEAR) {
                         setYearFrom(newYear);
@@ -249,8 +252,8 @@ function Frequency() {
                     type="number"
                     label="Year to:"
                     name="year_to"
-                    InputProps={{ inputProps: { min: MIN_YEAR, max: MAX_YEAR } }}
-                    onChange={e => {
+                    InputProps={{ inputProps: { min: yearFrom, max: MAX_YEAR } }}
+                    onChange={(e) => {
                       const newYear = Number(e.target.value);
                       if (newYear >= MIN_YEAR && newYear <= MAX_YEAR) {
                         setYearTo(newYear);
@@ -275,9 +278,9 @@ function Frequency() {
                     labelId="y-axis-metric-select-label"
                     id="y-axis-metric-select"
                     value={yAxisMetric}
-                    onChange={e => setYAxisMetric(e.target.value)}
+                    onChange={(e) => setYAxisMetric(e.target.value)}
                   >
-                    {Y_AXIS_METRICS.map(metric => (
+                    {Y_AXIS_METRICS.map((metric) => (
                       <MenuItem key={metric.value} value={metric.value}>
                         {metric.name}
                       </MenuItem>
@@ -311,9 +314,9 @@ function Frequency() {
                     labelId="display-option-select-label"
                     id="display-option-select"
                     value={displayOption}
-                    onChange={e => setDisplayOption(e.target.value)}
+                    onChange={(e) => setDisplayOption(e.target.value)}
                   >
-                    {DISPLAY_OPTIONS.map(option => (
+                    {DISPLAY_OPTIONS.map((option) => (
                       <MenuItem key={option.value} value={option.value}>
                         {option.name}
                       </MenuItem>
@@ -353,7 +356,7 @@ function Frequency() {
               datasets={frequencies}
               formParameters={{
                 outlets,
-                words: words.map(word => word.toLowerCase()),
+                words: words.map((word) => word.toLowerCase()),
                 yearFrom: Number(yearFrom),
                 yearTo: Number(yearTo),
                 yAxisKey: yAxisMetric,

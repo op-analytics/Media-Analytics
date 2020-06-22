@@ -13,7 +13,7 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { Link as RouterLink } from 'react-router-dom';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
     display: 'flex',
@@ -41,8 +41,10 @@ export default function Resend() {
   const classes = useStyles();
   const { register, handleSubmit } = useForm();
 
-  const resendConfirmationEmail = useStoreActions(state => state.user.resendConfirmationEmail);
-  const errors = useStoreState(state => state.ui.errors);
+  const resendConfirmationEmail = useStoreActions(
+    (state) => state.user.resendConfirmationEmail,
+  );
+  const errors = useStoreState((state) => state.ui.errors);
 
   const submit = ({ email }) => resendConfirmationEmail(email);
 

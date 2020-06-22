@@ -15,11 +15,11 @@ const timelineModel = {
   sentiments: [],
 
   // Actions and thunks
-  getAssociations: thunk(async (actions, payload,{getStoreActions}) => {
-    const {ui} = getStoreActions();
+  getAssociations: thunk(async (actions, payload, { getStoreActions }) => {
+    const { ui } = getStoreActions();
     ui.clearErrors();
     ui.setLoading(true);
-    actions.setAssociations([])
+    actions.setAssociations([]);
     try {
       const associations = await timelineService.getAssociations(payload);
       actions.setAssociations(associations);
@@ -30,8 +30,8 @@ const timelineModel = {
     ui.setLoading(false);
   }),
 
-  getFrequencies: thunk(async (actions, payload,{getStoreActions}) => {
-    const {ui} = getStoreActions();
+  getFrequencies: thunk(async (actions, payload, { getStoreActions }) => {
+    const { ui } = getStoreActions();
     ui.clearErrors();
     ui.setLoading(true);
     actions.setFrequencies([]);
@@ -45,14 +45,14 @@ const timelineModel = {
     ui.setLoading(false);
   }),
 
-  getSentiments: thunk(async (actions, payload,{getStoreActions}) => {
-    const {ui} = getStoreActions();
+  getSentiments: thunk(async (actions, payload, { getStoreActions }) => {
+    const { ui } = getStoreActions();
     ui.clearErrors();
     ui.setLoading(true);
-    actions.setSentiments([])
+    actions.setSentiments([]);
     try {
       const sentiments = await timelineService.getSentiments(payload);
-      const cleanedSentiments = sentiments.map(dataset => ({
+      const cleanedSentiments = sentiments.map((dataset) => ({
         title: dataset.word,
         data: dataset.data,
       }));

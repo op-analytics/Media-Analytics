@@ -11,11 +11,11 @@ import { Redirect, Route } from 'react-router-dom';
  * @component
  */
 const LoggedOutRoute = ({ component: Component, ...rest }) => {
-  const authenticated = useStoreState(state => state.user.authenticated);
+  const authenticated = useStoreState((state) => state.user.authenticated);
   return (
     <Route
       {...rest}
-      render={props =>
+      render={(props) =>
         authenticated === true ? <Redirect to="/" /> : <Component {...props} />
       }
     />

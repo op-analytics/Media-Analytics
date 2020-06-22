@@ -27,26 +27,26 @@ export const normaliseDatasets = (
   yAxisKey,
 ) => {
   const normalisedDatasets = JSON.parse(JSON.stringify(datasets));
-  outlets.forEach(outlet => {
-    words.forEach(word => {
+  outlets.forEach((outlet) => {
+    words.forEach((word) => {
       const wordData = normalisedDatasets.filter(
-        wordDatum => wordDatum.outlet === outlet && wordDatum.word === word,
+        (wordDatum) => wordDatum.outlet === outlet && wordDatum.word === word,
       );
       const firstYearData =
-        wordData.find(obj => obj.year === String(yearFrom)) ||
+        wordData.find((obj) => obj.year === String(yearFrom)) ||
         Object.values(wordData)[0];
       if (firstYearData) {
         let min = firstYearData[yAxisKey];
         let max = firstYearData[yAxisKey];
         // Find the actual maximum and minimum
-        Object.values(wordData).forEach(yearData => {
+        Object.values(wordData).forEach((yearData) => {
           if (yearData.year >= yearFrom && yearData.year <= yearTo) {
             if (yearData[yAxisKey] > max) max = yearData[yAxisKey];
             if (yearData[yAxisKey] < min) min = yearData[yAxisKey];
           }
         });
         // Normalise using the maximum and minimum
-        Object.values(wordData).forEach(yearData => {
+        Object.values(wordData).forEach((yearData) => {
           // eslint-disable-next-line no-param-reassign
           yearData[yAxisKey] = (yearData[yAxisKey] - min) / (max - min);
         });
@@ -61,7 +61,7 @@ export const normaliseDatasets = (
  * @param {String} str
  * @returns {String}
  */
-export const stringToColour = str => {
+export const stringToColour = (str) => {
   let hash = 0;
   [...str].forEach((_, i) => {
     // eslint-disable-next-line no-bitwise
@@ -95,10 +95,11 @@ export const createTooltip = (
   const ToolTip = ({ active, payload, label }) => {
     if (active) {
       const tooltipLines = [];
-      outlets.forEach(outlet => {
-        words.forEach(word => {
-          const formattedOutlet = mediaOutlets.find(obj => obj.value === outlet)
-            .title;
+      outlets.forEach((outlet) => {
+        words.forEach((word) => {
+          const formattedOutlet = mediaOutlets.find(
+            (obj) => obj.value === outlet,
+          ).title;
 
           // Change first letter of the word to uppercase
           const formattedWord =
@@ -146,7 +147,7 @@ export const createTooltip = (
       return (
         <div className={classes.tooltip}>
           <h3>{label}</h3>
-          {tooltipLines.map(line => (
+          {tooltipLines.map((line) => (
             <p
               style={{ color: line.color }}
               className={classes.tooltipLabel}
@@ -196,13 +197,13 @@ export const createLegendPayload = (
 ) => {
   const legendItems = [];
   if (displayOption !== 'multiple') {
-    data.forEach(yearData => {
+    data.forEach((yearData) => {
       outlets.forEach((outlet, index) => {
-        words.forEach(word => {
+        words.forEach((word) => {
           if (Object.keys(yearData).includes(outlet + word + YAxisKey)) {
-            if (!legendItems.some(item => item.id === outlet + word)) {
+            if (!legendItems.some((item) => item.id === outlet + word)) {
               const formattedOutlet = mediaOutlets.find(
-                obj => obj.value === outlet,
+                (obj) => obj.value === outlet,
               ).title;
 
               // Change first letter of the word to uppercase
@@ -248,7 +249,7 @@ export const createLegendPayload = (
  * @param {String} str
  * @returns {String}
  */
-export const CustomizedDot = props => {
+export const CustomizedDot = (props) => {
   const { cx, cy, stroke, value, number } = props;
   const iconData = value ? icons[number] : null;
   const Icon = iconData ? iconData.icon : null;
@@ -270,9 +271,9 @@ export const CustomizedDot = props => {
 export function multipleDatasets(dataset, mediaOutlets) {
   const result = [];
 
-  dataset.forEach(wordData => {
+  dataset.forEach((wordData) => {
     const title = `${
-      mediaOutlets.find(obj => obj.value === wordData.outlet).title
+      mediaOutlets.find((obj) => obj.value === wordData.outlet).title
     } -
       ${wordData.word}`;
 
@@ -284,7 +285,7 @@ export function multipleDatasets(dataset, mediaOutlets) {
       [`${wordData.outlet + wordData.word}freq`]: wordData.freq,
     };
 
-    let outlet = result.find(obj => obj.title === title);
+    let outlet = result.find((obj) => obj.title === title);
 
     if (!outlet) {
       outlet = {
@@ -294,7 +295,7 @@ export function multipleDatasets(dataset, mediaOutlets) {
       result.push(outlet);
     }
 
-    let yearData = outlet.data.find(obj => obj.year === wordData.year);
+    let yearData = outlet.data.find((obj) => obj.year === wordData.year);
     if (yearData === undefined) {
       yearData = { year: wordData.year };
       outlet.data.push(yearData);
@@ -327,8 +328,8 @@ export function singleDataset(dataset) {
     title: 'Summary',
     data: [],
   };
-  dataset.forEach(wordData => {
-    let yearData = result.data.find(obj => obj.year === wordData.year);
+  dataset.forEach((wordData) => {
+    let yearData = result.data.find((obj) => obj.year === wordData.year);
     if (yearData === undefined) {
       yearData = { year: wordData.year };
       result.data.push(yearData);
@@ -355,8 +356,8 @@ export function singleDataset(dataset) {
 export function byOutletDataset(dataset, mediaOutlets) {
   const result = [];
 
-  dataset.forEach(wordData => {
-    const { title } = mediaOutlets.find(obj => obj.value === wordData.outlet);
+  dataset.forEach((wordData) => {
+    const { title } = mediaOutlets.find((obj) => obj.value === wordData.outlet);
 
     const data = {
       word: wordData.word,
@@ -366,7 +367,7 @@ export function byOutletDataset(dataset, mediaOutlets) {
       [`${wordData.outlet + wordData.word}freq`]: wordData.freq,
     };
 
-    let outlet = result.find(obj => obj.title === title);
+    let outlet = result.find((obj) => obj.title === title);
 
     if (!outlet) {
       outlet = {
@@ -376,7 +377,7 @@ export function byOutletDataset(dataset, mediaOutlets) {
       result.push(outlet);
     }
 
-    let yearData = outlet.data.find(obj => obj.year === wordData.year);
+    let yearData = outlet.data.find((obj) => obj.year === wordData.year);
     if (yearData === undefined) {
       yearData = { year: wordData.year };
       outlet.data.push(yearData);
@@ -395,7 +396,7 @@ export function byOutletDataset(dataset, mediaOutlets) {
 export function byWordDataset(dataset) {
   const result = [];
 
-  dataset.forEach(wordData => {
+  dataset.forEach((wordData) => {
     const title = wordData.word;
 
     const data = {
@@ -406,7 +407,7 @@ export function byWordDataset(dataset) {
       [`${wordData.outlet + wordData.word}freq`]: wordData.freq,
     };
 
-    let word = result.find(obj => obj.title === title);
+    let word = result.find((obj) => obj.title === title);
 
     if (!word) {
       word = {
@@ -416,7 +417,7 @@ export function byWordDataset(dataset) {
       result.push(word);
     }
 
-    let yearData = word.data.find(obj => obj.year === wordData.year);
+    let yearData = word.data.find((obj) => obj.year === wordData.year);
     if (yearData === undefined) {
       yearData = { year: wordData.year };
       word.data.push(yearData);
@@ -442,9 +443,9 @@ export function singleLatentAssociationDataset(dataset) {
     data: [],
   };
 
-  dataset.forEach(association => {
+  dataset.forEach((association) => {
     let yearRangeObject = summaryObject.data.find(
-      obj => obj.yearRange === association.yearRange,
+      (obj) => obj.yearRange === association.yearRange,
     );
 
     if (!yearRangeObject) {
@@ -476,14 +477,14 @@ export const createLatentAssociationLegendPayload = (
   outlet,
 ) => {
   const legendItems = [];
-  data.forEach(yearData => {
+  data.forEach((yearData) => {
     if (Object.keys(yearData).includes('association')) {
-      if (legendItems.findIndex(item => item.id === outlet) === -1) {
+      if (legendItems.findIndex((item) => item.id === outlet) === -1) {
         const concept1Formatted = concept1
-          .map(item => item.charAt(0).toUpperCase() + item.substr(1))
+          .map((item) => item.charAt(0).toUpperCase() + item.substr(1))
           .join(', ');
         const concept2Formatted = concept2
-          .map(item => item.charAt(0).toUpperCase() + item.substr(1))
+          .map((item) => item.charAt(0).toUpperCase() + item.substr(1))
           .join(', ');
         legendItems.push({
           id: outlet,

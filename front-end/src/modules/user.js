@@ -15,10 +15,10 @@ const userModel = {
 
   // Computed properties
   // Property to check if the current user is authenticated
-  authenticated: computed(state => state.user != null),
+  authenticated: computed((state) => state.user != null),
 
   // Property to check if the current user is being authenticated
-  authenticating: computed(state => {
+  authenticating: computed((state) => {
     // FIXME: This needs to have a check if the token was invalid to stop the
     // page not loading
     const userIsUnauthenticated = state.user === null;
@@ -27,8 +27,8 @@ const userModel = {
   }),
 
   // Actions and thunks
-  login: thunk(async (actions, payload,{getStoreActions}) => {
-    const {ui} = getStoreActions();
+  login: thunk(async (actions, payload, { getStoreActions }) => {
+    const { ui } = getStoreActions();
     ui.clearErrors();
     try {
       const token = await userService.login(payload);
@@ -41,8 +41,8 @@ const userModel = {
     }
   }),
 
-  authenticate: thunk(async (actions, payload,{getStoreActions}) => {
-    const {ui} = getStoreActions()
+  authenticate: thunk(async (actions, payload, { getStoreActions }) => {
+    const { ui } = getStoreActions();
     ui.clearErrors();
     try {
       await userService.authenticate(payload);
@@ -54,8 +54,8 @@ const userModel = {
     }
   }),
 
-  signup: thunk(async (actions, payload,{dispatch,getStoreActions}) => {
-    const {ui} = getStoreActions()
+  signup: thunk(async (actions, payload, { dispatch, getStoreActions }) => {
+    const { ui } = getStoreActions();
     ui.clearErrors();
     try {
       await userService.signup(payload);
@@ -66,19 +66,21 @@ const userModel = {
     }
   }),
 
-  resendConfirmationEmail: thunk(async (actions, payload,{dispatch,getStoreActions}) => {
-    const {ui} = getStoreActions()
-    ui.clearErrors();
-    try {
-      await userService.resendEmail(payload);
-      dispatch(push('/confirmation'));
-    } catch ({ response }) {
-      const errors = getErrorsFromResponse(response);
-      ui.setErrors(errors);
-    }
-  }),
+  resendConfirmationEmail: thunk(
+    async (actions, payload, { dispatch, getStoreActions }) => {
+      const { ui } = getStoreActions();
+      ui.clearErrors();
+      try {
+        await userService.resendEmail(payload);
+        dispatch(push('/confirmation'));
+      } catch ({ response }) {
+        const errors = getErrorsFromResponse(response);
+        ui.setErrors(errors);
+      }
+    },
+  ),
 
-  logout: thunk(async actions => {
+  logout: thunk(async (actions) => {
     userService.logout();
     actions.setUser(null);
   }),

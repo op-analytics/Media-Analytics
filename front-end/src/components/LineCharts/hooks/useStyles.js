@@ -1,13 +1,16 @@
 import { makeStyles } from '@material-ui/core/styles';
 
-export const useSharedStyles = makeStyles(() => ({
+export const useSharedStyles = makeStyles((theme) => ({
   chartContainer: {
     width: '100%',
     maxWidth: '60vw',
+    [theme.breakpoints.down('md')]: {
+      maxWidth: '100%',
+    },
     height: '50vh',
     flex: '0 1 auto',
-    paddingBottom: '6vh',
-    paddingTop: '2rem',
+    padding: '2rem 2rem 6vh 1rem',
+    marginTop: '1rem',
   },
   chartTitle: {
     textAlign: 'center',

@@ -13,7 +13,7 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { Link as RouterLink } from 'react-router-dom';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
     display: 'flex',
@@ -41,8 +41,8 @@ export default function Login() {
   const classes = useStyles();
   const { register, handleSubmit } = useForm();
 
-  const login = useStoreActions(state => state.user.login);
-  const errors = useStoreState(state => state.ui.errors);
+  const login = useStoreActions((state) => state.user.login);
+  const errors = useStoreState((state) => state.ui.errors);
 
   const submit = ({ email, password }) => login({ email, password });
 

@@ -104,7 +104,8 @@ export default function FrequencyCounts() {
               color="textPrimary"
               className={classes.aboutText}
             >
-              Frequency is the total count of occurances of a word in a year divided by the total of all words in all articles of the year.
+              Frequency is the total count of occurances of a word in a year
+              divided by the total of all words in all articles of the year.
             </Typography>
           </li>
         </ul>

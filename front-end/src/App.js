@@ -38,12 +38,12 @@ const links = [
  * @component
  */
 function App() {
-  const logout = useStoreActions(store => store.user.logout);
-  const authenticate = useStoreActions(store => store.user.authenticate);
-  const authenticating = useStoreState(store => store.user.authenticating);
+  const logout = useStoreActions((store) => store.user.logout);
+  const authenticate = useStoreActions((store) => store.user.authenticate);
+  const authenticating = useStoreState((store) => store.user.authenticating);
   const dispatch = useStoreDispatch();
-  const redirect = useCallback(path => dispatch(push(path)), [dispatch]);
-  const location = useStoreState(store => store.router.location);
+  const redirect = useCallback((path) => dispatch(push(path)), [dispatch]);
+  const location = useStoreState((store) => store.router.location);
 
   // Try re-authenticate user
   useEffect(() => {

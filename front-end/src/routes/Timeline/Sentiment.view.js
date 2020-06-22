@@ -25,7 +25,7 @@ import CsvDownloadButton from '../../components/CsvDownloadButton';
 import FeedbackBar from '../../components/FeedbackBar';
 import config from '../../config';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   container: {
     display: 'flex',
     alignItems: 'center',
@@ -102,11 +102,11 @@ const PARAMETER_LIMIT = config.parameterLimits.frequency;
 const CSV_DOWNLOAD_NAME = config.csvDownloadNames.sentiment;
 const CSV_HEADERS = config.csvDownloadHeaders.sentiment;
 
-const getDownloadData = currentData => {
+const getDownloadData = (currentData) => {
   const dataToDownload = [];
   if (currentData) {
-    currentData.forEach(item => {
-      item.data.forEach(yearItem => {
+    currentData.forEach((item) => {
+      item.data.forEach((yearItem) => {
         dataToDownload.push({
           mediaOutlet: MEDIA_OUTLET,
           word: item.title,
@@ -124,9 +124,9 @@ const getDownloadData = currentData => {
  * @component
  */
 function SentimentAnalysis() {
-  const sentiments = useStoreState(state => state.timeline.sentiments);
-  const loading = useStoreState(state => state.ui.loading);
-  const getSentiments = useStoreActions(state => state.timeline.getSentiments);
+  const sentiments = useStoreState((state) => state.timeline.sentiments);
+  const loading = useStoreState((state) => state.ui.loading);
+  const getSentiments = useStoreActions((state) => state.timeline.getSentiments);
 
   const [words, setWords] = useState([]);
   const [yearFrom, setYearFrom] = useState(MIN_YEAR);
@@ -134,10 +134,10 @@ function SentimentAnalysis() {
 
   const classes = useStyles();
 
-  const errors = useStoreState(state => state.ui.errors);
+  const errors = useStoreState((state) => state.ui.errors);
 
   const handleDelete = (chip, state, setState) => {
-    setState(state.filter(word => word !== chip));
+    setState(state.filter((word) => word !== chip));
   };
 
   const handleAddChip = (chip, state, setState) => {
@@ -151,7 +151,7 @@ function SentimentAnalysis() {
     words,
   ]);
 
-  const onSubmitHandler = e => {
+  const onSubmitHandler = (e) => {
     e.preventDefault();
     getSentiments({ word: words[0], year_from: yearFrom, year_to: yearTo });
   };
@@ -183,8 +183,8 @@ function SentimentAnalysis() {
                     blurBehavior="add" // Fix android chrome bug
                     required={!words}
                     value={words}
-                    onAdd={chip => handleAddChip(chip, words, setWords)}
-                    onDelete={chip => handleDelete(chip, words, setWords)}
+                    onAdd={(chip) => handleAddChip(chip, words, setWords)}
+                    onDelete={(chip) => handleDelete(chip, words, setWords)}
                     chipRenderer={({ value }, key) => (
                       <Chip
                         key={key}
@@ -192,7 +192,7 @@ function SentimentAnalysis() {
                         color="secondary"
                         label={value}
                         // eslint-disable-next-line no-unused-vars
-                        onDelete={_ => handleDelete(value, words, setWords)}
+                        onDelete={(_) => handleDelete(value, words, setWords)}
                       />
                     )}
                   />
@@ -206,7 +206,7 @@ function SentimentAnalysis() {
                     label="Year from:"
                     name="year_from"
                     value={yearFrom}
-                    onChange={e => setYearFrom(Number(e.target.value))}
+                    onChange={(e) => setYearFrom(Number(e.target.value))}
                     required
                   />
                 </FormControl>
@@ -219,7 +219,7 @@ function SentimentAnalysis() {
                     label="Year to:"
                     name="year_to"
                     value={yearTo}
-                    onChange={e => setYearTo(Number(e.target.value))}
+                    onChange={(e) => setYearTo(Number(e.target.value))}
                     required
                   />
                 </FormControl>

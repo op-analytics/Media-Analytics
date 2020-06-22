@@ -30,14 +30,14 @@ import {
 } from '../../components/LineCharts/utils';
 import config from '../../config';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   container: {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'column',
     overflow: 'hidden',
-    width: '94%',
+    width: '100%',
     paddingTop: '2rem',
     paddingBottom: '1rem',
   },
@@ -68,7 +68,7 @@ const useStyles = makeStyles(theme => ({
     maxWidth: '70vw',
     height: '50vh',
     flex: '0 1 auto',
-    paddingBottom: '6vh',
+    padding: '4vh 1vw 6vh 0',
     marginTop: '5vh',
   },
   chartTitle: {
@@ -110,9 +110,10 @@ const CSV_HEADERS = config.csvDownloadHeaders.association;
 const getDownloadData = (currentData, concept1, concept2) => {
   const dataToDownload = [];
   if (currentData) {
-    currentData.forEach(item => {
+    currentData.forEach((item) => {
       dataToDownload.push({
-        mediaOutlet: MEDIA_OUTLETS.find(obj => obj.value === item.outlet).title,
+        mediaOutlet: MEDIA_OUTLETS.find((obj) => obj.value === item.outlet)
+          .title,
         concept1,
         concept2,
         yearRange: item.yearRange,
@@ -128,8 +129,8 @@ const getDownloadData = (currentData, concept1, concept2) => {
  * @component
  */
 function LatentAssociation() {
-  const associations = useStoreState(state => state.timeline.associations);
-  const loading = useStoreState(state => state.ui.loading);
+  const associations = useStoreState((state) => state.timeline.associations);
+  const loading = useStoreState((state) => state.ui.loading);
 
   const [formSubmitted, setFormSubmitted] = useState(true);
   const [concept1, setConcept1] = useState([]);
@@ -138,15 +139,15 @@ function LatentAssociation() {
   const [yearTo, setYearTo] = useState(MAX_YEAR);
   const [outlets, setOutlets] = useState([]);
 
-  const errors = useStoreState(state => state.ui.errors);
+  const errors = useStoreState((state) => state.ui.errors);
 
   const classes = useStyles();
   const getAssociations = useStoreActions(
-    state => state.timeline.getAssociations,
+    (state) => state.timeline.getAssociations,
   );
 
   const handleDelete = (chip, state, setState) => {
-    setState(state.filter(word => word !== chip));
+    setState(state.filter((word) => word !== chip));
   };
 
   const handleAddChip = (chip, state, setState) => {
@@ -164,7 +165,7 @@ function LatentAssociation() {
     [associations, concept1, concept2],
   );
 
-  const onSubmitHandler = e => {
+  const onSubmitHandler = (e) => {
     e.preventDefault();
     setFormSubmitted(true);
     getAssociations({
@@ -188,6 +189,7 @@ function LatentAssociation() {
       <div className={classes.container}>
         <Card className={classes.Card}>
           <form className={classes.form} onSubmit={onSubmitHandler}>
+            <h2>Latent Associations</h2>
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <FormControl className={classes.formControl}>
@@ -198,8 +200,10 @@ function LatentAssociation() {
                     blurBehavior="add" // Fix android chrome bug
                     required={!concept1.length}
                     value={concept1}
-                    onAdd={chip => handleAddChip(chip, concept1, setConcept1)}
-                    onDelete={chip => handleDelete(chip, concept1, setConcept1)}
+                    onAdd={(chip) => handleAddChip(chip, concept1, setConcept1)}
+                    onDelete={(chip) =>
+                      handleDelete(chip, concept1, setConcept1)
+                    }
                     chipRenderer={({ value }, key) => (
                       <Chip
                         key={key}
@@ -207,7 +211,7 @@ function LatentAssociation() {
                         color="secondary"
                         label={value}
                         // eslint-disable-next-line no-unused-vars
-                        onDelete={_ =>
+                        onDelete={(_) =>
                           handleDelete(value, concept1, setConcept1)
                         }
                       />
@@ -224,8 +228,10 @@ function LatentAssociation() {
                     blurBehavior="add" // Fix android chrome bug
                     required={!concept2.length}
                     value={concept2}
-                    onAdd={chip => handleAddChip(chip, concept2, setConcept2)}
-                    onDelete={chip => handleDelete(chip, concept2, setConcept2)}
+                    onAdd={(chip) => handleAddChip(chip, concept2, setConcept2)}
+                    onDelete={(chip) =>
+                      handleDelete(chip, concept2, setConcept2)
+                    }
                     chipRenderer={({ value }, key) => (
                       <Chip
                         key={key}
@@ -233,7 +239,7 @@ function LatentAssociation() {
                         color="default"
                         label={value}
                         // eslint-disable-next-line no-unused-vars
-                        onDelete={_ =>
+                        onDelete={(_) =>
                           handleDelete(value, concept2, setConcept2)
                         }
                       />
@@ -246,7 +252,7 @@ function LatentAssociation() {
                   <Autocomplete
                     id="outlet"
                     options={MEDIA_OUTLETS}
-                    getOptionLabel={option => option.title}
+                    getOptionLabel={(option) => option.title}
                     filterSelectedOptions
                     required={!outlets.length}
                     onChange={(_, newOutlet) => {
@@ -255,7 +261,7 @@ function LatentAssociation() {
                       }
                       setOutlets([newOutlet.value]);
                     }}
-                    renderInput={params => (
+                    renderInput={(params) => (
                       <TextField
                         {...params}
                         variant="standard"
@@ -274,7 +280,7 @@ function LatentAssociation() {
                     label="Year from:"
                     name="year_from"
                     value={yearFrom}
-                    onChange={e => setYearFrom(Number(e.target.value))}
+                    onChange={(e) => setYearFrom(e.target.value)}
                     required
                   />
                 </FormControl>
@@ -287,7 +293,7 @@ function LatentAssociation() {
                     label="Year to:"
                     name="year_to"
                     value={yearTo}
-                    onChange={e => setYearTo(Number(e.target.value))}
+                    onChange={(e) => setYearTo(e.target.value)}
                     required
                   />
                 </FormControl>
@@ -322,9 +328,9 @@ function LatentAssociation() {
           associations.length !== 0 &&
           concept1.length !== 0 &&
           concept2.length !== 0 && (
-            <div className={classes.chartContainer}>
+            <Card className={classes.chartContainer}>
               <h3 className={classes.chartTitle}>
-                {MEDIA_OUTLETS.find(obj => obj.value === outlets[0]).title}
+                {MEDIA_OUTLETS.find((obj) => obj.value === outlets[0]).title}
               </h3>
               <ResponsiveContainer>
                 <LineChart
@@ -365,7 +371,7 @@ function LatentAssociation() {
                   />
                 </LineChart>
               </ResponsiveContainer>
-            </div>
+            </Card>
           )
         )}
       </div>

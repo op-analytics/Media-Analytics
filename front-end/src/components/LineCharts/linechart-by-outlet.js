@@ -1,3 +1,4 @@
+import Card from '@material-ui/core/Card';
 import Grid from '@material-ui/core/Grid';
 import PropTypes, { arrayOf, number, shape, string } from 'prop-types';
 import React from 'react';
@@ -35,7 +36,7 @@ function LinechartByOutlet({ datasets, formParameters, mediaOutlets }) {
 
   return (
     <Grid key="container" item container xs={12} spacing={2} justify="center">
-      {datasets.map(dataset => (
+      {datasets.map((dataset) => (
         <Grid
           key={dataset.title}
           item
@@ -43,7 +44,7 @@ function LinechartByOutlet({ datasets, formParameters, mediaOutlets }) {
           xs={12}
           className={sharedClasses.gridItemChart}
         >
-          <div className={sharedClasses.chartContainer} key={dataset.title}>
+          <Card className={sharedClasses.chartContainer} key={dataset.title}>
             <h3 className={sharedClasses.chartTitle}>{dataset.title}</h3>
             <ResponsiveContainer>
               <LineChart
@@ -79,7 +80,7 @@ function LinechartByOutlet({ datasets, formParameters, mediaOutlets }) {
                   )}
                 />
                 <Tooltip
-                  itemSorter={item1 => item1.value * -1}
+                  itemSorter={(item1) => item1.value * -1}
                   content={createTooltip(
                     sharedClasses,
                     words,
@@ -91,8 +92,8 @@ function LinechartByOutlet({ datasets, formParameters, mediaOutlets }) {
                   )}
                 />
 
-                {words.map(word => {
-                  return outlets.map(outlet => (
+                {words.map((word) => {
+                  return outlets.map((outlet) => (
                     <Line
                       key={word + outlet}
                       type="monotone"
@@ -112,7 +113,7 @@ function LinechartByOutlet({ datasets, formParameters, mediaOutlets }) {
                 })}
               </LineChart>
             </ResponsiveContainer>
-          </div>
+          </Card>
         </Grid>
       ))}
     </Grid>
