@@ -98,6 +98,9 @@ const useStyles = makeStyles((theme) => ({
     width: '45vw',
     minWidth: '400px',
   },
+  circularProgress: {
+    marginTop: '40px',
+  },
 }));
 
 const MEDIA_OUTLETS = config.mediaOutlets.association;
@@ -322,7 +325,7 @@ function LatentAssociation() {
         {errors.length > 0 ? <FeedbackBar errors={errors} /> : null}
 
         {loading ? (
-          <CircularProgress />
+          <CircularProgress className={classes.circularProgress} />
         ) : (
           formSubmitted &&
           associations.length !== 0 &&
