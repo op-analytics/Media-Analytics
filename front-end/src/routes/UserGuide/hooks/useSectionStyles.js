@@ -1,19 +1,8 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 export const useSectionStyles = makeStyles({
-  container: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    flexDirection: 'column',
-    overflow: 'hidden',
-    width: '50vw',
-    minWidth: '22em',
-    margin: '0 auto',
-    padding: '0px',
-  },
   div: {
-    padding: '1rem 2rem 0rem 2rem',
+    paddingBottom: '1rem',
   },
   listDiv: {
     paddingLeft: '1rem',

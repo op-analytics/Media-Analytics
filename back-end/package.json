@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "nodemon",
     "lint": "eslint src/ --ext .ts",
-    "build": "tsc && babel ./src --out-dir ./dist --extensions '.ts,.js'",
+    "build": "tsc && babel ./src --out-dir ./dist --extensions '.ts,.js' && cp ./src/swagger.json ./dist/swagger.json",
     "start": "node dist/index.js"
   },
   "keywords": [],
