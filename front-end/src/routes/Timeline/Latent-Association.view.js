@@ -349,7 +349,6 @@ function LatentAssociation() {
                   <XAxis dataKey="yearRange" tickMargin={15} />
                   <YAxis domain={['auto', 'auto']} />
                   <Legend
-                    layout="vertical"
                     align="center"
                     payload={createLatentAssociationLegendPayload(
                       singleLatentAssociationDataset(associations).data,
