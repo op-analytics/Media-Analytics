@@ -66,7 +66,7 @@ function App() {
   return (
     // Wait until we have authenticated before showing the app
     !authenticating && (
-      <Nav title={config.title} links={links}>
+      <Nav title={config.siteTitle} links={links}>
         <Switch>
           <Route exact path="/" render={() => <Redirect to="/frequency" />} />
           <LoggedOutRoute path="/confirmation" component={Confirmation} />
