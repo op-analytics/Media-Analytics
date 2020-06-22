@@ -19,7 +19,7 @@ import React, { useMemo, useState } from 'react';
 import CsvDownloadButton from '../../components/CsvDownloadButton';
 import FeedbackBar from '../../components/FeedbackBar';
 import LineCharts from '../../components/LineCharts';
-
+import config from '../../config';
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -60,19 +60,13 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const mediaOutlets = [
-  { title: 'New York Times', value: 'nyt' },
-  { title: 'Wall Street Journal', value: 'wsj' },
-  { title: 'The Guardian', value: 'guardian' },
-  { title: 'HuffPost', value: 'hp' },
-];
-
-const displayOptions = [
-  { name: 'On a single chart', value: 'single' },
-  { name: 'On individual charts', value: 'multiple' },
-  { name: 'Grouped by media outlet', value: 'byOutlet' },
-  { name: 'Grouped by word', value: 'byWord' },
-];
+const MEDIA_OUTLETS = config.mediaOutlets.frequency;
+const DISPLAY_OPTIONS = config.frequencyDisplayOptions;
+const MIN_YEAR = config.yearRange.from;
+const MAX_YEAR = config.yearRange.to;
+const PARAMETER_LIMIT = config.parameterLimits.frequency;
+const Y_AXIS_METRICS = config.frequencyAxisMetrics;
+const CSV_DOWNLOAD_NAME = config.csvDownloadNames.frequency;
 
 const getDownloadData = (currentData, key, yearFrom, yearTo) => {
   const dataToDownload = [];
@@ -82,28 +76,20 @@ const getDownloadData = (currentData, key, yearFrom, yearTo) => {
       dataToDownload.push({
         year,
         value,
-        mediaOutlet: mediaOutlets.find(obj => obj.value === outlet).title,
+        mediaOutlet: MEDIA_OUTLETS.find(obj => obj.value === outlet).title,
         word,
       });
   });
   return dataToDownload;
 };
-const yAxisMetrics = [
-  { name: 'Frequency', value: 'freq' },
-  { name: 'Count', value: 'count' },
-  { name: 'Rank', value: 'rank' },
-];
 
 /**
  * The frequency timeline page component
  * @component
  */
 function Frequency() {
-  const MIN_YEAR = 1970;
-  const MAX_YEAR = 2020;
-  const PARAMETER_LIMIT = 4;
-
   const classes = useStyles();
+
   const [yearFrom, setYearFrom] = useState(MIN_YEAR);
   const [yearTo, setYearTo] = useState(MAX_YEAR);
   const [yAxisMetric, setYAxisMetric] = useState('freq');
@@ -159,7 +145,7 @@ function Frequency() {
         <CsvDownloadButton
           data={dataToDownload}
           headers={csvHeaders}
-          filename="ma-word-frequency.csv"
+          filename={CSV_DOWNLOAD_NAME}
         />
       ) : null}
       <div className={classes.container}>
@@ -199,7 +185,7 @@ function Frequency() {
                   <Autocomplete
                     multiple
                     id="tags-standard"
-                    options={mediaOutlets}
+                    options={MEDIA_OUTLETS}
                     getOptionLabel={option => option.title}
                     filterSelectedOptions
                     filterOptions={(options, state) => {
@@ -291,7 +277,7 @@ function Frequency() {
                     value={yAxisMetric}
                     onChange={e => setYAxisMetric(e.target.value)}
                   >
-                    {yAxisMetrics.map(metric => (
+                    {Y_AXIS_METRICS.map(metric => (
                       <MenuItem key={metric.value} value={metric.value}>
                         {metric.name}
                       </MenuItem>
@@ -327,7 +313,7 @@ function Frequency() {
                     value={displayOption}
                     onChange={e => setDisplayOption(e.target.value)}
                   >
-                    {displayOptions.map(option => (
+                    {DISPLAY_OPTIONS.map(option => (
                       <MenuItem key={option.value} value={option.value}>
                         {option.name}
                       </MenuItem>
@@ -356,11 +342,7 @@ function Frequency() {
           </form>
         </Card>
 
-        { errors.length > 0 ? (
-          <FeedbackBar
-            errors={errors}
-          />
-        ) : null }
+        {errors.length > 0 ? <FeedbackBar errors={errors} /> : null}
 
         {loading ? (
           <CircularProgress />
@@ -378,7 +360,7 @@ function Frequency() {
                 displayNormalised: normalised,
                 displayOption,
               }}
-              mediaOutlets={mediaOutlets}
+              mediaOutlets={MEDIA_OUTLETS}
             />
           )
         )}

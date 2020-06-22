@@ -43,9 +43,7 @@ function AboutSection() {
         usage in a comprehensive sample of news and opinion articles from popular
         news media outlets.
       </Typography>
-      <h2 className={classes.sectionHeadings}>
-        Disclaimer
-      </h2>
+      <h2 className={classes.sectionHeadings}>Disclaimer</h2>
       <Typography
         variant="body1"
         component="p"
@@ -75,9 +73,7 @@ function AboutSection() {
         to find the funding to use cloud infrastructure and lift this restriction
         before long.
       </Typography>
-      <h2 className={classes.sectionHeadings}>
-        Contact
-      </h2>
+      <h2 className={classes.sectionHeadings}>Contact</h2>
       <Typography
         variant="body1"
         component="p"
@@ -122,9 +118,7 @@ function AboutSection() {
           </li>
         </ul>
       </div>
-      <h2 className={classes.sectionHeadings}>
-        Frequency metrics
-      </h2>
+      <h2 className={classes.sectionHeadings}>Frequency metrics</h2>
       <Typography
         variant="body1"
         component="p"
@@ -159,9 +153,7 @@ function AboutSection() {
         represents the frequency rank of a word in the entire vocabulary of that
         year.
       </Typography>
-      <h2 className={classes.sectionHeadings}>
-        Latent associations
-      </h2>
+      <h2 className={classes.sectionHeadings}>Latent associations</h2>
       <Typography
         variant="body1"
         component="p"
@@ -199,9 +191,7 @@ function AboutSection() {
         iterations (epochs) through the corpus=5. The exponent used to shape the
         negative sampling distribution was 0.75.
       </Typography>
-      <h2 className={classes.sectionHeadings}>
-        Aside
-      </h2>
+      <h2 className={classes.sectionHeadings}>Aside</h2>
       <Typography
         variant="body1"
         component="p"

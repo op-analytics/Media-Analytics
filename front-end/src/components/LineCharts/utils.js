@@ -442,7 +442,7 @@ export function singleLatentAssociationDataset(dataset) {
     data: [],
   };
 
-  dataset.forEach ( association => {
+  dataset.forEach(association => {
     let yearRangeObject = summaryObject.data.find(
       obj => obj.yearRange === association.yearRange,
     );
@@ -453,7 +453,7 @@ export function singleLatentAssociationDataset(dataset) {
     }
     yearRangeObject.association = association.association;
     yearRangeObject.outlet = association.outlet;
-  })
+  });
 
   summaryObject.data.sort(
     (x, y) =>
@@ -492,6 +492,6 @@ export const createLatentAssociationLegendPayload = (
         });
       }
     }
-  })
+  });
   return legendItems;
 };

@@ -1,7 +1,8 @@
 import axios from 'axios';
 
-const API_URL =
-  process.env.NODE_ENV === 'production' ? '/api' : process.env.REACT_APP_API_URL;
+import config from '../config';
+
+const API_URL = config.apiUrl;
 
 /**
   A service to help make requests to the api and
@@ -48,7 +49,7 @@ export default {
    * @returns {Object} The user data for the current logged in user
    */
   async resendEmail(email) {
-    await axios.post(`${API_URL}/auth/confirm/resend`,{email});
+    await axios.post(`${API_URL}/auth/confirm/resend`, { email });
   },
 
   /**

@@ -1,5 +1,5 @@
 /* eslint-disable no-param-reassign */
-import { action, computed,thunk } from 'easy-peasy';
+import { action, computed, thunk } from 'easy-peasy';
 import { push } from 'redux-first-history';
 
 import userService from '../services/user';
@@ -59,7 +59,7 @@ const userModel = {
     ui.clearErrors();
     try {
       await userService.signup(payload);
-      dispatch(push('/confirmation'))
+      dispatch(push('/confirmation'));
     } catch ({ response }) {
       const errors = getErrorsFromResponse(response);
       ui.setErrors(errors);
@@ -71,7 +71,7 @@ const userModel = {
     ui.clearErrors();
     try {
       await userService.resendEmail(payload);
-      dispatch(push('/confirmation'))
+      dispatch(push('/confirmation'));
     } catch ({ response }) {
       const errors = getErrorsFromResponse(response);
       ui.setErrors(errors);

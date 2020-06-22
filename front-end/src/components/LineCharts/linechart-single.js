@@ -1,5 +1,5 @@
 import Grid from '@material-ui/core/Grid';
-import PropTypes, { arrayOf, number,shape, string } from 'prop-types';
+import PropTypes, { arrayOf, number, shape, string } from 'prop-types';
 import React from 'react';
 import {
   CartesianGrid,

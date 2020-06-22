@@ -1,7 +1,8 @@
 import axios from 'axios';
 
-const API_URL =
-  process.env.NODE_ENV === 'production' ? '/api' : process.env.REACT_APP_API_URL;
+import config from '../config';
+
+const API_URL = config.apiUrl;
 
 /**
  * A service to make requests to the api.
@@ -50,6 +51,6 @@ export default {
       `${API_URL}/timeline/frequency`,
       requestData,
     );
-    return data
+    return data;
   },
 };

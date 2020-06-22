@@ -4,7 +4,7 @@ import Link from '@material-ui/core/Link';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import MailOutlineIcon from '@material-ui/icons/MailOutline';
-import React from 'react'
+import React from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 
 const useStyles = makeStyles(theme => ({
@@ -16,27 +16,26 @@ const useStyles = makeStyles(theme => ({
   },
   avatar: {
     margin: theme.spacing(1),
-    width:'5rem',
-    height:'5rem',
+    width: '5rem',
+    height: '5rem',
     backgroundColor: theme.palette.secondary.main,
   },
   mailIcon: {
-    fontSize:'4rem',
+    fontSize: '4rem',
   },
 
   title: {
     margin: '2rem 1rem 0 0',
-    textAlign:"center"
+    textAlign: 'center',
   },
   textBlock: {
     margin: '0.5rem 0',
-    textAlign:"center",
+    textAlign: 'center',
   },
   textContainer: {
-    textAlign:"center",
+    textAlign: 'center',
   },
 }));
-
 
 /**
  * The Confirmation email has been sent page component
@@ -53,9 +52,14 @@ export default function Confirmation() {
         <Typography className={classes.title} component="p" variant="h5">
           Validation email was sent successfully
         </Typography>
-        <Container component="div" maxWidth="sm" className={classes.textContainer}>
+        <Container
+          component="div"
+          maxWidth="sm"
+          className={classes.textContainer}
+        >
           <Typography component="p" variant="body" className={classes.textBlock}>
-            We&apos;ve sent you a link to confirm your email address. Please check your inbox. It could take up to 10 minutes to show up
+            We&apos;ve sent you a link to confirm your email address. Please
+            check your inbox. It could take up to 10 minutes to show up
           </Typography>
           <Typography component="p" variant="body" className={classes.textBlock}>
             If you have already confirmed your email&nbsp;
@@ -67,6 +71,5 @@ export default function Confirmation() {
         </Container>
       </div>
     </Container>
-  )
+  );
 }
-

@@ -8,7 +8,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import MailOutlineIcon from '@material-ui/icons/MailOutline';
-import {useStoreActions, useStoreState } from 'easy-peasy';
+import { useStoreActions, useStoreState } from 'easy-peasy';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { Link as RouterLink } from 'react-router-dom';
@@ -44,7 +44,7 @@ export default function Resend() {
   const resendConfirmationEmail = useStoreActions(state => state.user.resendConfirmationEmail);
   const errors = useStoreState(state => state.ui.errors);
 
-  const submit = ({email}) => (resendConfirmationEmail(email))
+  const submit = ({ email }) => resendConfirmationEmail(email);
 
   let emailHasError = false;
   let emailHelperText = '';

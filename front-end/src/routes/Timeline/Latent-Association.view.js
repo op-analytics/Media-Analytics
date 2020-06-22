@@ -28,6 +28,7 @@ import {
   singleLatentAssociationDataset,
   stringToColour,
 } from '../../components/LineCharts/utils';
+import config from '../../config';
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -99,20 +100,19 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-// TODO Update other functions to use title instead of name, title is required for
-// autocomplete.
-const mediaOutlets = [
-  { title: 'New York Times', value: 'nyt' },
-  { title: 'Wall Street Journal', value: 'wsj' },
-  { title: 'The Guardian', value: 'guardian' },
-];
+const MEDIA_OUTLETS = config.mediaOutlets.association;
+const MIN_YEAR = config.yearRange.from;
+const MAX_YEAR = config.yearRange.to;
+const PARAMETER_LIMIT = config.parameterLimits.frequency;
+const CSV_DOWNLOAD_NAME = config.csvDownloadNames.association;
+const CSV_HEADERS = config.csvDownloadHeaders.association;
 
 const getDownloadData = (currentData, concept1, concept2) => {
   const dataToDownload = [];
   if (currentData) {
     currentData.forEach(item => {
       dataToDownload.push({
-        mediaOutlet: mediaOutlets.find(obj => obj.value === item.outlet).title,
+        mediaOutlet: MEDIA_OUTLETS.find(obj => obj.value === item.outlet).title,
         concept1,
         concept2,
         yearRange: item.yearRange,
@@ -134,8 +134,8 @@ function LatentAssociation() {
   const [formSubmitted, setFormSubmitted] = useState(true);
   const [concept1, setConcept1] = useState([]);
   const [concept2, setConcept2] = useState([]);
-  const [yearFrom, setYearFrom] = useState();
-  const [yearTo, setYearTo] = useState();
+  const [yearFrom, setYearFrom] = useState(MIN_YEAR);
+  const [yearTo, setYearTo] = useState(MAX_YEAR);
   const [outlets, setOutlets] = useState([]);
 
   const errors = useStoreState(state => state.ui.errors);
@@ -145,14 +145,12 @@ function LatentAssociation() {
     state => state.timeline.getAssociations,
   );
 
-  const wordLimit = 1;
-
   const handleDelete = (chip, state, setState) => {
     setState(state.filter(word => word !== chip));
   };
 
   const handleAddChip = (chip, state, setState) => {
-    if (state.length < wordLimit) {
+    if (state.length < PARAMETER_LIMIT) {
       setState([...state, chip]);
     }
     setFormSubmitted(true);
@@ -165,14 +163,6 @@ function LatentAssociation() {
     () => getDownloadData(associations, concept1, concept2),
     [associations, concept1, concept2],
   );
-
-  const csvHeaders = [
-    { label: 'media outlet', key: 'mediaOutlet' },
-    { label: 'concept1', key: 'concept1' },
-    { label: 'concept2', key: 'concept2' },
-    { label: 'year range', key: 'yearRange' },
-    { label: 'association', key: 'association' },
-  ];
 
   const onSubmitHandler = e => {
     e.preventDefault();
@@ -191,8 +181,8 @@ function LatentAssociation() {
       {formSubmitted && associations.length > 0 && !loading ? (
         <CsvDownloadButton
           data={dataToDownload}
-          headers={csvHeaders}
-          filename="ma-latent-association.csv"
+          headers={CSV_HEADERS}
+          filename={CSV_DOWNLOAD_NAME}
         />
       ) : null}
       <div className={classes.container}>
@@ -255,7 +245,7 @@ function LatentAssociation() {
                 <FormControl className={classes.formControl}>
                   <Autocomplete
                     id="outlet"
-                    options={mediaOutlets}
+                    options={MEDIA_OUTLETS}
                     getOptionLabel={option => option.title}
                     filterSelectedOptions
                     required={!outlets.length}
@@ -323,11 +313,7 @@ function LatentAssociation() {
           </form>
         </Card>
 
-        { errors.length > 0 ? (
-          <FeedbackBar
-            errors={errors}
-          />
-        ) : null }
+        {errors.length > 0 ? <FeedbackBar errors={errors} /> : null}
 
         {loading ? (
           <CircularProgress />
@@ -338,7 +324,7 @@ function LatentAssociation() {
           concept2.length !== 0 && (
             <div className={classes.chartContainer}>
               <h3 className={classes.chartTitle}>
-                {mediaOutlets.find(obj => obj.value === outlets[0]).title}
+                {MEDIA_OUTLETS.find(obj => obj.value === outlets[0]).title}
               </h3>
               <ResponsiveContainer>
                 <LineChart

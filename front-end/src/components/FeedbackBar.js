@@ -11,7 +11,7 @@ const useStyles = makeStyles({
   },
 });
 
-let message
+let message;
 
 /**
  * A feedback bar used to show errors on the timeline views
@@ -23,14 +23,16 @@ function FeedbackBar({ errors }) {
   const classes = useStyles();
   switch (errors[0].message) {
     case 'Not Found':
-      message = 'No data matching your words were found'
+      message = 'No data matching your words were found';
       break;
     default:
-      message = errors[0].message
+      message = errors[0].message;
   }
 
   return (
-    <Alert severity="warning" className={classes.alert}>{message}</Alert>
+    <Alert severity="warning" className={classes.alert}>
+      {message}
+    </Alert>
   );
 }
 

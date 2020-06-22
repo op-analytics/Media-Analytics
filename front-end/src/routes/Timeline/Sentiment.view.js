@@ -7,7 +7,7 @@ import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Alert from '@material-ui/lab/Alert';
-import { useStoreActions,useStoreState } from 'easy-peasy';
+import { useStoreActions, useStoreState } from 'easy-peasy';
 import ChipInput from 'material-ui-chip-input';
 import React, { useMemo, useState } from 'react';
 import {
@@ -23,6 +23,7 @@ import {
 
 import CsvDownloadButton from '../../components/CsvDownloadButton';
 import FeedbackBar from '../../components/FeedbackBar';
+import config from '../../config';
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -94,18 +95,25 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const getDownloadData = (currentData) => {
+const MEDIA_OUTLET = config.mediaOutlets.sentiment;
+const MIN_YEAR = config.yearRange.from;
+const MAX_YEAR = config.yearRange.to;
+const PARAMETER_LIMIT = config.parameterLimits.frequency;
+const CSV_DOWNLOAD_NAME = config.csvDownloadNames.sentiment;
+const CSV_HEADERS = config.csvDownloadHeaders.sentiment;
+
+const getDownloadData = currentData => {
   const dataToDownload = [];
   if (currentData) {
-    currentData.forEach( item => {
+    currentData.forEach(item => {
       item.data.forEach(yearItem => {
         dataToDownload.push({
-          mediaOutlet: 'New York Times',
+          mediaOutlet: MEDIA_OUTLET,
           word: item.title,
           year: yearItem.year,
           sentiment: yearItem.sentiment,
         });
-      })
+      });
     });
   }
   return dataToDownload;
@@ -121,36 +129,27 @@ function SentimentAnalysis() {
   const getSentiments = useStoreActions(state => state.timeline.getSentiments);
 
   const [words, setWords] = useState([]);
-  const [yearFrom, setYearFrom] = useState();
-  const [yearTo, setYearTo] = useState();
+  const [yearFrom, setYearFrom] = useState(MIN_YEAR);
+  const [yearTo, setYearTo] = useState(MAX_YEAR);
 
   const classes = useStyles();
 
   const errors = useStoreState(state => state.ui.errors);
-
-  const wordLimit = 1;
 
   const handleDelete = (chip, state, setState) => {
     setState(state.filter(word => word !== chip));
   };
 
   const handleAddChip = (chip, state, setState) => {
-    if (state.length < wordLimit) {
+    if (state.length < PARAMETER_LIMIT) {
       setState([...state, chip]);
     }
   };
 
-  const dataToDownload = useMemo(
-    () => getDownloadData(sentiments, words[0]),
-    [sentiments, words],
-  );
-
-  const csvHeaders = [
-    { label: 'media outlet', key: 'mediaOutlet' },
-    { label: 'word', key: 'word' },
-    { label: 'year', key: 'year' },
-    { label: 'sentiment', key: 'sentiment' },
-  ];
+  const dataToDownload = useMemo(() => getDownloadData(sentiments, words[0]), [
+    sentiments,
+    words,
+  ]);
 
   const onSubmitHandler = e => {
     e.preventDefault();
@@ -159,11 +158,11 @@ function SentimentAnalysis() {
 
   return (
     <>
-      { sentiments && !loading ? (
+      {sentiments && !loading ? (
         <CsvDownloadButton
           data={dataToDownload}
-          headers={csvHeaders}
-          filename="ma-sentiment-analysis.csv"
+          headers={CSV_HEADERS}
+          filename={CSV_DOWNLOAD_NAME}
         />
       ) : null}
       <br />
@@ -299,4 +298,4 @@ function SentimentAnalysis() {
   );
 }
 
-export default  SentimentAnalysis;
+export default SentimentAnalysis;

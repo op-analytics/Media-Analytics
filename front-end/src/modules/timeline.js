@@ -1,5 +1,5 @@
 /* eslint-disable no-param-reassign */
-import { action,thunk } from 'easy-peasy';
+import { action, thunk } from 'easy-peasy';
 
 import timelineService from '../services/timeline';
 import { getErrorsFromResponse } from './shared/errorHelpers';

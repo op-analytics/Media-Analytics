@@ -1,6 +1,6 @@
 import { createStore } from 'easy-peasy';
 
-import router, { createReduxHistory,routerMiddleware } from './router';
+import router, { createReduxHistory, routerMiddleware } from './router';
 import timeline from './timeline';
 import ui from './ui';
 import user from './user';

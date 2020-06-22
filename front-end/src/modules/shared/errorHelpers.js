@@ -17,6 +17,6 @@ function createGeneralError(errorMessage) {
  * @returns {Object[]}
  */
 export function getErrorsFromResponse(response) {
-  const errors = response.errors || response.data.errors || null
-  return errors || [createGeneralError(response.statusText)]
+  const errors = response.errors || response.data.errors || null;
+  return errors || [createGeneralError(response.statusText)];
 }

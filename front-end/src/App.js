@@ -7,17 +7,18 @@ import { push } from 'redux-first-history';
 import LoggedInRoute from './components/Auth/LoggedInRoute';
 import LoggedOutRoute from './components/Auth/LoggedOutRoute';
 import Nav from './components/Nav';
-import About from './routes/About';
-import Confirmation from './routes/Auth/Confirmation';
+import config from './config';
 //
 // Routes
+import About from './routes/About';
+import Confirmation from './routes/Auth/Confirmation';
 import Login from './routes/Auth/Login';
 import Resend from './routes/Auth/Resend';
 import Signup from './routes/Auth/Signup';
 import NotFound from './routes/NotFound.view';
 import FrequencyTimeline from './routes/Timeline/Frequency.view';
 import LatentAssociationTimeline from './routes/Timeline/Latent-Association.view';
-import UserGuide from './routes/UserGuide'
+import UserGuide from './routes/UserGuide';
 
 // Links to show on the side bar
 // Each sub array will have a divider separating them
@@ -59,13 +60,13 @@ function App() {
 
   // Scroll to the top of the page each time the page changes
   useEffect(() => {
-    window.scrollTo(0,0);
+    window.scrollTo(0, 0);
   }, [location]);
 
   return (
     // Wait until we have authenticated before showing the app
     !authenticating && (
-      <Nav title="Media-Analytics.org" links={links}>
+      <Nav title={config.title} links={links}>
         <Switch>
           <Route exact path="/" render={() => <Redirect to="/frequency" />} />
           <LoggedOutRoute path="/confirmation" component={Confirmation} />

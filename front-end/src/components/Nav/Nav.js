@@ -68,8 +68,7 @@ const useStyles = makeStyles(theme => ({
   },
   navSection: {
     padding: 0,
-
-  }
+  },
 }));
 
 /**
@@ -94,7 +93,12 @@ function Nav({ children, title, links }) {
           <Divider />
           <List className={classes.navSection}>
             {section.map(({ href, text }) => (
-              <NavLink to={href} className={classes.link} key={href + text} activeClassName={classes.isActive}>
+              <NavLink
+                to={href}
+                className={classes.link}
+                key={href + text}
+                activeClassName={classes.isActive}
+              >
                 <ListItem button key={text} className={classes.navItem}>
                   <ListItemText primary={text} />
                 </ListItem>
