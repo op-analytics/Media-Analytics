@@ -3,6 +3,7 @@ import SMTPTransport from 'nodemailer/lib/smtp-transport';
 
 import config from '@/config';
 
+// Email transport options using the gmail oauth settings in the config
 const transportOptions: SMTPTransport.Options = {
   service: 'Gmail',
   host: 'smtp.gmail.com',
@@ -17,7 +18,10 @@ const transportOptions: SMTPTransport.Options = {
   },
 };
 
+// Create an email transport using the options from above
 const transport = nodemailer.createTransport(transportOptions);
+
+// Verify that the transport is valid
 transport.verify();
 
 export default transport;

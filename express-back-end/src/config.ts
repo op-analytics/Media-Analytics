@@ -51,11 +51,14 @@ const envVarsSchema = Joi.object({
   .unknown()
   .required();
 
+// Validate the env against the schema
 const { error, value: envVars } = envVarsSchema.validate(process.env);
+// If there are errors throw them (This crashes the app)
 if (error) {
   throw new Error(`Config validation error: ${error.message}`);
 }
 
+// Export the env as a nicer object
 const config = {
   env: envVars.NODE_ENV,
   port: envVars.PORT,

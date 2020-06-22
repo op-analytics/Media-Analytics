@@ -1,4 +1,4 @@
-import express from 'express';
+import {Router} from 'express';
 
 import { ensureLoggedIn } from '../auth/middlewares';
 import { validateBody } from '../middlewares';
@@ -15,7 +15,7 @@ import {
   SentimentSchema,
 } from './schemas';
 
-const router = express.Router();
+const router = Router();
 
 router.get('/', MainController.home);
 
