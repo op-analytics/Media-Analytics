@@ -344,7 +344,7 @@ function LatentAssociation() {
                 >
                   <CartesianGrid strokeDasharray="3 3" />
                   <XAxis dataKey="yearRange" tickMargin={15} />
-                  <YAxis />
+                  <YAxis domain={['auto', 'auto']} />
                   <Legend
                     layout="vertical"
                     align="center"
