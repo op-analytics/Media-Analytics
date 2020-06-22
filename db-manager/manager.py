@@ -123,13 +123,14 @@ def cli():
 def add(data_type, media_outlet, drop_collection, file):
     MediaOutlet.drop_collection()
     for new_media_outlet in media_outlets:
-        MediaOutlet(new_media_outlet).save()
+        MediaOutlet(name=new_media_outlet).save()
 
     if file.endswith(".pkl"):
         with open(file, "rb") as data_file:
             if drop_collection:
                 mongo_documents[data_type].drop_collection()
             pickle_data = pickle.load(data_file)
+            print(pickle_data.keys())
             for year, data in pickle_data.items():
                 data_year = year
                 if data_type == "latent_association":
@@ -148,21 +149,21 @@ def add(data_type, media_outlet, drop_collection, file):
                         for word, word_data in year_data:
                             if data_type == "frequency":
                                 new_word = mongo_documents[data_type](
-                                    word, year, media_outlet, **word_data
+                                    word=word, year=year, media_outlet=media_outlet, rank=word_data["rank"], count=word_data["count"], freq=word_data["freq"] 
                                 )
-                            if data_type == "sentiment":
-                                new_word = mongo_documents[data_type](
-                                    word, year, media_outlet, word_data
-                                )
+                            #if data_type == "sentiment":
+                            #    new_word = mongo_documents[data_type](
+                            #        word, year, media_outlet, word_data
+                            #    )
 
                             if data_type == "latent_association":
                                 year_from, year_to = year.split("-")
                                 new_word = mongo_documents[data_type](
-                                    word,
-                                    year_from,
-                                    year_to,
-                                    media_outlet,
-                                    word_data["vectors"],
+                                    word=word,
+                                    year_from=year_from,
+                                    year_to=year_to,
+                                    media_outlet=media_outlet,
+                                    vectors=word_data["vectors"],
                                 )
                             new_word.save()
 
