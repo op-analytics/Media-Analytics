@@ -25,7 +25,7 @@ const useStyles = makeStyles(theme => ({
     flexGrow: 1,
   },
   drawer: {
-    [theme.breakpoints.up('sm')]: {
+    [theme.breakpoints.up('md')]: {
       width: drawerWidth,
       flexShrink: 0,
     },
@@ -35,7 +35,7 @@ const useStyles = makeStyles(theme => ({
   },
   menuButton: {
     marginRight: theme.spacing(2),
-    [theme.breakpoints.up('sm')]: {
+    [theme.breakpoints.up('md')]: {
       display: 'none',
     },
   },
@@ -139,8 +139,8 @@ function Nav({ children, title, links }) {
         </Toolbar>
       </AppBar>
       <nav className={classes.drawer}>
-        {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
-        <Hidden smUp implementation="js">
+        {/* Small page width drawer */}
+        <Hidden mdUp implementation="js">
           <Drawer
             variant="temporary"
             anchor="left"
@@ -156,7 +156,8 @@ function Nav({ children, title, links }) {
             {drawer}
           </Drawer>
         </Hidden>
-        <Hidden xsDown implementation="js">
+        {/* Large page width drawer */}
+        <Hidden smDown implementation="js">
           <Drawer
             classes={{
               paper: classes.drawerPaper,
