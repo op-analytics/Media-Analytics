@@ -115,7 +115,9 @@ export const createTooltip = (
               break;
             case 'byWord':
               tooltipLabel = `${formattedOutlet}: `;
-              color = stringToColour(outlet);
+              color = stringToColour(
+                mediaOutlets.find((obj) => obj.value === outlet).title,
+              );
               break;
             case 'byOutlet':
               tooltipLabel = `${formattedWord}: `;
@@ -227,7 +229,9 @@ export const createLegendPayload = (
                   break;
                 case 'byWord':
                   legendItem.value = formattedOutlet;
-                  legendItem.color = stringToColour(outlet);
+                  legendItem.color = stringToColour(
+                    mediaOutlets.find((obj) => obj.value === outlet).title,
+                  );
                   break;
                 default:
                   legendItem.value = `${formattedOutlet} - ${formattedWord}`;

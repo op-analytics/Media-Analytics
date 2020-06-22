@@ -98,13 +98,19 @@ function LinechartByWord({ datasets, formParameters, mediaOutlets }) {
                       key={word + outlet}
                       type="monotone"
                       dataKey={outlet + word + yAxisKey}
-                      stroke={stringToColour(outlet)}
-                      fill={stringToColour(outlet)}
+                      stroke={stringToColour(
+                        mediaOutlets.find((obj) => obj.value === outlet).title,
+                      )}
+                      fill={stringToColour(
+                        mediaOutlets.find((obj) => obj.value === outlet).title,
+                      )}
                       connectNulls
                       strokeWidth={3}
                       dot={<CustomizedDot number={0} />}
                       activeDot={{
-                        stroke: stringToColour(outlet),
+                        stroke: stringToColour(
+                          mediaOutlets.find((obj) => obj.value === outlet).title,
+                        ),
                         strokeWidth: 7,
                         border: 'white',
                       }}
