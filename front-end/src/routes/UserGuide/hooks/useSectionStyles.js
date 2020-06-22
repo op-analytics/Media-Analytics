@@ -7,7 +7,10 @@ export const useSectionStyles = makeStyles({
     justifyContent: 'center',
     flexDirection: 'column',
     overflow: 'hidden',
-    width: '60%',
+    width: '50vw',
+    minWidth: '22em',
+    margin: '0 auto',
+    padding: '0px',
   },
   div: {
     padding: '1rem 2rem 0rem 2rem',
