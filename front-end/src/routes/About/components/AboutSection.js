@@ -130,7 +130,7 @@ function AboutSection() {
         figure below illustrates.
       </Typography>
       <img
-        src="/about/nyt-normalized-word-frequency.png"
+        src="/assets/about/nyt-normalized-word-frequency.png"
         alt="Charts displaying word use frequency by the New York Times newspaper"
         className={classes.sectionImage}
       />
@@ -172,7 +172,7 @@ function AboutSection() {
         following figure illustrates.
       </Typography>
       <img
-        src="/about/nyt-association-between-words.png"
+        src="/assets/about/nyt-association-between-words.png"
         alt="Charts displaying word pair associations in the New York Times newspaper"
         className={classes.sectionImage}
       />

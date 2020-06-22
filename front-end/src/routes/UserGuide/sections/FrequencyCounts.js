@@ -24,7 +24,7 @@ export default function FrequencyCounts() {
         chip itself.
       </Typography>
       <img
-        src="/userguide/frequency-word-remove.png"
+        src="/assets/userguide/frequency-word-remove.png"
         className={classes.image}
         alt="Input pane"
       />
@@ -48,7 +48,7 @@ export default function FrequencyCounts() {
         autocomplete.
       </Typography>
       <img
-        src="/userguide/frequency-filter-outlets.png"
+        src="/assets/userguide/frequency-filter-outlets.png"
         className={classes.image}
         alt="Input form filtering outlets"
       />
