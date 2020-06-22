@@ -2,6 +2,7 @@ import { createStore } from 'easy-peasy';
 
 import router, { createReduxHistory,routerMiddleware } from './router';
 import timeline from './timeline';
+import ui from './ui';
 import user from './user';
 
 const isDevelopment = process.env.NODE_ENV === 'development';
@@ -10,6 +11,7 @@ const isDevelopment = process.env.NODE_ENV === 'development';
 const store = createStore(
   {
     timeline,
+    ui,
     user,
     router,
   },

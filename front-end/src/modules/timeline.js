@@ -10,48 +10,46 @@ import { getErrorsFromResponse } from './shared/errorHelpers';
  */
 const timelineModel = {
   // Timeline state
-  errors: [],
-  loading: false,
   frequencies: [],
   associations: [],
   sentiments: [],
 
   // Actions and thunks
-  getAssociations: thunk(async (actions, payload) => {
-    actions.setErrors([]);
-    actions.setLoading(true);
+  getAssociations: thunk(async (actions, payload,{getStoreActions}) => {
+    const {ui} = getStoreActions();
+    ui.clearErrors();
+    ui.setLoading(true);
     actions.setAssociations([])
-    actions.setErrors([])
     try {
       const associations = await timelineService.getAssociations(payload);
       actions.setAssociations(associations);
     } catch ({ response }) {
       const errors = getErrorsFromResponse(response);
-      actions.setErrors(errors);
+      ui.setErrors(errors);
     }
-    actions.setLoading(false);
+    ui.setLoading(false);
   }),
 
-  getFrequencies: thunk(async (actions, payload) => {
-    actions.setErrors([]);
-    actions.setLoading(true);
-    actions.setFrequencies([])
-    actions.setErrors([])
+  getFrequencies: thunk(async (actions, payload,{getStoreActions}) => {
+    const {ui} = getStoreActions();
+    ui.clearErrors();
+    ui.setLoading(true);
+    actions.setFrequencies([]);
     try {
       const frequencies = await timelineService.getFrequencies(payload);
       actions.setFrequencies(frequencies);
     } catch ({ response }) {
       const errors = getErrorsFromResponse(response);
-      actions.setErrors(errors);
+      ui.setErrors(errors);
     }
-    actions.setLoading(false);
+    ui.setLoading(false);
   }),
 
-  getSentiments: thunk(async (actions, payload) => {
-    actions.setErrors([]);
-    actions.setLoading(true);
+  getSentiments: thunk(async (actions, payload,{getStoreActions}) => {
+    const {ui} = getStoreActions();
+    ui.clearErrors();
+    ui.setLoading(true);
     actions.setSentiments([])
-    actions.setErrors([])
     try {
       const sentiments = await timelineService.getSentiments(payload);
       const cleanedSentiments = sentiments.map(dataset => ({
@@ -61,9 +59,9 @@ const timelineModel = {
       actions.setSentiments(cleanedSentiments);
     } catch ({ response }) {
       const errors = getErrorsFromResponse(response);
-      actions.setErrors(errors);
+      ui.setErrors(errors);
     }
-    actions.setLoading(false);
+    ui.setLoading(false);
   }),
 
   setLoading: action((state, payload) => {

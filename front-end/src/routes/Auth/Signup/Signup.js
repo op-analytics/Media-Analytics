@@ -53,7 +53,7 @@ export default function SignUp() {
   const [isHuman, setIsHuman] = useState(false);
   const [snackBarOpen, setSnackBarOpen] = useState(false);
 
-  const errors = useStoreState(state => state.user.errors);
+  const errors = useStoreState(state => state.ui.errors);
   const signup = useStoreActions(state => state.user.signup);
 
   let nameHasError = false;

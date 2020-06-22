@@ -42,7 +42,7 @@ export default function Login() {
   const { register, handleSubmit } = useForm();
 
   const login = useStoreActions(state => state.user.login);
-  const errors = useStoreState(state => state.user.errors);
+  const errors = useStoreState(state => state.ui.errors);
 
   const submit = ({ email, password }) => login({ email, password });
 

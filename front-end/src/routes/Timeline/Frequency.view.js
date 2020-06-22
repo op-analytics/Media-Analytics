@@ -13,7 +13,7 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import ToggleButton from '@material-ui/lab/ToggleButton';
 import { useStoreActions, useStoreState } from 'easy-peasy';
 import ChipInput from 'material-ui-chip-input';
-import React, { useEffect,useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 
 // import Autocomplete from '@material-ui/lab/Autocompelte';
 import CsvDownloadButton from '../../components/CsvDownloadButton';
@@ -112,15 +112,11 @@ function Frequency() {
   const [displayOption, setDisplayOption] = useState('byOutlet');
   const [words, setWords] = useState([]);
   const [formSubmitted, setFormSubmitted] = useState(true);
-  const loading = useStoreState(state => state.timeline.loading);
+  const loading = useStoreState(state => state.ui.loading);
   const frequencies = useStoreState(state => state.timeline.frequencies);
   const getFrequencies = useStoreActions(state => state.timeline.getFrequencies);
 
-  const setErrors = useStoreActions(state => state.timeline.setErrors);
-  useEffect(() => {
-    setErrors([])
-  }, [setErrors]);
-  const errors = useStoreState(state => state.timeline.errors);
+  const errors = useStoreState(state => state.ui.errors);
 
   const dataToDownload = useMemo(
     () => getDownloadData(frequencies, yAxisMetric, yearFrom, yearTo),

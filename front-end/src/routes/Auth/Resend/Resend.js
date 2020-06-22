@@ -42,7 +42,7 @@ export default function Resend() {
   const { register, handleSubmit } = useForm();
 
   const resendConfirmationEmail = useStoreActions(state => state.user.resendConfirmationEmail);
-  const errors = useStoreState(state => state.user.errors);
+  const errors = useStoreState(state => state.ui.errors);
 
   const submit = ({email}) => (resendConfirmationEmail(email))
 

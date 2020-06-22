@@ -12,7 +12,6 @@ import { getErrorsFromResponse } from './shared/errorHelpers';
 const userModel = {
   // User state
   user: null,
-  errors: [],
 
   // Computed properties
   // Property to check if the current user is authenticated
@@ -28,7 +27,9 @@ const userModel = {
   }),
 
   // Actions and thunks
-  login: thunk(async (actions, payload) => {
+  login: thunk(async (actions, payload,{getStoreActions}) => {
+    const {ui} = getStoreActions();
+    ui.clearErrors();
     try {
       const token = await userService.login(payload);
       await userService.authenticate(token);
@@ -36,38 +37,44 @@ const userModel = {
       actions.setUser(user);
     } catch ({ response }) {
       const errors = getErrorsFromResponse(response);
-      actions.setErrors(errors);
+      ui.setErrors(errors);
     }
   }),
 
-  authenticate: thunk(async (actions, payload) => {
+  authenticate: thunk(async (actions, payload,{getStoreActions}) => {
+    const {ui} = getStoreActions()
+    ui.clearErrors();
     try {
       await userService.authenticate(payload);
       const user = await userService.getLoggedInUser();
       actions.setUser(user);
     } catch ({ response }) {
       const errors = getErrorsFromResponse(response);
-      actions.setErrors(errors);
+      ui.setErrors(errors);
     }
   }),
 
-  signup: thunk(async (actions, payload,{dispatch}) => {
+  signup: thunk(async (actions, payload,{dispatch,getStoreActions}) => {
+    const {ui} = getStoreActions()
+    ui.clearErrors();
     try {
       await userService.signup(payload);
       dispatch(push('/confirmation'))
     } catch ({ response }) {
       const errors = getErrorsFromResponse(response);
-      actions.setErrors(errors);
+      ui.setErrors(errors);
     }
   }),
 
-  resendConfirmationEmail: thunk(async (actions, payload,{dispatch}) => {
+  resendConfirmationEmail: thunk(async (actions, payload,{dispatch,getStoreActions}) => {
+    const {ui} = getStoreActions()
+    ui.clearErrors();
     try {
       await userService.resendEmail(payload);
       dispatch(push('/confirmation'))
     } catch ({ response }) {
       const errors = getErrorsFromResponse(response);
-      actions.setErrors(errors);
+      ui.setErrors(errors);
     }
   }),
 

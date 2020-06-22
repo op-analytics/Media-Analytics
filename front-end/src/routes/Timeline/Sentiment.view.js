@@ -9,7 +9,7 @@ import TextField from '@material-ui/core/TextField';
 import Alert from '@material-ui/lab/Alert';
 import { useStoreActions,useStoreState } from 'easy-peasy';
 import ChipInput from 'material-ui-chip-input';
-import React, { useEffect,useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import {
   CartesianGrid,
   Legend,
@@ -117,7 +117,7 @@ const getDownloadData = (currentData) => {
  */
 function SentimentAnalysis() {
   const sentiments = useStoreState(state => state.timeline.sentiments);
-  const loading = useStoreState(state => state.timeline.loading);
+  const loading = useStoreState(state => state.ui.loading);
   const getSentiments = useStoreActions(state => state.timeline.getSentiments);
 
   const [words, setWords] = useState([]);
@@ -126,11 +126,7 @@ function SentimentAnalysis() {
 
   const classes = useStyles();
 
-  const setErrors = useStoreActions(state => state.timeline.setErrors);
-  useEffect(() => {
-    setErrors([]);
-  }, [setErrors]);
-  const errors = useStoreState(state => state.timeline.errors);
+  const errors = useStoreState(state => state.ui.errors);
 
   const wordLimit = 1;
 
