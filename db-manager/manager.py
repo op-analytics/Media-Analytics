@@ -15,9 +15,9 @@ from mongoengine import (
 
 connect(
     db="nyta",
-    username="yourUsername",
-    password="yourPassword",
-    host="mongodb://dbServer:port/nyta?authSource=admin",
+    username="",
+    password="",
+    host="mongodb://localhost/nyta?authSource=admin",
 )
 
 
@@ -48,6 +48,13 @@ class Sentiment(Document):
     year = IntField(required=True)
     media_outlet = ReferenceField(MediaOutlet, required=True)
     sentiment = FloatField(required=True)
+    meta = {
+        'indexes': [
+            'word',
+            'media_outlet',
+            'year',
+        ]
+    }
 
 
 class LatentAssociation(Document):
@@ -56,6 +63,14 @@ class LatentAssociation(Document):
     year_to = IntField(required=True)
     media_outlet = ReferenceField(MediaOutlet, required=True)
     vectors = ListField(required=False)
+    meta = {
+        'indexes': [
+            'word',
+            'media_outlet',
+            'year_from',
+            'year_to',
+        ]
+    }
 
 
 class Frequency(Document):
@@ -65,6 +80,13 @@ class Frequency(Document):
     rank = IntField(required=True)
     count = IntField(required=True)
     freq = FloatField(required=True)
+    meta = {
+        'indexes': [
+            'word',  # text index
+            'media_outlet', # text index
+            'year',
+        ]
+    }
 
 
 mongo_documents = {
