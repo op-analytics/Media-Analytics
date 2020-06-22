@@ -25,13 +25,13 @@ services:
     networks:
       - default
 
-  express-back-end:
+  back-end:
     build:
-      context: ./express-back-end
+      context: ./back-end
       dockerfile: Dockerfile-prod
     ports:
       - 5000:5000
-    env_file: './express-back-end/.env'
+    env_file: './back-end/.env'
     environment:
       - PORT=5000
     networks:
@@ -48,7 +48,7 @@ services:
     networks:
       - default
     depends_on:
-      - express-back-end
+      - back-end
 
   nginx:
     image: nichtj3/nyta-nginx:prod
@@ -62,4 +62,4 @@ services:
       - default
     depends_on:
       - front-end
-      - express-back-end
+      - back-end

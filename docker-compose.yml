@@ -25,16 +25,16 @@ services:
     networks:
       - default
 
-  express-back-end:
+  back-end:
     build:
-      context: ./express-back-end
+      context: ./back-end
       dockerfile: Dockerfile
     volumes:
-      - './express-back-end:/usr/src/app'
+      - './back-end:/usr/src/app'
       - '/usr/src/app/node_modules'
     ports:
       - 5000:5000
-    env_file: './express-back-end/.env'
+    env_file: './back-end/.env'
     environment:
       - PORT=5000
     networks:
@@ -52,6 +52,6 @@ services:
       - 3000:3000
     env_file: './front-end/.env'
     depends_on:
-      - express-back-end
+      - back-end
     networks:
       - default
