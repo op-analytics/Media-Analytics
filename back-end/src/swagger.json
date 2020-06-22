@@ -1,0 +1,581 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "",
+    "version": "1.0",
+    "title": "Media Analytics"
+  },
+  "host": "media-analytics.ict.op.ac.nz",
+  "basePath": "/api",
+  "tags": [
+    {
+      "name": "timeline",
+      "description": "Endpoint for retrieving timeline data."
+    },
+    {
+      "name": "auth",
+      "description": "Endpoint for authentication of a user."
+    }
+  ],
+  "schemes": ["https", "http"],
+  "paths": {
+    "/timeline/frequency": {
+      "post": {
+        "tags": ["timeline"],
+        "summary": "Return frequency statistics for the given parameters.",
+        "description": "",
+        "operationId": "getFrequency",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "frequencyRequest",
+            "in": "body",
+            "description": "Object that has frequency query parameters as properties.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": ["words", "outlets", "year_from", "year_to"],
+              "properties": {
+                "words": {
+                  "description": "Array of words to retrieve data for.",
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "outlets": {
+                  "description": "Array of outlets to retrieve data for.",
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "year_from": {
+                  "description": "The lowest year to return data for.",
+                  "type": "integer"
+                },
+                "year_to": {
+                  "description": "The highest year to return data for.",
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful.",
+            "schema": {
+              "$ref": "#/definitions/FrequencyResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorised"
+          },
+          "404": {
+            "description": "No data found.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "422": {
+            "description": "Invalid body.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "429": {
+            "description": "User has no tokens available to make a request"
+          }
+        },
+        "security": [
+          {
+            "ApiAuth": []
+          }
+        ]
+      }
+    },
+    "/timeline/latent-association": {
+      "post": {
+        "tags": ["timeline"],
+        "summary": "Return associations between the given concepts for the given years.",
+        "description": "",
+        "operationId": "getAssociations",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "associationsRequest",
+            "in": "body",
+            "description": "Object that has associations query parameters as properties",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "concept_1",
+                "concept_2",
+                "outlets",
+                "year_from",
+                "year_to"
+              ],
+              "properties": {
+                "concept_1": {
+                  "description": "Array of words that represent a concept to compare.",
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "concept_2": {
+                  "description": "Array of words that represent a concept to compare.",
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "outlet": {
+                  "description": "An outlet to retrieve data for.",
+                  "type": "string"
+                },
+                "year_from": {
+                  "description": "The lowest year to return data for.",
+                  "type": "integer"
+                },
+                "year_to": {
+                  "description": "The highest year to return data for.",
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful.",
+            "schema": {
+              "$ref": "#/definitions/AssociationResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorised"
+          },
+          "404": {
+            "description": "No data found.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "422": {
+            "description": "Invalid body.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "429": {
+            "description": "User has no tokens available to make a request"
+          }
+        },
+        "security": [
+          {
+            "ApiAuth": []
+          }
+        ]
+      }
+    },
+    "/timeline/sentiment": {
+      "post": {
+        "tags": ["timeline"],
+        "summary": "Return the sentiment for a word in the New York Times",
+        "description": "",
+        "operationId": "getSentiment",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "sentimentRequest",
+            "in": "body",
+            "description": "Object that has frequency query parameters as properties",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": ["word", "year_from", "year_to"],
+              "properties": {
+                "word": {
+                  "description": "Word to retrieve sentiment data for.",
+                  "type": "string"
+                },
+                "year_from": {
+                  "description": "The lowest year to return data for.",
+                  "type": "integer"
+                },
+                "year_to": {
+                  "description": "The highest year to return data for.",
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful.",
+            "schema": {
+              "$ref": "#/definitions/SentimentResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorised"
+          },
+          "404": {
+            "description": "No data found.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "422": {
+            "description": "Invalid body.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "429": {
+            "description": "User has no tokens available to make a request"
+          }
+        },
+        "security": [
+          {
+            "ApiAuth": []
+          }
+        ]
+      }
+    },
+    "/auth/signup": {
+      "post": {
+        "tags": ["auth"],
+        "summary": "Registers a user and sends a verification email",
+        "description": "",
+        "operationId": "signup",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "signupRequest",
+            "in": "body",
+            "description": "Object that contatin user sign up credentials as properties.\"",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": ["name", "email", "password", "confirmPassword"],
+              "properties": {
+                "name": {
+                  "description": "Name of a new user.",
+                  "type": "string"
+                },
+                "email": {
+                  "description": "Email of a new user. (Must not already be associated with a user.)",
+                  "type": "string"
+                },
+                "password": {
+                  "description": "Password for the new user.",
+                  "type": "string"
+                },
+                "confirmPassword": {
+                  "description": "Password confirmation for a new user. (Must match password.)",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully registered the user. An email has been sent.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Email is already associated with an account.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Error creating a user.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "tags": ["auth"],
+        "summary": "Verifies a user and logs them in",
+        "description": "",
+        "operationId": "login",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "loginRequest",
+            "in": "body",
+            "description": "Object containing user credentials as properties.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": ["email", "password"],
+              "properties": {
+                "email": {
+                  "description": "Email of a user.",
+                  "type": "string"
+                },
+                "password": {
+                  "description": "Password for the user.",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully logged the user in.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "token": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Email is not confirmed or incorrect user details.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "422": {
+            "description": "Invalid body.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/auth/user": {
+      "get": {
+        "tags": ["auth"],
+        "summary": "Retrieves user information for the current logged in user.",
+        "description": "",
+        "operationId": "getUser",
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "Authorisation ",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "object",
+                  "description": "User data."
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorised"
+          }
+        },
+        "security": [
+          {
+            "ApiAuth": []
+          }
+        ]
+      }
+    },
+    "/auth/confirm/{emailJWT}": {
+      "get": {
+        "tags": ["auth"],
+        "summary": "Verifies a user's email and redirects to the front-end login. This endpoint is used when a user clicks confirm in the confirmation email.",
+        "description": "",
+        "operationId": "confirm",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "emailJWT",
+            "in": "path",
+            "description": "A json web token containing the email to confirm. (This JWT can only be signed by the server.) ",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "302": {
+            "description": "Email successfully confirmed. Redirect to front-end login."
+          },
+          "400": {
+            "description": "There was a problem sending the confirmation email.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/auth/confirm/resend": {
+      "post": {
+        "tags": ["auth"],
+        "summary": "Resends the verification email for a user if they have not already been verified.",
+        "description": "",
+        "operationId": "confirmResend",
+        "consumes": ["application/json"],
+        "parameters": [
+          {
+            "name": "confirmRequest",
+            "in": "body",
+            "description": "Object containing email to be confirmed",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": ["email"],
+              "properties": {
+                "email": {
+                  "description": "The email to confirm",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Email confirmation successfully sent."
+          },
+          "400": {
+            "description": "There was a problem sending the confirmation email.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    }
+  },
+  "securityDefinitions": {
+    "ApiAuth": {
+      "type": "apiKey",
+      "name": "Authoriz ation",
+      "in": "header"
+    }
+  },
+  "definitions": {
+    "ErrorResponse": {
+      "type": "object",
+      "properties": {
+        "errors": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "message": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "FrequencyResponse": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "word": {
+            "type": "string"
+          },
+          "outlet": {
+            "type": "string"
+          },
+          "year": {
+            "type": "string"
+          },
+          "count": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "rank": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "freq": {
+            "type": "number"
+          }
+        }
+      }
+    },
+    "AssociationResponse": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "yearRange": {
+                "type": "string"
+              },
+              "association": {
+                "type": "number"
+              },
+              "outlet": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "SentimentResponse": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "word": {
+            "type": "string"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "year": {
+                  "type": "integer",
+                  "format": "int32"
+                },
+                "sentiment": {
+                  "type": "number"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
