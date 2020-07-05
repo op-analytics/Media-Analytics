@@ -184,16 +184,18 @@ export default function FrequencyCounts() {
         color="textPrimary"
         className={classes.aboutText}
       >
-        The default view of the data is to display absolute values. This allows
-        you to directly compare values. In some situations the difference in
-        absolute values between words or outlets maybe so large that comparing
-        directly is impossible due to the small changes for one dataset being
-        dwafed by large changes in another. Displaying normalised means each
-        dataset is normalised to it&apos;s own maximum and minimum values using
-        mean-max normalisation. This means that all data points for a particular
-        word or outlet now have a value of between zero and one. This makes
-        comparing datasets with large variations in scale easier but magnifies
-        even small changes in numbers.
+        The default view of the frequency data is to display absolute frequency
+        values (total counts of a word in a year divided by total counts of all
+        words in the year). This allows direct comparison of frequencies across
+        outlets. However, differences in the range of absolute frequencies for
+        different words are often so large that direct comparison of patterns is
+        impossible due to changes in prevalence for the low-frequency word being
+        dwarfed by the larger frequency values of the more common word. The
+        &quot;Display Normalised&quot; option allows to easily visualize the years of
+        maximum and minimum word usage, irrespective of its absolute frequency.
+        The normalization is achieved using min-max feature scaling which results
+        in a frequency range between zero and one for the minimum and maximum
+        frequency of the word in the time series.
       </Typography>
       <br />
     </div>
