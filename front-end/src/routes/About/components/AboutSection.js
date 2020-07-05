@@ -73,6 +73,17 @@ function AboutSection() {
         to find the funding to use cloud infrastructure and lift this restriction
         before long.
       </Typography>
+      <Typography
+        variant="body1"
+        component="p"
+        color="textPrimary"
+        className={classes.aboutText}
+      >
+        We could not find publicly available complete articles of the New York
+        Times for the year 1980 to calculate the corresponding frequency counts.
+        Thus, frequency counts for that year are backwards filled with frequency
+        counts from 1981.
+      </Typography>
       <h2 className={classes.sectionHeadings}>Contact</h2>
       <Typography
         variant="body1"
