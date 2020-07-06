@@ -223,3 +223,8 @@ typings/
 
 # Models
 back-end/models
+
+# CERTS
+nginx/certs/*.key
+nginx/certs/*.pem
+nginx/certs/*.crt
