@@ -96,7 +96,7 @@ function AboutSection() {
         <br />
         Rozado, D. (2020, July). Media-Analytics.org: A Resource to Research
         Language Usage by News Media Outlets. International Conference on ICT
-        enhanced Social Sciences and Humanities (ICTeSSH, 2020)
+        enhanced Social Sciences and Humanities (ICTeSSH, Amsterdam, 2020)
       </Typography>
       <h2 className={classes.sectionHeadings}>Contact</h2>
       <Typography
