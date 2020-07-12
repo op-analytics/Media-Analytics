@@ -6,6 +6,7 @@ import React from 'react';
 
 import { useSectionStyles } from './hooks/useSectionStyles';
 import FrequencyCounts from './sections/FrequencyCounts';
+import LatentAssociations from './sections/LatentAssociations';
 
 const useStyles = makeStyles((theme) => ({
   containerCard: {
@@ -26,7 +27,6 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 }));
-
 
 /**
  * The user guide page component
@@ -55,6 +55,7 @@ const UserGuide = () => {
           </Typography>
         </div>
         <FrequencyCounts />
+        <LatentAssociations />
       </Card>
     </Container>
   );
