@@ -12,19 +12,11 @@ import { getErrorsFromResponse } from './shared/errorHelpers';
 const userModel = {
   // User state
   user: null,
+  authenticating: true,
 
   // Computed properties
   // Property to check if the current user is authenticated
   authenticated: computed((state) => state.user != null),
-
-  // Property to check if the current user is being authenticated
-  authenticating: computed((state) => {
-    // FIXME: This needs to have a check if the token was invalid to stop the
-    // page not loading
-    const userIsUnauthenticated = state.user === null;
-    const weHaveAToken = localStorage.getItem('XAuthToken');
-    return userIsUnauthenticated && weHaveAToken;
-  }),
 
   // Actions and thunks
   login: thunk(async (actions, payload, { getStoreActions }) => {
@@ -91,6 +83,10 @@ const userModel = {
 
   setUser: action((state, payload) => {
     state.user = payload;
+  }),
+
+  setAuthenticating: action((state, payload) => {
+    state.authenticating = payload;
   }),
 };
 
