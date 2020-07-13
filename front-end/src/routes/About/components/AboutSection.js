@@ -84,20 +84,6 @@ function AboutSection() {
         Thus, frequency counts for that year are backwards filled with frequency
         counts from 1981.
       </Typography>
-      <h2 className={classes.sectionHeadings}>Attribution</h2>
-      <Typography
-        variant="body1"
-        component="p"
-        color="textPrimary"
-        className={classes.aboutText}
-      >
-        If you end up using the resources of this site in a scholarly
-        publication, we request that you cite this work:
-        <br />
-        Rozado, D. (2020, July). Media-Analytics.org: A Resource to Research
-        Language Usage by News Media Outlets. International Conference on ICT
-        enhanced Social Sciences and Humanities (ICTeSSH, Amsterdam, 2020)
-      </Typography>
       <h2 className={classes.sectionHeadings}>Contact</h2>
       <Typography
         variant="body1"
