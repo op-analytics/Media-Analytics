@@ -39,6 +39,9 @@ const links = [
  */
 function App() {
   const logout = useStoreActions((store) => store.user.logout);
+  const setAuthenticating = useStoreActions(
+    (store) => store.user.setAuthenticating,
+  );
   const authenticate = useStoreActions((store) => store.user.authenticate);
   const authenticating = useStoreState((store) => store.user.authenticating);
   const dispatch = useStoreDispatch();
@@ -49,6 +52,7 @@ function App() {
   useEffect(() => {
     const token = localStorage.XAuthToken;
     if (token) {
+      setAuthenticating(true);
       const decodedToken = jwtDecode(token);
       // Logout the user if the token has expired
       if (decodedToken.exp * 1000 < Date.now()) {
@@ -56,7 +60,8 @@ function App() {
         redirect('/login');
       } else authenticate(token);
     }
-  }, [logout, authenticate, redirect]);
+    setAuthenticating(false);
+  }, [logout, authenticate, redirect, setAuthenticating]);
 
   // Scroll to the top of the page each time the page changes
   useEffect(() => {
